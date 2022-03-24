@@ -42,6 +42,7 @@ namespace GW2Characters
         public static FlowPanel filterPanel;
         public static TextBox filterTextBox;
         public static StandardButton clearButton;
+        public static Image infoImage;
         public static StandardButton refreshAPI;
         private static List<string> CharacterNames = new List<string>();
         private static List<Character> Characters = new List<Character>();
@@ -78,6 +79,7 @@ namespace GW2Characters
         }
 
         static internal SettingEntry<Blish_HUD.Input.KeyBinding> LogoutKey;
+        static internal SettingEntry<bool> EnterOnSwap;
 
         const int WINDOW_WIDTH = 385;
         const int WINDOW_HEIGHT = 920;
@@ -87,7 +89,7 @@ namespace GW2Characters
 
         public static Character swapCharacter;
         #endregion
-        public static AccountInfo userAccount;
+        public static AccountInfo userAccount { get; set; }
         public class AccountInfo
         {
             public string Name;
@@ -96,7 +98,7 @@ namespace GW2Characters
             public void Save()
             {
                 if (API_Account != null)
-                {
+                {                    
                     List<AccountInfo> _data = new List<AccountInfo>();
                     _data.Add(userAccount);
 
@@ -108,10 +110,10 @@ namespace GW2Characters
             }
             public bool CharacterUpdateNeeded()
             {
-                double lastModified = DateTimeOffset.UtcNow.Subtract(userAccount.LastModified).TotalSeconds;
-                double lastUpdate = DateTimeOffset.UtcNow.Subtract(userAccount.LastBlishUpdate).TotalSeconds;
+                double lastModified = DateTimeOffset.UtcNow.Subtract(LastModified).TotalSeconds;
+                double lastUpdate = DateTimeOffset.UtcNow.Subtract(LastBlishUpdate).TotalSeconds;
 
-                return (lastUpdate) > lastModified;
+                return lastModified > 800 ||(lastUpdate) > lastModified;
             }
         }
         public class JsonCharacter
@@ -319,14 +321,14 @@ namespace GW2Characters
                 if (loaded && apiManager != null)
                 {
                     var player = GameService.Gw2Mumble.PlayerCharacter;
+
                     if (Name == player.Name)
                     {
                         _mapid = GameService.Gw2Mumble.CurrentMap.Id;
                         if (_mapid > 0 && _mapid != _lastmapid)
                         {
                             _lastmapid = _mapid;
-                            var map = await apiManager.Gw2ApiClient.V2.Maps.GetAsync(_mapid);
-                            this.map = map.Id;
+                            this.map = _mapid;
 
                             CharacterTooltip tooltp = (CharacterTooltip)characterControl.Tooltip;
                             tooltp._Update();
@@ -479,7 +481,7 @@ namespace GW2Characters
                             }
                             else
                             {
-                                //Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
+                                if (EnterOnSwap.Value) Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
                                 break;
                             }
                         }
@@ -578,7 +580,10 @@ namespace GW2Characters
                                                      new Blish_HUD.Input.KeyBinding(Keys.F12),
                                                      () => Strings.common.Logout,
                                                      () => Strings.common.LogoutDescription);
-
+            EnterOnSwap = settings.DefineSetting("ShowInTaskbar",
+                                                              false,
+                                                              () => Strings.common.LoginAfterSelect,
+                                                              () => Strings.common.LoginAfterSelect);
         }
         public static object GetPropValue(object src, string propName)
         {
@@ -666,7 +671,9 @@ namespace GW2Characters
         {
             if (Gw2ApiManager.HasPermissions(new[] { TokenPermission.Account, TokenPermission.Characters }) && API_Account != null && userAccount != null)
             {
+                //ScreenNotification.ShowNotification("Updating Account ....", ScreenNotification.NotificationType.Warning);
                 var account = await Gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
+
                 userAccount.LastModified = account.LastModified;
                 userAccount.Save();
 
@@ -676,6 +683,8 @@ namespace GW2Characters
                 if (userAccount.CharacterUpdateNeeded() || force)
                 {
                     userAccount.LastBlishUpdate = userAccount.LastBlishUpdate > account.LastModified ? userAccount.LastBlishUpdate : account.LastModified;
+                    userAccount.Save();
+
                     var characters = await Gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
                     Logger.Debug("Updating Characters ....");
                     //ScreenNotification.ShowNotification("Updating Characters ....", ScreenNotification.NotificationType.Warning);
@@ -684,7 +693,6 @@ namespace GW2Characters
 
                     foreach (Gw2Sharp.WebApi.V2.Models.Character c in characters)
                     {
-                        Logger.Debug("Updating Character: '" + c.Name + "'");
                         Character character = getCharacter(c.Name);
 
                         character.Name = character.Name ?? c.Name;
@@ -710,9 +718,14 @@ namespace GW2Characters
                         }
                         character.apiIndex = j;
 
-                        if (character.LastModified == dateZero || character.LastModified > account.LastModified.UtcDateTime)
+                        if (character.LastModified == dateZero || character.LastModified < account.LastModified.UtcDateTime)
                         {
                             character.LastModified = account.LastModified.UtcDateTime.AddSeconds(-j);
+                        }
+
+                        if (character.lastLogin == dateZero)
+                        {
+                            character.lastLogin = c.LastModified.UtcDateTime;
                         }
 
                         last = character;
@@ -725,6 +738,10 @@ namespace GW2Characters
                     //ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
                     Logger.Debug("Characters Updated!");
                 }
+
+                double lastModified = DateTimeOffset.UtcNow.Subtract(userAccount.LastModified).TotalSeconds;
+                double lastUpdate = DateTimeOffset.UtcNow.Subtract(userAccount.LastBlishUpdate).TotalSeconds;
+                infoImage.BasicTooltipText = "Last Modified: " + Math.Round(lastModified) + Environment.NewLine + "Last Blish Login: " + Math.Round(lastUpdate);
             }
             else
             {
@@ -740,6 +757,7 @@ namespace GW2Characters
             {
                 var account = await Gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
 
+
                 Logger.Debug("Account Age: " + account.Age.TotalSeconds + " seconds");
                 Logger.Debug("LastModified: " + account.LastModified);
 
@@ -753,11 +771,14 @@ namespace GW2Characters
                 CharactersPath = path + @"\characters.json";
                 AccountPath = path + @"\account.json";
 
-                userAccount = new AccountInfo()
+                if (userAccount == null)
                 {
-                    Name = account.Name,
-                    LastModified = account.LastModified,
-                };
+                    userAccount = new AccountInfo()
+                    {
+                        Name = account.Name,
+                        LastModified = account.LastModified,
+                    };
+                }
 
                 if (System.IO.File.Exists(AccountPath))
                 {
@@ -779,6 +800,7 @@ namespace GW2Characters
                 if (userAccount.CharacterUpdateNeeded())
                 {
                     userAccount.LastBlishUpdate = account.LastModified;
+                    userAccount.Save();
 
                     Logger.Debug("Updating Characters ....");
                     //ScreenNotification.ShowNotification("Updating Characters!", ScreenNotification.NotificationType.Warning);
@@ -789,7 +811,6 @@ namespace GW2Characters
 
                     foreach (Gw2Sharp.WebApi.V2.Models.Character c in characters)
                     {
-                        Logger.Debug("Updating Character: '" + c.Name + "'");
                         Character character = getCharacter(c.Name);
                         character.Name = character.Name ?? c.Name;
                         character.Race = (RaceType)Enum.Parse(typeof(RaceType), c.Race);
@@ -800,9 +821,14 @@ namespace GW2Characters
                         character.Created = c.Created;
                         character.apiIndex = j;
 
-                        if (character.LastModified == dateZero || character.LastModified > account.LastModified.UtcDateTime)
+                        if (character.LastModified == dateZero || character.LastModified < account.LastModified.UtcDateTime)
                         {
                             character.LastModified = account.LastModified.UtcDateTime.AddSeconds(-j);
+                        }
+
+                        if (character.lastLogin == dateZero)
+                        {
+                            character.lastLogin = c.LastModified.UtcDateTime;
                         }
 
                         character.contentsManager = ContentsManager;
@@ -845,6 +871,10 @@ namespace GW2Characters
 
                 charactersLoaded = true;
                 UpdateCharacters();
+
+                double lastModified = DateTimeOffset.UtcNow.Subtract(userAccount.LastModified).TotalSeconds;
+                double lastUpdate = DateTimeOffset.UtcNow.Subtract(userAccount.LastBlishUpdate).TotalSeconds;
+                infoImage.BasicTooltipText = "Last Modified: " + Math.Round(lastModified) + Environment.NewLine + "Last Blish Login: " + Math.Round(lastUpdate);
             }
             else
             {
@@ -882,7 +912,15 @@ namespace GW2Characters
                 //CanResize = true,
                 //BackgroundColor = Microsoft.Xna.Framework.Color.AliceBlue,
             };
-            
+
+            infoImage = new Image()
+            {
+                Texture = Textures.Icons[(int)Icons.Info],
+                Size = new Point(32, 32),
+                Location = new Point(Module.MainWidow.Width - 30, -10),
+                Parent = Module.MainWidow,
+            };
+
             refreshAPI = new StandardButton()
             {
                 Size = new Point(185, 25),
@@ -1065,7 +1103,6 @@ namespace GW2Characters
         {
             if (charactersLoaded)
             {
-                Logger.Debug("Resort Characters!");
                 CharacterPanel.SortChildren<CharacterControl>((a, b) => b.assignedCharacter.LastModified.CompareTo(a.assignedCharacter.LastModified));
                 Characters.Sort((a, b) => b.LastModified.CompareTo(a.LastModified));
 

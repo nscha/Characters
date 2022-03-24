@@ -187,6 +187,15 @@ namespace GW2Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter the game automatically after selecting the character in the character selection.
+        /// </summary>
+        internal static string LoginAfterSelect {
+            get {
+                return ResourceManager.GetString("LoginAfterSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
         internal static string Logout {

@@ -159,6 +159,9 @@
   <data name="Level" xml:space="preserve">
     <value>Nivel {0}</value>
   </data>
+  <data name="LoginAfterSelect" xml:space="preserve">
+    <value>Entrar en el juego automáticamente después de seleccionar el personaje en la selección de personajes</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Cerrar sesión</value>
   </data>

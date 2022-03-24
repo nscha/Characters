@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace GW2Characters
 {
     [Export(typeof(Blish_HUD.Modules.Module))]
-    public class Module : Blish_HUD.Modules.Module
+    public partial class Module : Blish_HUD.Modules.Module
     {
         DateTime dateZero;
         private static bool requestAPI = true;
@@ -125,8 +125,7 @@ namespace GW2Characters
             public int apiIndex { get; set; }
             public int Specialization { get; set; }
             public List<CharacterCrafting> Crafting;
-            public string mapName;
-            public string gameMode;
+            public int map;
             public int Level { get; set; }
         }
         public class CharacterCrafting
@@ -158,8 +157,7 @@ namespace GW2Characters
             public int apiIndex;
             public DateTimeOffset Created;
             public DateTime lastLogout;
-            public string mapName;
-            public string gameMode;
+            public int map;
 
             private void MainPanel_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
             {
@@ -181,7 +179,6 @@ namespace GW2Characters
                     Height = 60,
                     Width = CharacterPanel.Width - 20 - 5,
                     ShowBorder = true,
-                    //BasicTooltipText = "Name: " + Name + Environment.NewLine + "Profession: " + this.Profession + Environment.NewLine + "Spec: " + this.Specialization + Environment.NewLine + "Last Login: " + this.lastLogin + Environment.NewLine + "Race: " + this.Race,
                     assignedCharacter = this,
                     Tooltip = new CharacterTooltip()
                     {
@@ -192,6 +189,7 @@ namespace GW2Characters
                 characterControl.MouseEntered += MainPanel_MouseEntered;
                 characterControl.MouseLeft += MainPanel_MouseLeft;
                 CharacterTooltip tooltp = (CharacterTooltip)characterControl.Tooltip;
+                tooltp.Shown += delegate { tooltp._Update(); };
 
                 //Profession Icon
                 classImage = new Image()
@@ -212,7 +210,6 @@ namespace GW2Characters
                     Height = characterControl.Height / 2,
                     Width = characterControl.Width - 165,
                     Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular),
-                    //BasicTooltipText = "Name: " + Name + Environment.NewLine + "Profession: " + Environment.NewLine + "Spec: " + Environment.NewLine + "Last Login: " + Environment.NewLine + "Race: ",
                     VerticalAlignment = VerticalAlignment.Middle,
                     Tooltip = tooltp,
                 };
@@ -245,7 +242,7 @@ namespace GW2Characters
                 {
                     Texture = Textures.Icons[(int)Icons.BirthdayGift],
                     Parent = characterControl,
-                    Location = new Point(characterControl.Width - 175, (characterControl.Height / 2) - 2),
+                    Location = new Point(characterControl.Width - 150, (characterControl.Height / 2) - 2),
                     Size = new Point(20, 20),
                     Visible = false,
                 };
@@ -294,7 +291,7 @@ namespace GW2Characters
                     Texture = Textures.Icons[(int)Icons.Logout],
                     Size = new Point(32, 32),
                     Parent = characterControl,
-                    BasicTooltipText = "Switch to " + this.Name,
+                    BasicTooltipText = string.Format(Strings.common.Switch, this.Name),
                 };
                 switchButton.Click += SwitchButton_Click;
                 switchButton.MouseEntered += SwitchButton_MouseEntered;
@@ -329,8 +326,7 @@ namespace GW2Characters
                         {
                             _lastmapid = _mapid;
                             var map = await apiManager.Gw2ApiClient.V2.Maps.GetAsync(_mapid);
-                            mapName = map.Name;
-                            gameMode = map.Type;
+                            this.map = map.Id;
 
                             CharacterTooltip tooltp = (CharacterTooltip)characterControl.Tooltip;
                             tooltp._Update();
@@ -409,7 +405,7 @@ namespace GW2Characters
 
                     if (this.timeLabel != null)
                     {
-                        this.timeLabel.Text = string.Format("{3} Days {0:00}:{1:00}:{2:00}",
+                        this.timeLabel.Text = string.Format("{3} " + Strings.common.Days +" {0:00}:{1:00}:{2:00}",
                         t.Hours,
                         t.Minutes,
                         t.Seconds,
@@ -466,7 +462,7 @@ namespace GW2Characters
             {
                 if (!GameService.Gw2Mumble.CurrentMap.Type.IsCompetitive())
                 {
-                    ScreenNotification.ShowNotification("Swapping Characters!", ScreenNotification.NotificationType.Warning);
+                    ScreenNotification.ShowNotification(string.Format(Strings.common.Switch, Name), ScreenNotification.NotificationType.Warning);
 
                     if (!GameService.GameIntegration.Gw2Instance.IsInGame)
                     {
@@ -518,7 +514,7 @@ namespace GW2Characters
                 }
                 else
                 {
-                    ScreenNotification.ShowNotification("Character swapping is disabled in competetive modes!", ScreenNotification.NotificationType.Error);
+                    ScreenNotification.ShowNotification(Strings.common.Error_Competivive, ScreenNotification.NotificationType.Error);
                 }
             }
             public double seconds { get; set; }
@@ -560,8 +556,7 @@ namespace GW2Characters
                             apiIndex = c.apiIndex,
                             Created = c.Created,
                             LastModified = c.LastModified,
-                            gameMode = c.gameMode,
-                            mapName = c.mapName,
+                            map = c.map,
                             Level = c.Level,
                         };
 
@@ -581,8 +576,8 @@ namespace GW2Characters
         {
             LogoutKey = settings.DefineSetting(nameof(LogoutKey),
                                                      new Blish_HUD.Input.KeyBinding(Keys.F12),
-                                                     () => "Logout",
-                                                     () => "Key to Press when logged logging out. Must be the same as the game keybind for logout!");
+                                                     () => Strings.common.Logout,
+                                                     () => Strings.common.LogoutDescription);
 
         }
         public static object GetPropValue(object src, string propName)
@@ -602,16 +597,34 @@ namespace GW2Characters
             LoadTextures();
             Gw2ApiManager.SubtokenUpdated += Gw2ApiManager_SubtokenUpdated;
             AccountPath = DirectoriesManager.GetFullDirectoryPath("gw2characters") + @"\accounts.json";
+
+
+            DataManager.ContentsManager = ContentsManager;
+            DataManager.Load();
+
+            Logger.Debug("RACE CHECK");
+            Logger.Debug(DataManager.getRaceName(1));
+            Logger.Debug(DataManager.getRaceName("Human"));
+            Logger.Debug("Map Check: " + DataManager.getMapName("Interior Harathi"));
+            Logger.Debug("Map Check: " + DataManager.getMapName(1464));
+            Logger.Debug("Map Check: " + DataManager.getMapName(1465));
+
         }
 
         private void LoadTextures()
         {
-            Logger.Debug("Loading Textures....");
+            Logger.Debug("Loading Textures....");          
 
             Textures.Backgrounds = new Texture2D[Enum.GetValues(typeof(_Backgrounds)).Cast<int>().Max() + 1];
             foreach (_Backgrounds background in Enum.GetValues(typeof(_Backgrounds)))
             {
                 Textures.Backgrounds[(int)background] = ContentsManager.GetTexture(@"textures\backgrounds\" + (int)background + ".png");
+            }
+
+            Textures.Emblems= new Texture2D[Enum.GetValues(typeof(_Emblems)).Cast<int>().Max() + 1];
+            foreach (_Backgrounds emblem in Enum.GetValues(typeof(_Emblems)))
+            {
+                Textures.Emblems[(int)emblem] = ContentsManager.GetTexture(@"textures\emblems\" + (int)emblem + ".png");
             }
             
             Textures.Icons = new Texture2D[Enum.GetValues(typeof(Icons)).Cast<int>().Max() + 1];
@@ -619,7 +632,7 @@ namespace GW2Characters
             {
                 Textures.Icons[(int)icon] = ContentsManager.GetTexture(@"textures\icons\" + (int)icon + ".png");
             }
-
+           
             Textures.Races = new Texture2D[6];
             foreach (RaceType race in Enum.GetValues(typeof(RaceType)))
             {
@@ -665,7 +678,7 @@ namespace GW2Characters
                     userAccount.LastBlishUpdate = userAccount.LastBlishUpdate > account.LastModified ? userAccount.LastBlishUpdate : account.LastModified;
                     var characters = await Gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
                     Logger.Debug("Updating Characters ....");
-                    ScreenNotification.ShowNotification("Updating Characters ....", ScreenNotification.NotificationType.Warning);
+                    //ScreenNotification.ShowNotification("Updating Characters ....", ScreenNotification.NotificationType.Warning);
                     Character last = null;
                     int j = 0;
 
@@ -709,13 +722,13 @@ namespace GW2Characters
                     if (last != null) last.Save();
 
                     UpdateCharacters();
-                    ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
+                    //ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
                     Logger.Debug("Characters Updated!");
                 }
             }
             else
             {
-                ScreenNotification.ShowNotification("This API Token has not the required permissions!", ScreenNotification.NotificationType.Error);
+                ScreenNotification.ShowNotification(Strings.common.Error_Competivive, ScreenNotification.NotificationType.Error);
                 Logger.Error("This API Token has not the required permissions!");
             }
         }
@@ -768,7 +781,7 @@ namespace GW2Characters
                     userAccount.LastBlishUpdate = account.LastModified;
 
                     Logger.Debug("Updating Characters ....");
-                    ScreenNotification.ShowNotification("Updating Characters!", ScreenNotification.NotificationType.Warning);
+                    //ScreenNotification.ShowNotification("Updating Characters!", ScreenNotification.NotificationType.Warning);
                     Logger.Debug("The last API modification is more recent than our last local data track.");
                     var characters = await Gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
                     Character last = null;
@@ -819,7 +832,7 @@ namespace GW2Characters
                     }
 
                     if (last != null) last.Save();
-                    ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
+                    //ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
                 }
 
                 var player = GameService.Gw2Mumble.PlayerCharacter;
@@ -835,7 +848,7 @@ namespace GW2Characters
             }
             else
             {
-                ScreenNotification.ShowNotification("This API Token has not the required permissions!", ScreenNotification.NotificationType.Error);
+                ScreenNotification.ShowNotification(Strings.common.Error_InvalidPermissions, ScreenNotification.NotificationType.Error);
                 Logger.Error("This API Token has not the required permissions!");
                 // You don't actually have permission
             }
@@ -852,7 +865,7 @@ namespace GW2Characters
 
         private void CreateWindow()
         {
-            var _textureWindowBackground = ContentsManager.GetTexture(@"textures\bg.png");
+            var _textureWindowBackground = Textures.Backgrounds[(int)_Backgrounds.MainWindow];
 
             Module.MainWidow = new StandardWindow(
                 _textureWindowBackground,
@@ -862,7 +875,7 @@ namespace GW2Characters
             {
                 Parent = GameService.Graphics.SpriteScreen,
                 Title = "Characters",
-                Emblem = ContentsManager.GetTexture(@"textures\156015.png"),
+                Emblem = Textures.Emblems[(int)_Emblems.Characters],
                 Subtitle = "❤",
                 SavesPosition = true,
                 Id = $"CharactersWindow",
@@ -883,7 +896,7 @@ namespace GW2Characters
             filterTextBox = new TextBox()
             {
                 PlaceholderText = "Search for ...",
-                Size = new Point(313 - 8, 30),
+                Size = new Point(313 - 8 - 23, 30),
                 Font = GameService.Content.DefaultFont16,
                 Location = new Point(10, 20),
                 Parent = Module.MainWidow,
@@ -896,11 +909,33 @@ namespace GW2Characters
             clearButton = new StandardButton()
             {
                 Text = "Clear",
-                Location = new Point(313 + 2, 19),
-                Size = new Point(50, 32),
+                Location = new Point(290 + 2, 19),
+                Size = new Point(73, 32),
                 Parent = MainWidow,
                 ResizeIcon = true,
             };
+            void reset() {
+                foreach (ToggleImage toggle in filterProfessions)
+                {
+                    if (toggle != null && toggle._State != 1)
+                    {
+                        toggle._State = 1;
+                    }
+                }
+
+                foreach (ToggleImage toggle in filterCrafting)
+                {
+                    if (toggle != null)
+                    {
+                        toggle._State = 1;
+                    }
+                }
+
+                birthdayToggle._State = 0;
+                filterTextBox.Text = null;
+                UpdateCharacters();
+            }
+            clearButton.Click += delegate { reset(); };
 
             filterPanel = new FlowPanel()
             {
@@ -1014,6 +1049,7 @@ namespace GW2Characters
 
         protected override async Task LoadAsync()
         {
+            Logger.Debug("Load Async ...");
             cornerButton = new CornerIcon()
             {
                 IconName = "Characters",
@@ -1101,12 +1137,11 @@ namespace GW2Characters
 
                     foreach (string s in professionFilters)
                     {
-                        if (Enum.GetName(typeof(ProfessionType), c._Profession).ToLower().Contains(s)) return true;
-                        if (c._Specialization > 0)
-                        {
-                            var spec = Enum.GetName(typeof(Specializations), c._Specialization);
-                            if (spec != null && spec.ToLower().Contains(s)) return true;
-                        }
+                        var profName = DataManager.getProfessionName(c._Profession);
+                        var specName = DataManager.getSpecName(c._Specialization);
+
+                        if (profName.ToLower().Contains(s)) return true;
+                        if (c._Specialization > 0 && specName.ToLower().Contains(s)) return true;
                     }
 
                     foreach (string s in birthdayFilters)
@@ -1116,12 +1151,14 @@ namespace GW2Characters
 
                     foreach (string s in raceFilters)
                     {
-                        if (c.Race.ToString().ToLower().Contains(s)) return true;
+                        var race = DataManager.getRaceName(c.Race.ToString());
+                        if (race.ToString().ToLower().Contains(s)) return true;
                     }
 
                     foreach (string s in mapFilters)
                     {
-                        if (c.mapName != null && c.mapName.ToLower().Contains(s)) return true;
+                        var map = DataManager.getMapName(c.map);
+                        if (map != null && map.ToLower().Contains(s)) return true;
                     }
 
                     foreach (string s in nameFilters)
@@ -1196,20 +1233,48 @@ namespace GW2Characters
             var player = GameService.Gw2Mumble.PlayerCharacter;
             player.SpecializationChanged += Player_SpecializationChanged;
             GameService.GameIntegration.Gw2Instance.IsInGameChanged += Gw2Instance_IsInGameChanged;
-            GameService.Gw2Mumble.CurrentMap.MapChanged += CurrentMap_MapChanged; ;
+            GameService.Gw2Mumble.CurrentMap.MapChanged += CurrentMap_MapChanged;
+            OverlayService.Overlay.UserLocaleChanged += delegate { Load_UserLocale(); };
+            Load_UserLocale();
+        }
+
+        private void Load_UserLocale()
+        {
+            foreach (Character c in Characters) { 
+                CharacterTooltip ttp = (CharacterTooltip) c.characterControl.Tooltip;
+
+                ttp._mapLabel.Text = DataManager.getMapName(c.map);
+                ttp._raceLabel.Text = DataManager.getRaceName(c.Race.ToString());
+
+                c.switchButton.BasicTooltipText = string.Format(Strings.common.Switch, c.Name);
+            }
+
+            filterTextBox.PlaceholderText = Strings.common.SearchFor;
+            clearButton.Text = Strings.common.Clear;
+
+            foreach(ToggleImage toggle in filterProfessions)
+            {
+                if (toggle != null)
+                {
+                    toggle.BasicTooltipText = DataManager.getProfessionName(toggle.Id);
+                }
+            }
+
+            foreach (ToggleImage toggle in filterCrafting)
+            {
+                if (toggle != null)
+                {
+                    toggle.BasicTooltipText = DataManager.getCraftingName(Enum.GetName(typeof(Crafting), toggle.Id));
+                    if (toggle.Id == 0) toggle.BasicTooltipText = Strings.common.NoCraftingProfession;
+                }
+            }
+
+            birthdayToggle.BasicTooltipText = Strings.common.Birthday;
         }
 
         private async void CurrentMap_MapChanged(object sender, ValueEventArgs<int> e)
         {
-            if (1 == 3 && Current.character != null)
-            {
-                var map = await Gw2ApiManager.Gw2ApiClient.V2.Maps.GetAsync(GameService.Gw2Mumble.CurrentMap.Id);
-                Current.character.mapName = map.Name;                
-                Current.character.gameMode = map.Type;                
-                Current.character.UpdateCharacter();
-                Current.character.Save();
-                UpdateCharacters();
-            }
+
         }
 
         private void LoadCharacterList()
@@ -1234,8 +1299,7 @@ namespace GW2Characters
                         apiIndex = c.apiIndex,
                         Created = c.Created,
                         LastModified = c.LastModified,
-                        gameMode = c.gameMode,
-                        mapName = c.mapName,
+                        map = c.map,
                         Level = c.Level,
                     };
 
@@ -1284,9 +1348,9 @@ namespace GW2Characters
                 }
             }
 
-            if (Last.Tick_Save > 5000 && userAccount != null)
+            if (Last.Tick_Save > 15000 && userAccount != null)
             {
-                Last.Tick_Save = -5000;
+                Last.Tick_Save = -15000;
 
             }
 

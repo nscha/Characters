@@ -132,10 +132,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\CustomControls.cs" />
+    <Compile Include="Classes\DataManager.cs" />
     <Compile Include="Classes\Enums.cs" />
+    <Compile Include="Classes\GW2API_Extension.cs" />
     <Compile Include="Classes\MapTypeExtensions.cs" />
     <Compile Include="Classes\Textures.cs" />
     <Compile Include="Module.cs" />
+    <Compile Include="Strings\common.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>common.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AsyncClipboardService, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -314,6 +321,15 @@
     <Content Include="SharpDX.D3DCompiler.xml" />
     <Content Include="SharpDX.dll" />
     <Content Include="SharpDX.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Strings\common.de.resx" />
+    <EmbeddedResource Include="Strings\common.es.resx" />
+    <EmbeddedResource Include="Strings\common.fr.resx" />
+    <EmbeddedResource Include="Strings\common.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

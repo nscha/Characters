@@ -47,6 +47,29 @@
         Necromancer = 8,
         Revenant = 9
     }
+    public enum RaceEnum
+    {
+        //
+        // Summary:
+        //     Asura.
+        Asura = 0,
+        //
+        // Summary:
+        //     Charr.
+        Charr = 1,
+        //
+        // Summary:
+        //     Human.
+        Human = 2,
+        //
+        // Summary:
+        //     Norn.
+        Norn = 3,
+        //
+        // Summary:
+        //     Sylvari.
+        Sylvari = 4
+    }
     public enum Specializations
     {
         Berserker = 18,
@@ -102,5 +125,9 @@
     {
         MainWindow = 1,
         Tooltip = 2,
+    }
+    public enum _Emblems
+    {
+        Characters = 1,
     }
 }

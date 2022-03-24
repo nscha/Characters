@@ -14,24 +14,31 @@ namespace GW2Characters
     {
         public bool isActive;
         public int Id;
-        public int _State { get; set; }
+        private int __State;
+        public int _State {
+            get {
+                return __State;
+            }
+            set {
+                __State = value;
+                _OnStateChanged();
+            }
+        }
         public int _MaxState { get; set; }
         public Texture2D[] _Textures;
+        public event EventHandler _StateChanged;
+
+        private void _OnStateChanged()
+        {
+            if (_Textures != null && _Textures.Length > __State)
+            {
+                Texture = _Textures[__State];
+            }
+        }
 
         public int Toggle()
         {
-            _State++;
-
-            if (_State > (_MaxState -1))
-            {
-                _State = 0;
-            }
-
-            if (_Textures.Length >= _State)
-            {
-                Texture = _Textures[_State];
-            }
-
+            _State = (_State + 1 > (_MaxState - 1)) ? 0 : _State + 1;
             return _State;
         }
     }
@@ -109,7 +116,7 @@ namespace GW2Characters
                 };
                 _raceLabel = new Label()
                 {
-                    Text = c.Race.ToString(),
+                    Text = DataManager.getRaceName(c.Race.ToString()),
                     Parent = this,
                     Location = new Point(30, 40 + (index * 25)),
                     Visible = true,
@@ -127,7 +134,7 @@ namespace GW2Characters
                 };
                 _levelLabel = new Label()
                 {
-                    Text = "Level " + c.Level,
+                    Text = string.Format(Strings.common.Level, c.Level),
                     Parent = this,
                     Location = new Point(30, 40 + (index * 25)),
                     Visible = true,
@@ -145,7 +152,7 @@ namespace GW2Characters
                 };
                 _mapLabel = new Label()
                 {
-                    Text = "Map Name" + " " + "(PvE)",
+                    Text = DataManager.getMapName(c.map),
                     Parent = this,
                     Location = new Point(30, 40 + (index * 25)),
                     Visible = true,
@@ -165,7 +172,7 @@ namespace GW2Characters
                 };
                 _createdLabel = new Label()
                 {
-                    Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year - 1) + " years)",
+                    Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year - 1) + " "+ Strings.common.Years + ")",
                     Parent = this,
                     Location = new Point(30, 40 + (index * 25)),
                     Visible = true,
@@ -184,7 +191,7 @@ namespace GW2Characters
                 };
                 _ageLabel = new Label()
                 {
-                    Text = string.Format("{3} Days {0:00}:{1:00}:{2:00}",
+                    Text = string.Format("{3} " + Strings.common.Days +" {0:00}:{1:00}:{2:00}",
                     t.Hours,
                     t.Minutes,
                     t.Seconds,
@@ -209,7 +216,7 @@ namespace GW2Characters
                 var c = assignedCharacter;
 
                 var t = TimeSpan.FromSeconds(c.seconds);
-                _ageLabel.Text = string.Format("{3} Days {0:00}:{1:00}:{2:00}",
+                _ageLabel.Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00}",
                         t.Hours,
                         t.Minutes,
                         t.Seconds,
@@ -219,17 +226,8 @@ namespace GW2Characters
                 DateTime zeroTime = new DateTime(1, 1, 1);
                 TimeSpan span = (DateTime.UtcNow - c.Created.UtcDateTime);
 
-                _createdLabel .Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year -1) + " years)";
-                if (c.mapName == "" || c.mapName == null)
-                {
-                    _mapLabel.Text = "Unkown Map"  + " (Unkown Type)";
-                }
-                else
-                {
-                    _mapLabel.Text = c.mapName + " (" + c.gameMode + ")";
-                }
-
-                _levelLabel.Text = "Level " + c.Level;
+                _createdLabel .Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year -1) + " " + Strings.common.Years +")";
+                _levelLabel.Text = string.Format(Strings.common.Level, c.Level);
             }
         }
     }

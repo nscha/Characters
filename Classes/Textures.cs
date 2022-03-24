@@ -12,5 +12,6 @@ namespace GW2Characters
         public static Texture2D[] Crafting;
         public static Texture2D[] CraftingDisabled;
         public static Texture2D[] Backgrounds;
+        public static Texture2D[] Emblems;
     }
 }

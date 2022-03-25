@@ -147,6 +147,13 @@
   <data name="Error_InvalidPermissions" xml:space="preserve">
     <value>Dieser API-Schlüssel hat nicht die erforderlichen Berechtigungen.</value>
   </data>
+  <data name="FilterDelay_Description" xml:space="preserve">
+    <value>Durchschnittliche Zeit in Millisekunden, die zwischen dem Filtern des Panels Ihrer Charaktere gewartet wird.
+Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, um die Einstellungsseite zu aktualisieren!</value>
+  </data>
+  <data name="FilterDelay_DisplayName" xml:space="preserve">
+    <value>Filterverzögerung ({0} ms)</value>
+  </data>
   <data name="Huntsman" xml:space="preserve">
     <value>Waidmann</value>
   </data>
@@ -192,6 +199,13 @@ Dies erfordert einen API-Schlüssel mit Berechtigungen zumindest für den Endpun
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Spezialisierung</value>
+  </data>
+  <data name="SwapDelay_Description" xml:space="preserve">
+    <value>Durchschnittliche Ladezeit von Ingame bis zur Charakterauswahl.
+Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, um die Einstellungsseite zu aktualisieren!</value>
+  </data>
+  <data name="SwapDelay_DisplayName" xml:space="preserve">
+    <value>Ladeverzögerung ({0} ms)</value>
   </data>
   <data name="Switch" xml:space="preserve">
     <value>Wechsel zu {0}</value>

@@ -147,6 +147,13 @@
   <data name="Error_InvalidPermissions" xml:space="preserve">
     <value>Esta clave API no tiene los permisos necesarios.</value>
   </data>
+  <data name="FilterDelay_Description" xml:space="preserve">
+    <value>Tiempo medio en milisegundos de espera entre el filtrado del panel de tus personajes.
+Para obtener el valor actual tendrás que cambiar las pestañas del módulo una vez para actualizar la página de configuración.</value>
+  </data>
+  <data name="FilterDelay_DisplayName" xml:space="preserve">
+    <value>Retraso del filtro ({0} ms)</value>
+  </data>
   <data name="Huntsman" xml:space="preserve">
     <value>Cazador</value>
   </data>
@@ -192,6 +199,13 @@
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Especialización</value>
+  </data>
+  <data name="SwapDelay_Description" xml:space="preserve">
+    <value>Tiempo medio de carga desde el inicio del juego hasta la selección del personaje.
+Para obtener el valor actual tendrás que cambiar las pestañas del módulo una vez para actualizar la página de configuración.</value>
+  </data>
+  <data name="SwapDelay_DisplayName" xml:space="preserve">
+    <value>Délai de chargement ({0} ms)</value>
   </data>
   <data name="Switch" xml:space="preserve">
     <value>Cambiar a {0}</value>

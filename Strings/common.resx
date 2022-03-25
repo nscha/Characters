@@ -147,6 +147,13 @@
   <data name="Error_InvalidPermissions" xml:space="preserve">
     <value>This API key does not have the required permissions.</value>
   </data>
+  <data name="FilterDelay_Description" xml:space="preserve">
+    <value>Average time in milliseconds waited between filtering your characters' panel.
+To get the current value you will have to swap module tabs once to update the settings page!</value>
+  </data>
+  <data name="FilterDelay_DisplayName" xml:space="preserve">
+    <value>Filter Delay ({0} ms)</value>
+  </data>
   <data name="Huntsman" xml:space="preserve">
     <value>Huntsman</value>
   </data>
@@ -192,6 +199,13 @@ This will require an API-Key with permissions at least for the 'characters' endp
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Specialization</value>
+  </data>
+  <data name="SwapDelay_Description" xml:space="preserve">
+    <value>Avg. loading time from ingame to character selection.
+To get the current value you will have to swap module tabs once to update the settings page!</value>
+  </data>
+  <data name="SwapDelay_DisplayName" xml:space="preserve">
+    <value>Loading Delay ({0} ms)</value>
   </data>
   <data name="Switch" xml:space="preserve">
     <value>Switch to {0}</value>

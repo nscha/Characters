@@ -147,6 +147,13 @@
   <data name="Error_InvalidPermissions" xml:space="preserve">
     <value>Cette clé d'API ne dispose pas des autorisations requises.</value>
   </data>
+  <data name="FilterDelay_Description" xml:space="preserve">
+    <value>Temps moyen, en millisecondes, d'attente entre le filtrage du panneau de vos personnages.
+Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois pour mettre à jour la page de paramètres !</value>
+  </data>
+  <data name="FilterDelay_DisplayName" xml:space="preserve">
+    <value>Retard du filtre ({0} ms)</value>
+  </data>
   <data name="Huntsman" xml:space="preserve">
     <value>Chasseur</value>
   </data>
@@ -192,6 +199,13 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Spécialisation</value>
+  </data>
+  <data name="SwapDelay_Description" xml:space="preserve">
+    <value>Temps de chargement moyen entre le début du jeu et la sélection du personnage.
+Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois pour mettre à jour la page de paramètres !</value>
+  </data>
+  <data name="SwapDelay_DisplayName" xml:space="preserve">
+    <value>Délai de chargement ({0} ms)</value>
   </data>
   <data name="SwitchTo" xml:space="preserve">
     <value>Passer à {0}</value>

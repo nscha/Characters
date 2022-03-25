@@ -228,7 +228,8 @@ namespace GW2Characters
 
                 _createdLabel .Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year -1) + " " + Strings.common.Years +")";
                 _levelLabel.Text = string.Format(Strings.common.Level, c.Level);
-            }
+                _mapLabel.Text = DataManager.getMapName(c.map);
+                }
         }
     }
 }

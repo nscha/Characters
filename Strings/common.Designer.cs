@@ -151,6 +151,25 @@ namespace GW2Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Average time in milliseconds waited between filtering your characters&apos; panel.
+        ///To get the current value you will have to swap module tabs once to update the settings page!.
+        /// </summary>
+        internal static string FilterDelay_Description {
+            get {
+                return ResourceManager.GetString("FilterDelay_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter Delay ({0} ms).
+        /// </summary>
+        internal static string FilterDelay_DisplayName {
+            get {
+                return ResourceManager.GetString("FilterDelay_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Huntsman.
         /// </summary>
         internal static string Huntsman {
@@ -283,6 +302,25 @@ namespace GW2Characters.Strings {
         internal static string Specialization {
             get {
                 return ResourceManager.GetString("Specialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avg. loading time from ingame to character selection.
+        ///To get the current value you will have to swap module tabs once to update the settings page!.
+        /// </summary>
+        internal static string SwapDelay_Description {
+            get {
+                return ResourceManager.GetString("SwapDelay_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Delay ({0} ms).
+        /// </summary>
+        internal static string SwapDelay_DisplayName {
+            get {
+                return ResourceManager.GetString("SwapDelay_DisplayName", resourceCulture);
             }
         }
         

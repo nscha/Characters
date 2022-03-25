@@ -23,7 +23,9 @@ namespace GW2Characters
     public partial class Module : Blish_HUD.Modules.Module
     {
         DateTime dateZero;
+        public static DateTime lastLogout;
         private static bool requestAPI = true;
+        private static bool filterCharacterPanel = true;
         #region Service Managers
         public SettingsManager SettingsManager => this.ModuleParameters.SettingsManager;
         public ContentsManager ContentsManager => this.ModuleParameters.ContentsManager;
@@ -66,6 +68,7 @@ namespace GW2Characters
             public static Character character { get; set; }
             public static string CharName { get; set; }
             public static int CharCount { get; set; }
+            public static double Tick_PanelUpdate;
             public static double Tick_Save;
             public static double Tick_Update;
             public static double Tick_APIUpdate;
@@ -73,13 +76,14 @@ namespace GW2Characters
         private static class Current
         {
             public static Character character { get; set; }
-            public static double Tick_Save;
-            public static double Tick_Update;
-            public static double Tick_APIUpdate;
         }
 
         static internal SettingEntry<Blish_HUD.Input.KeyBinding> LogoutKey;
         static internal SettingEntry<bool> EnterOnSwap;
+        static internal SettingEntry<int> SwapDelay;
+        static internal SettingEntry<int> FilterDelay;
+        static internal int _FilterDelay = 75;
+
 
         const int WINDOW_WIDTH = 385;
         const int WINDOW_HEIGHT = 920;
@@ -158,7 +162,6 @@ namespace GW2Characters
             public List<Image> craftingImages;
             public int apiIndex;
             public DateTimeOffset Created;
-            public DateTime lastLogout;
             public int map;
 
             private void MainPanel_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
@@ -337,30 +340,24 @@ namespace GW2Characters
 
                         lastLogin = DateTime.UtcNow.AddSeconds(0);
                         LastModified = DateTime.UtcNow.AddSeconds(1);
-                        Specialization = (Specializations)player.Specialization;
-                        _Specialization = player.Specialization;
-
-                        Profession = player.Profession;
-                        _Profession = (int)player.Profession;
                         Race = player.Race;
                         birthdayImage.Visible = false;
 
                         Update_UI_Time();
                         UpdateProfession();
-                        Current.character = this;
                     }
                 }
             }
 
             public Texture2D getProfessionTexture()
             {
-                if (this._Specialization > 0)
+                if (_Specialization > 0)
                 {
-                    return Textures.Specializations[this._Specialization];
+                    return Textures.Specializations[_Specialization];
                 }
-                else if (this._Profession <= 9 && this._Profession >= 1)
+                else if (_Profession <= 9 && _Profession >= 1)
                 {
-                    return Textures.Professions[this._Profession];
+                    return Textures.Professions[_Profession];
                 }
 
                 return Textures.Icons[(int)Icons.Bug];
@@ -382,14 +379,25 @@ namespace GW2Characters
                 {
                     bool changed = (_Specialization != player.Specialization || Profession != player.Profession);
 
-                    Specialization = (Specializations)player.Specialization;
-                    _Specialization = player.Specialization;
+                    if (changed)
+                    {
+                        if (DataManager._Specializations.Length > player.Specialization && DataManager._Specializations[player.Specialization] != null)
+                        {
+                            Specialization = (Specializations)player.Specialization;
+                            _Specialization = player.Specialization;
+                        }
+                        else
+                        {
+                            Specialization = 0;
+                            _Specialization = 0;
+                        }
 
-                    Profession = player.Profession;
-                    _Profession = (int)player.Profession;
+                        Profession = player.Profession;
+                        _Profession = (int)player.Profession;
 
-                    this.classImage.Texture = this.getProfessionTexture();
-                    if (changed) Save();
+                        classImage.Texture = getProfessionTexture();
+                        Save();
+                    }
                 }
             }
             public void UpdateTooltips()
@@ -486,7 +494,7 @@ namespace GW2Characters
                             }
                         }
                     }
-                    else if (DateTime.UtcNow.Subtract(lastLogout).TotalSeconds > 5)
+                    else if (DateTime.UtcNow.Subtract(lastLogout).TotalSeconds > 1)
                     {
                         var mods = LogoutKey.Value.ModifierKeys;
                         var primary = (VirtualKeyShort)LogoutKey.Value.PrimaryKey;
@@ -580,14 +588,24 @@ namespace GW2Characters
                                                      new Blish_HUD.Input.KeyBinding(Keys.F12),
                                                      () => Strings.common.Logout,
                                                      () => Strings.common.LogoutDescription);
-            EnterOnSwap = settings.DefineSetting("ShowInTaskbar",
+            EnterOnSwap = settings.DefineSetting(nameof(EnterOnSwap),
                                                               false,
                                                               () => Strings.common.LoginAfterSelect,
                                                               () => Strings.common.LoginAfterSelect);
-        }
-        public static object GetPropValue(object src, string propName)
-        {
-            return src.GetType().GetProperty(propName).GetValue(src, null);
+
+            SwapDelay = settings.DefineSetting(nameof(SwapDelay),
+                                                              500,
+                                                              () => string.Format(Strings.common.SwapDelay_DisplayName, SwapDelay.Value),
+                                                              () => Strings.common.SwapDelay_Description);
+            SwapDelay.SetRange(0, 5000);
+
+            FilterDelay = settings.DefineSetting(nameof(FilterDelay),
+                                                              150,
+                                                              () => string.Format(Strings.common.FilterDelay_DisplayName, FilterDelay.Value),
+                                                              () => Strings.common.FilterDelay_Description);
+            FilterDelay.SetRange(0, 500);
+            FilterDelay.SettingChanged += delegate { _FilterDelay = FilterDelay.Value / 2; };
+            _FilterDelay = FilterDelay.Value / 2;
         }
 
         protected override void Initialize()
@@ -734,7 +752,7 @@ namespace GW2Characters
 
                     if (last != null) last.Save();
 
-                    UpdateCharacters();
+                    filterCharacterPanel = true;
                     //ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
                     Logger.Debug("Characters Updated!");
                 }
@@ -870,7 +888,7 @@ namespace GW2Characters
                 }
 
                 charactersLoaded = true;
-                UpdateCharacters();
+                filterCharacterPanel = true;
 
                 double lastModified = DateTimeOffset.UtcNow.Subtract(userAccount.LastModified).TotalSeconds;
                 double lastUpdate = DateTimeOffset.UtcNow.Subtract(userAccount.LastBlishUpdate).TotalSeconds;
@@ -916,8 +934,8 @@ namespace GW2Characters
             infoImage = new Image()
             {
                 Texture = Textures.Icons[(int)Icons.Info],
-                Size = new Point(32, 32),
-                Location = new Point(Module.MainWidow.Width - 30, -10),
+                Size = new Point(28, 28),
+                Location = new Point(Module.MainWidow.Width - 25, -5),
                 Parent = Module.MainWidow,
             };
 
@@ -929,7 +947,10 @@ namespace GW2Characters
                 Text = "Refresh API Data",
                 Visible = false,
             };
-            refreshAPI.Click += RefreshAPI_Click;
+            refreshAPI.Click += delegate
+            {
+                FetchAPI(true);
+            };
 
             filterTextBox = new TextBox()
             {
@@ -942,7 +963,7 @@ namespace GW2Characters
             };
 
             Tooltip tt = new Tooltip();
-            filterTextBox.TextChanged += delegate { UpdateCharacters(); };
+            filterTextBox.TextChanged += delegate { filterCharacterPanel = true;  };
 
             clearButton = new StandardButton()
             {
@@ -971,7 +992,7 @@ namespace GW2Characters
 
                 birthdayToggle._State = 0;
                 filterTextBox.Text = null;
-                UpdateCharacters();
+                filterCharacterPanel = true;
             }
             clearButton.Click += delegate { reset(); };
 
@@ -999,7 +1020,7 @@ namespace GW2Characters
                 filterProfessions[(int)profession]._Textures[0] = Textures.ProfessionsDisabled[(int)profession];
                 filterProfessions[(int)profession]._Textures[1] = Textures.Professions[(int)profession];
 
-                filterProfessions[(int)profession].Click += delegate { filterProfessions[(int)profession].Toggle(); UpdateCharacters(); };
+                filterProfessions[(int)profession].Click += delegate { filterProfessions[(int)profession].Toggle(); filterCharacterPanel = true;  };
             }
             
             birthdayToggle = new ToggleImage()
@@ -1016,7 +1037,7 @@ namespace GW2Characters
             birthdayToggle._Textures[1] = Textures.Icons[(int)Icons.BirthdayGift];
             birthdayToggle._Textures[2] = Textures.Icons[(int)Icons.BirthdayGiftOpen];
 
-            birthdayToggle.Click += delegate { birthdayToggle.Toggle(); UpdateCharacters(); };
+            birthdayToggle.Click += delegate { birthdayToggle.Toggle(); filterCharacterPanel = true;  };
 
             new Label()
             {
@@ -1045,7 +1066,7 @@ namespace GW2Characters
                     filterCrafting[(int)crafting]._Textures[0] = Textures.CraftingDisabled[(int)crafting];
                     filterCrafting[(int)crafting]._Textures[1] = Textures.Crafting[(int)crafting];
 
-                    filterCrafting[(int)crafting].Click += delegate { filterCrafting[(int)crafting].Toggle(); UpdateCharacters(); };
+                    filterCrafting[(int)crafting].Click += delegate { filterCrafting[(int)crafting].Toggle(); filterCharacterPanel = true; };
                 }
             }
 
@@ -1063,7 +1084,7 @@ namespace GW2Characters
             filterCrafting[(int)Crafting.Unknown]._Textures[0] = Textures.CraftingDisabled[(int)Crafting.Unknown];
             filterCrafting[(int)Crafting.Unknown]._Textures[1] = Textures.Crafting[(int)Crafting.Unknown];
 
-            filterCrafting[(int)Crafting.Unknown].Click += delegate { filterCrafting[(int)Crafting.Unknown].Toggle(); UpdateCharacters(); };
+            filterCrafting[(int)Crafting.Unknown].Click += delegate { filterCrafting[(int)Crafting.Unknown].Toggle(); filterCharacterPanel = true; };
 
  
             CharacterPanel = new FlowPanel()
@@ -1079,12 +1100,6 @@ namespace GW2Characters
             Module.MainWidow.Show();            
         }
 
-
-        private void RefreshAPI_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            FetchAPI(true);
-        }
-
         protected override async Task LoadAsync()
         {
             Logger.Debug("Load Async ...");
@@ -1098,8 +1113,7 @@ namespace GW2Characters
             cornerButton.Click += delegate { MainWidow.ToggleWindow(); };
         }
 
-        public bool updatePanel = false;
-        private void UpdateCharacters()
+        private void UpdateCharacterPanel()
         {
             if (charactersLoaded)
             {
@@ -1261,15 +1275,13 @@ namespace GW2Characters
 
         protected override void OnModuleLoaded(EventArgs e)
         {
-
             // Base handler must be called
             base.OnModuleLoaded(e);
             CreateWindow();
 
             var player = GameService.Gw2Mumble.PlayerCharacter;
             player.SpecializationChanged += Player_SpecializationChanged;
-            GameService.GameIntegration.Gw2Instance.IsInGameChanged += Gw2Instance_IsInGameChanged;
-            GameService.Gw2Mumble.CurrentMap.MapChanged += CurrentMap_MapChanged;
+
             OverlayService.Overlay.UserLocaleChanged += delegate { Load_UserLocale(); };
             Load_UserLocale();
         }
@@ -1307,10 +1319,25 @@ namespace GW2Characters
 
             birthdayToggle.BasicTooltipText = Strings.common.Birthday;
         }
-
-        private async void CurrentMap_MapChanged(object sender, ValueEventArgs<int> e)
+        private void Update_CurrentCharacter()
         {
+            if (GameService.GameIntegration.Gw2Instance.IsInGame && charactersLoaded)
+            {
+                var player = GameService.Gw2Mumble.PlayerCharacter;
+                Last.character = Current.character;
 
+                Current.character = getCharacter(player.Name);
+
+                Current.character.UpdateCharacter();
+
+                if (Last.character != Current.character && userAccount != null)
+                {
+                    userAccount.LastBlishUpdate = DateTimeOffset.UtcNow;
+                    userAccount.Save();
+                    filterCharacterPanel = true;
+                    Current.character.Save();
+                }
+            }
         }
 
         private void LoadCharacterList()
@@ -1325,6 +1352,7 @@ namespace GW2Characters
                     Character character = new Character()
                     {
                         contentsManager = ContentsManager,
+                        apiManager = Gw2ApiManager,
 
                         Race = c.Race,
                         Name = c.Name,
@@ -1349,8 +1377,8 @@ namespace GW2Characters
         {
             if (Current.character != null)
             {
-                Current.character.UpdateProfession();
-                UpdateCharacters();
+                Current.character.UpdateProfession(); 
+                filterCharacterPanel = true;
             };
         }
 
@@ -1359,15 +1387,12 @@ namespace GW2Characters
             Last.Tick_Save += gameTime.ElapsedGameTime.TotalMilliseconds;
             Last.Tick_Update += gameTime.ElapsedGameTime.TotalMilliseconds;
             Last.Tick_APIUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
+            Last.Tick_PanelUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (charactersLoaded && Last.Tick_Update > 250)
             {
                 Last.Tick_Update = -250;
-
-                if (Current.character != null && GameService.GameIntegration.Gw2Instance.IsInGame)
-                {
-                    Current.character.UpdateCharacter();
-                }
+                Update_CurrentCharacter();
 
                 foreach (Character character in Characters)
                 {
@@ -1377,10 +1402,21 @@ namespace GW2Characters
                     }
                 }
 
-                if (swapCharacter != null && !GameService.GameIntegration.Gw2Instance.IsInGame)
+                if (swapCharacter != null && !GameService.GameIntegration.Gw2Instance.IsInGame && DateTime.UtcNow.Subtract(lastLogout).TotalMilliseconds >= SwapDelay.Value)
                 {
                     swapCharacter.Swap();
                     swapCharacter = null;
+                }
+            }
+
+            if (charactersLoaded && Last.Tick_PanelUpdate > _FilterDelay)
+            {
+                Last.Tick_PanelUpdate = -_FilterDelay;
+
+                if (filterCharacterPanel)
+                {
+                    filterCharacterPanel = false;
+                    UpdateCharacterPanel();
                 }
             }
 
@@ -1395,35 +1431,6 @@ namespace GW2Characters
                 Logger.Debug("Check GW2 API for Updates.");
                 Last.Tick_APIUpdate = -30000;
                 FetchAPI();
-            }
-        }
-
-        private void Gw2Instance_IsInGameChanged(object sender, ValueEventArgs<bool> e)
-        {
-            if (e.Value)
-            {
-                if (userAccount != null)
-                {
-                    var player = GameService.Gw2Mumble.PlayerCharacter;
-                    Character c = getCharacter(player.Name);
-                    c.UpdateCharacter();
-                    c.apiIndex = 0;
-
-                    int i = 1;
-                    foreach (Character character in Characters)
-                    {
-                        if (character != c)
-                        {
-                            character.apiIndex = i;
-                            i++;
-                        }
-                    }
-                    UpdateCharacters();
-                    c.Save();
-
-                    userAccount.LastBlishUpdate = DateTimeOffset.UtcNow;
-                    userAccount.Save();
-                }
             }
         }
 

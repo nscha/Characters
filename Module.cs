@@ -1103,7 +1103,6 @@ namespace GW2Characters
         {
             if (charactersLoaded)
             {
-                CharacterPanel.SortChildren<CharacterControl>((a, b) => b.assignedCharacter.LastModified.CompareTo(a.assignedCharacter.LastModified));
                 Characters.Sort((a, b) => b.LastModified.CompareTo(a.LastModified));
 
                 string txt = filterTextBox.Text.ToLower();
@@ -1256,7 +1255,7 @@ namespace GW2Characters
                     }
                 }
 
-                CharacterPanel.Invalidate();
+                CharacterPanel.SortChildren<CharacterControl>((a, b) => b.assignedCharacter.LastModified.CompareTo(a.assignedCharacter.LastModified));
             }
         }
 

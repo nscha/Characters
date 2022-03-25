@@ -1,6 +1,6 @@
 {
   "name": "GW2Characters",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "namespace": "GW2Characters",
   "package": "GW2Characters.dll",
   "manifest_version": 1,  

@@ -7,7 +7,7 @@ using System.Globalization;
 using MapModel = Gw2Sharp.WebApi.V2.Models.Map;
 using Newtonsoft.Json;
 
-namespace GW2Characters
+namespace Kenedia.Modules.Characters
 {
     public class _Professions {
         public int Id { get; set; } 

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MapType = Gw2Sharp.Models.MapType;
 
-namespace GW2Characters
+namespace Kenedia.Modules.Characters
 {
     internal static class MapTypeExtensions
     {

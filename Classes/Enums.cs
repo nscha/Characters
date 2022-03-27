@@ -1,4 +1,4 @@
-﻿namespace GW2Characters
+﻿namespace Kenedia.Modules.Characters
 {
     public enum Icons
     {
@@ -34,6 +34,12 @@
         QuestionMark = 30,
         Clock = 31,
         Influence = 32,
+        Expand,
+        ExpandHovered,
+        Close,
+        CloseHovered,
+        Collapse,
+        CollapseHovered,
     }
     public enum Professions
     {
@@ -125,6 +131,7 @@
     {
         MainWindow = 1,
         Tooltip = 2,
+        ExpandWindow = 3,
     }
     public enum _Emblems
     {

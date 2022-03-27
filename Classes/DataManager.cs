@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace GW2Characters
+namespace Kenedia.Modules.Characters
 {
     public static class DataManager
     {

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E1F0FEC8-830F-486F-99F1-BA81B8C28B8F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>GW2Characters</RootNamespace>
-    <AssemblyName>GW2Characters</AssemblyName>
+    <RootNamespace>Kenedia.Modules.Characters</RootNamespace>
+    <AssemblyName>Characters</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -131,12 +131,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AccountInfo.cs" />
+    <Compile Include="Classes\Character.cs" />
     <Compile Include="Classes\CustomControls.cs" />
     <Compile Include="Classes\DataManager.cs" />
     <Compile Include="Classes\Enums.cs" />
     <Compile Include="Classes\GW2API_Extension.cs" />
     <Compile Include="Classes\MapTypeExtensions.cs" />
+    <Compile Include="Classes\Settings.cs" />
     <Compile Include="Classes\Textures.cs" />
+    <Compile Include="Classes\GW2API.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Strings\common.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -330,6 +334,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>common.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Module\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

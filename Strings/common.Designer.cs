@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GW2Characters.Strings {
+namespace Kenedia.Modules.Characters.Strings {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace GW2Characters.Strings {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GW2Characters.Strings.common", typeof(common).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kenedia.Modules.Characters.Strings.common", typeof(common).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -3,12 +3,21 @@ using Gw2Sharp.Models;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Blish_HUD.Common.UI.Views;
+using Blish_HUD.Graphics.UI;
+using Blish_HUD.Input;
+using Blish_HUD;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace GW2Characters
+namespace Kenedia.Modules.Characters
 {
     public class CharacterControl : Panel
     {
-        public Module.Character assignedCharacter;
+        public Character assignedCharacter;
     }
     public class ToggleImage : Image
     {
@@ -44,11 +53,11 @@ namespace GW2Characters
     }
     public class CharacterControl_DetailsButton : DetailsButton
     {
-        public Module.Character assignedCharacter;        
+        public Character assignedCharacter;        
     }
     public class CharacterTooltip : Tooltip
     {
-        public Module.Character assignedCharacter;
+        public Character assignedCharacter;
 
         public Image _nameTexture;
         public Label _nameLabel;
@@ -230,6 +239,50 @@ namespace GW2Characters
                 _levelLabel.Text = string.Format(Strings.common.Level, c.Level);
                 _mapLabel.Text = DataManager.getMapName(c.map);
                 }
+        }
+    }
+    public class BasicContainer : Container
+    {
+        const int PADDING = 2;
+        public Texture2D Texture;
+
+        public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
+        {
+            if (Texture == null) Texture = Textures.Backgrounds[(int)_Backgrounds.Tooltip];
+
+           spriteBatch.DrawOnCtrl(this, Texture, bounds, new Rectangle(3, 4, _size.X, _size.Y), Color.White * 0.98f);
+
+            // Top
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 0, _size.X - 2, 3).Add(-PADDING, -PADDING, PADDING * 2, 0), Color.Black * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, _size.X - 2, 1).Add(-PADDING, -PADDING, PADDING * 2, 0), Color.Black * 0.6f);
+
+            // Right
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 3, 1, 3, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 2, 1, 1, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.6f);
+
+            // Bottom
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 3, _size.X - 2, 3).Add(-PADDING, PADDING, PADDING * 2, 0), Color.Black * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 2, _size.X - 2, 1).Add(-PADDING, PADDING, PADDING * 2, 0), Color.Black * 0.6f);
+
+            // Left
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(0, 1, 3, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, 1, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.6f);
+        }
+    }
+
+    public class CharacterDetailWindow : BasicContainer
+    {
+        public TextBox tag_TextBox;
+        public Label name_Label;
+        public Image spec_Image;
+        public Label spec_Label;
+        public Image separator_Image;
+        public FlowPanel customTags_Panel;
+
+        public Character assignedCharacter;
+        public void setCharacter(Character character)
+        {
+            assignedCharacter = character;
         }
     }
 }

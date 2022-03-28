@@ -40,6 +40,9 @@
         CloseHovered,
         Collapse,
         CollapseHovered,
+        Add,
+        AddDisabled,
+        AddHovered,
     }
     public enum Professions
     {
@@ -132,6 +135,7 @@
         MainWindow = 1,
         Tooltip = 2,
         ExpandWindow = 3,
+        Tag,
     }
     public enum _Emblems
     {

@@ -124,6 +124,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom Tags.
+        /// </summary>
+        internal static string CustomTags {
+            get {
+                return ResourceManager.GetString("CustomTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Days.
         /// </summary>
         internal static string Days {

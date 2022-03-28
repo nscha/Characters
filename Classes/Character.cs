@@ -39,6 +39,7 @@ namespace Kenedia.Modules.Characters
         public List<CharacterCrafting> Crafting;
         public int map;
         public int Level { get; set; }
+        public string Tags;
     }
 
     public class Character
@@ -100,12 +101,19 @@ namespace Kenedia.Modules.Characters
                         {
                             Module.subWindow.Hide();
                         }
+
+                        if (Module.subWindow.assignedCharacter != this)
+                        {
+                            Module.subWindow.setCharacter(this);
+                        }
+
                         break;
 
                     case false:
                         if (!switchButton.MouseOver)
                         {
                             Module.subWindow.Show();
+                            Module.filterWindow.Hide();
 
                             if (Module.subWindow.assignedCharacter != this)
                             {
@@ -472,6 +480,7 @@ namespace Kenedia.Modules.Characters
         public Label checkbox;
         public Label timeSince;
         public Image icon;
+        public List<string> Tags = new List<string>();
 
         public void Save()
         {
@@ -495,6 +504,7 @@ namespace Kenedia.Modules.Characters
                         LastModified = c.LastModified,
                         map = c.map,
                         Level = c.Level,
+                        Tags = String.Join("|", c.Tags),
                     };
 
 

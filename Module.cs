@@ -33,6 +33,8 @@ namespace Kenedia.Modules.Characters
         public ContentsManager ContentsManager => this.ModuleParameters.ContentsManager;
         public DirectoriesManager DirectoriesManager => this.ModuleParameters.DirectoriesManager;
         public Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
+
+        public ContentService contentService = new ContentService();
         #endregion
         public static string CharactersPath;
         public static string AccountPath;
@@ -60,6 +62,8 @@ namespace Kenedia.Modules.Characters
         public static BasicContainer filterWindow { get; private set; }
         public static Label racesLabel;
         public static Label specializationLabel;
+        public static Label customTagsLabel;
+        public static FlowPanel filterTagsPanel;
 
         public static CharacterDetailWindow subWindow { get; private set; }
 
@@ -84,6 +88,8 @@ namespace Kenedia.Modules.Characters
         public static AccountInfo userAccount { get; set; }
         public static List<string> CharacterNames = new List<string>();
         public static List<Character> Characters = new List<Character>();
+        public static List<string> Tags = new List<string>();
+        public static List<TagEntry> TagEntries = new List<TagEntry>();
 
         public static readonly Logger Logger = Logger.GetLogger<Module>();
 
@@ -185,6 +191,7 @@ namespace Kenedia.Modules.Characters
 
             racesLabel.Text = Strings.common.Race;
             specializationLabel.Text = Strings.common.Specialization;
+            customTagsLabel.Text = Strings.common.CustomTags;
 
             foreach (ToggleImage toggle in filterProfessions)
             {
@@ -255,10 +262,27 @@ namespace Kenedia.Modules.Characters
                         LastModified = c.LastModified,
                         map = c.map,
                         Level = c.Level,
+                        Tags = c.Tags != null && c.Tags != "" ? c.Tags.Split('|').ToList() : new List<string>(),
                     };
+
+                    foreach(string tag in character.Tags)
+                    {
+                        if (!Tags.Contains(tag)) Tags.Add(tag);
+                    }
 
                     Characters.Add(character);
                     CharacterNames.Add(character.Name);
+                }
+
+                var iC = new Character();
+                foreach (string tag in Tags)
+                {
+                    var entry = new TagEntry(tag, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));
+                    entry.Click += delegate
+                    {
+                        filterTextBox.Text += ((filterTextBox.Text.Trim().EndsWith(";") || filterTextBox.Text.Trim() == "") ? " " : "; ") + "-t " + tag;
+                    };
+                    TagEntries.Add(entry);
                 }
             }
         }
@@ -300,6 +324,8 @@ namespace Kenedia.Modules.Characters
                 List<string> birthdayFilters = new List<string>();
                 List<string> raceFilters = new List<string>();
                 List<string> nameFilters = new List<string>();
+                List<string> tagFilters = new List<string>();
+
                 List<string> filterParts = new List<string>();
                 foreach (string part in parts)
                 {
@@ -308,37 +334,45 @@ namespace Kenedia.Modules.Characters
 
                 foreach (string part in filterParts)
                 {
-                    switch (part)
+                    if (part != "")
                     {
-                        //Crafting filter
-                        case string s when s.StartsWith("-c "):
-                            craftingFilters.Add(s.ToLower().Replace("-c ", "").Trim());
-                            break;
+                        switch (part)
+                        {
+                            //Crafting filter
+                            case string s when s.StartsWith("-c "):
+                                craftingFilters.Add(s.ToLower().Replace("-c ", "").Trim());
+                                break;
 
-                        //Profession filter
-                        case string s when s.StartsWith("-p "):
-                            professionFilters.Add(s.ToLower().Replace("-p ", "").Trim());
-                            break;
+                            //Profession filter
+                            case string s when s.StartsWith("-p "):
+                                professionFilters.Add(s.ToLower().Replace("-p ", "").Trim());
+                                break;
 
-                        //Map filter
-                        case string s when s.StartsWith("-m "):
-                            mapFilters.Add(s.ToLower().Replace("-m ", "").Trim());
-                            break;
+                            //Custom Tag filter
+                            case string s when s.StartsWith("-t "):
+                                tagFilters.Add(s.ToLower().Replace("-t ", "").Trim());
+                                break;
 
-                        //Race filter
-                        case string s when s.StartsWith("-r "):
-                            raceFilters.Add(s.ToLower().Replace("-r ", "").Trim());
-                            break;
+                            //Map filter
+                            case string s when s.StartsWith("-m "):
+                                mapFilters.Add(s.ToLower().Replace("-m ", "").Trim());
+                                break;
 
-                        //Race filter
-                        case string s when s.StartsWith("-b"):
-                            birthdayFilters.Add(s.ToLower().Replace("-b ", "").Trim());
-                            break;
+                            //Race filter
+                            case string s when s.StartsWith("-r "):
+                                raceFilters.Add(s.ToLower().Replace("-r ", "").Trim());
+                                break;
 
-                        //Name filter
-                        default:
-                            nameFilters.Add(part.ToLower().Trim());
-                            break;
+                            //Race filter
+                            case string s when s.StartsWith("-b"):
+                                birthdayFilters.Add(s.ToLower().Replace("-b ", "").Trim());
+                                break;
+
+                            //Name filter
+                            default:
+                                nameFilters.Add(part.ToLower().Trim());
+                                break;
+                        }
                     }
                 }
 
@@ -354,6 +388,14 @@ namespace Kenedia.Modules.Characters
                             {
                                 if (Enum.GetName(typeof(Crafting), crafting.Id).ToLower().Contains(s)) return true;
                             }
+                        }
+                    }
+
+                    foreach (string s in tagFilters)
+                    {
+                        foreach (string tag in c.Tags)
+                        {
+                            if (tag.ToLower().Contains(s)) return true;
                         }
                     }
 
@@ -461,6 +503,7 @@ namespace Kenedia.Modules.Characters
                 CharacterPanel.SortChildren<CharacterControl>((a, b) => b.assignedCharacter.LastModified.CompareTo(a.assignedCharacter.LastModified));
             }
         }
+
         private void Update_CurrentCharacter()
         {
             if (GameService.GameIntegration.Gw2Instance.IsInGame && charactersLoaded)
@@ -719,6 +762,7 @@ namespace Kenedia.Modules.Characters
                 else
                 {
                     filterWindow.Show();
+                    subWindow.Hide();
                     expandButton.Texture = Textures.Icons[(int)Icons.CollapseHovered];
                 }
             };
@@ -733,7 +777,7 @@ namespace Kenedia.Modules.Characters
                 FlowDirection = ControlFlowDirection.SingleTopToBottom,
             };
 
-            Module.MainWidow.Show();
+            //Module.MainWidow.Show();
         }
         private void CreateFilterWindow()
         {
@@ -741,10 +785,13 @@ namespace Kenedia.Modules.Characters
 
             filterWindow = new BasicContainer()
             {
-                Size = new Point(300, 225 + 32 + 30),
+                HeightSizingMode = SizingMode.AutoSize,
+                Width = 300,
+                //Size = new Point(300, 225 + 32 + 30),
                 Location = new Point(MainWidow.Location.X + WINDOW_WIDTH - 25, MainWidow.Location.Y + 60),
                 Parent = GameService.Graphics.SpriteScreen,
                 Texture = Textures.Backgrounds[(int)_Backgrounds.ExpandWindow],
+                AutoSizePadding = new Point(5, 5),
             };
 
             MainWidow.Moved += delegate {
@@ -756,8 +803,8 @@ namespace Kenedia.Modules.Characters
             {
                 Texture = Textures.Icons[(int)Icons.Close],
                 Parent = filterWindow,
-                Location = new Point(filterWindow.Width - 30, -2),
-                Size = new Point(32, 32),               
+                Location = new Point(filterWindow.Width - 23, 2),
+                Size = new Point(21, 23),               
             };
             closeButton.MouseEntered += delegate { closeButton.Texture = Textures.Icons[(int)Icons.CloseHovered]; };
             closeButton.MouseLeft += delegate { closeButton.Texture = Textures.Icons[(int)Icons.Close]; };
@@ -953,6 +1000,35 @@ namespace Kenedia.Modules.Characters
                 filterCharacterPanel = true;
             };
 
+
+            customTagsLabel = new Label()
+            {
+                Text = Strings.common.CustomTags,
+                Parent = filterWindow,
+                Location = new Point(10, btn.Location.Y + btn.Height + 10),
+                Visible = true,
+                Width = 200,
+                Height = 27,
+                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular),
+            };
+            new Image()
+            {
+                Texture = Textures.Icons[(int)Icons.Separator],
+                Parent = filterWindow,
+                Location = new Point(0, btn.Location.Y + btn.Height + 10 + 25),
+                Size = new Point(filterWindow.Width, 4),
+            };
+            filterTagsPanel = new FlowPanel()
+            {
+                Parent = filterWindow,
+                Location = new Point(5,  btn.Location.Y + btn.Height + 10 + 25 + 8),
+
+                Width = filterWindow.Width,
+                OuterControlPadding = new Vector2(2, 2),
+                ControlPadding = new Vector2(5, 2),
+                HeightSizingMode = SizingMode.AutoSize,
+            };
+
             filterWindow.Hide();
         }
         private void CreateSubWindow()
@@ -961,34 +1037,36 @@ namespace Kenedia.Modules.Characters
             var offset = (190 - 16 - 5);
             subWindow = new CharacterDetailWindow()
             {
-                Size = new Point(350, MainWidow.Height - offset),
+                //Size = new Point(350, MainWidow.Height - offset),
                 Location = new Point(MainWidow.Location.X + WINDOW_WIDTH - 25, MainWidow.Location.Y + offset),
                 Parent = GameService.Graphics.SpriteScreen,
                 Texture = Textures.Backgrounds[(int)_Backgrounds.ExpandWindow],
+                Width =  350,
+                HeightSizingMode = SizingMode.AutoSize,
             };
 
             MainWidow.Moved += delegate {
-                subWindow.Location = new Point(MainWidow.Location.X + WINDOW_WIDTH, MainWidow.Location.Y + 60);
-            };
+                subWindow.Location = new Point(MainWidow.Location.X + WINDOW_WIDTH - 25, MainWidow.Location.Y + offset);
+            };            
 
             //Profession Icon
             subWindow.spec_Image = new Image()
             {
                 Location = new Point(0, 0),
-                Texture = Textures.Specializations[(int) Specializations.Berserker],
-                Size = new Point(48, 48),
+                Texture = Textures.Professions[(int) Professions.Guardian],
+                Size = new Point(58, 58),
                 Parent = subWindow,
             };
 
             //Character Name
             subWindow.name_Label = new Label()
             {
-                Location = new Point(48 + 5, 0),
-                Text = Name,
+                Location = new Point(60, 0),
+                Text = "py" + Name + "yq",
                 Parent = subWindow,
-                Height = 30,
+                Height = 25,
                 Width = subWindow.Width - 165,
-                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular),
+                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular),
                 VerticalAlignment = VerticalAlignment.Middle,
             };
 
@@ -997,20 +1075,86 @@ namespace Kenedia.Modules.Characters
             {
                 Texture = Textures.Icons[(int)Icons.Separator],
                 Parent = subWindow,
-                Location = new Point(48, 75),
+                Location = new Point(55, 27),
                 Size = new Point(subWindow.Width - 165, 4),
             };
 
             //Spec Name
             subWindow.spec_Label = new Label()
             {
-                Location = new Point(48 + 5, 80),
+                Location = new Point(60, 33),
                 Text = DataManager.getProfessionName(1),
                 Parent = subWindow,
-                Height = 16,
+                Height = 25,
                 Width = subWindow.Width - 165,
-                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size12, ContentService.FontStyle.Regular),
+                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular),
                 VerticalAlignment = VerticalAlignment.Middle,
+            };
+
+
+            subWindow.tag_TextBox = new TextBox()
+            {
+                Parent = subWindow,
+                Location = new Point(5, 60 + 15),
+                Size = new Point(subWindow.Width - 5 - 25 - 5, 25),
+                PlaceholderText = "PvE, WvW, PvP, Raiding, ERP ..."
+            };
+            subWindow.tag_TextBox.TextChanged += delegate
+            {
+                if (subWindow.tag_TextBox.Text != null && subWindow.tag_TextBox.Text.Trim() != "")
+                {
+                    subWindow.addTag_Button.Texture = Textures.Icons[(int)Icons.Add];
+                }
+                else
+                {
+                    subWindow.addTag_Button.Texture = Textures.Icons[(int)Icons.AddDisabled];
+                }
+            };
+
+            subWindow.addTag_Button = new Image()
+            {
+                Texture = Textures.Icons[(int) Icons.AddDisabled],
+                Parent = subWindow,
+                Location = new Point(subWindow.Width - 25 - 5, 58 + 15),
+                Size = new Point(29, 29),
+            };
+            subWindow.addTag_Button.MouseEntered += delegate { subWindow.addTag_Button.Texture = Textures.Icons[(int)Icons.AddHovered]; };
+            subWindow.addTag_Button.MouseLeft += delegate { subWindow.addTag_Button.Texture = Textures.Icons[(int)Icons.AddDisabled]; };
+            subWindow.addTag_Button.Click += delegate {
+                var txt = subWindow.tag_TextBox != null && subWindow.tag_TextBox.Text.Trim() != "" ? subWindow.tag_TextBox.Text : null;
+                if (txt != null && subWindow.assignedCharacter != null && !subWindow.assignedCharacter.Tags.Contains(txt))
+                {
+                    new TagEntry(txt, subWindow.assignedCharacter, subWindow.customTags_Panel);
+                    subWindow.assignedCharacter.Tags.Add(txt);
+                    subWindow.assignedCharacter.Save();
+
+                    if (!Tags.Contains(txt))
+                    {
+                        Tags.Add(txt);
+                        var entry = new TagEntry(txt, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));
+                        entry.Click += delegate
+                        {
+                            filterTextBox.Text += ((filterTextBox.Text.Trim().EndsWith(";") || filterTextBox.Text.Trim() == "")  ? " " : "; ") + "-t " + txt;
+                        };
+                        TagEntries.Add(entry);
+                    }
+
+                    subWindow.tag_TextBox.Text = null;
+                    subWindow.customTags_Panel.SortChildren<TagEntry>((a, b) => a.textLabel.Text.CompareTo(b.textLabel.Text));
+
+                    subWindow.Invalidate();
+                }
+            };
+
+            subWindow.customTags_Panel = new FlowPanel()
+            {
+                Parent = subWindow,
+                Location = new Point(5, 95),
+                Width = 330,
+                ShowBorder = true,
+                OuterControlPadding = new Vector2(2, 2),
+                ControlPadding = new Vector2(5, 2),
+                HeightSizingMode = SizingMode.AutoSize,
             };
 
             subWindow.Hide();

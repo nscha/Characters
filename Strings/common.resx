@@ -138,6 +138,9 @@
   <data name="CraftingProfession" xml:space="preserve">
     <value>Crafting Profession</value>
   </data>
+  <data name="CustomTags" xml:space="preserve">
+    <value>Custom Tags</value>
+  </data>
   <data name="Days" xml:space="preserve">
     <value>Days</value>
   </data>

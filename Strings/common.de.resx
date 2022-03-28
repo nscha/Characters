@@ -138,6 +138,9 @@
   <data name="CraftingProfession" xml:space="preserve">
     <value>Handwerksberuf</value>
   </data>
+  <data name="CustomTags" xml:space="preserve">
+    <value>Benutzerdefinierte Tags</value>
+  </data>
   <data name="Days" xml:space="preserve">
     <value>Tage</value>
   </data>

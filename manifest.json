@@ -1,6 +1,6 @@
 {
   "name": "Characters",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "namespace": "Kenedia.Modules.Characters",
   "package": "Characters.dll",
   "manifest_version": 1,

@@ -77,6 +77,8 @@ namespace Kenedia.Modules.Characters
         public Image _ageTexture;
         public Label _ageLabel;
 
+        public FlowPanel Tags;
+        public List<string> _Tags;
         public WindowBase _Parent;
 
 
@@ -211,7 +213,18 @@ namespace Kenedia.Modules.Characters
                     Visible = true,
                     AutoSizeWidth = true,
                 };
-                                
+
+                index++;
+                Tags = new FlowPanel()
+                {
+                    Parent = this,
+                    Location = new Point(0, 40 + (index * 25)),
+                    Width = this.Width,
+                    OuterControlPadding = new Vector2(2, 2),
+                    ControlPadding = new Vector2(5, 2),
+                    HeightSizingMode = SizingMode.AutoSize,
+                };
+
                 this.Invalidate();
                 this._Update();
             }
@@ -238,7 +251,46 @@ namespace Kenedia.Modules.Characters
                 _createdLabel .Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year -1) + " " + Strings.common.Years +")";
                 _levelLabel.Text = string.Format(Strings.common.Level, c.Level);
                 _mapLabel.Text = DataManager.getMapName(c.map);
+
+                if (c.Tags != null && (_Tags == null || !Enumerable.SequenceEqual(_Tags, c.Tags)))
+                {
+                    _Tags = new List<string>(c.Tags);
+
+                    Tags.ClearChildren();
+                    foreach (string tag in c.Tags)
+                    {
+                        new TagEntry(tag, c, Tags, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size12, ContentService.FontStyle.Regular));
+                    }
                 }
+            }
+        }
+    }
+    public class  TagPanel : FlowPanel
+    {
+        const int PADDING = 2;
+        public Texture2D Texture;
+
+        public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
+        {
+            if (Texture == null) Texture = Textures.Backgrounds[(int)_Backgrounds.Tag];
+
+           spriteBatch.DrawOnCtrl(this, Texture, bounds, new Rectangle(3, 4, _size.X, _size.Y), Color.White * 0.98f);
+
+            // Top
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 0, _size.X - 2, 3).Add(-PADDING, -PADDING, PADDING * 2, 0), Color.Black * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, _size.X - 2, 1).Add(-PADDING, -PADDING, PADDING * 2, 0), Color.Black * 0.6f);
+
+            // Right
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 3, 1, 3, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 2, 1, 1, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.6f);
+
+            // Bottom
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 3, _size.X - 2, 3).Add(-PADDING, PADDING, PADDING * 2, 0), Color.Black * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 2, _size.X - 2, 1).Add(-PADDING, PADDING, PADDING * 2, 0), Color.Black * 0.6f);
+
+            // Left
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(0, 1, 3, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, 1, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.6f);
         }
     }
     public class BasicContainer : Container
@@ -269,10 +321,84 @@ namespace Kenedia.Modules.Characters
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, 1, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.6f);
         }
     }
+    public class TagEntry : Panel
+    {
+        public Character assignedCharacter;
+        public Label textLabel;
+        public Image deleteButton;
+        private TagPanel panel;
+        private bool showDeleteButton;
 
+        public TagEntry(string txt, Character character, FlowPanel parent, bool showButton = true, MonoGame.Extended.BitmapFonts.BitmapFont font = default)
+        {
+            ContentService contentService = new ContentService();
+            var textFont = (font == default) ? contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular) : font;
+            
+            assignedCharacter = character;
+            Parent = parent;
+            WidthSizingMode = SizingMode.AutoSize;
+            HeightSizingMode = SizingMode.AutoSize;
+            showDeleteButton = showButton;
+
+            panel = new TagPanel()
+            {
+                Parent = this,
+                WidthSizingMode = SizingMode.AutoSize,
+                HeightSizingMode = SizingMode.AutoSize,
+                FlowDirection = ControlFlowDirection.SingleLeftToRight,
+                OuterControlPadding = new Vector2(5, 3),
+                ControlPadding = new Vector2(3, 0),
+                AutoSizePadding = new Point(5, 2),
+        };
+
+            if (showDeleteButton)
+            {
+                deleteButton = new Image()
+                {
+                    Texture = Textures.Icons[(int)Icons.Close],
+                    Parent = panel,
+                    //Location = new Point(panel.Width - 32 - 4, -4),
+                    Size = new Point(21, 23),
+                };
+                deleteButton.MouseEntered += delegate { deleteButton.Texture = Textures.Icons[(int)Icons.CloseHovered]; };
+                deleteButton.MouseLeft += delegate { deleteButton.Texture = Textures.Icons[(int)Icons.Close]; };
+                deleteButton.Click += delegate
+                {
+                    assignedCharacter.Tags.Remove(Text);
+                    this.Dispose();
+                };
+            }
+
+            textLabel = new Label()
+            {
+                Text = txt,
+                Parent = panel,
+                AutoSizeWidth = true,
+                Height = showDeleteButton ? deleteButton.Size.Y : textFont.LineHeight + 4,
+                Font = textFont,
+                VerticalAlignment = VerticalAlignment.Middle,
+            };
+            
+            panel.Invalidate();
+
+            _Text = txt;
+        }
+
+        private string _Text;
+        public string Text {
+            get { return _Text; }
+            set
+            {
+                _Text = value;
+                textLabel.Text = " " + value + " ";            }
+        }
+
+
+    }
     public class CharacterDetailWindow : BasicContainer
     {
         public TextBox tag_TextBox;
+        public Image addTag_Button;
         public Label name_Label;
         public Image spec_Image;
         public Label spec_Label;
@@ -280,9 +406,18 @@ namespace Kenedia.Modules.Characters
         public FlowPanel customTags_Panel;
 
         public Character assignedCharacter;
-        public void setCharacter(Character character)
+        public void setCharacter(Character c)
         {
-            assignedCharacter = character;
+            assignedCharacter = c;
+            name_Label.Text = c.Name;
+            spec_Label.Text = DataManager.getProfessionName(c._Profession);
+            spec_Image.Texture = Textures.Professions[c._Profession];
+            customTags_Panel.ClearChildren();
+
+            foreach(string tag in c.Tags)
+            {
+                new TagEntry(tag, c, customTags_Panel);
+            }
         }
     }
 }

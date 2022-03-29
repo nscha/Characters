@@ -70,7 +70,7 @@ namespace Kenedia.Modules.Characters
         public DateTime NextBirthday;
         public int map;
         public bool loginCharacter;
-        public bool include;
+        public bool include = true;
 
         private void MainPanel_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
@@ -98,6 +98,7 @@ namespace Kenedia.Modules.Characters
                     Parent = characterControl,
                     assignedCharacter = this,
                 },
+                Visible = true,
             };
             characterControl.Click += CharacterControl_Click;
             characterControl.Click += delegate {
@@ -244,8 +245,6 @@ namespace Kenedia.Modules.Characters
 
             tooltp._Create();
             this.loaded = true;
-
-
         }
 
         private void CharacterControl_Click(object sender, Blish_HUD.Input.MouseEventArgs e)

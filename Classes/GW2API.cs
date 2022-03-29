@@ -108,10 +108,6 @@ namespace Kenedia.Modules.Characters
             {
                 var account = await Gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
 
-
-                Logger.Debug("Account Age: " + account.Age.TotalSeconds + " seconds");
-                Logger.Debug("LastModified: " + account.LastModified);
-
                 API_Account = account;
                 string path = DirectoriesManager.GetFullDirectoryPath("characters") + @"\" + API_Account.Name;
                 if (!Directory.Exists(path))
@@ -215,7 +211,6 @@ namespace Kenedia.Modules.Characters
                 var player = GameService.Gw2Mumble.PlayerCharacter;
                 foreach (Character character in Characters)
                 {
-                    Logger.Debug("Adding UI Elements for " + character.Name);
                     character.Create_UI_Elements();
                     if (player != null && player.Name == character.Name) Current.character = character;
                 }

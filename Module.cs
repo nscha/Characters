@@ -565,7 +565,10 @@ namespace Kenedia.Modules.Characters
                     }
                 }
 
-                CharacterPanel.SortChildren<CharacterControl>((a, b) => b.assignedCharacter.LastModified.CompareTo(a.assignedCharacter.LastModified));
+                if (CharacterPanel != null)
+                {
+                    CharacterPanel.SortChildren<CharacterControl>((a, b) => b.assignedCharacter.LastModified.CompareTo(a.assignedCharacter.LastModified));
+                }
             }
         }
 
@@ -726,7 +729,7 @@ namespace Kenedia.Modules.Characters
             {
                 CanScroll = true,
                 ShowBorder = true,
-                Parent = Module.MainWidow,
+                Parent = MainWidow,
                 Width = MainWidow.Width,
                 Height = MainWidow.Height - (clearButton.Location.Y + clearButton.Height + 5 + 50),
                 //HeightSizingMode = SizingMode.Fill,
@@ -1288,18 +1291,31 @@ namespace Kenedia.Modules.Characters
 
             // Dispose Settings Event
             Settings.ShortcutKey.Value.Activated -= OnKeyPressed_ToggleMenu;
+            Gw2ApiManager.SubtokenUpdated -= Gw2ApiManager_SubtokenUpdated;
 
-            ModuleInstance = null;
-
-            CharacterNames = null;
-            Characters = null;
-            Tags = null;
-            TagEntries = null;
+            CharacterNames = new List<string>();
+            Characters = new List<Character>();
+            Tags = new List<string>();
+            TagEntries = new List<TagEntry>();
             userAccount = null;
             swapCharacter = null;
             API_Account = null;
             Current.character = null;
             Last.character = null;
+            
+            Textures.Backgrounds = null;
+            Textures.Crafting = null;
+            Textures.CraftingDisabled = null;
+            Textures.Emblems = null;
+            Textures.Icons = null;
+            Textures.Professions= null;
+            Textures.ProfessionsDisabled= null;
+            Textures.Races= null;
+            Textures.RacesDisabled = null;
+            Textures.Specializations= null;
+            Textures.SpecializationsDisabled= null;
+
+            ModuleInstance = null;
         }
     }
 }

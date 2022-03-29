@@ -21,6 +21,11 @@ namespace Kenedia.Modules.Characters
     }
     public class ToggleImage : Image
     {
+        public ToggleImage()
+        {
+            Click += delegate { Toggle(); };
+        }
+
         public bool isActive;
         public int Id;
         private int __State;
@@ -40,6 +45,45 @@ namespace Kenedia.Modules.Characters
         private void _OnStateChanged()
         {
             if (_Textures != null && _Textures.Length > __State)
+            {
+                Texture = _Textures[__State];
+            }
+        }
+
+        public int Toggle()
+        {
+            _State = (_State + 1 > (_MaxState - 1)) ? 0 : _State + 1;
+            return _State;
+        }
+    }
+    public class ToggleIcon: Image
+    {
+        public ToggleIcon()
+        {
+            Click += delegate { Toggle(); Module.filterCharacterPanel = true;  };
+            Size = new Point(32, 32);
+            Texture = Textures.Icons[(int)Icons.Bug];
+        }
+
+        public bool isActive;
+        public int Id;
+        private int __State;
+        public int _State {
+            get {
+                return __State;
+            }
+            set {
+                __State = value;
+                _OnStateChanged();
+            }
+        }
+        public int _MaxState { get; set; }
+        public List<Texture2D> _Textures = new List<Texture2D>();
+        public event EventHandler _StateChanged;
+
+        private void _OnStateChanged()
+        {
+            if (_Textures != null && _Textures.Count > __State)
             {
                 Texture = _Textures[__State];
             }
@@ -73,6 +117,9 @@ namespace Kenedia.Modules.Characters
 
         public Image _createdTexture;
         public Label _createdLabel;
+
+        public Image _nextBirthdayTexture;
+        public Label _nextBirthdayLabel;
 
         public Image _ageTexture;
         public Label _ageLabel;
@@ -175,7 +222,7 @@ namespace Kenedia.Modules.Characters
                 index++;
                 _createdTexture = new Image()
                 {
-                    Texture = Textures.Icons[(int)Icons.BirthdayGift],
+                    Texture = Textures.Icons[(int)Icons.Crown],
                     Parent = this,
                     Location = new Point(0, 40 + (index * 25)),
                     Size = new Point(20, 20),
@@ -189,6 +236,31 @@ namespace Kenedia.Modules.Characters
                     Visible = true,
                     AutoSizeWidth = true,
                 };
+
+                span = (c.NextBirthday - DateTime.UtcNow);
+                index++;
+                _nextBirthdayTexture = new Image()
+                {
+                    Texture = Textures.Icons[(int)Icons.BirthdayGift],
+                    Parent = this,
+                    Location = new Point(0, 40 + (index * 25)),
+                    Size = new Point(20, 20),
+                    Visible = true,
+                };
+                _nextBirthdayLabel = new Label()
+                {
+                    Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00} " + Strings.common.UntilBirthday,
+                    span.Hours,
+                    span.Minutes,
+                    span.Seconds,
+                    span.Days
+                    ),
+                    Parent = this,
+                    Location = new Point(30, 40 + (index * 25)),
+                    Visible = true,
+                    AutoSizeWidth = true,
+                };
+
 
                 var t = TimeSpan.FromSeconds(c.seconds);
                 index++;
@@ -249,7 +321,17 @@ namespace Kenedia.Modules.Characters
                 TimeSpan span = (DateTime.UtcNow - c.Created.UtcDateTime);
 
                 _createdLabel .Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year -1) + " " + Strings.common.Years +")";
-                _levelLabel.Text = string.Format(Strings.common.Level, c.Level);
+
+                span = (c.NextBirthday - DateTime.UtcNow);
+                _nextBirthdayLabel.Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00} " + Strings.common.UntilBirthday,
+                    span.Hours,
+                    span.Minutes,
+                    span.Seconds,
+                    span.Days
+                    );
+
+
+            _levelLabel.Text = string.Format(Strings.common.Level, c.Level);
                 _mapLabel.Text = DataManager.getMapName(c.map);
 
                 if (c.Tags != null && (_Tags == null || !Enumerable.SequenceEqual(_Tags, c.Tags)))
@@ -293,6 +375,17 @@ namespace Kenedia.Modules.Characters
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, 1, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.6f);
         }
     }
+    public class FilterWindow : BasicContainer
+    {
+        public HeadedFlowRegion Utility;
+        public HeadedFlowRegion Crafting;
+        public HeadedFlowRegion Profession;
+        public HeadedFlowRegion Specialization;
+        public HeadedFlowRegion CustomTags;
+        public StandardButton toggleSpecsButton;
+        public ToggleIcon visibleToggle;
+        public ToggleIcon birthdayToggle;
+    }
     public class BasicContainer : Container
     {
         const int PADDING = 2;
@@ -321,13 +414,127 @@ namespace Kenedia.Modules.Characters
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, 1, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.6f);
         }
     }
+    public class HeaderUnderlined : Panel
+    {
+        static ContentService contentService = new ContentService();
+        public MonoGame.Extended.BitmapFonts.BitmapFont Font;
+        public Label textLabel;
+        public Image Separator_Image;
+        private string _Text;
+        public string Text
+        {
+            get { return _Text; }
+            set { _Text = value; textLabel.Text = value;
+                textLabel.Height = Font.LineHeight + 4; }
+        }
+        private int _HorizontalPadding = 5;
+        public int HorizontalPadding
+        {
+            get { return _HorizontalPadding; }
+            set { _HorizontalPadding = value; textLabel.Location = new Point(_HorizontalPadding, _VerticalPadding); Separator_Image.Location = new Point(0, textLabel.Location.Y + textLabel.Height + _VerticalPadding); }
+        }
+        private int _VerticalPadding = 3;
+        public int VerticalPadding
+        {
+            get { return _VerticalPadding; }
+            set { _VerticalPadding = value; textLabel.Location = new Point(_HorizontalPadding, _VerticalPadding); Separator_Image.Location = new Point(0, textLabel.Location.Y + textLabel.Height + _VerticalPadding);  }
+        }
+
+        public HeaderUnderlined()
+        {
+            WidthSizingMode = SizingMode.AutoSize;
+            HeightSizingMode = SizingMode.AutoSize;
+            Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
+
+            textLabel = new Label()
+            {
+                Location = new Point(_HorizontalPadding, 0),
+                Text = "",
+                Parent = this,
+                AutoSizeWidth = true,
+                //AutoSizeHeight = true,
+                Height = Font.LineHeight + 4,
+                Font = Font,
+            };
+
+            Separator_Image = new Image()
+            {
+                Texture = Textures.Icons[(int)Icons.Separator],
+                Parent = this,
+                Location = new Point(0, textLabel.Location.Y + textLabel.Height + VerticalPadding),
+                Size = new Point(Width, 4),
+            };
+
+            Resized += delegate
+            {
+                textLabel.Invalidate();
+                Separator_Image.Size = new Point(Width, 4);
+                Separator_Image.Location = new Point(0, textLabel.Location.Y + textLabel.Height + VerticalPadding);
+            };
+        }
+    }
+    public class HeadedFlowRegion : HeaderUnderlined
+    {
+        public FlowPanel contentFlowPanel;
+        public HeadedFlowRegion()
+        {
+            contentFlowPanel = new FlowPanel()
+            {
+                Parent = this,
+                WidthSizingMode = SizingMode.Fill,
+                HeightSizingMode = SizingMode.AutoSize,
+                Location = new Point(0, Separator_Image.Location.Y + Separator_Image.Height + VerticalPadding),
+                //AutoSizePadding = new Point(5, 2),
+                OuterControlPadding = new Vector2(HorizontalPadding, VerticalPadding),
+                //ControlPadding = new Vector2(HorizontalPadding, VerticalPadding),
+
+            };
+
+            Resized += delegate
+            {
+                Separator_Image.Size = new Point(Width, 4);
+                Separator_Image.Location = new Point(0, textLabel.Location.Y + textLabel.Height + VerticalPadding);
+                contentFlowPanel.Location = new Point(0, Separator_Image.Location.Y + Separator_Image.Height + VerticalPadding);
+            };
+        }
+    }
     public class TagEntry : Panel
     {
         public Character assignedCharacter;
         public Label textLabel;
         public Image deleteButton;
         private TagPanel panel;
-        private bool showDeleteButton;
+        private bool _showDeleteButton;        
+        private bool _Highlighted = true;        
+        public bool Highlighted
+        {
+            get { return _Highlighted; }
+            set
+            {
+                _Highlighted = value;
+
+                if (value)
+                {
+                    panel.Texture = Textures.Backgrounds[(int)_Backgrounds.Tag];
+                    deleteButton.Texture = Textures.Icons[(int)Icons.Close];
+                }
+                else
+                {
+                    panel.Texture = Textures.Backgrounds[(int)_Backgrounds.TagDisabled];
+                    deleteButton.Texture = Textures.Icons[(int)Icons.CloseDisabled];
+                }
+            }
+        }
+
+        public bool showDeleteButton {
+            get { return _showDeleteButton; }
+            set
+            {
+                _showDeleteButton = value;
+                if (deleteButton != null) deleteButton.Visible = value;
+            }
+        }
+        private bool Discardable;
 
         public TagEntry(string txt, Character character, FlowPanel parent, bool showButton = true, MonoGame.Extended.BitmapFonts.BitmapFont font = default)
         {
@@ -338,7 +545,6 @@ namespace Kenedia.Modules.Characters
             Parent = parent;
             WidthSizingMode = SizingMode.AutoSize;
             HeightSizingMode = SizingMode.AutoSize;
-            showDeleteButton = showButton;
 
             panel = new TagPanel()
             {
@@ -349,25 +555,66 @@ namespace Kenedia.Modules.Characters
                 OuterControlPadding = new Vector2(5, 3),
                 ControlPadding = new Vector2(3, 0),
                 AutoSizePadding = new Point(5, 2),
-        };
+            };
+            panel.Click += delegate {
+                if (!Highlighted)
+                {
+                    Highlighted = true;
+                    assignedCharacter.Tags.Add(Text);
+                }
+            };
 
-            if (showDeleteButton)
+            deleteButton = new Image()
             {
-                deleteButton = new Image()
+                Texture = Textures.Icons[(int)Icons.Close],
+                Parent = panel,
+                //Location = new Point(panel.Width - 32 - 4, -4),
+                Size = new Point(21, 23),
+                Visible = showDeleteButton,
+            };
+            deleteButton.MouseEntered += delegate { deleteButton.Texture = _Highlighted ? Textures.Icons[(int)Icons.CloseHovered] : Textures.Icons[(int)Icons.CloseDisabled]; };
+            deleteButton.MouseLeft += delegate { deleteButton.Texture = _Highlighted ? Textures.Icons[(int)Icons.Close] : Textures.Icons[(int)Icons.CloseDisabled]; };
+            deleteButton.Click += delegate
+            {
+                Highlighted = false;
+                assignedCharacter.Tags.Remove(Text);
+                assignedCharacter.Save();
+
+                foreach(string s in assignedCharacter.Tags)
                 {
-                    Texture = Textures.Icons[(int)Icons.Close],
-                    Parent = panel,
-                    //Location = new Point(panel.Width - 32 - 4, -4),
-                    Size = new Point(21, 23),
-                };
-                deleteButton.MouseEntered += delegate { deleteButton.Texture = Textures.Icons[(int)Icons.CloseHovered]; };
-                deleteButton.MouseLeft += delegate { deleteButton.Texture = Textures.Icons[(int)Icons.Close]; };
-                deleteButton.Click += delegate
+                    Module.Logger.Debug(s);
+                }
+
+                if (Module.filterTagsPanel != null)
                 {
-                    assignedCharacter.Tags.Remove(Text);
-                    this.Dispose();
-                };
-            }
+                    var tempList = new List<string>(Module.Tags);
+                    foreach (Character c in Module.Characters)
+                    {
+                        foreach (string t in c.Tags)
+                        {
+                            if (tempList.Contains(t)) tempList.Remove(t);
+                        }
+                    }
+
+                    List<TagEntry> deleteList = new List<TagEntry>();
+                    foreach (TagEntry tag in Module.filterTagsPanel)
+                    {
+                        if (tempList.Contains(tag.Text))
+                        {
+                            Module.Tags.Remove(tag.Text);
+                            deleteList.Add(tag);
+                        };
+                    }
+
+                    foreach (TagEntry tag in deleteList)
+                    {
+                        if (tag.Text == Text) this.Dispose();
+                        tag.Dispose();
+                    }
+                }
+
+                if (Discardable) this.Dispose();
+            };
 
             textLabel = new Label()
             {
@@ -382,6 +629,7 @@ namespace Kenedia.Modules.Characters
             panel.Invalidate();
 
             _Text = txt;
+            showDeleteButton = showButton;
         }
 
         private string _Text;
@@ -393,7 +641,42 @@ namespace Kenedia.Modules.Characters
                 textLabel.Text = " " + value + " ";            }
         }
 
+        private void DeleteOG()
+        {
+            if (_Highlighted)
+            {
+                assignedCharacter.Tags.Remove(Text);
 
+                if (Module.filterTagsPanel != null)
+                {
+                    var tempList = new List<string>(Module.Tags);
+                    foreach (Character c in Module.Characters)
+                    {
+                        foreach (string t in c.Tags)
+                        {
+                            if (tempList.Contains(t)) tempList.Remove(t);
+                        }
+                    }
+
+                    List<TagEntry> deleteList = new List<TagEntry>();
+                    foreach (TagEntry tag in Module.filterTagsPanel)
+                    {
+                        if (tempList.Contains(tag.Text))
+                        {
+                            Module.Tags.Remove(tag.Text);
+                            deleteList.Add(tag);
+                        };
+                    }
+
+                    foreach (TagEntry tag in deleteList)
+                    {
+                        tag.Dispose();
+                    }
+                }
+
+                this.Dispose();
+            }
+        }
     }
     public class CharacterDetailWindow : BasicContainer
     {
@@ -401,9 +684,12 @@ namespace Kenedia.Modules.Characters
         public Image addTag_Button;
         public Label name_Label;
         public Image spec_Image;
+        public Image include_Image;
         public Label spec_Label;
         public Image separator_Image;
         public FlowPanel customTags_Panel;
+        public Checkbox loginCharacter;
+        private List<string> Tags = new List<string>();
 
         public Character assignedCharacter;
         public void setCharacter(Character c)
@@ -412,11 +698,24 @@ namespace Kenedia.Modules.Characters
             name_Label.Text = c.Name;
             spec_Label.Text = DataManager.getProfessionName(c._Profession);
             spec_Image.Texture = Textures.Professions[c._Profession];
-            customTags_Panel.ClearChildren();
+            loginCharacter.Checked = c.loginCharacter;
+            include_Image.Texture = c.include ? Textures.Icons[(int)Icons.Visible] : Textures.Icons[(int)Icons.Hide];
 
-            foreach(string tag in c.Tags)
+            if (!Enumerable.SequenceEqual(Tags, Module.Tags))
             {
-                new TagEntry(tag, c, customTags_Panel);
+                customTags_Panel.ClearChildren();
+                Tags = new List<string>(Module.Tags);
+
+                foreach (string tag in Module.Tags)
+                {
+                    new TagEntry(tag, c, customTags_Panel);
+                }
+            }
+
+            foreach (TagEntry tag in customTags_Panel)
+            {
+                tag.Highlighted = c.Tags.Contains(tag.Text);
+                tag.assignedCharacter = c;
             }
         }
     }

@@ -43,6 +43,9 @@
         Add,
         AddDisabled,
         AddHovered,
+        Visible,
+        Hide,
+        CloseDisabled,
     }
     public enum Professions
     {
@@ -136,6 +139,7 @@
         Tooltip = 2,
         ExpandWindow = 3,
         Tag,
+        TagDisabled,
     }
     public enum _Emblems
     {

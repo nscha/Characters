@@ -123,6 +123,13 @@
   <data name="Artificer" xml:space="preserve">
     <value>Artificier</value>
   </data>
+  <data name="AutoLogin_Description" xml:space="preserve">
+    <value>S'il est activé au premier chargement de Blish et qu'il se trouve dans la sélection des personnages, le module entre dans le jeu. Après être entré dans le jeu, il attendra que le MumbleLink et le Token API soient complètement chargés.
+Une fois le chargement terminé, il basculera vers le personnage qui est défini comme étant le "Login Character".</value>
+  </data>
+  <data name="AutoLogin_DisplayName" xml:space="preserve">
+    <value>Connexion automatique du personnage sélectionné</value>
+  </data>
   <data name="Birthday" xml:space="preserve">
     <value>Anniversaire</value>
   </data>
@@ -143,6 +150,18 @@
   </data>
   <data name="Days" xml:space="preserve">
     <value>Jours</value>
+  </data>
+  <data name="DoubleClickToEnter_Description" xml:space="preserve">
+    <value>Permet de double-cliquer sur le personnage dans la liste des personnages pour se connecter à ce personnage.</value>
+  </data>
+  <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
+    <value>Double-cliquez pour échanger</value>
+  </data>
+  <data name="EnterOnSwap_Description" xml:space="preserve">
+    <value>Entrer dans le jeu automatiquement après avoir sélectionné le personnage dans la sélection des personnages.</value>
+  </data>
+  <data name="EnterOnSwap_DisplayName" xml:space="preserve">
+    <value>Connexion après avoir choisi le personnage</value>
   </data>
   <data name="Error_Competivive" xml:space="preserve">
     <value>Le changement de personnage est désactivé en mode compétition !</value>
@@ -172,6 +191,9 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="LoginAfterSelect" xml:space="preserve">
     <value>Entrer dans le jeu automatiquement après avoir sélectionné le personnage dans la sélection des personnages.</value>
   </data>
+  <data name="LoginCharacter" xml:space="preserve">
+    <value>Personnage de connexion</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Déconnexion</value>
   </data>
@@ -200,6 +222,21 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
   <data name="SearchFor" xml:space="preserve">
     <value>Recherche de ...</value>
   </data>
+  <data name="SearchGuide" xml:space="preserve">
+    <value>-c Profession d'artisanat
+-p Profession/Spécialisation
+-r Race
+-b Anniversaire
+-m MapName
+-t CustomTag
+-c Chef ; -p Warrior affiche tous les guerriers et tous les chefs.</value>
+  </data>
+  <data name="ShortcutToggle_Description" xml:space="preserve">
+    <value>Touche à presser pour accéder au menu des personnages.</value>
+  </data>
+  <data name="ShortcutToggle_DisplayName" xml:space="preserve">
+    <value>Changer de menu</value>
+  </data>
   <data name="Specialization" xml:space="preserve">
     <value>Spécialisation</value>
   </data>
@@ -216,8 +253,17 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="Tailor" xml:space="preserve">
     <value>Tailleur</value>
   </data>
+  <data name="ToggleAll" xml:space="preserve">
+    <value>Commuter tout</value>
+  </data>
+  <data name="ToggleVisible" xml:space="preserve">
+    <value>Afficher/masquer les personnages cachés</value>
+  </data>
   <data name="Unkown" xml:space="preserve">
     <value>Inconnu</value>
+  </data>
+  <data name="UntilBirthday" xml:space="preserve">
+    <value>jusqu'à l'anniversaire</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Mise à jour {0}</value>
@@ -227,6 +273,9 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   </data>
   <data name="Updating" xml:space="preserve">
     <value>Mise à jour de {0}</value>
+  </data>
+  <data name="Utility" xml:space="preserve">
+    <value>Utile</value>
   </data>
   <data name="Weaponsmith" xml:space="preserve">
     <value>Forgeron d'armes</value>

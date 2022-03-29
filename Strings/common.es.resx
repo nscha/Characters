@@ -123,6 +123,13 @@
   <data name="Artificer" xml:space="preserve">
     <value>Artificiero</value>
   </data>
+  <data name="AutoLogin_Description" xml:space="preserve">
+    <value>Si se activa en la primera carga de Blish y estando en la selección de personaje el módulo entra en el juego. Después de entrar en el juego esperará hasta que el MumbleLink y el API Token estén completamente cargados.
+Una vez cargado por completo, cambiará al personaje que está configurado como "Personaje de inicio de sesión".</value>
+  </data>
+  <data name="AutoLogin_DisplayName" xml:space="preserve">
+    <value>Inicio de sesión automático del personaje seleccionado</value>
+  </data>
   <data name="Birthday" xml:space="preserve">
     <value>Cumpleaños</value>
   </data>
@@ -143,6 +150,18 @@
   </data>
   <data name="Days" xml:space="preserve">
     <value>Días</value>
+  </data>
+  <data name="DoubleClickToEnter_Description" xml:space="preserve">
+    <value>Permite hacer doble clic en el personaje de la lista de personajes para acceder a ese personaje.</value>
+  </data>
+  <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
+    <value>Doble clic para intercambiar</value>
+  </data>
+  <data name="EnterOnSwap_Description" xml:space="preserve">
+    <value>Entrar en el juego automáticamente después de seleccionar el personaje en la selección de personajes</value>
+  </data>
+  <data name="EnterOnSwap_DisplayName" xml:space="preserve">
+    <value>Registro tras la selección del personaje</value>
   </data>
   <data name="Error_Competivive" xml:space="preserve">
     <value>El cambio de personajes está desactivado en el modo de competición.</value>
@@ -172,6 +191,9 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="LoginAfterSelect" xml:space="preserve">
     <value>Entrar en el juego automáticamente después de seleccionar el personaje en la selección de personajes</value>
   </data>
+  <data name="LoginCharacter" xml:space="preserve">
+    <value>Carácter de inicio de sesión</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Cerrar sesión</value>
   </data>
@@ -200,6 +222,21 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="SearchFor" xml:space="preserve">
     <value>Búsqueda de ...</value>
   </data>
+  <data name="SearchGuide" xml:space="preserve">
+    <value>-c Profesión de artesano
+-p Profesión/Especialización
+-r Raza
+-b Cumpleaños
+-m Nombre del mapa
+-t Etiqueta personalizada
+-c Chef; -p Guerrero mostrará todos los guerreros y todos los chefs</value>
+  </data>
+  <data name="ShortcutToggle_Description" xml:space="preserve">
+    <value>para acceder al menú de caracteres.</value>
+  </data>
+  <data name="ShortcutToggle_DisplayName" xml:space="preserve">
+    <value>Menú alternativo</value>
+  </data>
   <data name="Specialization" xml:space="preserve">
     <value>Especialización</value>
   </data>
@@ -216,8 +253,17 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="Tailor" xml:space="preserve">
     <value>Sastre</value>
   </data>
+  <data name="ToggleAll" xml:space="preserve">
+    <value>Cambiar todo</value>
+  </data>
+  <data name="ToggleVisible" xml:space="preserve">
+    <value>Mostrar/ocultar caracteres ocultos</value>
+  </data>
   <data name="Unkown" xml:space="preserve">
     <value>Desconocido</value>
+  </data>
+  <data name="UntilBirthday" xml:space="preserve">
+    <value>hasta el cumpleaños</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Actualización {0}</value>
@@ -227,6 +273,9 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="Updating" xml:space="preserve">
     <value>Actualizando {0}</value>
+  </data>
+  <data name="Utility" xml:space="preserve">
+    <value>Útil</value>
   </data>
   <data name="Weaponsmith" xml:space="preserve">
     <value>Armero</value>

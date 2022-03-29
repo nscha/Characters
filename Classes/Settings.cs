@@ -6,7 +6,10 @@ namespace Kenedia.Modules.Characters
     public class _Settings
     {
         public SettingEntry<Blish_HUD.Input.KeyBinding> LogoutKey;
+        public SettingEntry<Blish_HUD.Input.KeyBinding> ShortcutKey;
         public SettingEntry<bool> EnterOnSwap;
+        public SettingEntry<bool> AutoLogin;
+        public SettingEntry<bool> DoubleClickToEnter;
         public SettingEntry<int> SwapDelay;
         public SettingEntry<int> FilterDelay;
         public int _FilterDelay = 75;
@@ -15,18 +18,32 @@ namespace Kenedia.Modules.Characters
     public partial class Module : Blish_HUD.Modules.Module
     {
         //Settings
-        public static _Settings Settings = new _Settings();
-
         protected override void DefineSettings(SettingCollection settings)
         {
             Settings.LogoutKey = settings.DefineSetting(nameof(Settings.LogoutKey),
                                                      new Blish_HUD.Input.KeyBinding(Keys.F12),
                                                      () => Strings.common.Logout,
                                                      () => Strings.common.LogoutDescription);
+
+            Settings.ShortcutKey = settings.DefineSetting(nameof(Settings.ShortcutKey),
+                                                     new Blish_HUD.Input.KeyBinding(ModifierKeys.Shift, Keys.C),
+                                                     () => Strings.common.ShortcutToggle_DisplayName,
+                                                     () => Strings.common.ShortcutToggle_Description);
+
             Settings.EnterOnSwap = settings.DefineSetting(nameof(Settings.EnterOnSwap),
                                                               false,
-                                                              () => Strings.common.LoginAfterSelect,
-                                                              () => Strings.common.LoginAfterSelect);
+                                                              () => Strings.common.EnterOnSwap_DisplayName,
+                                                              () => Strings.common.EnterOnSwap_Description);
+
+            Settings.AutoLogin = settings.DefineSetting(nameof(Settings.AutoLogin),
+                                                              false,
+                                                              () => Strings.common.AutoLogin_DisplayName,
+                                                              () => Strings.common.AutoLogin_Description);
+
+            Settings.DoubleClickToEnter = settings.DefineSetting(nameof(Settings.DoubleClickToEnter),
+                                                              false,
+                                                              () => Strings.common.DoubleClickToEnter_DisplayName,
+                                                              () => Strings.common.DoubleClickToEnter_Description);
 
             Settings.SwapDelay = settings.DefineSetting(nameof(Settings.SwapDelay),
                                                               500,

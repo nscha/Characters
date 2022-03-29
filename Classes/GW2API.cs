@@ -15,84 +15,89 @@ namespace Kenedia.Modules.Characters
     {
         public async void FetchAPI(bool force = false)
         {
-            if (Gw2ApiManager.HasPermissions(new[] { TokenPermission.Account, TokenPermission.Characters }) && API_Account != null && userAccount != null)
+            try
             {
-                //ScreenNotification.ShowNotification("Updating Account ....", ScreenNotification.NotificationType.Warning);
-                var account = await Gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
-
-                userAccount.LastModified = account.LastModified;
-                userAccount.Save();
-
-                ///character.LastModified older than account.LastModified --> character.LastModified = account.LastModified.UtcDateTime.AddSeconds(-j)
-                ///character.LastModified younger than account.LastModified --> character.LastModified = character.LastModified
-
-                if (userAccount.CharacterUpdateNeeded() || force)
+                if (Gw2ApiManager.HasPermissions(new[] { TokenPermission.Account, TokenPermission.Characters }) && API_Account != null && userAccount != null)
                 {
-                    userAccount.LastBlishUpdate = userAccount.LastBlishUpdate > account.LastModified ? userAccount.LastBlishUpdate : account.LastModified;
+                    //ScreenNotification.ShowNotification("Updating Account ....", ScreenNotification.NotificationType.Warning);
+                    var account = await Gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
+
+                    userAccount.LastModified = account.LastModified;
                     userAccount.Save();
 
-                    var characters = await Gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
-                    Logger.Debug("Updating Characters ....");
-                    //ScreenNotification.ShowNotification("Updating Characters ....", ScreenNotification.NotificationType.Warning);
-                    Character last = null;
-                    int j = 0;
+                    ///character.LastModified older than account.LastModified --> character.LastModified = account.LastModified.UtcDateTime.AddSeconds(-j)
+                    ///character.LastModified younger than account.LastModified --> character.LastModified = character.LastModified
 
-                    foreach (Gw2Sharp.WebApi.V2.Models.Character c in characters)
+                    if (userAccount.CharacterUpdateNeeded() || force)
                     {
-                        Character character = getCharacter(c.Name);
+                        userAccount.LastBlishUpdate = userAccount.LastBlishUpdate > account.LastModified ? userAccount.LastBlishUpdate : account.LastModified;
+                        userAccount.Save();
 
-                        character.Name = character.Name ?? c.Name;
-                        character.Race = (RaceType)Enum.Parse(typeof(RaceType), c.Race);
-                        character._Profession = (int)Enum.Parse(typeof(Professions), c.Profession.ToString());
-                        character.Profession = (ProfessionType)Enum.Parse(typeof(ProfessionType), c.Profession.ToString());
-                        character._Specialization = character._Specialization > -1 ? character._Specialization : -1;
-                        character.Level = c.Level;
-                        character.Created = c.Created;
-                        character.contentsManager = ContentsManager;
-                        character.apiManager = Gw2ApiManager;
+                        var characters = await Gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
+                        Logger.Debug("Updating Characters ....");
+                        //ScreenNotification.ShowNotification("Updating Characters ....", ScreenNotification.NotificationType.Warning);
+                        Character last = null;
+                        int j = 0;
 
-                        character.Crafting = new List<CharacterCrafting>();
-
-                        foreach (CharacterCraftingDiscipline disc in c.Crafting.ToList())
+                        foreach (Gw2Sharp.WebApi.V2.Models.Character c in characters)
                         {
-                            character.Crafting.Add(new CharacterCrafting()
+                            Character character = getCharacter(c.Name);
+
+                            character.Name = character.Name ?? c.Name;
+                            character.Race = (RaceType)Enum.Parse(typeof(RaceType), c.Race);
+                            character._Profession = (int)Enum.Parse(typeof(Professions), c.Profession.ToString());
+                            character.Profession = (ProfessionType)Enum.Parse(typeof(ProfessionType), c.Profession.ToString());
+                            character._Specialization = character._Specialization > -1 ? character._Specialization : -1;
+                            character.Level = c.Level;
+                            character.Created = c.Created;
+                            character.contentsManager = ContentsManager;
+                            character.apiManager = Gw2ApiManager;
+
+                            character.Crafting = new List<CharacterCrafting>();
+
+                            foreach (CharacterCraftingDiscipline disc in c.Crafting.ToList())
                             {
-                                Id = (int)disc.Discipline.Value,
-                                Rating = disc.Rating,
-                                Active = disc.Active,
-                            });
-                        }
-                        character.apiIndex = j;
+                                character.Crafting.Add(new CharacterCrafting()
+                                {
+                                    Id = (int)disc.Discipline.Value,
+                                    Rating = disc.Rating,
+                                    Active = disc.Active,
+                                });
+                            }
+                            character.apiIndex = j;
 
-                        if (character.LastModified == dateZero || character.LastModified < account.LastModified.UtcDateTime)
-                        {
-                            character.LastModified = account.LastModified.UtcDateTime.AddSeconds(-j);
+                            if (character.LastModified == dateZero || character.LastModified < account.LastModified.UtcDateTime)
+                            {
+                                character.LastModified = account.LastModified.UtcDateTime.AddSeconds(-j);
+                            }
+
+                            if (character.lastLogin == dateZero)
+                            {
+                                character.lastLogin = c.LastModified.UtcDateTime;
+                            }
+
+                            last = character;
+                            j++;
                         }
 
-                        if (character.lastLogin == dateZero)
-                        {
-                            character.lastLogin = c.LastModified.UtcDateTime;
-                        }
+                        if (last != null) last.Save();
 
-                        last = character;
-                        j++;
+                        filterCharacterPanel = true;
+                        //ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
+                        Logger.Debug("Characters Updated!");
                     }
 
-                    if (last != null) last.Save();
-
-                    filterCharacterPanel = true;
-                    //ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
-                    Logger.Debug("Characters Updated!");
+                    double lastModified = DateTimeOffset.UtcNow.Subtract(userAccount.LastModified).TotalSeconds;
+                    double lastUpdate = DateTimeOffset.UtcNow.Subtract(userAccount.LastBlishUpdate).TotalSeconds;
+                    infoImage.BasicTooltipText = "Last Modified: " + Math.Round(lastModified) + Environment.NewLine + "Last Blish Login: " + Math.Round(lastUpdate);
                 }
-
-                double lastModified = DateTimeOffset.UtcNow.Subtract(userAccount.LastModified).TotalSeconds;
-                double lastUpdate = DateTimeOffset.UtcNow.Subtract(userAccount.LastBlishUpdate).TotalSeconds;
-                infoImage.BasicTooltipText = "Last Modified: " + Math.Round(lastModified) + Environment.NewLine + "Last Blish Login: " + Math.Round(lastUpdate);
-            }
-            else
-            {
-                ScreenNotification.ShowNotification(Strings.common.Error_Competivive, ScreenNotification.NotificationType.Error);
-                Logger.Error("This API Token has not the required permissions!");
+                else
+                {
+                    ScreenNotification.ShowNotification(Strings.common.Error_Competivive, ScreenNotification.NotificationType.Error);
+                    Logger.Error("This API Token has not the required permissions!");
+                }
+            } catch (Exception ex) {
+                Logger.Warn(ex, "Failed to fetch characters from the API.");
             }
         }
         private async void Gw2ApiManager_SubtokenUpdated(object sender, ValueEventArgs<IEnumerable<TokenPermission>> e)

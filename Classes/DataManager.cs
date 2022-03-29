@@ -18,11 +18,13 @@ namespace Kenedia.Modules.Characters
             _Specializations = new _jsonSpecialization().Load();
             _Races = new _jsonRace().Load();
             _Maps = new _jsonMap().Load();
+            _Craftings = new _jsonCrafting().Load();
         }
         public static _Profession[] _Professions { get; set; }
         public static _Specialization[] _Specializations { get; set; }
         public static _Race[] _Races { get; set; }
         public static _Map[] _Maps { get; set; }                
+        public static _Crafting[] _Craftings { get; set; }                
         public class _Names
         {
             public string de { get; set; }
@@ -139,6 +141,33 @@ namespace Kenedia.Modules.Characters
             public IReadOnlyList<int> Floors;
             public int DefaultFloor;
             public int ContinentId;
+        }
+        public class _jsonCrafting
+        {
+            public _Crafting[] Load()
+            {
+                var path = @"data\crafting_professions.json";
+                _Crafting[] disciplines = new _Crafting[1];
+
+                string jsonString = new StreamReader(ContentsManager.GetFileStream(path)).ReadToEnd();
+
+                if (jsonString != null && jsonString != "")
+                {
+                    List<_jsonCrafting> localData = JsonConvert.DeserializeObject<List<_jsonCrafting>>(jsonString);
+                    _jsonCrafting biggest = localData.Aggregate((i1, i2) => i1.Id > i2.Id ? i1 : i2);
+                    disciplines = new _Crafting[biggest.Id + 1];
+
+                    foreach (_jsonCrafting entry in localData)
+                    {
+                        disciplines[entry.Id] = new _Crafting() { _Names = entry._Names, API_Id = entry.Id, Id = entry.Id };
+                    }
+                }
+
+                return disciplines;
+            }
+            public _Names _Names = new _Names();
+            public int Id { get; set; }
+            public string API_Id { get; set; }
         }
 
         public class _Profession : _jsonProfession
@@ -321,6 +350,51 @@ namespace Kenedia.Modules.Characters
                 }
             }
         }
+        public class _Crafting : _jsonMap
+        {
+            public string Name
+            {
+                get
+                {
+
+                    switch (Blish_HUD.SettingsService.Overlay.UserLocale.Value)
+                    {
+                        case Gw2Sharp.WebApi.Locale.German:
+                            return _Names.de;
+
+                        case Gw2Sharp.WebApi.Locale.French:
+                            return _Names.fr;
+
+                        case Gw2Sharp.WebApi.Locale.Spanish:
+                            return _Names.es;
+
+                        default:
+                            return _Names.en;
+                    }
+                }
+                set
+                {
+                    switch (Blish_HUD.SettingsService.Overlay.UserLocale.Value)
+                    {
+                        case Gw2Sharp.WebApi.Locale.German:
+                            _Names.de = value;
+                            break;
+
+                        case Gw2Sharp.WebApi.Locale.French:
+                            _Names.fr = value;
+                            break;
+
+                        case Gw2Sharp.WebApi.Locale.Spanish:
+                            _Names.es = value;
+                            break;
+
+                        default:
+                            _Names.en = value;
+                            break;
+                    }
+                }
+            }
+        }
 
          public static string getMapName(int id)
         {
@@ -400,6 +474,10 @@ namespace Kenedia.Modules.Characters
                 default:
                     return Strings.common.Unkown + " " + Strings.common.CraftingProfession;
             }
+        }
+        public static string getCraftingName(int id)
+        {
+            return _Craftings.Length > id && _Craftings[id] != null ? _Craftings[id].Name : Strings.common.Unkown + " " + Strings.common.CraftingProfession;
         }
     }
 }

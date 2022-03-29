@@ -123,6 +123,13 @@
   <data name="Artificer" xml:space="preserve">
     <value>Artificer</value>
   </data>
+  <data name="AutoLogin_Description" xml:space="preserve">
+    <value>If enabled on the first load of Blish and beeing in character selection the module enters the game. After entering the game it will wait until the MumbleLink and API Token is fully loaded.
+Once fully loaded it will switch to the character which is set to be the "Login Character".</value>
+  </data>
+  <data name="AutoLogin_DisplayName" xml:space="preserve">
+    <value>Auto Login to selected Character</value>
+  </data>
   <data name="Birthday" xml:space="preserve">
     <value>Birthday</value>
   </data>
@@ -143,6 +150,18 @@
   </data>
   <data name="Days" xml:space="preserve">
     <value>Days</value>
+  </data>
+  <data name="DoubleClickToEnter_Description" xml:space="preserve">
+    <value>Enables double clicking the character in the character list to login to that character.</value>
+  </data>
+  <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
+    <value>Double Click to Swap</value>
+  </data>
+  <data name="EnterOnSwap_Description" xml:space="preserve">
+    <value>Enter the game automatically after selecting the character in the character selection</value>
+  </data>
+  <data name="EnterOnSwap_DisplayName" xml:space="preserve">
+    <value>Login after selecting the character</value>
   </data>
   <data name="Error_Competivive" xml:space="preserve">
     <value>Character swapping is disabled in competition mode!</value>
@@ -172,6 +191,9 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="LoginAfterSelect" xml:space="preserve">
     <value>Enter the game automatically after selecting the character in the character selection</value>
   </data>
+  <data name="LoginCharacter" xml:space="preserve">
+    <value>Log in character</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
@@ -200,6 +222,21 @@ This will require an API-Key with permissions at least for the 'characters' endp
   <data name="SearchFor" xml:space="preserve">
     <value>Search for ...</value>
   </data>
+  <data name="SearchGuide" xml:space="preserve">
+    <value>-c Crafting Profession
+-p Profession/Specialization
+-r Race
+-b Birthday
+-m MapName
+-t CustomTag
+-c Chef; -p Warrior will show all warriors and all chefs</value>
+  </data>
+  <data name="ShortcutToggle_Description" xml:space="preserve">
+    <value>Key to Press to toggle the characters menu.</value>
+  </data>
+  <data name="ShortcutToggle_DisplayName" xml:space="preserve">
+    <value>Toggle Menu</value>
+  </data>
   <data name="Specialization" xml:space="preserve">
     <value>Specialization</value>
   </data>
@@ -216,8 +253,17 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="Tailor" xml:space="preserve">
     <value>Tailor</value>
   </data>
+  <data name="ToggleAll" xml:space="preserve">
+    <value>Toggle All</value>
+  </data>
+  <data name="ToggleVisible" xml:space="preserve">
+    <value>Show/Hide hidden Characters</value>
+  </data>
   <data name="Unkown" xml:space="preserve">
     <value>Unkown</value>
+  </data>
+  <data name="UntilBirthday" xml:space="preserve">
+    <value>until Birthday</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update {0}</value>
@@ -227,6 +273,9 @@ To get the current value you will have to swap module tabs once to update the se
   </data>
   <data name="Updating" xml:space="preserve">
     <value>Updating {0}</value>
+  </data>
+  <data name="Utility" xml:space="preserve">
+    <value>Utility</value>
   </data>
   <data name="Weaponsmith" xml:space="preserve">
     <value>Weaponsmith</value>

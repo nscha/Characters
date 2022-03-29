@@ -1,1 +1,57 @@
-[{"_Names":{"de":"Asura","en":"Asura","es":"Asura","fr":"Asura"},"Id":0,"API_Id":"Asura","Name":"Asura"},{"_Names":{"de":"Charr","en":"Charr","es":"Charr","fr":"Charr"},"Id":1,"API_Id":"Charr","Name":"Charr"},{"_Names":{"de":"Mensch","en":"Human","es":"Humano","fr":"Humain"},"Id":2,"API_Id":"Human","Name":"Humain"},{"_Names":{"de":"Norn","en":"Norn","es":"Norn","fr":"Norn"},"Id":3,"API_Id":"Norn","Name":"Norn"},{"_Names":{"de":"Sylvari","en":"Sylvari","es":"Sylvari","fr":"Sylvari"},"Id":4,"API_Id":"Sylvari","Name":"Sylvari"}]
+[
+  {
+    "_Names": {
+      "de": "Asura",
+      "en": "Asura",
+      "es": "Asura",
+      "fr": "Asura"
+    },
+    "Id": 0,
+    "API_Id": "Asura",
+    "Name": "Asura"
+  },
+  {
+    "_Names": {
+      "de": "Charr",
+      "en": "Charr",
+      "es": "Charr",
+      "fr": "Charr"
+    },
+    "Id": 1,
+    "API_Id": "Charr",
+    "Name": "Charr"
+  },
+  {
+    "_Names": {
+      "de": "Mensch",
+      "en": "Human",
+      "es": "Humano",
+      "fr": "Humain"
+    },
+    "Id": 2,
+    "API_Id": "Human",
+    "Name": "Humain"
+  },
+  {
+    "_Names": {
+      "de": "Norn",
+      "en": "Norn",
+      "es": "Norn",
+      "fr": "Norn"
+    },
+    "Id": 3,
+    "API_Id": "Norn",
+    "Name": "Norn"
+  },
+  {
+    "_Names": {
+      "de": "Sylvari",
+      "en": "Sylvari",
+      "es": "Sylvari",
+      "fr": "Sylvari"
+    },
+    "Id": 4,
+    "API_Id": "Sylvari",
+    "Name": "Sylvari"
+  }
+]

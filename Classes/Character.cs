@@ -40,6 +40,8 @@ namespace Kenedia.Modules.Characters
         public int map;
         public int Level { get; set; }
         public string Tags;
+        public bool loginCharacter;
+        public bool include = true;
     }
 
     public class Character
@@ -55,6 +57,7 @@ namespace Kenedia.Modules.Characters
         public bool loaded = false;
         public List<CharacterCrafting> Crafting;
         public CharacterControl characterControl;
+        public FlowPanel craftingPanel;
         public Tooltip tooltip;
         public Image classImage;
         public Label nameLabel;
@@ -64,7 +67,10 @@ namespace Kenedia.Modules.Characters
         public List<Image> craftingImages;
         public int apiIndex;
         public DateTimeOffset Created;
+        public DateTime NextBirthday;
         public int map;
+        public bool loginCharacter;
+        public bool include;
 
         private void MainPanel_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
@@ -93,6 +99,7 @@ namespace Kenedia.Modules.Characters
                     assignedCharacter = this,
                 },
             };
+            characterControl.Click += CharacterControl_Click;
             characterControl.Click += delegate {
                 switch (Module.subWindow.Visible)
                 {
@@ -188,7 +195,7 @@ namespace Kenedia.Modules.Characters
             //Crafting Professions
             if (Crafting.Count > 0)
             {
-                var craftingPanel = new FlowPanel()
+                craftingPanel = new FlowPanel()
                 {
                     Location = new Point(characterControl.Width - 45 - 48 - 10, 0),
                     Parent = characterControl,
@@ -210,9 +217,9 @@ namespace Kenedia.Modules.Characters
                             Parent = craftingPanel,
                             Enabled = false,
                         });
-                        ttp = ttp + Enum.GetName(typeof(Crafting), crafting.Id) + " (" + crafting.Rating + ")" + Environment.NewLine;
+                        ttp = ttp + DataManager.getCraftingName(crafting.Id) + " (" + crafting.Rating + ")" + Environment.NewLine;
                     }
-                }
+                }                
 
                 ttp = ttp.TrimEnd();
 
@@ -239,6 +246,14 @@ namespace Kenedia.Modules.Characters
             this.loaded = true;
 
 
+        }
+
+        private void CharacterControl_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            if (e.IsDoubleClick && Module.Settings.DoubleClickToEnter.Value)
+            {
+                Swap();
+            }
         }
 
         private void SwitchButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
@@ -335,16 +350,32 @@ namespace Kenedia.Modules.Characters
                 }
             }
         }
-        public void UpdateTooltips()
+        public void UpdateLanguage()
         {
+            if (craftingImages != null && Crafting.Count > 0)
+            {
+                string ttp = "";
+                foreach (CharacterCrafting crafting in Crafting)
+                {
+                    if (crafting.Active)
+                    {
+                        ttp = ttp + DataManager.getCraftingName(crafting.Id) + " (" + crafting.Rating + ")" + Environment.NewLine;
+                    }
+                }
+                ttp = ttp.TrimEnd();
+                foreach (Image image in craftingImages)
+                {
+                    image.BasicTooltipText = ttp;
+                }
 
+                craftingPanel.BasicTooltipText = ttp;
+            }
         }
         public void Update_UI_Time()
         {
             if (this.loaded)
             {
                 this.seconds = Math.Round(DateTime.UtcNow.Subtract(this.lastLogin).TotalSeconds);
-                this.UpdateTooltips();
 
                 var t = TimeSpan.FromSeconds(this.seconds);
 
@@ -363,6 +394,10 @@ namespace Kenedia.Modules.Characters
                     for (int i = 1; i < 100; i++)
                     {
                         DateTime birthDay = Created.AddYears(i).DateTime;
+                        if ((NextBirthday == null || NextBirthday == Module.dateZero) && birthDay >= DateTime.UtcNow)
+                        {
+                            NextBirthday = birthDay;
+                        }
 
                         if (birthDay <= DateTime.UtcNow)
                         {
@@ -484,38 +519,7 @@ namespace Kenedia.Modules.Characters
 
         public void Save()
         {
-            if (Module.API_Account != null)
-            {
-
-                List<JsonCharacter> _data = new List<JsonCharacter>();
-                foreach (Character c in Module.Characters)
-                {
-                    JsonCharacter jsonCharacter = new JsonCharacter()
-                    {
-                        Name = c.Name,
-                        Race = c.Race,
-
-                        Specialization = c._Specialization,
-                        Profession = c._Profession,
-                        Crafting = c.Crafting,
-                        lastLogin = c.lastLogin,
-                        apiIndex = c.apiIndex,
-                        Created = c.Created,
-                        LastModified = c.LastModified,
-                        map = c.map,
-                        Level = c.Level,
-                        Tags = String.Join("|", c.Tags),
-                    };
-
-
-                    _data.Add(jsonCharacter);
-                }
-
-                string json = JsonConvert.SerializeObject(_data.ToArray());
-
-                //write string to file
-                System.IO.File.WriteAllText(Module.CharactersPath, json);
-            }
+            Module.saveCharacters = true;
         }
     }
 }

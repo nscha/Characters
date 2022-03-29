@@ -79,6 +79,25 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If enabled on the first load of Blish and beeing in character selection the module enters the game. After entering the game it will wait until the MumbleLink and API Token is fully loaded.
+        ///Once fully loaded it will switch to the character which is set to be the &quot;Login Character&quot;..
+        /// </summary>
+        internal static string AutoLogin_Description {
+            get {
+                return ResourceManager.GetString("AutoLogin_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Login to selected Character.
+        /// </summary>
+        internal static string AutoLogin_DisplayName {
+            get {
+                return ResourceManager.GetString("AutoLogin_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birthday.
         /// </summary>
         internal static string Birthday {
@@ -138,6 +157,42 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string Days {
             get {
                 return ResourceManager.GetString("Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables double clicking the character in the character list to login to that character..
+        /// </summary>
+        internal static string DoubleClickToEnter_Description {
+            get {
+                return ResourceManager.GetString("DoubleClickToEnter_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double Click to Swap.
+        /// </summary>
+        internal static string DoubleClickToEnter_DisplayName {
+            get {
+                return ResourceManager.GetString("DoubleClickToEnter_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the game automatically after selecting the character in the character selection.
+        /// </summary>
+        internal static string EnterOnSwap_Description {
+            get {
+                return ResourceManager.GetString("EnterOnSwap_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login after selecting the character.
+        /// </summary>
+        internal static string EnterOnSwap_DisplayName {
+            get {
+                return ResourceManager.GetString("EnterOnSwap_DisplayName", resourceCulture);
             }
         }
         
@@ -224,6 +279,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log in character.
+        /// </summary>
+        internal static string LoginCharacter {
+            get {
+                return ResourceManager.GetString("LoginCharacter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
         internal static string Logout {
@@ -306,6 +370,39 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to -c Crafting Profession
+        ///-p Profession/Specialization
+        ///-r Race
+        ///-b Birthday
+        ///-m MapName
+        ///-t CustomTag
+        ///-c Chef; -p Warrior will show all warriors and all chefs.
+        /// </summary>
+        internal static string SearchGuide {
+            get {
+                return ResourceManager.GetString("SearchGuide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key to Press to toggle the characters menu..
+        /// </summary>
+        internal static string ShortcutToggle_Description {
+            get {
+                return ResourceManager.GetString("ShortcutToggle_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Menu.
+        /// </summary>
+        internal static string ShortcutToggle_DisplayName {
+            get {
+                return ResourceManager.GetString("ShortcutToggle_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specialization.
         /// </summary>
         internal static string Specialization {
@@ -352,11 +449,38 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle All.
+        /// </summary>
+        internal static string ToggleAll {
+            get {
+                return ResourceManager.GetString("ToggleAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show/Hide hidden Characters.
+        /// </summary>
+        internal static string ToggleVisible {
+            get {
+                return ResourceManager.GetString("ToggleVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unkown.
         /// </summary>
         internal static string Unkown {
             get {
                 return ResourceManager.GetString("Unkown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to until Birthday.
+        /// </summary>
+        internal static string UntilBirthday {
+            get {
+                return ResourceManager.GetString("UntilBirthday", resourceCulture);
             }
         }
         
@@ -384,6 +508,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string Updating {
             get {
                 return ResourceManager.GetString("Updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utility.
+        /// </summary>
+        internal static string Utility {
+            get {
+                return ResourceManager.GetString("Utility", resourceCulture);
             }
         }
         

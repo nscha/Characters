@@ -123,6 +123,13 @@
   <data name="Artificer" xml:space="preserve">
     <value>Konstrukteur</value>
   </data>
+  <data name="AutoLogin_Description" xml:space="preserve">
+    <value>Wenn es beim ersten Laden von Blish aktiviert ist und sich in der Charakterauswahl befindet, betritt das Modul das Spiel. Nach dem Betreten des Spiels wartet es, bis der MumbleLink und das API-Token vollständig geladen sind.
+Sobald es vollständig geladen ist, wechselt es zu dem Charakter, der als "Login-Charakter" eingestellt ist.</value>
+  </data>
+  <data name="AutoLogin_DisplayName" xml:space="preserve">
+    <value>Automatisches Einloggen des ausgewähltem Charakters</value>
+  </data>
   <data name="Birthday" xml:space="preserve">
     <value>Geburtstag</value>
   </data>
@@ -143,6 +150,18 @@
   </data>
   <data name="Days" xml:space="preserve">
     <value>Tage</value>
+  </data>
+  <data name="DoubleClickToEnter_Description" xml:space="preserve">
+    <value>Ermöglicht einen Doppelklick auf den Charakter in der Charakterliste, um sich bei diesem Charakter anzumelden.</value>
+  </data>
+  <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
+    <value>Doppelklick zum Wechseln</value>
+  </data>
+  <data name="EnterOnSwap_Description" xml:space="preserve">
+    <value>Automatischer Spieleinstieg nach Auswahl des Charakters in der Charakterauswahl</value>
+  </data>
+  <data name="EnterOnSwap_DisplayName" xml:space="preserve">
+    <value>Anmeldung nach Auswahl des Charakters</value>
   </data>
   <data name="Error_Competivive" xml:space="preserve">
     <value>Das Wechseln der Charaktere ist im Wettkampfmodus deaktiviert!</value>
@@ -172,6 +191,9 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   <data name="LoginAfterSelect" xml:space="preserve">
     <value>Automatischer Spieleinstieg nach Auswahl des Charakters in der Charakterauswahl</value>
   </data>
+  <data name="LoginCharacter" xml:space="preserve">
+    <value>login Character</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Ausloggen</value>
   </data>
@@ -200,6 +222,21 @@ Dies erfordert einen API-Schlüssel mit Berechtigungen zumindest für den Endpun
   <data name="SearchFor" xml:space="preserve">
     <value>Suche nach ...</value>
   </data>
+  <data name="SearchGuide" xml:space="preserve">
+    <value>-c Handwerklicher Beruf
+-p Beruf/Spezialisierung
+-r Rasse
+-b Geburtstag
+-m Kartenname
+-t BenutzerdefinierterTag
+-c Koch; -p Krieger zeigt alle Krieger und alle Köche</value>
+  </data>
+  <data name="ShortcutToggle_Description" xml:space="preserve">
+    <value>Taste zum Drücken, um das Charaktermenü aufzurufen.</value>
+  </data>
+  <data name="ShortcutToggle_DisplayName" xml:space="preserve">
+    <value>Menü umschalten</value>
+  </data>
   <data name="Specialization" xml:space="preserve">
     <value>Spezialisierung</value>
   </data>
@@ -216,8 +253,17 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   <data name="Tailor" xml:space="preserve">
     <value>Schneider</value>
   </data>
+  <data name="ToggleAll" xml:space="preserve">
+    <value>Alle umschalten</value>
+  </data>
+  <data name="ToggleVisible" xml:space="preserve">
+    <value>Ausgeblendete Charaktere anzeigen/ausblenden</value>
+  </data>
   <data name="Unkown" xml:space="preserve">
     <value>Unbekannte</value>
+  </data>
+  <data name="UntilBirthday" xml:space="preserve">
+    <value>bis Geburtstag</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Aktualisierung {0}</value>
@@ -227,6 +273,9 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   </data>
   <data name="Updating" xml:space="preserve">
     <value>Aktualisierung von {0}</value>
+  </data>
+  <data name="Utility" xml:space="preserve">
+    <value>Nützliches</value>
   </data>
   <data name="Weaponsmith" xml:space="preserve">
     <value>Waffenschmied</value>

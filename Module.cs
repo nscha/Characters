@@ -688,12 +688,6 @@ namespace Kenedia.Modules.Characters
                 };
             };
 
-            filterTextBox.EnterPressed += delegate
-            {
-                //filterWindow.Hide();
-            };
-
-
             clearButton = new StandardButton()
             {
                 Text = "Clear",
@@ -734,7 +728,8 @@ namespace Kenedia.Modules.Characters
                 ShowBorder = true,
                 Parent = Module.MainWidow,
                 Width = MainWidow.Width,
-                HeightSizingMode = SizingMode.Fill,
+                Height = MainWidow.Height - (clearButton.Location.Y + clearButton.Height + 5 + 50),
+                //HeightSizingMode = SizingMode.Fill,
                 Location = new Point(0, clearButton.Location.Y + clearButton.Height + 5),
                 FlowDirection = ControlFlowDirection.SingleTopToBottom,
             };

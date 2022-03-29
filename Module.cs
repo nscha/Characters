@@ -1232,7 +1232,7 @@ namespace Kenedia.Modules.Characters
 
                 foreach (Character character in Characters)
                 {
-                    if (character.characterControl.Visible)
+                    if (character.characterControl != null && character.characterControl.Visible)
                     {
                         character.Update_UI_Time();
                     }
@@ -1290,6 +1290,16 @@ namespace Kenedia.Modules.Characters
             Settings.ShortcutKey.Value.Activated -= OnKeyPressed_ToggleMenu;
 
             ModuleInstance = null;
+
+            CharacterNames = null;
+            Characters = null;
+            Tags = null;
+            TagEntries = null;
+            userAccount = null;
+            swapCharacter = null;
+            API_Account = null;
+            Current.character = null;
+            Last.character = null;
         }
     }
 }

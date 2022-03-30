@@ -10,6 +10,8 @@ namespace Kenedia.Modules.Characters
         public SettingEntry<bool> EnterOnSwap;
         public SettingEntry<bool> AutoLogin;
         public SettingEntry<bool> DoubleClickToEnter;
+        public SettingEntry<bool> FadeSubWindows;
+        public SettingEntry<bool> FocusFilter;
         public SettingEntry<int> SwapDelay;
         public SettingEntry<int> FilterDelay;
         public int _FilterDelay = 75;
@@ -20,6 +22,46 @@ namespace Kenedia.Modules.Characters
         //Settings
         protected override void DefineSettings(SettingCollection settings)
         {
+            Settings.AutoLogin = settings.DefineSetting(nameof(Settings.AutoLogin),
+                                                              false,
+                                                              () => Strings.common.AutoLogin_DisplayName,
+                                                              () => Strings.common.AutoLogin_Description);
+
+            Settings.EnterOnSwap = settings.DefineSetting(nameof(Settings.EnterOnSwap),
+                                                              false,
+                                                              () => Strings.common.EnterOnSwap_DisplayName,
+                                                              () => Strings.common.EnterOnSwap_Description);
+
+            Settings.DoubleClickToEnter = settings.DefineSetting(nameof(Settings.DoubleClickToEnter),
+                                                              false,
+                                                              () => Strings.common.DoubleClickToEnter_DisplayName,
+                                                              () => Strings.common.DoubleClickToEnter_Description);
+
+
+            Settings.FadeSubWindows = settings.DefineSetting(nameof(Settings.FadeSubWindows),
+                                                              false,
+                                                              () => Strings.common.FadeOut_DisplayName,
+                                                              () => Strings.common.FadeOut_Description);
+
+            Settings.FocusFilter = settings.DefineSetting(nameof(Settings.FocusFilter),
+                                                              false,
+                                                              () => Strings.common.FocusFilter_DisplayName,
+                                                              () => Strings.common.FocusFilter_Description);
+
+            Settings.FilterDelay = settings.DefineSetting(nameof(Settings.FilterDelay),
+                                                              150,
+                                                              () => string.Format(Strings.common.FilterDelay_DisplayName, Settings.FilterDelay.Value),
+                                                              () => Strings.common.FilterDelay_Description);
+            Settings.FilterDelay.SetRange(0, 500);
+            Settings.FilterDelay.SettingChanged += delegate { Settings._FilterDelay = Settings.FilterDelay.Value / 2; };
+            Settings._FilterDelay = Settings.FilterDelay.Value / 2;
+
+            Settings.SwapDelay = settings.DefineSetting(nameof(Settings.SwapDelay),
+                                                              500,
+                                                              () => string.Format(Strings.common.SwapDelay_DisplayName, Settings.SwapDelay.Value),
+                                                              () => Strings.common.SwapDelay_Description);
+            Settings.SwapDelay.SetRange(0, 5000);
+
             Settings.LogoutKey = settings.DefineSetting(nameof(Settings.LogoutKey),
                                                      new Blish_HUD.Input.KeyBinding(Keys.F12),
                                                      () => Strings.common.Logout,
@@ -29,35 +71,6 @@ namespace Kenedia.Modules.Characters
                                                      new Blish_HUD.Input.KeyBinding(ModifierKeys.Shift, Keys.C),
                                                      () => Strings.common.ShortcutToggle_DisplayName,
                                                      () => Strings.common.ShortcutToggle_Description);
-
-            Settings.EnterOnSwap = settings.DefineSetting(nameof(Settings.EnterOnSwap),
-                                                              false,
-                                                              () => Strings.common.EnterOnSwap_DisplayName,
-                                                              () => Strings.common.EnterOnSwap_Description);
-
-            Settings.AutoLogin = settings.DefineSetting(nameof(Settings.AutoLogin),
-                                                              false,
-                                                              () => Strings.common.AutoLogin_DisplayName,
-                                                              () => Strings.common.AutoLogin_Description);
-
-            Settings.DoubleClickToEnter = settings.DefineSetting(nameof(Settings.DoubleClickToEnter),
-                                                              false,
-                                                              () => Strings.common.DoubleClickToEnter_DisplayName,
-                                                              () => Strings.common.DoubleClickToEnter_Description);
-
-            Settings.SwapDelay = settings.DefineSetting(nameof(Settings.SwapDelay),
-                                                              500,
-                                                              () => string.Format(Strings.common.SwapDelay_DisplayName, Settings.SwapDelay.Value),
-                                                              () => Strings.common.SwapDelay_Description);
-            Settings.SwapDelay.SetRange(0, 5000);
-
-            Settings.FilterDelay = settings.DefineSetting(nameof(Settings.FilterDelay),
-                                                              150,
-                                                              () => string.Format(Strings.common.FilterDelay_DisplayName, Settings.FilterDelay.Value),
-                                                              () => Strings.common.FilterDelay_Description);
-            Settings.FilterDelay.SetRange(0, 500);
-            Settings.FilterDelay.SettingChanged += delegate { Settings._FilterDelay = Settings.FilterDelay.Value / 2; };
-            Settings._FilterDelay = Settings.FilterDelay.Value / 2;
         }
     }
 }

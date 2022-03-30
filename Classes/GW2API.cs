@@ -102,131 +102,138 @@ namespace Kenedia.Modules.Characters
         }
         private async void Gw2ApiManager_SubtokenUpdated(object sender, ValueEventArgs<IEnumerable<TokenPermission>> e)
         {
-            Logger.Debug("API Subtoken Updated!");
-
-            if (Gw2ApiManager.HasPermissions(new[] { TokenPermission.Account, TokenPermission.Characters }))
+            try
             {
-                var account = await Gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
+                Logger.Debug("API Subtoken Updated!");
 
-                API_Account = account;
-                string path = DirectoriesManager.GetFullDirectoryPath("characters") + @"\" + API_Account.Name;
-                if (!Directory.Exists(path))
+                if (Gw2ApiManager.HasPermissions(new[] { TokenPermission.Account, TokenPermission.Characters }))
                 {
-                    Directory.CreateDirectory(path);
-                }
+                    var account = await Gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
 
-                CharactersPath = path + @"\characters.json";
-                AccountPath = path + @"\account.json";
-
-                if (userAccount == null)
-                {
-                    userAccount = new AccountInfo()
+                    API_Account = account;
+                    string path = DirectoriesManager.GetFullDirectoryPath("characters") + @"\" + API_Account.Name;
+                    if (!Directory.Exists(path))
                     {
-                        Name = account.Name,
-                        LastModified = account.LastModified,
-                    };
-                }
-
-                if (System.IO.File.Exists(AccountPath))
-                {
-                    requestAPI = false;
-                    List<AccountInfo> accountInfos = JsonConvert.DeserializeObject<List<AccountInfo>>(System.IO.File.ReadAllText(AccountPath));
-
-                    foreach (AccountInfo acc in accountInfos)
-                    {
-                        if (acc.Name == account.Name)
-                        {
-                            userAccount.LastBlishUpdate = acc.LastBlishUpdate;
-                            break;
-                        }
+                        Directory.CreateDirectory(path);
                     }
-                }
 
-                LoadCharacterList();
+                    CharactersPath = path + @"\characters.json";
+                    AccountPath = path + @"\account.json";
 
-                if (userAccount.CharacterUpdateNeeded())
-                {
-                    userAccount.LastBlishUpdate = account.LastModified;
-                    userAccount.Save();
-
-                    Logger.Debug("Updating Characters ....");
-                    //ScreenNotification.ShowNotification("Updating Characters!", ScreenNotification.NotificationType.Warning);
-                    Logger.Debug("The last API modification is more recent than our last local data track.");
-                    var characters = await Gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
-                    Character last = null;
-                    int j = 0;
-
-                    foreach (Gw2Sharp.WebApi.V2.Models.Character c in characters)
+                    if (userAccount == null)
                     {
-                        Character character = getCharacter(c.Name);
-                        character.Name = character.Name ?? c.Name;
-                        character.Race = (RaceType)Enum.Parse(typeof(RaceType), c.Race);
-                        character._Profession = (int)Enum.Parse(typeof(Professions), c.Profession.ToString());
-                        character.Profession = (ProfessionType)Enum.Parse(typeof(ProfessionType), c.Profession.ToString());
-                        character._Specialization = character._Specialization > -1 ? character._Specialization : -1;
-                        character.Level = c.Level;
-                        character.Created = c.Created;
-                        character.apiIndex = j;
-
-                        if (character.LastModified == dateZero || character.LastModified < account.LastModified.UtcDateTime)
+                        userAccount = new AccountInfo()
                         {
-                            character.LastModified = account.LastModified.UtcDateTime.AddSeconds(-j);
-                        }
+                            Name = account.Name,
+                            LastModified = account.LastModified,
+                        };
+                    }
 
-                        if (character.lastLogin == dateZero)
+                    if (System.IO.File.Exists(AccountPath))
+                    {
+                        requestAPI = false;
+                        List<AccountInfo> accountInfos = JsonConvert.DeserializeObject<List<AccountInfo>>(System.IO.File.ReadAllText(AccountPath));
+
+                        foreach (AccountInfo acc in accountInfos)
                         {
-                            character.lastLogin = c.LastModified.UtcDateTime;
-                        }
-
-                        character.contentsManager = ContentsManager;
-                        character.apiManager = Gw2ApiManager;
-
-                        character.Crafting = new List<CharacterCrafting>();
-
-                        foreach (CharacterCraftingDiscipline disc in c.Crafting.ToList())
-                        {
-                            character.Crafting.Add(new CharacterCrafting()
+                            if (acc.Name == account.Name)
                             {
-                                Id = (int)disc.Discipline.Value,
-                                Rating = disc.Rating,
-                                Active = disc.Active,
-                            });
+                                userAccount.LastBlishUpdate = acc.LastBlishUpdate;
+                                break;
+                            }
                         }
-
-
-                        if (!CharacterNames.Contains(c.Name))
-                        {
-                            CharacterNames.Add(c.Name);
-                            Characters.Add(character);
-                        }
-
-                        last = character;
-                        j++;
                     }
 
-                    if (last != null) last.Save();
-                    //ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
-                }
+                    LoadCharacterList();
 
-                var player = GameService.Gw2Mumble.PlayerCharacter;
-                foreach (Character character in Characters)
+                    if (userAccount.CharacterUpdateNeeded())
+                    {
+                        userAccount.LastBlishUpdate = account.LastModified;
+                        userAccount.Save();
+
+                        Logger.Debug("Updating Characters ....");
+                        //ScreenNotification.ShowNotification("Updating Characters!", ScreenNotification.NotificationType.Warning);
+                        Logger.Debug("The last API modification is more recent than our last local data track.");
+                        var characters = await Gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
+                        Character last = null;
+                        int j = 0;
+
+                        foreach (Gw2Sharp.WebApi.V2.Models.Character c in characters)
+                        {
+                            Character character = getCharacter(c.Name);
+                            character.Name = character.Name ?? c.Name;
+                            character.Race = (RaceType)Enum.Parse(typeof(RaceType), c.Race);
+                            character._Profession = (int)Enum.Parse(typeof(Professions), c.Profession.ToString());
+                            character.Profession = (ProfessionType)Enum.Parse(typeof(ProfessionType), c.Profession.ToString());
+                            character._Specialization = character._Specialization > -1 ? character._Specialization : -1;
+                            character.Level = c.Level;
+                            character.Created = c.Created;
+                            character.apiIndex = j;
+
+                            if (character.LastModified == dateZero || character.LastModified < account.LastModified.UtcDateTime)
+                            {
+                                character.LastModified = account.LastModified.UtcDateTime.AddSeconds(-j);
+                            }
+
+                            if (character.lastLogin == dateZero)
+                            {
+                                character.lastLogin = c.LastModified.UtcDateTime;
+                            }
+
+                            character.contentsManager = ContentsManager;
+                            character.apiManager = Gw2ApiManager;
+
+                            character.Crafting = new List<CharacterCrafting>();
+
+                            foreach (CharacterCraftingDiscipline disc in c.Crafting.ToList())
+                            {
+                                character.Crafting.Add(new CharacterCrafting()
+                                {
+                                    Id = (int)disc.Discipline.Value,
+                                    Rating = disc.Rating,
+                                    Active = disc.Active,
+                                });
+                            }
+
+
+                            if (!CharacterNames.Contains(c.Name))
+                            {
+                                CharacterNames.Add(c.Name);
+                                Characters.Add(character);
+                            }
+
+                            last = character;
+                            j++;
+                        }
+
+                        if (last != null) last.Save();
+                        //ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
+                    }
+
+                    var player = GameService.Gw2Mumble.PlayerCharacter;
+                    foreach (Character character in Characters)
+                    {
+                        character.Create_UI_Elements();
+                        if (player != null && player.Name == character.Name) Current.character = character;
+                    }
+
+                    charactersLoaded = true;
+                    filterCharacterPanel = true;
+
+                    double lastModified = DateTimeOffset.UtcNow.Subtract(userAccount.LastModified).TotalSeconds;
+                    double lastUpdate = DateTimeOffset.UtcNow.Subtract(userAccount.LastBlishUpdate).TotalSeconds;
+                    infoImage.BasicTooltipText = "Last Modified: " + Math.Round(lastModified) + Environment.NewLine + "Last Blish Login: " + Math.Round(lastUpdate);
+                }
+                else
                 {
-                    character.Create_UI_Elements();
-                    if (player != null && player.Name == character.Name) Current.character = character;
+                    ScreenNotification.ShowNotification(Strings.common.Error_InvalidPermissions, ScreenNotification.NotificationType.Error);
+                    Logger.Error("This API Token has not the required permissions!");
+                    // You don't actually have permission
                 }
-
-                charactersLoaded = true;
-                filterCharacterPanel = true;
-
-                double lastModified = DateTimeOffset.UtcNow.Subtract(userAccount.LastModified).TotalSeconds;
-                double lastUpdate = DateTimeOffset.UtcNow.Subtract(userAccount.LastBlishUpdate).TotalSeconds;
-                infoImage.BasicTooltipText = "Last Modified: " + Math.Round(lastModified) + Environment.NewLine + "Last Blish Login: " + Math.Round(lastUpdate);
             }
-            else
+            catch (Exception ex)
             {
-                ScreenNotification.ShowNotification(Strings.common.Error_InvalidPermissions, ScreenNotification.NotificationType.Error);
-                Logger.Error("This API Token has not the required permissions!");
-                // You don't actually have permission
+                Logger.Warn(ex, "Failed to fetch characters from the API.");
             }
         }
     }

@@ -215,6 +215,24 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fade the filter and character window automatically after 2500 ms.
+        /// </summary>
+        internal static string FadeOut_Description {
+            get {
+                return ResourceManager.GetString("FadeOut_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fade extra window.
+        /// </summary>
+        internal static string FadeOut_DisplayName {
+            get {
+                return ResourceManager.GetString("FadeOut_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Average time in milliseconds waited between filtering your characters&apos; panel.
         ///To get the current value you will have to swap module tabs once to update the settings page!.
         /// </summary>
@@ -230,6 +248,24 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string FilterDelay_DisplayName {
             get {
                 return ResourceManager.GetString("FilterDelay_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When toggling the main menu to show, automatically focus the search field.
+        /// </summary>
+        internal static string FocusFilter_Description {
+            get {
+                return ResourceManager.GetString("FocusFilter_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Focus search field.
+        /// </summary>
+        internal static string FocusFilter_DisplayName {
+            get {
+                return ResourceManager.GetString("FocusFilter_DisplayName", resourceCulture);
             }
         }
         

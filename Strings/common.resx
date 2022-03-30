@@ -169,12 +169,24 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="Error_InvalidPermissions" xml:space="preserve">
     <value>This API key does not have the required permissions.</value>
   </data>
+  <data name="FadeOut_Description" xml:space="preserve">
+    <value>Fade the filter and character window automatically after 2500 ms</value>
+  </data>
+  <data name="FadeOut_DisplayName" xml:space="preserve">
+    <value>Fade extra window</value>
+  </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Average time in milliseconds waited between filtering your characters' panel.
 To get the current value you will have to swap module tabs once to update the settings page!</value>
   </data>
   <data name="FilterDelay_DisplayName" xml:space="preserve">
     <value>Filter Delay ({0} ms)</value>
+  </data>
+  <data name="FocusFilter_Description" xml:space="preserve">
+    <value>When toggling the main menu to show, automatically focus the search field</value>
+  </data>
+  <data name="FocusFilter_DisplayName" xml:space="preserve">
+    <value>Focus search field</value>
   </data>
   <data name="Huntsman" xml:space="preserve">
     <value>Huntsman</value>

@@ -169,12 +169,24 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
   <data name="Error_InvalidPermissions" xml:space="preserve">
     <value>Esta clave API no tiene los permisos necesarios.</value>
   </data>
+  <data name="FadeOut_Description" xml:space="preserve">
+    <value>Desvanecer el filtro y la ventana de caracteres automáticamente después de 2500 ms</value>
+  </data>
+  <data name="FadeOut_DisplayName" xml:space="preserve">
+    <value>desvanecer la ventana extra</value>
+  </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Tiempo medio en milisegundos de espera entre el filtrado del panel de tus personajes.
 Para obtener el valor actual tendrás que cambiar las pestañas del módulo una vez para actualizar la página de configuración.</value>
   </data>
   <data name="FilterDelay_DisplayName" xml:space="preserve">
     <value>Retraso del filtro ({0} ms)</value>
+  </data>
+  <data name="FocusFilter_Description" xml:space="preserve">
+    <value>Al mostrar el menú principal, enfocar automáticamente el campo de búsqueda</value>
+  </data>
+  <data name="FocusFilter_DisplayName" xml:space="preserve">
+    <value>Campo de búsqueda de enfoque</value>
   </data>
   <data name="Huntsman" xml:space="preserve">
     <value>Cazador</value>

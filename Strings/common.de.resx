@@ -169,12 +169,24 @@ Sobald es vollständig geladen ist, wechselt es zu dem Charakter, der als "Login
   <data name="Error_InvalidPermissions" xml:space="preserve">
     <value>Dieser API-Schlüssel hat nicht die erforderlichen Berechtigungen.</value>
   </data>
+  <data name="FadeOut_Description" xml:space="preserve">
+    <value>Filter und Charakterfenster automatisch nach 2500 ms ausblenden</value>
+  </data>
+  <data name="FadeOut_DisplayName" xml:space="preserve">
+    <value>Verblasse extra Fenster</value>
+  </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Durchschnittliche Zeit in Millisekunden, die zwischen dem Filtern des Panels Ihrer Charaktere gewartet wird.
 Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, um die Einstellungsseite zu aktualisieren!</value>
   </data>
   <data name="FilterDelay_DisplayName" xml:space="preserve">
     <value>Filterverzögerung ({0} ms)</value>
+  </data>
+  <data name="FocusFilter_Description" xml:space="preserve">
+    <value>Wenn das Hauptmenü angezeigt wird, wird das Suchfeld automatisch fokussiert</value>
+  </data>
+  <data name="FocusFilter_DisplayName" xml:space="preserve">
+    <value>Fokusiere Suchfeld</value>
   </data>
   <data name="Huntsman" xml:space="preserve">
     <value>Waidmann</value>

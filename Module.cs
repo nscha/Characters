@@ -88,6 +88,7 @@ namespace Kenedia.Modules.Characters
             public static double Tick_Save;
             public static double Tick_Update;
             public static double Tick_APIUpdate;
+            public static double Tick_FadeEffect;
         }
         private static class Current
         {
@@ -261,57 +262,66 @@ namespace Kenedia.Modules.Characters
                 }
             }
         }
-        private void LoadCharacterList()
+        private bool LoadCharacterList()
         {
-            Logger.Debug("Character File exists: " + System.IO.File.Exists(CharactersPath));
-            if (System.IO.File.Exists(CharactersPath))
+            try
             {
-                requestAPI = false;
-                List<JsonCharacter> characters = JsonConvert.DeserializeObject<List<JsonCharacter>>(System.IO.File.ReadAllText(CharactersPath));
-
-                foreach (JsonCharacter c in characters)
+                Logger.Debug("Character File exists: " + System.IO.File.Exists(CharactersPath));
+                if (System.IO.File.Exists(CharactersPath))
                 {
-                    Character character = new Character()
-                    {
-                        contentsManager = ContentsManager,
-                        apiManager = Gw2ApiManager,
+                    requestAPI = false;
+                    List<JsonCharacter> characters = JsonConvert.DeserializeObject<List<JsonCharacter>>(System.IO.File.ReadAllText(CharactersPath));
 
-                        Race = c.Race,
-                        Name = c.Name,
-                        lastLogin = c.lastLogin,
-                        _Profession = c.Profession,
-                        _Specialization = c.Specialization,
-                        Crafting = c.Crafting,
-                        apiIndex = c.apiIndex,
-                        Created = c.Created,
-                        LastModified = c.LastModified,
-                        map = c.map,
-                        Level = c.Level,
-                        Tags = c.Tags != null && c.Tags != "" ? c.Tags.Split('|').ToList() : new List<string>(),
-                        loginCharacter = c.loginCharacter,
-                        include = c.include,
-                    };
-
-                    foreach(string tag in character.Tags)
+                    foreach (JsonCharacter c in characters)
                     {
-                        if (!Tags.Contains(tag)) Tags.Add(tag);
+                        Character character = new Character()
+                        {
+                            contentsManager = ContentsManager,
+                            apiManager = Gw2ApiManager,
+
+                            Race = c.Race,
+                            Name = c.Name,
+                            lastLogin = c.lastLogin,
+                            _Profession = c.Profession,
+                            _Specialization = c.Specialization,
+                            Crafting = c.Crafting,
+                            apiIndex = c.apiIndex,
+                            Created = c.Created,
+                            LastModified = c.LastModified,
+                            map = c.map,
+                            Level = c.Level,
+                            Tags = c.Tags != null && c.Tags != "" ? c.Tags.Split('|').ToList() : new List<string>(),
+                            loginCharacter = c.loginCharacter,
+                            include = c.include,
+                        };
+
+                        foreach (string tag in character.Tags)
+                        {
+                            if (!Tags.Contains(tag)) Tags.Add(tag);
+                        }
+
+                        Characters.Add(character);
+                        CharacterNames.Add(character.Name);
+                        if (c.loginCharacter) loginCharacter = character;
                     }
 
-                    Characters.Add(character);
-                    CharacterNames.Add(character.Name);
-                    if (c.loginCharacter) loginCharacter = character;
-                }
-
-                var iC = new Character();
-                foreach (string tag in Tags)
-                {
-                    var entry = new TagEntry(tag, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));
-                    entry.Click += delegate
+                    var iC = new Character();
+                    foreach (string tag in Tags)
                     {
-                        filterTextBox.Text += ((filterTextBox.Text.Trim().EndsWith(";") || filterTextBox.Text.Trim() == "") ? " " : "; ") + "-t " + tag;
-                    };
-                    TagEntries.Add(entry);
+                        var entry = new TagEntry(tag, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));
+                        entry.Click += delegate
+                        {
+                            filterTextBox.Text += ((filterTextBox.Text.Trim().EndsWith(";") || filterTextBox.Text.Trim() == "") ? " " : "; ") + "-t " + tag;
+                        };
+                        TagEntries.Add(entry);
+                    }
                 }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn(ex, "Failed to load the local characters from file '" + CharactersPath + "'.");
+                return false;
             }
         }
 
@@ -644,6 +654,10 @@ namespace Kenedia.Modules.Characters
             {
                 subWindow.Hide();
                 filterWindow.Hide();
+                if (Settings.FocusFilter.Value) {
+                    Control.ActiveControl = filterTextBox;
+                    filterTextBox.Focused = true;
+                };
             };            
 
             infoImage = new Image()
@@ -1227,6 +1241,7 @@ namespace Kenedia.Modules.Characters
             Last.Tick_Update += gameTime.ElapsedGameTime.TotalMilliseconds;
             Last.Tick_APIUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
             Last.Tick_PanelUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
+            Last.Tick_FadeEffect += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (charactersLoaded && Last.Tick_Update > 250)
             {
@@ -1250,6 +1265,16 @@ namespace Kenedia.Modules.Characters
                 {
                     swapCharacter.Swap();
                     swapCharacter = null;
+                }
+            }
+
+            if (Settings.FadeSubWindows.Value && Last.Tick_FadeEffect > 30)
+            {
+                Last.Tick_FadeEffect = -30;
+                if (filterWindow.Visible && DateTime.Now.Subtract(filterWindow.lastInput).TotalMilliseconds >= 2500)
+                {
+                    filterWindow.Opacity = filterWindow.Opacity - (float)0.1;
+                    if (filterWindow.Opacity <= (float) 0) filterWindow.Hide();
                 }
             }
 

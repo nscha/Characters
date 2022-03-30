@@ -377,6 +377,17 @@ namespace Kenedia.Modules.Characters
     }
     public class FilterWindow : BasicContainer
     {
+        public FilterWindow()
+        {            
+            this.Click += delegate { lastInput = DateTime.Now; Opacity = 1;   };
+            MouseMoved += delegate { lastInput = DateTime.Now; Opacity = 1; Module.Logger.Debug("Mouse Moved!"); };
+            this.MouseEntered += delegate { lastInput = DateTime.Now; Opacity = 1;  };
+            this.MouseLeft += delegate { lastInput = DateTime.Now; Opacity = 1;  };
+            this.Shown += delegate { lastInput = DateTime.Now; Opacity = 1; };
+            this.Hidden += delegate { Opacity = 1; };
+        }
+        public DateTime lastInput;
+        public int Alpha = 255;
         public HeadedFlowRegion Utility;
         public HeadedFlowRegion Crafting;
         public HeadedFlowRegion Profession;

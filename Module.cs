@@ -20,6 +20,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Color = Microsoft.Xna.Framework.Color;
 using static Blish_HUD.GameService;
 using Blish_HUD.Input;
+using System.Runtime.InteropServices;
 
 namespace Kenedia.Modules.Characters
 {
@@ -41,10 +42,30 @@ namespace Kenedia.Modules.Characters
         #endregion
         public static string CharactersPath;
         public static string AccountPath;
+        public static string AccountImagesPath;
+        public static string GlobalImagesPath;
         [ImportingConstructor]
         public Module([Import("ModuleParameters")] ModuleParameters moduleParameters) : base(moduleParameters) {
             ModuleInstance = this;
         }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int Width, int Height, bool Repaint);
+
+
+
 
         #region Global Variables
         public static _Settings Settings = new _Settings();
@@ -71,6 +92,8 @@ namespace Kenedia.Modules.Characters
         public static FlowPanel filterTagsPanel;
 
         public static CharacterDetailWindow subWindow { get; private set; }
+        public static BasicContainer screenCaptureWindow { get; private set; }
+        public static BasicContainer captureBox;
 
         //States
         public static bool charactersLoaded;
@@ -89,6 +112,7 @@ namespace Kenedia.Modules.Characters
             public static double Tick_Update;
             public static double Tick_APIUpdate;
             public static double Tick_FadeEffect;
+            public static DateTime Tick_ImageSave;
         }
         private static class Current
         {
@@ -124,19 +148,48 @@ namespace Kenedia.Modules.Characters
             ModKeyMapping[(int)ModifierKeys.Shift] = VirtualKeyShort.LSHIFT;
 
             LoadTextures();
+
             Gw2ApiManager.SubtokenUpdated += Gw2ApiManager_SubtokenUpdated;
             AccountPath = DirectoriesManager.GetFullDirectoryPath("characters") + @"\accounts.json";
+
+            GlobalImagesPath = DirectoriesManager.GetFullDirectoryPath("characters") + @"\images\";
+            LoadCustomImages();
 
             DataManager.ContentsManager = ContentsManager;
             DataManager.Load();
 
             Settings.ShortcutKey.Value.Enabled = true;
             Settings.ShortcutKey.Value.Activated += OnKeyPressed_ToggleMenu;
+
+            Settings.SwapModifier.Value.Enabled = true;
+            Settings.SwapModifier.Value.Activated += OnKeyPressed_LogoutMod;
+        }
+
+        private void LoadCustomImages()
+        {
+            var global_images = Directory.GetFiles(GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
+
+            Textures.CustomImages = new Texture2D[global_images.Count + 100];
+
+            GameService.Graphics.QueueMainThreadRender((graphicsDevice) => {
+                Logger.Debug("Loading all custom Images ... ");
+                var basePath = DirectoriesManager.GetFullDirectoryPath("characters");
+                var i = 0;
+
+                foreach (string image_path in global_images)
+                {
+                    Textures.CustomImages[i] = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(image_path, FileMode.Open));
+                    Textures.CustomImages[i].Name = image_path.Replace(basePath, "");
+                    i++;
+                }
+
+                Textures.Loaded = true;
+            });
         }
 
         private void LoadTextures()
         {
-            Logger.Debug("Loading Textures....");          
+            Logger.Debug("Loading Textures....");
 
             Textures.Backgrounds = new Texture2D[Enum.GetValues(typeof(_Backgrounds)).Cast<int>().Max() + 1];
             foreach (_Backgrounds background in Enum.GetValues(typeof(_Backgrounds)))
@@ -166,18 +219,22 @@ namespace Kenedia.Modules.Characters
 
             Textures.Professions = new Texture2D[Enum.GetValues(typeof(Professions)).Cast<int>().Max() + 1];
             Textures.ProfessionsDisabled = new Texture2D[Enum.GetValues(typeof(Professions)).Cast<int>().Max() + 1];
+            Textures.ProfessionsWhite = new Texture2D[Enum.GetValues(typeof(Professions)).Cast<int>().Max() + 1];
             foreach (Professions profession in Enum.GetValues(typeof(Professions)))
             {
                 Textures.Professions[(int)profession] = ContentsManager.GetTexture(@"textures\professions\" + (int)profession + ".png");
                 Textures.ProfessionsDisabled[(int)profession] = ContentsManager.GetTexture(@"textures\professions gray\" + (int)profession + ".png");
+                Textures.ProfessionsWhite[(int)profession] = ContentsManager.GetTexture(@"textures\professions white\" + (int)profession + ".png");
             }
 
             Textures.Specializations = new Texture2D[Enum.GetValues(typeof(Specializations)).Cast<int>().Max() + 1];
             Textures.SpecializationsDisabled = new Texture2D[Enum.GetValues(typeof(Specializations)).Cast<int>().Max() + 1];
+            Textures.SpecializationsWhite = new Texture2D[Enum.GetValues(typeof(Specializations)).Cast<int>().Max() + 1];
             foreach (Specializations specialization in Enum.GetValues(typeof(Specializations)))
             {
                 Textures.Specializations[(int)specialization] = ContentsManager.GetTexture(@"textures\specializations\" + (int)specialization + ".png");
                 Textures.SpecializationsDisabled[(int)specialization] = ContentsManager.GetTexture(@"textures\specializations gray\" + (int)specialization + ".png");
+                Textures.SpecializationsWhite[(int)specialization] = ContentsManager.GetTexture(@"textures\specializations white\" + (int)specialization + ".png");
             }
 
             Textures.Crafting = new Texture2D[Enum.GetValues(typeof(Crafting)).Cast<int>().Max() + 1];
@@ -194,10 +251,9 @@ namespace Kenedia.Modules.Characters
             {
                 CharacterTooltip ttp = (CharacterTooltip)c.characterControl.Tooltip;
 
-                ttp._mapLabel.Text = DataManager.getMapName(c.map);
-                ttp._raceLabel.Text = DataManager.getRaceName(c.Race.ToString());
-
-                c.switchButton.BasicTooltipText = string.Format(Strings.common.Switch, c.Name);
+                ttp._Map.Text = DataManager.getMapName(c.Map);
+                ttp._Race.Text = DataManager.getRaceName(c.Race.ToString());
+                ttp._switchInfoLabel.Text = string.Format(Strings.common.DoubleClickToSwap, c.Name);
             }
 
             filterTextBox.PlaceholderText = Strings.common.SearchFor;
@@ -272,51 +328,70 @@ namespace Kenedia.Modules.Characters
                     requestAPI = false;
                     List<JsonCharacter> characters = JsonConvert.DeserializeObject<List<JsonCharacter>>(System.IO.File.ReadAllText(CharactersPath));
 
-                    foreach (JsonCharacter c in characters)
+                    if (characters != null)
                     {
-                        Character character = new Character()
+                        foreach (JsonCharacter c in characters)
                         {
-                            contentsManager = ContentsManager,
-                            apiManager = Gw2ApiManager,
+                            Character character = new Character()
+                            {
+                                contentsManager = ContentsManager,
+                                apiManager = Gw2ApiManager,
 
-                            Race = c.Race,
-                            Name = c.Name,
-                            lastLogin = c.lastLogin,
-                            _Profession = c.Profession,
-                            _Specialization = c.Specialization,
-                            Crafting = c.Crafting,
-                            apiIndex = c.apiIndex,
-                            Created = c.Created,
-                            LastModified = c.LastModified,
-                            map = c.map,
-                            Level = c.Level,
-                            Tags = c.Tags != null && c.Tags != "" ? c.Tags.Split('|').ToList() : new List<string>(),
-                            loginCharacter = c.loginCharacter,
-                            include = c.include,
-                        };
+                                Race = c.Race,
+                                Name = c.Name,
+                                lastLogin = c.lastLogin,
+                                _Profession = c.Profession,
+                                _Specialization = c.Specialization,
+                                Crafting = c.Crafting,
+                                apiIndex = c.apiIndex,
+                                Created = c.Created,
+                                LastModified = c.LastModified,
+                                Map = c.Map,
+                                Level = c.Level,
+                                Tags = c.Tags != null && c.Tags != "" ? c.Tags.Split('|').ToList() : new List<string>(),
+                                loginCharacter = c.loginCharacter,
+                                include = c.include,
+                                Icon = c.Icon,
+                            };
 
-                        foreach (string tag in character.Tags)
-                        {
-                            if (!Tags.Contains(tag)) Tags.Add(tag);
+                            foreach (string tag in character.Tags)
+                            {
+                                if (!Tags.Contains(tag)) Tags.Add(tag);
+                            }
+
+                            Characters.Add(character);
+                            CharacterNames.Add(character.Name);
+                            if (c.loginCharacter) loginCharacter = character;
                         }
 
-                        Characters.Add(character);
-                        CharacterNames.Add(character.Name);
-                        if (c.loginCharacter) loginCharacter = character;
-                    }
-
-                    var iC = new Character();
-                    foreach (string tag in Tags)
-                    {
-                        var entry = new TagEntry(tag, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));
-                        entry.Click += delegate
+                        var iC = new Character();
+                        foreach (string txt in Tags)
                         {
-                            filterTextBox.Text += ((filterTextBox.Text.Trim().EndsWith(";") || filterTextBox.Text.Trim() == "") ? " " : "; ") + "-t " + tag;
-                        };
-                        TagEntries.Add(entry);
+                            var entry = new TagEntry(txt, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));
+                            entry.Click += delegate
+                            {
+                                if (filterTextBox.Text.ToLower().Contains(txt.ToLower()))
+                                {
+                                    var newTxt = filterTextBox.Text;
+                                    newTxt = txt.Replace("; -t " + txt + ";", "");
+                                    newTxt = txt.Replace("; -t " + txt, "");
+                                    newTxt = txt.Replace("-t " + txt + ";", "");
+                                    newTxt = txt.Replace("-t " + txt, "");
+                                    filterTextBox.Text = txt.Trim();
+                                }
+                                else
+                                {
+                                    filterTextBox.Text += (((filterTextBox.Text.Trim().EndsWith(";") || filterTextBox.Text.Trim() == "") ? " " : "; ") + "-t " + txt).Trim();
+                                }
+                            };
+                            TagEntries.Add(entry);
+                        }
+
+                        return true;
                     }
                 }
-                return true;
+
+                return false;
             }
             catch (Exception ex)
             {
@@ -345,11 +420,12 @@ namespace Kenedia.Modules.Characters
                         apiIndex = c.apiIndex,
                         Created = c.Created,
                         LastModified = c.LastModified,
-                        map = c.map,
+                        Map = c.Map,
                         Level = c.Level,
                         Tags = String.Join("|", c.Tags),
                         loginCharacter = c.loginCharacter,
                         include = c.include,
+                        Icon = c.Icon,
                     };
 
 
@@ -383,6 +459,25 @@ namespace Kenedia.Modules.Characters
             }
 
             return new Character();
+        }
+        class Match
+        {
+            public List<ToggleIcon> toggleIcons = new List<ToggleIcon>();
+            public bool disabled {
+                get { 
+                    foreach (ToggleIcon toggleIcon in toggleIcons)
+                    {
+                        if (toggleIcon != null && toggleIcon._State == 1) return false;
+                    }
+
+                    return true;
+                }
+            }
+            public bool match = false;
+            public bool isMatching
+            {
+                get { return disabled || match; }
+            }
         }
         private void UpdateCharacterPanel()
         {
@@ -485,7 +580,7 @@ namespace Kenedia.Modules.Characters
 
                     foreach (string s in birthdayFilters)
                     {
-                        if (c.birthdayImage.Visible) return true;
+                        if (c.characterControl.birthday_Image.Visible) return true;
                     }
 
                     foreach (string s in raceFilters)
@@ -496,7 +591,7 @@ namespace Kenedia.Modules.Characters
 
                     foreach (string s in mapFilters)
                     {
-                        var map = DataManager.getMapName(c.map);
+                        var map = DataManager.getMapName(c.Map);
                         if (map != null && map.ToLower().Contains(s)) return true;
                     }
 
@@ -509,41 +604,57 @@ namespace Kenedia.Modules.Characters
                 }
                 bool matchingToggles(Character c)
                 {
-                    bool professionMatch = false;
-                    bool craftingMatch = false;
-                    bool birthdayMatch = false;
-                    bool raceMatch = false;
-                    bool specMatch = false;
+                    Match professionMatch = new Match() {
+                    toggleIcons = filterProfessions,
+                    };
+                    Match craftingMatch = new Match()
+                    {
+                        toggleIcons = filterCrafting,
+                    };
+                    Match raceMatch = new Match()
+                    {
+                        toggleIcons = filterRaces,
+                    };
+                    Match specMatch = new Match()
+                    {
+                        toggleIcons = filterSpecs,
+                    };
+                    specMatch.toggleIcons.AddRange(filterBaseSpecs);
+                    Match birthdayMatch = new Match();
+                    birthdayMatch.toggleIcons.Add(filterWindow.birthdayToggle);
 
                     foreach (ToggleIcon toggle in filterProfessions)
                     {
-                        if (toggle != null && toggle._State == 1 && toggle.Id == (int)c._Profession) professionMatch = true;
+                        if (toggle != null && toggle._State == 1)
+                        {
+                            if (toggle != null && toggle._State == 1 && toggle.Id == (int)c._Profession) professionMatch.match = true;
+                        }
                     }
 
                     foreach (ToggleIcon toggle in filterSpecs)
                     {
-                        if (toggle != null && toggle._State == 1 && (toggle.Id == (int)c._Specialization)) specMatch = true;
+                        if (toggle != null && toggle._State == 1 && (toggle.Id == (int)c._Specialization)) specMatch.match = true;
                     }
 
                     foreach (ToggleIcon toggle in filterBaseSpecs)
                     {
-                        if (toggle != null && toggle._State == 1 && ((int)c._Specialization == 0 && toggle.Id == (int)c._Profession)) specMatch = true;
+                        if (toggle != null && toggle._State == 1 && ((int)c._Specialization == 0 && toggle.Id == (int)c._Profession)) specMatch.match = true;
                     }
 
                     foreach (ToggleIcon toggle in filterRaces)
                     {
-                        if (toggle != null && toggle._State == 1 && toggle.Id == (int)c.Race) raceMatch = true;
+                        if (toggle != null && toggle._State == 1 && toggle.Id == (int)c.Race) raceMatch.match = true;
                     }
 
                     foreach (ToggleIcon toggle in filterCrafting)
                     {
-                        if (toggle != null && toggle._State == 1 && toggle.Id == 0 && c.Crafting.Count == 0) { craftingMatch = true; break; };
+                        if (toggle != null && toggle._State == 1 && toggle.Id == 0 && c.Crafting.Count == 0) { craftingMatch.match = true; break; };
 
                         if (toggle != null && toggle._State == 1)
                         {
                             foreach (CharacterCrafting crafting in c.Crafting)
                             {
-                                if (crafting.Active && toggle.Id == crafting.Id) craftingMatch = true;
+                                if (crafting.Active && toggle.Id == crafting.Id && (!Settings.OnlyMaxCrafting.Value || crafting.Rating == 500 || (crafting.Id == 4 || crafting.Id == 7) && crafting.Rating == 400)) craftingMatch.match = true;
                             }
                         }
                     }
@@ -551,16 +662,16 @@ namespace Kenedia.Modules.Characters
                     switch (filterWindow.birthdayToggle._State)
                     {
                         case 0:
-                            birthdayMatch = true;
+                            birthdayMatch.match = true;
                             break;
                         case 1:
-                            birthdayMatch = c.birthdayImage.Visible == true;
+                            birthdayMatch.match = c.characterControl.birthday_Image.Visible == true;
                             break;
                         case 2:
-                            birthdayMatch = c.birthdayImage.Visible == false;
+                            birthdayMatch.match = c.characterControl.birthday_Image.Visible == false;
                             break;
                     }
-                    return craftingMatch && professionMatch && birthdayMatch && raceMatch && specMatch;
+                    return craftingMatch.isMatching && professionMatch.isMatching && birthdayMatch.isMatching && raceMatch.isMatching && specMatch.isMatching;
                 }
 
                 foreach (Character character in Characters)
@@ -610,6 +721,21 @@ namespace Kenedia.Modules.Characters
             CreateWindow();
             CreateFilterWindow();
             CreateSubWindow();
+            CreateScreenCapture();
+
+            GameService.Graphics.SpriteScreen.Resized += delegate
+            {
+                bool captureResolution = GameService.Graphics.Resolution.X == 1084 && GameService.Graphics.Resolution.Y == 761;
+
+                if (captureResolution)
+                {
+                    screenCaptureWindow.Dispose();
+                    CreateScreenCapture();
+                    screenCaptureWindow.Visible = captureResolution;
+                }
+
+                screenCaptureWindow.Visible = captureResolution; //captureResolution
+            };
 
             var player = GameService.Gw2Mumble.PlayerCharacter;
             player.SpecializationChanged += delegate {
@@ -627,6 +753,30 @@ namespace Kenedia.Modules.Characters
             {
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
             };
+        }
+        void ResetFilters()
+        {
+            List<List<ToggleIcon>> toggles = new List<List<ToggleIcon>>();
+            toggles.Add(filterCrafting);
+            toggles.Add(filterProfessions);
+            toggles.Add(filterSpecs);
+            toggles.Add(filterRaces);
+            toggles.Add(filterBaseSpecs);
+
+            foreach (List<ToggleIcon> toggleArray in toggles)
+            {
+                foreach (ToggleIcon toggle in toggleArray)
+                {
+                    if (toggle != null)
+                    {
+                        toggle._State = 0;
+                    }
+                }
+            }
+
+            filterWindow.birthdayToggle._State = 0;
+            filterTextBox.Text = null;
+            filterCharacterPanel = true;
         }
         private void CreateWindow()
         {
@@ -694,6 +844,21 @@ namespace Kenedia.Modules.Characters
 
             Tooltip tt = new Tooltip();
             filterTextBox.TextChanged += delegate { filterCharacterPanel = true; };
+            filterTextBox.EnterPressed += delegate 
+            {
+               if (Settings.EnterToLogin.Value)
+                {
+                    foreach (CharacterControl c in CharacterPanel.Children)
+                    {
+                        if (c.Visible)
+                        {
+                            c.assignedCharacter.Swap();
+                            break;
+                        }
+                    }
+                } 
+            };
+
             filterTextBox.Click += delegate {
                 if (filterWindow.Visible)
                 {
@@ -713,31 +878,7 @@ namespace Kenedia.Modules.Characters
                 Parent = MainWidow,
                 ResizeIcon = true,
             };
-            void reset()
-            {
-                List<List<ToggleIcon>> toggles = new List<List<ToggleIcon>>();
-                toggles.Add(filterCrafting);
-                toggles.Add(filterProfessions);
-                toggles.Add(filterSpecs);
-                toggles.Add(filterRaces);
-                toggles.Add(filterBaseSpecs);
-
-                foreach(List<ToggleIcon>  toggleArray in toggles)
-                {
-                    foreach (ToggleIcon toggle in toggleArray)
-                    {
-                        if (toggle != null)
-                        {
-                            toggle._State = 1;
-                        }
-                    }
-                }
-
-                filterWindow.birthdayToggle._State = 0;
-                filterTextBox.Text = null;
-                filterCharacterPanel = true;
-            }
-            clearButton.Click += delegate { reset(); };
+            clearButton.Click += delegate { ResetFilters(); };
 
             CharacterPanel = new FlowPanel()
             {
@@ -880,10 +1021,10 @@ namespace Kenedia.Modules.Characters
                         Textures.RacesDisabled[index],
                         Textures.Races[index],
                     },
-                    _State = 1,
+                    _State = 0,
                     _MaxState = 2,
                     Size = new Point(24, 24),
-                    Texture = Textures.Races[index],
+                    Texture = Textures.RacesDisabled[index],
                     Parent = region,
                     Id = index,
                 });
@@ -921,7 +1062,7 @@ namespace Kenedia.Modules.Characters
                         Textures.CraftingDisabled[index],
                         Textures.Crafting[index],
                     },
-                    _State = 1,
+                    _State = 0,
                     _MaxState = 2,
                     Parent = region,
                     Id = index,
@@ -951,7 +1092,7 @@ namespace Kenedia.Modules.Characters
                         Textures.ProfessionsDisabled[index],
                         Textures.Professions[index],
                     },
-                    _State = 1,
+                    _State = 0,
                     _MaxState = 2,
                     Parent = region,
                     Id = index,
@@ -980,7 +1121,7 @@ namespace Kenedia.Modules.Characters
                         Textures.ProfessionsDisabled[index],
                         Textures.Professions[index],
                     },
-                    _State = 1,
+                    _State = 0,
                     _MaxState = 2,
                     Parent = region,
                     Id = index,
@@ -997,7 +1138,7 @@ namespace Kenedia.Modules.Characters
                          Textures.SpecializationsDisabled[index],
                           Textures.Specializations[index],
                     },
-                    _State = 1,
+                    _State = 0,
                     _MaxState = 2,
                     Parent = region,
                     Id = index,
@@ -1069,7 +1210,24 @@ namespace Kenedia.Modules.Characters
 
             MainWidow.Moved += delegate {
                 subWindow.Location = new Point(MainWidow.Location.X + WINDOW_WIDTH - 25, MainWidow.Location.Y + offset);
-            };            
+            };
+
+            subWindow.border_TopRight = new Image()
+            {
+                Parent = subWindow,
+                Location = new Point(0, 0),
+                Size = new Point(58, 58),
+                Texture = Textures.Backgrounds[(int)_Backgrounds.BorderTopRight],
+                Visible = false,
+            };
+            subWindow.border_BottomLeft = new Image()
+            {
+                Parent = subWindow,
+                Location = new Point(0, 0),
+                Size = new Point(58, 58),
+                Texture = Textures.Backgrounds[(int)_Backgrounds.BorderBottomLeft],
+                Visible = false,
+            };
 
             //Profession Icon
             subWindow.spec_Image = new Image()
@@ -1078,6 +1236,21 @@ namespace Kenedia.Modules.Characters
                 Texture = Textures.Professions[(int) Professions.Guardian],
                 Size = new Point(58, 58),
                 Parent = subWindow,
+            };
+            subWindow.spec_Image.MouseEntered += delegate {
+                if (!GameService.GameIntegration.Gw2Instance.IsInGame) subWindow.spec_Image.Texture = Textures.Icons[(int)Icons.CogMedium];
+            };
+            subWindow.spec_Image.MouseLeft += delegate {
+                subWindow.spec_Image.Texture = subWindow.assignedCharacter.getProfessionTexture();
+            };
+            subWindow.spec_Image.Click += delegate
+            {
+                if (!GameService.GameIntegration.Gw2Instance.IsInGame)
+                {
+                    var pos = new RECT();
+                    GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref pos);
+                    MoveWindow(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, pos.Left, pos.Top, 1100, 800, false);
+                }
             };
 
             //Character Name
@@ -1099,6 +1272,7 @@ namespace Kenedia.Modules.Characters
                 Texture = Textures.Icons[(int)Icons.Visible],
                 Size = new Point(32, 32),
                 Parent = subWindow,
+                BasicTooltipText = string.Format(Strings.common.ShowHide_Tooltip, "Name"),
             };
             subWindow.include_Image.Click += delegate {
                 subWindow.assignedCharacter.include = !subWindow.assignedCharacter.include;
@@ -1188,7 +1362,19 @@ namespace Kenedia.Modules.Characters
                         var entry = new TagEntry(txt, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));
                         entry.Click += delegate
                         {
-                            filterTextBox.Text += ((filterTextBox.Text.Trim().EndsWith(";") || filterTextBox.Text.Trim() == "") ? " " : "; ") + "-t " + txt;
+                            if (filterTextBox.Text.ToLower().Contains(txt.ToLower()))
+                            {
+                                var newTxt = filterTextBox.Text;
+                                newTxt = txt.Replace("; -t " + txt + ";", "");
+                                newTxt = txt.Replace("; -t " + txt, "");
+                                newTxt = txt.Replace("-t " + txt + ";", "");
+                                newTxt = txt.Replace("-t " + txt, "");
+                                filterTextBox.Text = txt.Trim();
+                            }
+                            else
+                            {
+                                filterTextBox.Text += (((filterTextBox.Text.Trim().EndsWith(";") || filterTextBox.Text.Trim() == "") ? " " : "; ") + "-t " + txt).Trim();
+                            }
                         };
                         TagEntries.Add(entry);
                     }
@@ -1226,6 +1412,158 @@ namespace Kenedia.Modules.Characters
 
             subWindow.Hide();
         }
+        private void CreateScreenCapture()
+        {
+            // UI Scale Larger
+            // WinSize
+
+            double scale = GameService.Graphics.UIScaleMultiplier;
+
+            var resolution = GameService.Graphics.Resolution;
+            var sidePadding = 255 ;
+            var bottomPadding = 100;
+
+            var CharacterImageSize = (int)(140);
+            var Image_Gap = -10;
+            var topMenuHeight = 60;
+
+            
+            screenCaptureWindow = new BasicContainer()
+            {
+                showBackground = false,
+                FrameColor = Color.Transparent,
+                Parent = GameService.Graphics.SpriteScreen,
+                Location = new Point(sidePadding, resolution.Y - (bottomPadding) - topMenuHeight),
+                //Size = new Point(resolution.X - (sidePadding - 90 ), CharacterImageSize + 5 + topMenuHeight * 20),
+                Size = new Point(resolution.X - (sidePadding - 90 ), topMenuHeight),
+                Visible = false,
+            };
+
+            Image_Gap = 17;
+            CharacterImageSize = 124;
+
+            var captureAllbtn = new StandardButton()
+            {
+                Parent = screenCaptureWindow,
+                Text = "Capture All",
+                Location = new Point(4 + 2 + (5 * (CharacterImageSize + Image_Gap)), 0),
+                Size = new Point(CharacterImageSize, topMenuHeight - 30),
+            };
+
+            for (int i = 0; i < (5); i++)
+            {
+                int[] offsets = { -1, 0, 0, 1, 1 };
+                var ctn = new BasicContainer()
+                {
+                    showBackground = false,
+                    FrameColor = Color.Transparent,
+                    Parent = screenCaptureWindow,
+                    Location = new Point(4  + offsets[i] + (i * (CharacterImageSize + Image_Gap)), 1 + topMenuHeight),
+                    Size = new Point(CharacterImageSize, CharacterImageSize),
+                    Visible = false,
+                };
+
+                var btn = new StandardButton()
+                {
+                    Parent = screenCaptureWindow,
+                    Text = "Capture",
+                    Location = new Point(4 + offsets[i] + (i * (CharacterImageSize + Image_Gap)), 0),
+                    Size = new Point(CharacterImageSize, topMenuHeight - 30),
+                };
+
+                void click ()
+                {
+                    var images = Directory.GetFiles(GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
+
+                    //Last.Tick_ImageSave = DateTime.Now;
+                    CharacterImageSize = 110;
+                    var TitleBarHeight = 33;
+                    var SideBarWidth = 10;
+                    var clientRectangle = new RECT();
+                    GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref clientRectangle);
+
+                    var cPos = ctn.AbsoluteBounds;
+                    double factor = GameService.Graphics.UIScaleMultiplier;
+
+                    using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(CharacterImageSize, CharacterImageSize))
+                    {
+                        using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
+                        {
+                            var x = (int)(cPos.X * factor);
+                            var y = (int)(cPos.Y * factor);
+
+                            g.CopyFromScreen(new System.Drawing.Point(clientRectangle.Left + x + SideBarWidth, clientRectangle.Top + y + TitleBarHeight), System.Drawing.Point.Empty, new System.Drawing.Size(CharacterImageSize, CharacterImageSize));
+                        }
+                        bitmap.Save(GlobalImagesPath + "Image " + (images.Count + 1) + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                    }
+
+                    LoadCustomImages();
+                };
+
+                btn.Click += delegate { click(); };
+                captureAllbtn.Click += delegate { click(); };
+
+            }     
+            
+
+        }
+        private void CreateScreenCapture_NormalSize()
+        {
+
+            var resolution = GameService.Graphics.Resolution;
+            var sidePadding = 200;
+            var bottomPadding = 0;
+
+            var CharacterImageSize = 102;
+            var Image_Gap = -10;
+            var topMenuHeight = 60;
+
+            
+            Logger.Debug("X: " + resolution.X + "; Y:" + resolution.Y);
+            screenCaptureWindow = new BasicContainer()
+            {
+                showBackground = false,
+                FrameColor = Color.Transparent,
+                Parent = GameService.Graphics.SpriteScreen,
+                Location = new Point(sidePadding, resolution.Y - (bottomPadding) - topMenuHeight),
+                Size = new Point(resolution.X - (sidePadding - 90 ), CharacterImageSize + 5 + topMenuHeight),
+            };
+
+            Image_Gap = 4;
+            CharacterImageSize = 102;
+
+            for (int i = 0; i < (resolution.X / CharacterImageSize); i++)
+            {
+
+                var ctn = new BasicContainer()
+                {
+                    showBackground = false,
+                    FrameColor = Color.Red,
+                    Parent = screenCaptureWindow,
+                    Location = new Point(Image_Gap + (i * (CharacterImageSize + Image_Gap + (11))), 1 + topMenuHeight),
+                    Size = new Point(CharacterImageSize, CharacterImageSize),
+                };
+
+                var btn = new StandardButton()
+                {
+                    Parent = screenCaptureWindow,
+                    Text = "Capture",
+                    Location = new Point(Image_Gap + (i * (CharacterImageSize + Image_Gap + (11))), 0),
+                    Size = new Point(CharacterImageSize, topMenuHeight - 30),
+                };
+
+                btn.Click += delegate
+                {
+                    captureBox = ctn;
+                };
+            }        
+        }
+        private void OnKeyPressed_LogoutMod(object o, EventArgs e)
+        {
+            Logger.Debug("Logout Mod Click: ACTIVATED!");
+            Settings.SwapModifierPressed = DateTime.Now;
+        }
+
         private void OnKeyPressed_ToggleMenu(object o, EventArgs e)
         {
             // !filterTextBox.Focused && !subWindow.tag_TextBox.Focused
@@ -1276,6 +1614,12 @@ namespace Kenedia.Modules.Characters
                     filterWindow.Opacity = filterWindow.Opacity - (float)0.1;
                     if (filterWindow.Opacity <= (float) 0) filterWindow.Hide();
                 }
+
+                if (subWindow.Visible && DateTime.Now.Subtract(subWindow.lastInput).TotalMilliseconds >= 3500)
+                {
+                    subWindow.Opacity = subWindow.Opacity - (float)0.1;
+                    if (subWindow.Opacity <= (float) 0) subWindow.Hide();
+                }
             }
 
             if (charactersLoaded && Last.Tick_PanelUpdate > Settings._FilterDelay)
@@ -1313,6 +1657,7 @@ namespace Kenedia.Modules.Characters
             subWindow?.Dispose();
             filterWindow?.Dispose();
             cornerButton?.Dispose();
+            screenCaptureWindow?.Dispose();
 
             // Dispose Settings Event
             Settings.ShortcutKey.Value.Activated -= OnKeyPressed_ToggleMenu;
@@ -1333,12 +1678,14 @@ namespace Kenedia.Modules.Characters
             Textures.CraftingDisabled = null;
             Textures.Emblems = null;
             Textures.Icons = null;
-            Textures.Professions= null;
-            Textures.ProfessionsDisabled= null;
-            Textures.Races= null;
+            Textures.Professions = null;
+            Textures.ProfessionsDisabled = null;
+            Textures.ProfessionsWhite = null;
+            Textures.Races = null;
             Textures.RacesDisabled = null;
-            Textures.Specializations= null;
-            Textures.SpecializationsDisabled= null;
+            Textures.Specializations = null;
+            Textures.SpecializationsDisabled = null;
+            Textures.SpecializationsWhite = null;
 
             ModuleInstance = null;
         }

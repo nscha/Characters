@@ -2,6 +2,7 @@
 using Gw2Sharp.Models;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,334 @@ using Blish_HUD.Input;
 using Blish_HUD;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using BitmapFont = MonoGame.Extended.BitmapFonts.BitmapFont;
 
 namespace Kenedia.Modules.Characters
 {
+    public class DataImage : Image
+    {
+        public int Id;
+        public CharacterCrafting Crafting;
+    }
+
     public class CharacterControl : Panel
     {
         public Character assignedCharacter;
+        public Image character_Image;
+        public Image profession_Image;
+        public Image birthday_Image;
+        public Image switch_Image;
+        public Image separator_Image;
+
+        public Image border_TopRight;
+        public Image border_BottomLeft;
+
+        public Label name_Label;
+        public Label time_Label;
+        public Label level_Label;
+
+        public Panel background_Panel;
+        public FlowPanel crafting_Panel;
+        public List<DataImage> crafting_Images = new List<DataImage>();
+
+        private int _FramePadding = 6;
+        private int _Padding = 4;
+        public int Padding {
+            get { return _Padding; }
+            set 
+            {
+                _Padding = value;
+                AdjustLayout();
+            }
+        }
+
+        public CharacterControl(Character c)
+        {
+            ContentService contentService = new ContentService();
+            assignedCharacter = c;
+            Height = 76;
+            WidthSizingMode = SizingMode.Fill;
+            ShowBorder = false;
+            Tooltip = new CharacterTooltip(assignedCharacter)
+            {
+                Parent = this,
+            };
+
+            var defaultIcon = (assignedCharacter.Icon == null || assignedCharacter.Icon == "");
+            border_TopRight = new Image()
+            {
+                Parent = this,
+                Location = new Point(_Padding, _Padding),
+                Size = new Point(ContentRegion.Height - (_Padding * 2), ContentRegion.Height - (_Padding * 2)),
+                Texture = Textures.Backgrounds[(int)_Backgrounds.BorderTopRight],
+                Visible = defaultIcon,
+            };
+            border_BottomLeft = new Image()
+            {
+                Parent = this,
+                Location = new Point(_Padding, _Padding),
+                Size = new Point(ContentRegion.Height - (_Padding * 2), ContentRegion.Height - (_Padding * 2)),
+                Texture = Textures.Backgrounds[(int)_Backgrounds.BorderBottomLeft],
+                Visible = defaultIcon,
+            };
+
+            //Character Image
+            character_Image = new Image()
+            {
+                Texture = c.getProfessionTexture(),
+                Location = defaultIcon ? new Point(_Padding + _FramePadding, _Padding + _FramePadding) : new Point(_Padding, _Padding),
+                Size = defaultIcon ? new Point(ContentRegion.Height - (_Padding * 2) - (_FramePadding * 2), ContentRegion.Height - (_Padding * 2) - (_FramePadding * 2)) : new Point(ContentRegion.Height - (_Padding * 2), ContentRegion.Height - (_Padding * 2)),
+                Parent = this,
+                Tooltip = Tooltip,
+            };
+
+            background_Panel = new Panel()
+            {
+                Location = new Point(character_Image.Location.X, character_Image.Location.Y + character_Image.Height - 38),
+                Size = new Point(22, character_Image.Height - (character_Image.Location.Y + character_Image.Height - 38)),
+                Parent = this,
+                BackgroundColor = new Color(43,43, 43, 255),
+            };
+
+
+            //Level Label
+            level_Label = new Label()
+            {
+                Parent = this,
+                AutoSizeWidth = true,
+                Location = new Point(character_Image.Location.X + 5, character_Image.Location.Y + character_Image.Height - 12),
+                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size11, ContentService.FontStyle.Regular),
+
+                Text = c.Level.ToString(),
+                Tooltip = Tooltip,
+
+                Height = (ContentRegion.Height - (_Padding * 2)) / 2,
+                VerticalAlignment = VerticalAlignment.Middle,
+            };
+
+            //Profession Image
+            profession_Image = new Image()
+            {
+                Texture = c.getProfessionTexture(false, true),
+                Location = new Point(character_Image.Location.X, character_Image.Location.Y + character_Image.Height - 36),
+                Size = new Point(24, 24),
+                Parent = this,
+                Tooltip = Tooltip,
+            };
+
+            //Character Name
+            name_Label = new Label()
+            {
+                Parent = this,
+                AutoSizeWidth = true,
+                Location = new Point(character_Image.Location.X + character_Image.Width + (_Padding * 2) + _FramePadding, 0 + _Padding),
+                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular),
+
+                Text = c.Name,
+                Tooltip = Tooltip,
+
+                Height = (ContentRegion.Height - (_Padding * 2)) / 2,
+                VerticalAlignment = VerticalAlignment.Middle,
+            };
+
+            separator_Image = new Image()
+            {
+                Location = new Point(character_Image.Location.X + character_Image.Width + _Padding + _FramePadding, (ContentRegion.Height / 2) - (int)Math.Ceiling((decimal)_Padding / 2)),
+                Texture = Textures.Icons[(int)Icons.Separator],
+                Parent = this,
+                Size = new Point(Width - character_Image.Width - 2 - (_Padding * 3), (int) Math.Ceiling((decimal) _Padding/2)),
+                Tooltip = Tooltip,
+            };
+
+            //Time since Login
+            time_Label = new Label()
+            {
+                Location = new Point(character_Image.Location.X + character_Image.Width + (_Padding * 2) + _FramePadding, (ContentRegion.Height / 2) + _Padding - (contentService.DefaultFont18.LineHeight - contentService.DefaultFont12.LineHeight)),
+                Text = "00:00:00",
+                Parent = this,
+                Height = (ContentRegion.Height - (_Padding * 2)) / 2,
+                AutoSizeWidth = true,
+                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size12, ContentService.FontStyle.Regular),
+                VerticalAlignment = VerticalAlignment.Middle,
+                Tooltip = Tooltip,
+            };
+
+            //Birthday Image
+            birthday_Image = new Image()
+            {
+                Texture = Textures.Icons[(int)Icons.BirthdayGift],
+                Parent = this,
+                Location = new Point(Width - 150, (ContentRegion.Height / 2) - 2),
+                Size = new Point(32, 32),
+                Visible = true,
+            };
+
+            var iBegin = character_Image.Location.X + character_Image.Width + (_Padding * 3) + _FramePadding;
+            var iWidth = (Width - iBegin) / 2;
+
+            //Crafting Professions
+            if (c.Crafting.Count > 0)
+            {
+                crafting_Panel = new FlowPanel()
+                {
+                    Location = new Point(iBegin + iWidth, time_Label.Location.Y),
+                    Parent = this,
+                    Height = ContentRegion.Height,
+                    Width = ((Width - (character_Image.Location.X + character_Image.Width + (_Padding * 2) + _FramePadding)) / 2),
+                    FlowDirection = ControlFlowDirection.SingleLeftToRight,
+                    Tooltip = Tooltip,
+                };
+                string ttp = "";
+
+                foreach (CharacterCrafting crafting in c.Crafting)
+                {
+                    if (crafting.Active)
+                    {
+                        crafting_Images.Add(new DataImage()
+                        {
+                            Texture = Textures.Crafting[crafting.Id],
+                            Size = new Point(24, 24),
+                            Parent = crafting_Panel,
+                            Visible = (!Module.Settings.OnlyMaxCrafting.Value) || (crafting.Id == 4 || crafting.Id == 7 && crafting.Rating == 400) || (crafting.Rating == 500),
+                            Id = crafting.Id,
+                            Crafting = crafting,
+                            Tooltip = Tooltip,
+                        });
+                    }
+                }
+            }
+
+            switch_Image = new Image()
+            {
+                Location = new Point(Width - 45, 10),
+                Texture = Textures.Icons[(int)Icons.Logout],
+                Size = new Point(32, 32),
+                Parent = this,
+                BasicTooltipText = string.Format(Strings.common.Switch, c.Name),
+                Visible = false,
+            };
+            switch_Image.Click += delegate { if (Module.Settings.SwapModifier.Value.PrimaryKey == Keys.None || Module.Settings.SwapModifier.Value.IsTriggering) c.Swap(); };
+            switch_Image.MouseEntered += delegate { if(Module.Settings.SwapModifier.Value.PrimaryKey == Keys.None || Module.Settings.SwapModifier.Value.IsTriggering) switch_Image.Texture = Textures.Icons[(int)Icons.LogoutWhite]; };
+            switch_Image.MouseLeft += delegate { switch_Image.Texture = Textures.Icons[(int)Icons.Logout]; };
+
+            MouseEntered += delegate {
+                BackgroundTexture = Textures.Icons[(int)Icons.RectangleHighlight];
+                switch_Image.Visible = (Module.Settings.SwapModifier.Value.PrimaryKey == Keys.None || Module.Settings.SwapModifier.Value.IsTriggering);
+            };
+            MouseMoved += delegate {
+                BackgroundTexture = Textures.Icons[(int)Icons.RectangleHighlight];
+                switch_Image.Visible = (Module.Settings.SwapModifier.Value.PrimaryKey == Keys.None || Module.Settings.SwapModifier.Value.IsTriggering);
+            };
+            MouseLeft += delegate {
+                BackgroundTexture = null;
+                switch_Image.Visible = false;
+            };
+
+            Click += delegate {
+                switch (Module.subWindow.Visible)
+                {
+                    case true:
+                        if (!switch_Image.MouseOver && Module.subWindow.assignedCharacter == assignedCharacter)
+                        {
+                            Module.subWindow.Hide();
+                        }
+
+                        if (Module.subWindow.assignedCharacter != assignedCharacter)
+                        {
+                            Module.subWindow.setCharacter(assignedCharacter);
+                        }
+
+                        break;
+
+                    case false:
+                        if (!switch_Image.MouseOver)
+                        {
+                            Module.subWindow.Show();
+                            Module.filterWindow.Hide();
+
+                            if (Module.subWindow.assignedCharacter != assignedCharacter)
+                            {
+                                Module.subWindow.setCharacter(assignedCharacter);
+                            }
+                        }
+                        break;
+                }
+            };
+            Click += isDoubleClicked;
+            Resized += delegate { AdjustLayout(); };
+        }
+        void isDoubleClicked(object sender, MouseEventArgs e)
+        {
+                if (e.IsDoubleClick && Module.Settings.DoubleClickToEnter.Value && (Module.Settings.SwapModifier.Value.PrimaryKey == Keys.None || Module.Settings.SwapModifier.Value.IsTriggering))
+            {
+                assignedCharacter.Swap();
+            }
+        }
+        public void UpdateLanguage()
+        {
+            CharacterTooltip tooltp = (CharacterTooltip)Tooltip;
+            tooltp._Update();
+        }
+        public void UpdateUI()
+        {
+
+            if(assignedCharacter.hadBirthdaySinceLogin())
+            {
+                birthday_Image.Visible = true;
+                birthday_Image.BasicTooltipText = assignedCharacter.Name + " had Birthday! They are now " + assignedCharacter.Years + " years old.";
+            }
+            else
+            {
+                birthday_Image.Visible = false;
+            }
+            character_Image.Texture = assignedCharacter.getProfessionTexture();
+            profession_Image.Texture = assignedCharacter.getProfessionTexture(false, true);
+
+            var defaultIcon = (assignedCharacter.Icon == null || assignedCharacter.Icon == "");
+            border_BottomLeft.Visible = defaultIcon;
+            border_TopRight.Visible = defaultIcon;
+
+            var t = TimeSpan.FromSeconds(assignedCharacter.seconds);
+            time_Label.Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00}", t.Hours, t.Minutes, t.Seconds, t.Days);
+
+            if (Tooltip.Visible)
+            {
+                CharacterTooltip tooltp = (CharacterTooltip)Tooltip;
+                tooltp._Update();
+            };
+        }
+        
+        void AdjustLayout()
+        {
+            var defaultIcon = (assignedCharacter.Icon == null || assignedCharacter.Icon == "");
+            character_Image.Location = defaultIcon ? new Point(_Padding + _FramePadding, _Padding + _FramePadding) : new Point(_Padding, _Padding);
+            character_Image.Size = defaultIcon ? new Point(ContentRegion.Height - (_Padding * 2) - (_FramePadding * 2), ContentRegion.Height - (_Padding * 2) - (_FramePadding * 2)) : new Point(ContentRegion.Height - (_Padding * 2), ContentRegion.Height - (_Padding * 2));
+            border_BottomLeft.Visible = defaultIcon;
+            border_TopRight.Visible = defaultIcon;
+
+            var referenceImage = defaultIcon ? border_TopRight : character_Image;
+            separator_Image.Location = new Point(referenceImage.Location.X + referenceImage.Width + _Padding, (ContentRegion.Height / 2) - (int)Math.Ceiling((decimal)_Padding / 2));
+            separator_Image.Size = new Point(Width - referenceImage.Width - (_Padding * 3), 4);
+            birthday_Image.Location = new Point(referenceImage.Location.X + referenceImage.Width - birthday_Image.Width + 4, referenceImage.Location.Y + referenceImage.Height - birthday_Image.Height + 4 );
+
+            switch_Image.Location = new Point(Width - switch_Image.Width - _Padding, (Height - switch_Image.Height - _Padding) / 2 + 2);
+
+            if (assignedCharacter.Crafting.Count > 0)
+            {
+                var iBegin = character_Image.Location.X + character_Image.Width + (_Padding * 3) + _FramePadding;
+                var iWidth = (Width - iBegin) / 2;
+                crafting_Panel.Location = new Point(iBegin + iWidth, time_Label.Location.Y + ((time_Label.Height - 24) / 2));
+                crafting_Panel.WidthSizingMode = SizingMode.Fill;
+            }
+
+            level_Label.Location = new Point(character_Image.Location.X + 3, character_Image.Location.Y + character_Image.Height - 10 - level_Label.Font.LineHeight);
+            profession_Image.Location = new Point(character_Image.Location.X - 2, character_Image.Location.Y + character_Image.Height - 38);
+            profession_Image.Visible = !defaultIcon;
+
+            background_Panel.Location = new Point(character_Image.Location.X, character_Image.Location.Y + character_Image.Height - 38);
+            background_Panel.Size = new Point(22, character_Image.Height - (character_Image.Location.Y + character_Image.Height - 41));
+            background_Panel.Visible = !defaultIcon;
+        }
     }
     public class ToggleImage : Image
     {
@@ -56,11 +379,11 @@ namespace Kenedia.Modules.Characters
             return _State;
         }
     }
-    public class ToggleIcon: Image
+    public class ToggleIcon : Image
     {
         public ToggleIcon()
         {
-            Click += delegate { Toggle(); Module.filterCharacterPanel = true;  };
+            Click += delegate { Toggle(); Module.filterCharacterPanel = true; };
             Size = new Point(32, 32);
             Texture = Textures.Icons[(int)Icons.Bug];
         }
@@ -97,220 +420,209 @@ namespace Kenedia.Modules.Characters
     }
     public class CharacterControl_DetailsButton : DetailsButton
     {
-        public Character assignedCharacter;        
+        public Character assignedCharacter;
+    }
+    public class Separator : Panel
+    {
+        public Image _Separator;
+        public int TopPadding = 0;
+        public int BottomPadding = 4;
+        public int LeftPadding = 0;
+        public int RightPadding = 0;
+        public int Thickness = 4;
+
+        public Separator ()
+        {
+            _Separator = new Image()
+            {
+                Location = new Point(LeftPadding, TopPadding),
+                Texture = Textures.Icons[(int)Icons.Separator],
+                Parent = this,
+                Size = new Point(Width - (LeftPadding + RightPadding), Thickness),
+            };
+
+            Height = TopPadding + BottomPadding + _Separator.Height;
+            WidthSizingMode = SizingMode.Fill;
+
+            PropertyChanged += delegate
+            {
+                Height = TopPadding + BottomPadding + _Separator.Height;
+                _Separator.Location = new Point(LeftPadding, TopPadding);
+                _Separator.Size = new Point(Width - (LeftPadding + RightPadding), Thickness);
+            };
+        }
+
     }
     public class CharacterTooltip : Tooltip
     {
+        public static ContentService ContentService = new ContentService();
         public Character assignedCharacter;
 
-        public Image _nameTexture;
-        public Label _nameLabel;
+        public IconLabel _Name;
+        public IconLabel _Race;
+        public IconLabel _Level;
+        public IconLabel _Map;
+        public IconLabel _Created;
+        public IconLabel _NextBirthday;
+        public IconLabel _LastLogin;
 
-        public Image _levelTexture;
-        public Label _levelLabel;
+        public List<IconLabel>_CraftingProfessions = new List<IconLabel>();
 
-        public Image _raceTexture;
-        public Label _raceLabel;
+        public Separator _Separator;
 
-        public Image _mapTexture;
-        public Label _mapLabel;
-
-        public Image _createdTexture;
-        public Label _createdLabel;
-
-        public Image _nextBirthdayTexture;
-        public Label _nextBirthdayLabel;
-
-        public Image _ageTexture;
-        public Label _ageLabel;
-
+        public FlowPanel ContentRegion;
         public FlowPanel Tags;
         public List<string> _Tags;
         public WindowBase _Parent;
 
+        public Label _switchInfoLabel;
 
-        public void _Create()
+        public CharacterTooltip(Character character)
         {
-            if (assignedCharacter != null && assignedCharacter.characterControl != null)
+            assignedCharacter = character;
+            var c = assignedCharacter;
+            var index = 0;
+
+            Shown += delegate { _Update(); };
+            Resized += delegate
             {
-                Blish_HUD.ContentService contentService = new Blish_HUD.ContentService();
-                var c = assignedCharacter;
-                var parent = assignedCharacter.characterControl;
-                var index = 0;
+               // if(_Separator != null) _Separator.Width = _Name != null ? _Name.Width + 5 : Width - 20;
+               //if(_switchInfoLabel!= null) _switchInfoLabel.Width = _Separator != null ? _Separator.Width : Width - 20;
+            };
 
-                _nameTexture = new Image()
-                {
-                    Texture = Textures.Icons[(int)Icons.Crown],
-                    Parent = this,
-                    Location = new Point(0, 0 + (index * 25)),
-                    Size = new Point(20, 20),
-                    Visible = false,
-                };
-                _nameLabel = new Label()
-                {
-                    Text = c.Name,
-                    Parent = this,
-                    Location = new Point(0, 0 + (index * 25)),
-                    Visible = true,
-                    Width = 200,
-                    Font = contentService.GetFont(Blish_HUD.ContentService.FontFace.Menomonia, Blish_HUD.ContentService.FontSize.Size20, Blish_HUD.ContentService.FontStyle.Regular),
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                };
-                new Image()
-                {
-                    Texture = Textures.Icons[(int)Icons.Separator],
-                    Parent = this,
-                    Location = new Point(0, 25 + (index * 25)),
-                    Size = new Point(this.Width - 0, 4),
-                };
+            ContentRegion = new FlowPanel()
+            {
+                Location = new Point(0, 0),
+                HeightSizingMode = SizingMode.AutoSize,
+                WidthSizingMode = SizingMode.AutoSize,
+                FlowDirection = ControlFlowDirection.SingleTopToBottom,
+                Parent = this,
+            };
 
-                _raceTexture = new Image()
-                {
-                    Texture = Textures.Races[(int)c.Race],
-                    Parent = this,
-                    Location = new Point(0, 40 + (index * 25)),
-                    Size = new Point(20, 20),
-                    Visible = true,
-                };
-                _raceLabel = new Label()
-                {
-                    Text = DataManager.getRaceName(c.Race.ToString()),
-                    Parent = this,
-                    Location = new Point(30, 40 + (index * 25)),
-                    Visible = true,
-                    AutoSizeWidth = true,
-                };
+            _Name = new IconLabel()
+            {
+                //Location = new Point(0, 0),
+                Texture = Textures.Icons[(int) Icons.People],
+                Parent = ContentRegion,
+                Text = c.Name,
+                Font = new ContentService().GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size20, ContentService.FontStyle.Regular),
+                Gap = 4,
+            };
 
-                index++;
-                _levelTexture = new Image()
-                {
-                    Texture = Textures.Icons[(int)Icons.Influence],
-                    Parent = this,
-                    Location = new Point(0, 40 + (index * 25)),
-                    Size = new Point(20, 20),
-                    Visible = true,
-                };
-                _levelLabel = new Label()
-                {
-                    Text = string.Format(Strings.common.Level, c.Level),
-                    Parent = this,
-                    Location = new Point(30, 40 + (index * 25)),
-                    Visible = true,
-                    AutoSizeWidth = true,
-                };
+            _Separator = new Separator()
+            {
+                Parent = ContentRegion,
+            };            
 
-                index++;
-                _mapTexture = new Image()
-                {
-                    Texture = Textures.Icons[(int)Icons.PvE],
-                    Parent = this,
-                    Location = new Point(0, 40 + (index * 25)),
-                    Size = new Point(20, 20),
-                    Visible = true,
-                };
-                _mapLabel = new Label()
-                {
-                    Text = DataManager.getMapName(c.map),
-                    Parent = this,
-                    Location = new Point(30, 40 + (index * 25)),
-                    Visible = true,
-                    AutoSizeWidth = true,
-                };
+            _Race = new IconLabel()
+            {
+                Texture = Textures.Races[(int)c.Race],
+                Text = DataManager.getRaceName(c.Race.ToString()),
+                Parent = ContentRegion,
+            };
 
-                DateTime zeroTime = new DateTime(1, 1, 1);
-                TimeSpan span = (DateTime.UtcNow - c.Created.UtcDateTime);
-                index++;
-                _createdTexture = new Image()
-                {
-                    Texture = Textures.Icons[(int)Icons.Crown],
-                    Parent = this,
-                    Location = new Point(0, 40 + (index * 25)),
-                    Size = new Point(20, 20),
-                    Visible = true,
-                };
-                _createdLabel = new Label()
-                {
-                    Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year - 1) + " "+ Strings.common.Years + ")",
-                    Parent = this,
-                    Location = new Point(30, 40 + (index * 25)),
-                    Visible = true,
-                    AutoSizeWidth = true,
-                };
+            _Level = new IconLabel()
+            {
+                Texture = Textures.Icons[(int)Icons.Influence],
+                Text = string.Format(Strings.common.Level, c.Level),
+                Parent = ContentRegion,
+            };
 
-                span = (c.NextBirthday - DateTime.UtcNow);
-                index++;
-                _nextBirthdayTexture = new Image()
-                {
-                    Texture = Textures.Icons[(int)Icons.BirthdayGift],
-                    Parent = this,
-                    Location = new Point(0, 40 + (index * 25)),
-                    Size = new Point(20, 20),
-                    Visible = true,
-                };
-                _nextBirthdayLabel = new Label()
-                {
-                    Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00} " + Strings.common.UntilBirthday,
-                    span.Hours,
-                    span.Minutes,
-                    span.Seconds,
-                    span.Days
-                    ),
-                    Parent = this,
-                    Location = new Point(30, 40 + (index * 25)),
-                    Visible = true,
-                    AutoSizeWidth = true,
-                };
+            _Map = new IconLabel()
+            {
+                Texture = Textures.Icons[(int)Icons.PvE],
+                Text = DataManager.getMapName(c.Map),
+                Parent = ContentRegion,
+            };
 
+            DateTime zeroTime = new DateTime(1, 1, 1);
+            TimeSpan span = (DateTime.UtcNow - c.Created.UtcDateTime);
+            _Created = new IconLabel()
+            {
+                Texture = Textures.Icons[(int)Icons.Crown],
+                Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year - 1) + " " + Strings.common.Years + ")",
+                Parent = ContentRegion,
+            };
 
-                var t = TimeSpan.FromSeconds(c.seconds);
-                index++;
-                _ageTexture = new Image()
-                {
-                    Texture = Textures.Icons[(int)Icons.Clock],
-                    Parent = this,
-                    Location = new Point(0, 40 + (index * 25)),
-                    Size = new Point(20, 20),
-                    Visible = true,
-                };
-                _ageLabel = new Label()
-                {
-                    Text = string.Format("{3} " + Strings.common.Days +" {0:00}:{1:00}:{2:00}",
-                    t.Hours,
-                    t.Minutes,
-                    t.Seconds,
-                    t.Days
-                    ),
-                    Parent = this,
-                    Location = new Point(30, 40 + (index * 25)),
-                    Visible = true,
-                    AutoSizeWidth = true,
-                };
+            span = (c.NextBirthday - DateTime.UtcNow);
+            _NextBirthday = new IconLabel()
+            {
+                Texture = Textures.Icons[(int)Icons.BirthdayGift],
+                Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00} " + Strings.common.UntilBirthday,
+                span.Hours,
+                span.Minutes,
+                span.Seconds,
+                span.Days
+                ),
+                Parent = ContentRegion,
+            };
 
-                index++;
-                Tags = new FlowPanel()
+            foreach(CharacterCrafting crafting in c.Crafting)
+            {
+                var ctrl = new IconLabel()
                 {
-                    Parent = this,
-                    Location = new Point(0, 40 + (index * 25)),
-                    Width = this.Width,
-                    OuterControlPadding = new Vector2(2, 2),
-                    ControlPadding = new Vector2(5, 2),
-                    HeightSizingMode = SizingMode.AutoSize,
-                };
+                    Parent = ContentRegion,
+                    Text = DataManager.getCraftingName(crafting.Id) + " (" + crafting.Rating + "/" + (crafting.Id == 4 ||crafting.Id == 7  ? 400 : 500) + ")",
+                    Texture = crafting.Active ? Textures.Crafting[crafting.Id] : Textures.CraftingDisabled[crafting.Id],
+                    _Crafting = crafting,
+            };
+                ctrl.Label.TextColor = !crafting.Active ? Color.LightGray : ctrl.Label.TextColor;
 
-                this.Invalidate();
-                this._Update();
+                _CraftingProfessions.Add(ctrl);
             }
+
+            var t = TimeSpan.FromSeconds(c.seconds);
+            _LastLogin = new IconLabel()
+            {
+                Texture = Textures.Icons[(int)Icons.Clock],
+                Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00}",
+                t.Hours,
+                t.Minutes,
+                t.Seconds,
+                t.Days
+                ),
+                Parent = ContentRegion,
+            };
+
+            var p = new Panel()
+            {
+                WidthSizingMode = SizingMode.Fill,
+                Parent = ContentRegion,
+            };
+
+            _switchInfoLabel = new Label()
+            {
+                Text = "- " + string.Format(Strings.common.DoubleClickToSwap, assignedCharacter.Name) + " -",
+                Parent = p,
+                Font = ContentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size12, ContentService.FontStyle.Regular),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                TextColor = Color.LightGray,
+            };
+
+            p.Resized += delegate { _switchInfoLabel.Width = p.Width; p.Height = _switchInfoLabel.Height + 5; };
+
+            Tags = new FlowPanel()
+            {
+                Parent = ContentRegion,
+                OuterControlPadding = new Vector2(2, 2),
+                ControlPadding = new Vector2(5, 2),
+                WidthSizingMode = SizingMode.Fill,
+                HeightSizingMode = SizingMode.AutoSize,
+            };
+
+            this.Invalidate();
+            this._Update();
         }
 
         public void _Update()
         {
             if (assignedCharacter != null && assignedCharacter.characterControl != null)
             {
-                Blish_HUD.ContentService contentService = new Blish_HUD.ContentService();
+                ContentService contentService = new ContentService();
                 var c = assignedCharacter;
 
                 var t = TimeSpan.FromSeconds(c.seconds);
-                _ageLabel.Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00}",
+               _LastLogin.Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00}",
                         t.Hours,
                         t.Minutes,
                         t.Seconds,
@@ -320,19 +632,26 @@ namespace Kenedia.Modules.Characters
                 DateTime zeroTime = new DateTime(1, 1, 1);
                 TimeSpan span = (DateTime.UtcNow - c.Created.UtcDateTime);
 
-                _createdLabel .Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year -1) + " " + Strings.common.Years +")";
+                _Created.Text = c.Created.ToString("G") + " (" + ((zeroTime + span).Year - 1) + " " + Strings.common.Years + ")";
 
                 span = (c.NextBirthday - DateTime.UtcNow);
-                _nextBirthdayLabel.Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00} " + Strings.common.UntilBirthday,
+                _NextBirthday.Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00} " + Strings.common.UntilBirthday,
                     span.Hours,
                     span.Minutes,
                     span.Seconds,
                     span.Days
                     );
 
+                _Level.Text = string.Format(Strings.common.Level, c.Level);
+                _Map.Text = DataManager.getMapName(c.Map);
 
-            _levelLabel.Text = string.Format(Strings.common.Level, c.Level);
-                _mapLabel.Text = DataManager.getMapName(c.map);
+                if (assignedCharacter.Crafting.Count > 0)
+                {
+                    foreach (IconLabel iconLabel in _CraftingProfessions)
+                    {
+                        iconLabel.Text = DataManager.getCraftingName(iconLabel._Crafting.Id) + " (" + iconLabel._Crafting.Rating + "/" + (iconLabel._Crafting.Id == 4 || iconLabel._Crafting.Id == 7 ? 400 : 500) + ")";
+                    }
+                }
 
                 if (c.Tags != null && (_Tags == null || !Enumerable.SequenceEqual(_Tags, c.Tags)))
                 {
@@ -347,7 +666,7 @@ namespace Kenedia.Modules.Characters
             }
         }
     }
-    public class  TagPanel : FlowPanel
+    public class TagPanel : FlowPanel
     {
         const int PADDING = 2;
         public Texture2D Texture;
@@ -356,7 +675,7 @@ namespace Kenedia.Modules.Characters
         {
             if (Texture == null) Texture = Textures.Backgrounds[(int)_Backgrounds.Tag];
 
-           spriteBatch.DrawOnCtrl(this, Texture, bounds, new Rectangle(3, 4, _size.X, _size.Y), Color.White * 0.98f);
+            spriteBatch.DrawOnCtrl(this, Texture, bounds, new Rectangle(3, 4, _size.X, _size.Y), Color.White * 0.98f);
 
             // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 0, _size.X - 2, 3).Add(-PADDING, -PADDING, PADDING * 2, 0), Color.Black * 0.5f);
@@ -378,11 +697,11 @@ namespace Kenedia.Modules.Characters
     public class FilterWindow : BasicContainer
     {
         public FilterWindow()
-        {            
-            this.Click += delegate { lastInput = DateTime.Now; Opacity = 1;   };
+        {
+            this.Click += delegate { lastInput = DateTime.Now; Opacity = 1; };
             MouseMoved += delegate { lastInput = DateTime.Now; Opacity = 1; Module.Logger.Debug("Mouse Moved!"); };
-            this.MouseEntered += delegate { lastInput = DateTime.Now; Opacity = 1;  };
-            this.MouseLeft += delegate { lastInput = DateTime.Now; Opacity = 1;  };
+            this.MouseEntered += delegate { lastInput = DateTime.Now; Opacity = 1; };
+            this.MouseLeft += delegate { lastInput = DateTime.Now; Opacity = 1; };
             this.Shown += delegate { lastInput = DateTime.Now; Opacity = 1; };
             this.Hidden += delegate { Opacity = 1; };
         }
@@ -397,46 +716,97 @@ namespace Kenedia.Modules.Characters
         public ToggleIcon visibleToggle;
         public ToggleIcon birthdayToggle;
     }
+    public class RectangleBorder : Container
+    {
+        const int PADDING = 2;
+
+        public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
+        {
+            // Top
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 0, _size.X - 2, 3).Add(-PADDING, -PADDING, PADDING * 2, 0), Color.White * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, _size.X - 2, 1).Add(-PADDING, -PADDING, PADDING * 2, 0), Color.White * 0.6f);
+
+            // Right
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 3, 1, 3, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), Color.White * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 2, 1, 1, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), Color.White * 0.6f);
+
+            // Bottom
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 3, _size.X - 2, 3).Add(-PADDING, PADDING, PADDING * 2, 0), Color.White * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 2, _size.X - 2, 1).Add(-PADDING, PADDING, PADDING * 2, 0), Color.White * 0.6f);
+
+            // Left
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(0, 1, 3, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.White * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, 1, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.White * 0.6f);
+        }
+    }
     public class BasicContainer : Container
     {
         const int PADDING = 2;
         public Texture2D Texture;
+        public bool showBackground = true;
+        public Color FrameColor = Color.Black;
+        public Color TextureColor = Color.White;
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (Texture == null) Texture = Textures.Backgrounds[(int)_Backgrounds.Tooltip];
-
-           spriteBatch.DrawOnCtrl(this, Texture, bounds, new Rectangle(3, 4, _size.X, _size.Y), Color.White * 0.98f);
+            if (showBackground)
+            {
+                if (Texture == null) Texture = Textures.Backgrounds[(int)_Backgrounds.Tooltip];
+                spriteBatch.DrawOnCtrl(this, Texture, bounds, new Rectangle(3, 4, _size.X, _size.Y), TextureColor * 0.98f);
+            }
 
             // Top
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 0, _size.X - 2, 3).Add(-PADDING, -PADDING, PADDING * 2, 0), Color.Black * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, _size.X - 2, 1).Add(-PADDING, -PADDING, PADDING * 2, 0), Color.Black * 0.6f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 0, _size.X - 2, 3).Add(-PADDING, -PADDING, PADDING * 2, 0), FrameColor * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, _size.X - 2, 1).Add(-PADDING, -PADDING, PADDING * 2, 0), FrameColor * 0.6f);
 
             // Right
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 3, 1, 3, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 2, 1, 1, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.6f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 3, 1, 3, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), FrameColor * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(_size.X - 2, 1, 1, _size.Y - 2).Add(PADDING, -PADDING, 0, PADDING * 2), FrameColor * 0.6f);
 
             // Bottom
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 3, _size.X - 2, 3).Add(-PADDING, PADDING, PADDING * 2, 0), Color.Black * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 2, _size.X - 2, 1).Add(-PADDING, PADDING, PADDING * 2, 0), Color.Black * 0.6f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 3, _size.X - 2, 3).Add(-PADDING, PADDING, PADDING * 2, 0), FrameColor * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, _size.Y - 2, _size.X - 2, 1).Add(-PADDING, PADDING, PADDING * 2, 0), FrameColor * 0.6f);
 
             // Left
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(0, 1, 3, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, 1, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), Color.Black * 0.6f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(0, 1, 3, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), FrameColor * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, 1, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), FrameColor * 0.6f);
         }
     }
     public class HeaderUnderlined : Panel
     {
         static ContentService contentService = new ContentService();
-        public MonoGame.Extended.BitmapFonts.BitmapFont Font;
+        private BitmapFont _Font;
+        public BitmapFont Font {
+            get { return _Font; }
+            set {
+                _Font = value;
+
+                if (AlignCentered)
+                {
+                    textLabel.Height = _Font.LineHeight + 4;
+                    textLabel.Width = Math.Max((int)Math.Ceiling(_Font.MeasureString(textLabel.Text).Width) + _HorizontalPadding, Width - (_HorizontalPadding * 2));
+                    Invalidate();
+                }
+            }
+        }
+        private bool AlignCentered;
         public Label textLabel;
         public Image Separator_Image;
         private string _Text;
         public string Text
         {
             get { return _Text; }
-            set { _Text = value; textLabel.Text = value;
-                textLabel.Height = Font.LineHeight + 4; }
+            set {
+                _Text = value; 
+                textLabel.Text = value;
+                textLabel.Height = Font.LineHeight + 4;
+
+                if (AlignCentered)
+                {
+                    textLabel.Width = Math.Max((int)Math.Ceiling(Font.MeasureString(value).Width) + _HorizontalPadding, Width - (_HorizontalPadding * 2));
+                    Invalidate();
+                }
+            }
         }
         private int _HorizontalPadding = 5;
         public int HorizontalPadding
@@ -448,14 +818,14 @@ namespace Kenedia.Modules.Characters
         public int VerticalPadding
         {
             get { return _VerticalPadding; }
-            set { _VerticalPadding = value; textLabel.Location = new Point(_HorizontalPadding, _VerticalPadding); Separator_Image.Location = new Point(0, textLabel.Location.Y + textLabel.Height + _VerticalPadding);  }
+            set { _VerticalPadding = value; textLabel.Location = new Point(_HorizontalPadding, _VerticalPadding); Separator_Image.Location = new Point(0, textLabel.Location.Y + textLabel.Height + _VerticalPadding); }
         }
 
         public HeaderUnderlined()
         {
             WidthSizingMode = SizingMode.AutoSize;
             HeightSizingMode = SizingMode.AutoSize;
-            Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
+            _Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
 
             textLabel = new Label()
             {
@@ -463,9 +833,8 @@ namespace Kenedia.Modules.Characters
                 Text = "",
                 Parent = this,
                 AutoSizeWidth = true,
-                //AutoSizeHeight = true,
-                Height = Font.LineHeight + 4,
-                Font = Font,
+                Height = _Font.LineHeight + 4,
+                Font = _Font,
             };
 
             Separator_Image = new Image()
@@ -481,6 +850,49 @@ namespace Kenedia.Modules.Characters
                 textLabel.Invalidate();
                 Separator_Image.Size = new Point(Width, 4);
                 Separator_Image.Location = new Point(0, textLabel.Location.Y + textLabel.Height + VerticalPadding);
+            };
+        }
+
+        public HeaderUnderlined(bool centered)
+        {
+            AlignCentered = centered;
+
+            WidthSizingMode = AlignCentered ? SizingMode.Standard: SizingMode.AutoSize;
+            HeightSizingMode = SizingMode.AutoSize;
+            _Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
+
+            textLabel = new Label()
+            {
+                Location = new Point(_HorizontalPadding, 0),
+                Text = "",
+                Parent = this,
+                Height = Font.LineHeight + 4,
+                Font = Font,
+            };
+
+            Separator_Image = new Image()
+            {
+                Texture = Textures.Icons[(int)Icons.Separator],
+                Parent = this,
+                Location = new Point(0, textLabel.Location.Y + textLabel.Height + VerticalPadding),
+                Size = new Point(Width, 4),
+            };
+
+            Resized += delegate
+            {
+                Separator_Image.Size = new Point(Width, 4);
+                Separator_Image.Location = new Point(0, textLabel.Location.Y + textLabel.Height + VerticalPadding);
+
+                var newWidth = Math.Max((int)Math.Ceiling(Font.MeasureString(textLabel.Text).Width) + _HorizontalPadding, Width - _HorizontalPadding);
+                textLabel.Width = newWidth;
+
+                if (newWidth > Width - (_HorizontalPadding))
+                {
+                    Width = newWidth + _HorizontalPadding;
+                    Invalidate();
+                }
+                
+                Module.Logger.Debug("TEXT:" + textLabel.Text + "; LABEL WIDTH: " + textLabel.Width + "; HEADER WIDTH: " + Width);
             };
         }
     }
@@ -515,8 +927,8 @@ namespace Kenedia.Modules.Characters
         public Label textLabel;
         public Image deleteButton;
         private TagPanel panel;
-        private bool _showDeleteButton;        
-        private bool _Highlighted = true;        
+        private bool _showDeleteButton;
+        private bool _Highlighted = true;
         public bool Highlighted
         {
             get { return _Highlighted; }
@@ -551,7 +963,7 @@ namespace Kenedia.Modules.Characters
         {
             ContentService contentService = new ContentService();
             var textFont = (font == default) ? contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular) : font;
-            
+
             assignedCharacter = character;
             Parent = parent;
             WidthSizingMode = SizingMode.AutoSize;
@@ -591,7 +1003,7 @@ namespace Kenedia.Modules.Characters
                 assignedCharacter.Tags.Remove(Text);
                 assignedCharacter.Save();
 
-                foreach(string s in assignedCharacter.Tags)
+                foreach (string s in assignedCharacter.Tags)
                 {
                     Module.Logger.Debug(s);
                 }
@@ -636,7 +1048,7 @@ namespace Kenedia.Modules.Characters
                 Font = textFont,
                 VerticalAlignment = VerticalAlignment.Middle,
             };
-            
+
             panel.Invalidate();
 
             _Text = txt;
@@ -649,7 +1061,7 @@ namespace Kenedia.Modules.Characters
             set
             {
                 _Text = value;
-                textLabel.Text = " " + value + " ";            }
+                textLabel.Text = " " + value + " "; }
         }
 
         private void DeleteOG()
@@ -691,11 +1103,25 @@ namespace Kenedia.Modules.Characters
     }
     public class CharacterDetailWindow : BasicContainer
     {
+        public CharacterDetailWindow()
+        {
+            this.Click += delegate { lastInput = DateTime.Now; Opacity = 1; };
+            MouseMoved += delegate { lastInput = DateTime.Now; Opacity = 1; Module.Logger.Debug("Mouse Moved!"); };
+            this.MouseEntered += delegate { lastInput = DateTime.Now; Opacity = 1; };
+            this.MouseLeft += delegate { lastInput = DateTime.Now; Opacity = 1; };
+            this.Shown += delegate { lastInput = DateTime.Now; Opacity = 1; };
+            this.Hidden += delegate { Opacity = 1; };
+        }
+        public DateTime lastInput;
         public TextBox tag_TextBox;
         public Image addTag_Button;
         public Label name_Label;
         public Image spec_Image;
         public Image include_Image;
+
+        public Image border_TopRight;
+        public Image border_BottomLeft;
+
         public Label spec_Label;
         public Image separator_Image;
         public FlowPanel customTags_Panel;
@@ -707,8 +1133,10 @@ namespace Kenedia.Modules.Characters
         {
             assignedCharacter = c;
             name_Label.Text = c.Name;
-            spec_Label.Text = DataManager.getProfessionName(c._Profession);
-            spec_Image.Texture = Textures.Professions[c._Profession];
+            //spec_Label.Text = DataManager.getProfessionName(c._Profession);
+            //spec_Image.Texture = Textures.Professions[c._Profession];
+            spec_Image.Texture = c.getProfessionTexture();
+
             loginCharacter.Checked = c.loginCharacter;
             include_Image.Texture = c.include ? Textures.Icons[(int)Icons.Visible] : Textures.Icons[(int)Icons.Hide];
 
@@ -728,6 +1156,95 @@ namespace Kenedia.Modules.Characters
                 tag.Highlighted = c.Tags.Contains(tag.Text);
                 tag.assignedCharacter = c;
             }
+
+            var defaultIcon = (assignedCharacter.Icon == null || assignedCharacter.Icon == "");
+            border_TopRight.Visible = defaultIcon;
+            border_BottomLeft.Visible = defaultIcon;
+
+            include_Image.BasicTooltipText = string.Format(Strings.common.ShowHide_Tooltip, c.Name);
+        }
+    }
+    public class IconLabel : Panel
+    {
+        public CharacterCrafting _Crafting;
+        public int Gap { 
+            get { return _Gap;  }
+            set
+            {
+                _Gap = value;
+                Label.Location = new Point(Font.LineHeight + 4 + _Gap, 0);
+                Invalidate();
+            }
+        }
+        private int _Gap = 8;
+        public Image Image;
+        public Label Label;
+        private Texture2D _Texture;
+        public Texture2D Texture
+        {
+            get {
+                return _Texture;
+                    }
+            set {
+                _Texture = value;
+                if (Image != null) Image.Texture = _Texture;
+            }
+        }
+        private string _Text;
+        public string Text
+        {
+            get {
+                return _Text;
+                    }
+            set {
+                _Text = value;
+                if (Label != null)
+                {
+                    Label.Text = _Text;
+                    Invalidate();
+                };
+            }
+        }
+        private BitmapFont _Font;
+        public BitmapFont Font
+        {
+            get {
+                return _Font;
+                    }
+            set {
+                _Font = value;
+                if (Label != null)
+                {
+                    Label.Font = _Font;
+                    Label.Height = Font.LineHeight + 4;
+                    Image.Size = new Point(Font.LineHeight + 4, Font.LineHeight + 4);
+                    Label.Location = new Point(Font.LineHeight + 4 + _Gap, 0);
+
+                    Invalidate();
+                };
+            }
+        }
+
+        public IconLabel()
+        {
+            HeightSizingMode = SizingMode.AutoSize;
+            WidthSizingMode = SizingMode.AutoSize;
+            _Font = new ContentService().GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
+
+            Image = new Image()
+            {
+                Size = new Point(Font.LineHeight + 4, Font.LineHeight + 4),
+                Location = new Point(0, 0),
+                Parent = this,
+            };
+            Label = new Label()
+            {
+                Height = Font.LineHeight + 4,
+                VerticalAlignment = VerticalAlignment.Middle, 
+                Location = new Point(Image.Size.X + _Gap, 0),
+                Parent = this,
+                AutoSizeWidth = true,
+            };
         }
     }
 }

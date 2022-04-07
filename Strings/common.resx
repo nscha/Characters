@@ -157,11 +157,20 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
     <value>Double Click to Swap</value>
   </data>
+  <data name="DoubleClickToSwap" xml:space="preserve">
+    <value>Doubleclick to swap to {0}!</value>
+  </data>
   <data name="EnterOnSwap_Description" xml:space="preserve">
     <value>Enter the game automatically after selecting the character in the character selection</value>
   </data>
   <data name="EnterOnSwap_DisplayName" xml:space="preserve">
     <value>Login after selecting the character</value>
+  </data>
+  <data name="EnterToLogin_Description" xml:space="preserve">
+    <value>If the searchbox is focused pressing 'RETURN' will log to the first character in the list.</value>
+  </data>
+  <data name="EnterToLogin_DisplayName" xml:space="preserve">
+    <value>Press Enter to swap</value>
   </data>
   <data name="Error_Competivive" xml:space="preserve">
     <value>Character swapping is disabled in competition mode!</value>
@@ -222,6 +231,12 @@ This will require an API-Key with permissions at least for the 'characters' endp
   <data name="NoCraftingProfession" xml:space="preserve">
     <value>No Crafting Profession</value>
   </data>
+  <data name="OnlyMaxCrafting_Description" xml:space="preserve">
+    <value>Show only those crafting Professions which are at 500 rating (Jeweler 400).</value>
+  </data>
+  <data name="OnlyMaxCrafting_DisplayName" xml:space="preserve">
+    <value>Show only maxed out crafting Professions</value>
+  </data>
   <data name="Profession" xml:space="preserve">
     <value>Profession</value>
   </data>
@@ -249,6 +264,9 @@ This will require an API-Key with permissions at least for the 'characters' endp
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Toggle Menu</value>
   </data>
+  <data name="ShowHide_Tooltip" xml:space="preserve">
+    <value>Show/Hides {0} in the character list.</value>
+  </data>
   <data name="Specialization" xml:space="preserve">
     <value>Specialization</value>
   </data>
@@ -258,6 +276,12 @@ To get the current value you will have to swap module tabs once to update the se
   </data>
   <data name="SwapDelay_DisplayName" xml:space="preserve">
     <value>Loading Delay ({0} ms)</value>
+  </data>
+  <data name="SwapModifier_Description" xml:space="preserve">
+    <value>Only if the Modifier is pressed trigger character swapping. This will prevent accidientally swapping!</value>
+  </data>
+  <data name="SwapModifier_DisplayName" xml:space="preserve">
+    <value>Require Modifier to swap</value>
   </data>
   <data name="Switch" xml:space="preserve">
     <value>Switch to {0}</value>

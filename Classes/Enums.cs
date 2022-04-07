@@ -46,6 +46,10 @@
         Visible,
         Hide,
         CloseDisabled,
+        CogBig,
+        CogMedium,
+        ProfessionPlaceholder,
+        ProfessionPlaceholder2,
     }
     public enum Professions
     {
@@ -140,6 +144,15 @@
         ExpandWindow = 3,
         Tag,
         TagDisabled,
+        BorderBottomLeft,
+        BorderTopRight,
+        GrayFullFrame,
+        WhiteFrame,
+        RectanlgeFrame,
+        BorderTop,
+        BorderBottom,
+        BorderSimple,
+        BorderSimpleThinner,
     }
     public enum _Emblems
     {

@@ -1,5 +1,7 @@
 ﻿using Blish_HUD.Settings;
 using Microsoft.Xna.Framework.Input;
+using Blish_HUD.Controls;
+using System;
 
 namespace Kenedia.Modules.Characters
 {
@@ -7,14 +9,23 @@ namespace Kenedia.Modules.Characters
     {
         public SettingEntry<Blish_HUD.Input.KeyBinding> LogoutKey;
         public SettingEntry<Blish_HUD.Input.KeyBinding> ShortcutKey;
+        public SettingEntry<Blish_HUD.Input.KeyBinding> SwapModifier;
         public SettingEntry<bool> EnterOnSwap;
         public SettingEntry<bool> AutoLogin;
         public SettingEntry<bool> DoubleClickToEnter;
         public SettingEntry<bool> FadeSubWindows;
+        public SettingEntry<bool> OnlyMaxCrafting;
         public SettingEntry<bool> FocusFilter;
+        public SettingEntry<bool> EnterToLogin;
         public SettingEntry<int> SwapDelay;
         public SettingEntry<int> FilterDelay;
         public int _FilterDelay = 75;
+
+        public DateTime SwapModifierPressed;
+        public bool isSwapModifierPressed() {
+            Module.Logger.Debug("Time Since Logout Mod Click: " + DateTime.Now.Subtract(SwapModifierPressed).TotalMilliseconds);
+            return DateTime.Now.Subtract(SwapModifierPressed).TotalMilliseconds <= 2500;
+        }
     }
 
     public partial class Module : Blish_HUD.Modules.Module
@@ -37,11 +48,34 @@ namespace Kenedia.Modules.Characters
                                                               () => Strings.common.DoubleClickToEnter_DisplayName,
                                                               () => Strings.common.DoubleClickToEnter_Description);
 
+            Settings.EnterToLogin = settings.DefineSetting(nameof(Settings.EnterToLogin),
+                                                              false,
+                                                              () => Strings.common.EnterToLogin_DisplayName,
+                                                              () => Strings.common.EnterToLogin_Description);
+
 
             Settings.FadeSubWindows = settings.DefineSetting(nameof(Settings.FadeSubWindows),
                                                               false,
                                                               () => Strings.common.FadeOut_DisplayName,
                                                               () => Strings.common.FadeOut_Description);
+            
+            Settings.OnlyMaxCrafting = settings.DefineSetting(nameof(Settings.OnlyMaxCrafting),
+                                                              true,
+                                                              () => Strings.common.OnlyMaxCrafting_DisplayName,
+                                                              () => Strings.common.OnlyMaxCrafting_Description);
+            Settings.OnlyMaxCrafting.SettingChanged += delegate {
+                foreach (Character c in Module.Characters)
+                {
+                    if (c.loaded && c.Crafting.Count > 0)
+                    {
+                        foreach(DataImage image in c.characterControl.crafting_Images)
+                        {
+                            image.Visible = (!Module.Settings.OnlyMaxCrafting.Value) || (image.Crafting.Id == 4 && image.Crafting.Rating == 400) || (image.Crafting.Rating == 500);
+                        }
+                        c.characterControl.crafting_Panel.Invalidate();
+                    }
+                }
+            };
 
             Settings.FocusFilter = settings.DefineSetting(nameof(Settings.FocusFilter),
                                                               false,
@@ -71,6 +105,11 @@ namespace Kenedia.Modules.Characters
                                                      new Blish_HUD.Input.KeyBinding(ModifierKeys.Shift, Keys.C),
                                                      () => Strings.common.ShortcutToggle_DisplayName,
                                                      () => Strings.common.ShortcutToggle_Description);
+
+            Settings.SwapModifier = settings.DefineSetting(nameof(Settings.SwapModifier),
+                                                     new Blish_HUD.Input.KeyBinding(Keys.None),
+                                                     () => Strings.common.SwapModifier_DisplayName,
+                                                     () => Strings.common.SwapModifier_Description);
         }
     }
 }

@@ -4,13 +4,19 @@ namespace Kenedia.Modules.Characters
 {
     public static class Textures
     {
+        public static bool Loaded;
+        public static Texture2D[] CustomImages;
+        public static Texture2D[] CustomGlobalImages;
+
         public static Texture2D[] Races;
         public static Texture2D[] RacesDisabled;
 
         public static Texture2D[] Professions;
+        public static Texture2D[] ProfessionsWhite;
         public static Texture2D[] ProfessionsDisabled;
 
         public static Texture2D[] Specializations;
+        public static Texture2D[] SpecializationsWhite;
         public static Texture2D[] SpecializationsDisabled;
 
         public static Texture2D[] Icons;

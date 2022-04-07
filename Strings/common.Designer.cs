@@ -179,6 +179,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doubleclick to swap to {0}!.
+        /// </summary>
+        internal static string DoubleClickToSwap {
+            get {
+                return ResourceManager.GetString("DoubleClickToSwap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter the game automatically after selecting the character in the character selection.
         /// </summary>
         internal static string EnterOnSwap_Description {
@@ -193,6 +202,24 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string EnterOnSwap_DisplayName {
             get {
                 return ResourceManager.GetString("EnterOnSwap_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the searchbox is focused pressing &apos;RETURN&apos; will log to the first character in the list..
+        /// </summary>
+        internal static string EnterToLogin_Description {
+            get {
+                return ResourceManager.GetString("EnterToLogin_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press Enter to swap.
+        /// </summary>
+        internal static string EnterToLogin_DisplayName {
+            get {
+                return ResourceManager.GetString("EnterToLogin_DisplayName", resourceCulture);
             }
         }
         
@@ -370,6 +397,24 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show only those crafting Professions which are at 500 rating (Jeweler 400)..
+        /// </summary>
+        internal static string OnlyMaxCrafting_Description {
+            get {
+                return ResourceManager.GetString("OnlyMaxCrafting_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show only maxed out crafting Professions.
+        /// </summary>
+        internal static string OnlyMaxCrafting_DisplayName {
+            get {
+                return ResourceManager.GetString("OnlyMaxCrafting_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profession.
         /// </summary>
         internal static string Profession {
@@ -439,6 +484,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show/Hides {0} in the character list..
+        /// </summary>
+        internal static string ShowHide_Tooltip {
+            get {
+                return ResourceManager.GetString("ShowHide_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specialization.
         /// </summary>
         internal static string Specialization {
@@ -463,6 +517,24 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string SwapDelay_DisplayName {
             get {
                 return ResourceManager.GetString("SwapDelay_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only if the Modifier is pressed trigger character swapping. This will prevent accidientally swapping!.
+        /// </summary>
+        internal static string SwapModifier_Description {
+            get {
+                return ResourceManager.GetString("SwapModifier_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Require Modifier to swap.
+        /// </summary>
+        internal static string SwapModifier_DisplayName {
+            get {
+                return ResourceManager.GetString("SwapModifier_DisplayName", resourceCulture);
             }
         }
         

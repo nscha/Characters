@@ -29,15 +29,18 @@ namespace Kenedia.Modules.Characters
     public class JsonCharacter
     {
         public string Name { get; set; }
+        public string Icon { get; set; }
+
         public DateTime lastLogin;
         public DateTime LastModified;
         public DateTimeOffset Created;
+
         public RaceType Race { get; set; }
         public int Profession { get; set; }
         public int apiIndex { get; set; }
         public int Specialization { get; set; }
         public List<CharacterCrafting> Crafting;
-        public int map;
+        public int Map;
         public int Level { get; set; }
         public string Tags;
         public bool loginCharacter;
@@ -51,223 +54,60 @@ namespace Kenedia.Modules.Characters
 
         public int _mapid;
         public int _lastmapid;
+        public int Years;
 
         public bool logged_In_Once = false;
 
         public bool loaded = false;
         public List<CharacterCrafting> Crafting;
         public CharacterControl characterControl;
-        public FlowPanel craftingPanel;
-        public Tooltip tooltip;
-        public Image classImage;
-        public Label nameLabel;
-        public Label timeLabel;
-        public Image switchButton;
-        public Image birthdayImage;
-        public List<Image> craftingImages;
+
         public int apiIndex;
         public DateTimeOffset Created;
         public DateTime NextBirthday;
-        public int map;
+        public int Map;
         public bool loginCharacter;
         public bool include = true;
 
-        private void MainPanel_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
+        public bool hadBirthdaySinceLogin()
         {
-            Panel s = (Panel)sender;
-            s.BackgroundTexture = null;
-        }
-        private void MainPanel_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            Panel s = (Panel)sender;
-            s.BackgroundTexture = Textures.Icons[(int)Icons.RectangleHighlight];
-        }
-        public void Create_UI_Elements()
-        {
-            ContentService contentService = new ContentService();
-
-            characterControl = new CharacterControl()
+            for (int i = 1; i < 100; i++)
             {
-                Parent = Module.CharacterPanel,
-                Height = 60,
-                Width = Module.CharacterPanel.Width - 20 - 5,
-                ShowBorder = true,
-                assignedCharacter = this,
-                Tooltip = new CharacterTooltip()
+                DateTime birthDay = Created.AddYears(i).DateTime;
+                if ((NextBirthday == null || NextBirthday == Module.dateZero) && birthDay >= DateTime.UtcNow)
                 {
-                    Parent = characterControl,
-                    assignedCharacter = this,
-                },
-                Visible = true,
-            };
-            characterControl.Click += CharacterControl_Click;
-            characterControl.Click += delegate {
-                switch (Module.subWindow.Visible)
-                {
-                    case true:
-                        if (!switchButton.MouseOver && Module.subWindow.assignedCharacter == this)
-                        {
-                            Module.subWindow.Hide();
-                        }
-
-                        if (Module.subWindow.assignedCharacter != this)
-                        {
-                            Module.subWindow.setCharacter(this);
-                        }
-
-                        break;
-
-                    case false:
-                        if (!switchButton.MouseOver)
-                        {
-                            Module.subWindow.Show();
-                            Module.filterWindow.Hide();
-
-                            if (Module.subWindow.assignedCharacter != this)
-                            {
-                                Module.subWindow.setCharacter(this);
-                            }
-                        }
-                        break;
+                    NextBirthday = birthDay;
+                    Years = i;
                 }
-            };
 
-            characterControl.MouseEntered += MainPanel_MouseEntered;
-            characterControl.MouseLeft += MainPanel_MouseLeft;
-            CharacterTooltip tooltp = (CharacterTooltip)characterControl.Tooltip;
-            tooltp.Shown += delegate { tooltp._Update(); };
-
-            //Profession Icon
-            classImage = new Image()
-            {
-                Location = new Point(0, 0),
-                Texture = getProfessionTexture(),
-                Size = new Point(48, 48),
-                Parent = characterControl,
-                Tooltip = tooltp,
-            };
-
-            //Character Name
-            nameLabel = new Label()
-            {
-                Location = new Point(48 + 5, 0),
-                Text = Name,
-                Parent = characterControl,
-                Height = characterControl.Height / 2,
-                Width = characterControl.Width - 165,
-                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular),
-                VerticalAlignment = VerticalAlignment.Middle,
-                Tooltip = tooltp,
-            };
-
-            //Separator
-            new Image()
-            {
-                Texture = Textures.Icons[(int)Icons.Separator],
-                Parent = characterControl,
-                Location = new Point(48, (characterControl.Height / 2) - 6),
-                Size = new Point(characterControl.Width - 165, 4),
-                Tooltip = tooltp,
-            };
-
-            //Time since Login
-            timeLabel = new Label()
-            {
-                Location = new Point(48 + 5, characterControl.Height / 2 - 2),
-                Text = "00:00:00",
-                Parent = characterControl,
-                Height = 16,
-                Width = characterControl.Width - 165,
-                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size12, ContentService.FontStyle.Regular),
-                VerticalAlignment = VerticalAlignment.Middle,
-                Tooltip = tooltp,
-            };
-
-            //Birthday Image
-            birthdayImage = new Image()
-            {
-                Texture = Textures.Icons[(int)Icons.BirthdayGift],
-                Parent = characterControl,
-                Location = new Point(characterControl.Width - 150, (characterControl.Height / 2) - 2),
-                Size = new Point(20, 20),
-                Visible = false,
-            };
-
-            //Crafting Professions
-            if (Crafting.Count > 0)
-            {
-                craftingPanel = new FlowPanel()
+                if (birthDay <= DateTime.UtcNow)
                 {
-                    Location = new Point(characterControl.Width - 45 - 48 - 10, 0),
-                    Parent = characterControl,
-                    Height = characterControl.Height,
-                    Width = 55,
-                    FlowDirection = ControlFlowDirection.LeftToRight,
-                };
-                string ttp = "";
-
-                craftingImages = new List<Image>();
-                foreach (CharacterCrafting crafting in Crafting)
-                {
-                    if (crafting.Active)
+                    if (birthDay > lastLogin)
                     {
-                        craftingImages.Add(new Image()
-                        {
-                            Texture = Textures.Crafting[crafting.Id],
-                            Size = new Point(24, 24),
-                            Parent = craftingPanel,
-                            Enabled = false,
-                        });
-                        ttp = ttp + DataManager.getCraftingName(crafting.Id) + " (" + crafting.Rating + ")" + Environment.NewLine;
+                        return true;
                     }
-                }                
-
-                ttp = ttp.TrimEnd();
-
-                foreach (Image image in craftingImages)
-                {
-                    image.BasicTooltipText = ttp;
                 }
-                craftingPanel.BasicTooltipText = ttp;
+                else
+                {
+                    return false;
+                };
             }
 
-            switchButton = new Image()
-            {
-                Location = new Point(characterControl.Width - 45, 10),
-                Texture = Textures.Icons[(int)Icons.Logout],
-                Size = new Point(32, 32),
-                Parent = characterControl,
-                BasicTooltipText = string.Format(Strings.common.Switch, this.Name),
-            };
-            switchButton.Click += SwitchButton_Click;
-            switchButton.MouseEntered += SwitchButton_MouseEntered;
-            switchButton.MouseLeft += SwitchButton_MouseLeft;
+            return false;
+        }
 
-            tooltp._Create();
+        public void Create_UI_Elements()
+        {
+            characterControl = new CharacterControl(this)
+            {
+                WidthSizingMode = SizingMode.Standard,
+                Parent = Module.CharacterPanel,
+                Width = Module.CharacterPanel.Width - 25,
+            };
+
             this.loaded = true;
         }
 
-        private void CharacterControl_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            if (e.IsDoubleClick && Module.Settings.DoubleClickToEnter.Value)
-            {
-                Swap();
-            }
-        }
-
-        private void SwitchButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            Swap();
-        }
-
-        private void SwitchButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            switchButton.Texture = Textures.Icons[(int)Icons.Logout];
-        }
-        private void SwitchButton_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            switchButton.Texture = Textures.Icons[(int)Icons.LogoutWhite];
-        }
         public async void UpdateCharacter()
         {
             if (loaded && apiManager != null)
@@ -280,7 +120,7 @@ namespace Kenedia.Modules.Characters
                     if (_mapid > 0 && _mapid != _lastmapid)
                     {
                         _lastmapid = _mapid;
-                        this.map = _mapid;
+                        this.Map = _mapid;
 
                         CharacterTooltip tooltp = (CharacterTooltip)characterControl.Tooltip;
                         tooltp._Update();
@@ -290,7 +130,8 @@ namespace Kenedia.Modules.Characters
                     lastLogin = DateTime.UtcNow.AddSeconds(0);
                     LastModified = DateTime.UtcNow.AddSeconds(1);
                     Race = player.Race;
-                    birthdayImage.Visible = false;
+
+                    characterControl.UpdateUI();
 
                     Update_UI_Time();
                     UpdateProfession();
@@ -298,15 +139,37 @@ namespace Kenedia.Modules.Characters
             }
         }
 
-        public Texture2D getProfessionTexture()
+        public Texture2D getProfessionTexture(bool includeCustom = true, bool baseIcons = false)
         {
-            if (_Specialization > 0)
+            if (baseIcons)
             {
-                return Textures.Specializations[_Specialization];
+                if (_Specialization > 0)
+                {
+                    return Textures.SpecializationsWhite[_Specialization];
+                }
+                else if (_Profession <= 9 && _Profession >= 1)
+                {
+                    return Textures.ProfessionsWhite[_Profession];
+                }
             }
-            else if (_Profession <= 9 && _Profession >= 1)
+            else
             {
-                return Textures.Professions[_Profession];
+                if (includeCustom && Icon != null && Icon != "")
+                {
+                    foreach (Texture2D Texture in Textures.CustomImages)
+                    {
+                        if (Texture != null && Texture.Name == Icon) return Texture;
+                    }
+                }
+
+                if (_Specialization > 0)
+                {
+                    return Textures.Specializations[_Specialization];
+                }
+                else if (_Profession <= 9 && _Profession >= 1)
+                {
+                    return Textures.Professions[_Profession];
+                }
             }
 
             return Textures.Icons[(int)Icons.Bug];
@@ -344,80 +207,21 @@ namespace Kenedia.Modules.Characters
                     Profession = player.Profession;
                     _Profession = (int)player.Profession;
 
-                    classImage.Texture = getProfessionTexture();
+                    characterControl.UpdateUI();
                     Save();
                 }
             }
         }
         public void UpdateLanguage()
         {
-            if (craftingImages != null && Crafting.Count > 0)
-            {
-                string ttp = "";
-                foreach (CharacterCrafting crafting in Crafting)
-                {
-                    if (crafting.Active)
-                    {
-                        ttp = ttp + DataManager.getCraftingName(crafting.Id) + " (" + crafting.Rating + ")" + Environment.NewLine;
-                    }
-                }
-                ttp = ttp.TrimEnd();
-                foreach (Image image in craftingImages)
-                {
-                    image.BasicTooltipText = ttp;
-                }
-
-                craftingPanel.BasicTooltipText = ttp;
-            }
+            characterControl.UpdateLanguage();
         }
         public void Update_UI_Time()
         {
             if (this.loaded)
             {
                 this.seconds = Math.Round(DateTime.UtcNow.Subtract(this.lastLogin).TotalSeconds);
-
-                var t = TimeSpan.FromSeconds(this.seconds);
-
-                if (this.timeLabel != null)
-                {
-                    this.timeLabel.Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00}",
-                    t.Hours,
-                    t.Minutes,
-                    t.Seconds,
-                    t.Days
-                    );
-                }
-
-                if (!birthdayImage.Visible)
-                {
-                    for (int i = 1; i < 100; i++)
-                    {
-                        DateTime birthDay = Created.AddYears(i).DateTime;
-                        if ((NextBirthday == null || NextBirthday == Module.dateZero) && birthDay >= DateTime.UtcNow)
-                        {
-                            NextBirthday = birthDay;
-                        }
-
-                        if (birthDay <= DateTime.UtcNow)
-                        {
-                            if (birthDay > lastLogin)
-                            {
-                                birthdayImage.Visible = true;
-                                birthdayImage.BasicTooltipText = Name + " had Birthday! They are now " + i + " years old.";
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        };
-                    }
-                }
-
-                if (characterControl.Tooltip.Visible)
-                {
-                    CharacterTooltip tooltp = (CharacterTooltip)characterControl.Tooltip;
-                    tooltp._Update();
-                };
+                characterControl.UpdateUI();
             }
         }
         public void Show()
@@ -439,65 +243,70 @@ namespace Kenedia.Modules.Characters
         public bool visible = true;
         public void Swap()
         {
-            if (!GameService.Gw2Mumble.CurrentMap.Type.IsCompetitive())
+            if (GameService.Gw2Mumble.PlayerCharacter.Name != Name || !GameService.GameIntegration.Gw2Instance.IsInGame)
             {
-                ScreenNotification.ShowNotification(string.Format(Strings.common.Switch, Name), ScreenNotification.NotificationType.Warning);
-
-                if (!GameService.GameIntegration.Gw2Instance.IsInGame)
+                if (!GameService.Gw2Mumble.CurrentMap.Type.IsCompetitive())
                 {
-                    for (int i = 0; i < Module.Characters.Count; i++)
-                    {
-                        Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
-                    }
+                    ScreenNotification.ShowNotification(string.Format(Strings.common.Switch, Name), ScreenNotification.NotificationType.Warning);
 
-                    foreach (Character c in Module.Characters)
+                    if (!GameService.GameIntegration.Gw2Instance.IsInGame)
                     {
-                        if (c.Name != Name)
+                        for (int i = 0; i < Module.Characters.Count; i++)
                         {
-                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
+                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
                         }
-                        else
+
+                        foreach (Character c in Module.Characters)
                         {
-                            if (Module.Settings.EnterOnSwap.Value) Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
-                            break;
+                            if (c.Name != Name)
+                            {
+                                Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
+                            }
+                            else
+                            {
+                                if (Module.Settings.EnterOnSwap.Value) Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
+                                break;
+                            }
                         }
+                    }
+                    else if (DateTime.UtcNow.Subtract(Module.lastLogout).TotalSeconds > 1)
+                    {
+                        var mods = Module.Settings.LogoutKey.Value.ModifierKeys;
+                        var primary = (VirtualKeyShort)Module.Settings.LogoutKey.Value.PrimaryKey;
+
+                        foreach (ModifierKeys mod in Enum.GetValues(typeof(ModifierKeys)))
+                        {
+                            if (mod != ModifierKeys.None && mods.HasFlag(mod))
+                            {
+                                Blish_HUD.Controls.Intern.Keyboard.Press(Module.ModKeyMapping[(int)mod], false);
+                            }
+                        }
+
+                        Blish_HUD.Controls.Intern.Keyboard.Stroke(primary, false);
+
+                        foreach (ModifierKeys mod in Enum.GetValues(typeof(ModifierKeys)))
+                        {
+                            if (mod != ModifierKeys.None && mods.HasFlag(mod))
+                            {
+                                Blish_HUD.Controls.Intern.Keyboard.Release(Module.ModKeyMapping[(int)mod], false);
+                            }
+                        }
+
+                        Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
+                        Module.lastLogout = DateTime.UtcNow;
+                        Module.swapCharacter = this;
                     }
                 }
-                else if (DateTime.UtcNow.Subtract(Module.lastLogout).TotalSeconds > 1)
+                else
                 {
-                    var mods = Module.Settings.LogoutKey.Value.ModifierKeys;
-                    var primary = (VirtualKeyShort)Module.Settings.LogoutKey.Value.PrimaryKey;
-
-                    foreach (ModifierKeys mod in Enum.GetValues(typeof(ModifierKeys)))
-                    {
-                        if (mod != ModifierKeys.None && mods.HasFlag(mod))
-                        {
-                            Blish_HUD.Controls.Intern.Keyboard.Press(Module.ModKeyMapping[(int)mod], false);
-                        }
-                    }
-
-                    Blish_HUD.Controls.Intern.Keyboard.Stroke(primary, false);
-
-                    foreach (ModifierKeys mod in Enum.GetValues(typeof(ModifierKeys)))
-                    {
-                        if (mod != ModifierKeys.None && mods.HasFlag(mod))
-                        {
-                            Blish_HUD.Controls.Intern.Keyboard.Release(Module.ModKeyMapping[(int)mod], false);
-                        }
-                    }
-
-                    Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
-                    Module.lastLogout = DateTime.UtcNow;
-                    Module.swapCharacter = this;
+                    ScreenNotification.ShowNotification(Strings.common.Error_Competivive, ScreenNotification.NotificationType.Error);
                 }
-            }
-            else
-            {
-                ScreenNotification.ShowNotification(Strings.common.Error_Competivive, ScreenNotification.NotificationType.Error);
             }
         }
+
         public double seconds { get; set; }
         public string Name { get; set; }
+        public string Icon { get; set; }
         public int Level { get; set; }
         public RaceType Race { get; set; }
 

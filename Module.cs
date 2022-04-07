@@ -322,7 +322,6 @@ namespace Kenedia.Modules.Characters
         {
             try
             {
-                Logger.Debug("Character File exists: " + System.IO.File.Exists(CharactersPath));
                 if (System.IO.File.Exists(CharactersPath))
                 {
                     requestAPI = false;
@@ -354,17 +353,19 @@ namespace Kenedia.Modules.Characters
                                 Icon = c.Icon,
                             };
 
-                            foreach (string tag in character.Tags)
-                            {
-                                if (!Tags.Contains(tag)) Tags.Add(tag);
-                            }
+                            if (!CharacterNames.Contains(character.Name)) {
+                                foreach (string tag in character.Tags)
+                                {
+                                    if (!Tags.Contains(tag)) Tags.Add(tag);
+                                }
 
-                            Characters.Add(character);
-                            CharacterNames.Add(character.Name);
-                            if (c.loginCharacter) loginCharacter = character;
+                                Characters.Add(character);
+                                CharacterNames.Add(character.Name);
+                                if (c.loginCharacter) loginCharacter = character;
+                            }
                         }
 
-                        var iC = new Character();
+                        //var iC = new Character();
                         foreach (string txt in Tags)
                         {
                             var entry = new TagEntry(txt, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));

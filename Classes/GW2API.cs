@@ -154,7 +154,6 @@ namespace Kenedia.Modules.Characters
                         userAccount.Save();
 
                         Logger.Debug("Updating Characters ....");
-                        //ScreenNotification.ShowNotification("Updating Characters!", ScreenNotification.NotificationType.Warning);
                         Logger.Debug("The last API modification is more recent than our last local data track.");
                         var characters = await Gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
                         Character last = null;
@@ -197,7 +196,6 @@ namespace Kenedia.Modules.Characters
                                 });
                             }
 
-
                             if (!CharacterNames.Contains(c.Name))
                             {
                                 CharacterNames.Add(c.Name);
@@ -209,7 +207,6 @@ namespace Kenedia.Modules.Characters
                         }
 
                         if (last != null) last.Save();
-                        //ScreenNotification.ShowNotification("Characters Updated!", ScreenNotification.NotificationType.Warning);
                     }
 
                     var player = GameService.Gw2Mumble.PlayerCharacter;

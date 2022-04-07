@@ -98,14 +98,17 @@ namespace Kenedia.Modules.Characters
 
         public void Create_UI_Elements()
         {
-            characterControl = new CharacterControl(this)
+            if (!loaded)
             {
-                WidthSizingMode = SizingMode.Standard,
-                Parent = Module.CharacterPanel,
-                Width = Module.CharacterPanel.Width - 25,
-            };
+                characterControl = new CharacterControl(this)
+                {
+                    WidthSizingMode = SizingMode.Standard,
+                    Parent = Module.CharacterPanel,
+                    Width = Module.CharacterPanel.Width - 25,
+                };
+            }
 
-            this.loaded = true;
+            loaded = true;
         }
 
         public async void UpdateCharacter()

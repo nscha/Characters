@@ -14,6 +14,7 @@ using Blish_HUD;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BitmapFont = MonoGame.Extended.BitmapFonts.BitmapFont;
+using System.IO;
 
 namespace Kenedia.Modules.Characters
 {
@@ -250,6 +251,8 @@ namespace Kenedia.Modules.Characters
                             Module.subWindow.setCharacter(assignedCharacter);
                         }
 
+                        if (Module.ImageSelectorWindow.Visible) Module.ImageSelectorWindow.assignedCharacter = assignedCharacter;
+
                         break;
 
                     case false:
@@ -262,6 +265,8 @@ namespace Kenedia.Modules.Characters
                             {
                                 Module.subWindow.setCharacter(assignedCharacter);
                             }
+
+                            if (Module.ImageSelectorWindow.Visible) Module.ImageSelectorWindow.assignedCharacter = assignedCharacter;
                         }
                         break;
                 }
@@ -293,12 +298,9 @@ namespace Kenedia.Modules.Characters
             {
                 birthday_Image.Visible = false;
             }
+
             character_Image.Texture = assignedCharacter.getProfessionTexture();
             profession_Image.Texture = assignedCharacter.getProfessionTexture(false, true);
-
-            var defaultIcon = (assignedCharacter.Icon == null || assignedCharacter.Icon == "");
-            border_BottomLeft.Visible = defaultIcon;
-            border_TopRight.Visible = defaultIcon;
 
             var t = TimeSpan.FromSeconds(assignedCharacter.seconds);
             time_Label.Text = string.Format("{3} " + Strings.common.Days + " {0:00}:{1:00}:{2:00}", t.Hours, t.Minutes, t.Seconds, t.Days);
@@ -308,6 +310,8 @@ namespace Kenedia.Modules.Characters
                 CharacterTooltip tooltp = (CharacterTooltip)Tooltip;
                 tooltp._Update();
             };
+
+            AdjustLayout();
         }
         
         void AdjustLayout()
@@ -772,6 +776,366 @@ namespace Kenedia.Modules.Characters
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(1, 1, 1, _size.Y - 2).Add(-PADDING, -PADDING, 0, PADDING * 2), FrameColor * 0.6f);
         }
     }
+    public class ScreenCaptureWindow : BasicContainer
+    {
+        public Action LoadCustomImages;
+
+        private List<StandardButton> captureButtons = new List<StandardButton>();
+        private StandardButton captureAll_Button;
+        private StandardButton close_Button;
+        private Label disclaimer_Label;
+
+
+        public ScreenCaptureWindow(Point Dimensions)
+        {
+            double scale = GameService.Graphics.UIScaleMultiplier;
+
+            var resolution = GameService.Graphics.Resolution;
+            var sidePadding = 255;
+            var bottomPadding = 100;
+
+            var CharacterImageSize = (int)(140);
+            var Image_Gap = -10;
+            var topMenuHeight = 60;
+
+            Size = Dimensions;
+
+            Image_Gap = 17;
+            CharacterImageSize = 124;
+
+            captureAll_Button = new StandardButton()
+            {
+                Parent = this,
+                Text = Strings.common.CaptureAll,
+                Location = new Point(4 + 2 + (5 * (CharacterImageSize + Image_Gap)), 0),
+                Size = new Point(CharacterImageSize, topMenuHeight - 30),
+            };
+
+            var contentService = new ContentService();
+            disclaimer_Label = new Label()
+            {
+                Parent = this,
+                Text = Strings.common.UISizeDisclaimer,
+                Location = new Point(0, 30),
+                Size = new Point(Width - CharacterImageSize - Image_Gap, topMenuHeight - 30),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                TextColor = Color.Red,
+                Font = contentService.DefaultFont18,
+                //BackgroundColor = Color.Black,
+            };
+
+            close_Button = new StandardButton()
+            {
+                Parent = this,
+                Text = Strings.common.Close,
+                Location = new Point(4 + 2 + (5 * (CharacterImageSize + Image_Gap)), 30),
+                Size = new Point(CharacterImageSize, topMenuHeight - 30),
+            };
+            close_Button.Click += delegate
+            {
+                Visible = false;
+                Module.MainWidow.Show();
+                Module.ImageSelectorWindow.Show();
+                Module.ResetGameWindow();
+            };
+
+            for (int i = 0; i < (5); i++)
+            {
+                int[] offsets = { -1, 0, 0, 1, 1 };
+                var ctn = new BasicContainer()
+                {
+                    showBackground = false,
+                    FrameColor = Color.Transparent,
+                    Parent = this,
+                    Location = new Point(4 + offsets[i] + (i * (CharacterImageSize + Image_Gap)), 1 + topMenuHeight),
+                    Size = new Point(CharacterImageSize, CharacterImageSize),
+                    Visible = false,
+                };
+
+                var btn = new StandardButton()
+                {
+                    Parent = this,
+                    Text = Strings.common.Capture,
+                    Location = new Point(4 + offsets[i] + (i * (CharacterImageSize + Image_Gap)), 0),
+                    Size = new Point(CharacterImageSize, topMenuHeight - 30),
+                };
+
+                void click()
+                {
+                    var images = Directory.GetFiles(Module.GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
+
+                    //Last.Tick_ImageSave = DateTime.Now;
+                    CharacterImageSize = 110;
+                    var TitleBarHeight = 33;
+                    var SideBarWidth = 10;
+                    var clientRectangle = new Module.RECT();
+                    Module.GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref clientRectangle);
+
+                    var cPos = ctn.AbsoluteBounds;
+                    double factor = GameService.Graphics.UIScaleMultiplier;
+
+                    using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(CharacterImageSize, CharacterImageSize))
+                    {
+                        using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
+                        {
+                            var x = (int)(cPos.X * factor);
+                            var y = (int)(cPos.Y * factor);
+
+                            g.CopyFromScreen(new System.Drawing.Point(clientRectangle.Left + x + SideBarWidth, clientRectangle.Top + y + TitleBarHeight), System.Drawing.Point.Empty, new System.Drawing.Size(CharacterImageSize, CharacterImageSize));
+                        }
+                        bitmap.Save(Module.GlobalImagesPath + "Image " + (images.Count + 1) + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                    }
+
+                    LoadCustomImages();
+                };
+
+                btn.Click += delegate { click(); };
+                captureAll_Button.Click += delegate { click(); };
+                captureButtons.Add(btn);
+            }
+        }
+        public void UpdateLanguage()
+        {
+            disclaimer_Label.Text = Strings.common.UISizeDisclaimer;
+            close_Button.Text = Strings.common.Close;
+            captureAll_Button.Text = Strings.common.CaptureAll;
+            foreach (StandardButton btn in captureButtons)
+            {
+                btn.Text = Strings.common.Capture;
+            }
+    }
+}
+    public class ImageSelector : BasicContainer
+    {
+        private Character _assignedCharacter = new Character();
+        public Character assignedCharacter 
+        {
+            get { return _assignedCharacter; }
+            set {
+                if (assignedCharacter != value)
+                {
+                    _assignedCharacter = value;
+                    setCharacter();
+                    selected_Image = null;
+                }
+            }
+        }
+
+        private Texture2D selected_Image;
+        private Label name_Label;
+        private Image character_Image;
+        private Image selector_Image;
+        private FlowPanel images_Panel;
+        private List<string> ImageNames = new List<string>();
+        private HeaderUnderlined header_HeaderUnderlined;
+
+        private StandardButton save_Button;
+        private StandardButton default_Button;
+        private StandardButton refresh_Button;
+        private StandardButton cancel_Button;
+        private StandardButton create_Button;
+
+        public ImageSelector(int width, int height) {
+            Width = width;
+            Height = height;
+
+            var contentService = new ContentService();
+            var iPadding = 5;
+
+            var set_img = new Image()
+            {
+                Parent = this,
+                Texture = Textures.Emblems[(int) _Emblems.Settings],
+                Size = new Point(64,64),
+            };
+            set_img.Click += delegate
+            {
+                Hide();
+            };
+
+            header_HeaderUnderlined = new HeaderUnderlined()
+            {
+                Parent = this,
+                Text = Strings.common.SelectImage,
+                Location = new Point(72, iPadding),
+                Font = contentService.DefaultFont32,
+                Width = 300,
+            };
+            character_Image = new Image()
+            {
+                Parent = this,
+                Size = new Point(75, 75),
+                Location = new Point(Width - 75 - iPadding, iPadding),
+                Texture = new Character().getProfessionTexture(),
+            };
+            var panel =  new Panel()
+            {
+                Parent = this,
+                Location = new Point(0, 75 + iPadding),
+                Height = Height - iPadding - 75,
+                Padding = new Thickness(8,8),
+                //ControlPadding = new Vector2(8, 8),
+                //HeightSizingMode = SizingMode.Fill,
+                WidthSizingMode = SizingMode.Fill,
+            };
+            selector_Image = new Image()
+            {
+                //Parent = this,
+                Parent = panel,
+                Size = new Point(104, 110),
+                Location = new Point(0, 0),
+                Texture = Textures.Backgrounds[(int)_Backgrounds.Selector],
+                Visible = true,
+            };
+
+            name_Label = new Label()
+            {
+                Parent = this,
+                Text = "Character Name",
+                AutoSizeWidth = true,
+                Font = contentService.DefaultFont18,
+                AutoSizeHeight = true,
+                VerticalAlignment = VerticalAlignment.Top,
+            };
+            name_Label.Location = new Point(Width - character_Image.Width - (iPadding * 3) - name_Label.Width, iPadding);
+
+            default_Button = new StandardButton()
+            {
+                Parent = this,
+                Text = Strings.common.UseDefault,
+                Location = new Point(Width - character_Image.Width - (iPadding * 3) - 125, iPadding + name_Label.Height + iPadding),
+                Size = new Point(125, 25),
+            };
+            default_Button.Click += delegate
+            {
+                selected_Image = null;
+                character_Image.Texture = assignedCharacter.getProfessionTexture(false);
+            };
+
+            refresh_Button = new StandardButton()
+            {
+                Parent = this,
+                Text = Strings.common.RefreshImages,
+                Location = new Point(75, 55),
+                Size = new Point(150, 25),
+            };
+            refresh_Button.Click += delegate
+            {
+                //images_Panel.ClearChildren();
+                LoadImages();
+            };
+
+            create_Button = new StandardButton()
+            {
+                Parent = this,
+                Text = Strings.common.CreateImages,
+                Location = new Point(75 + 5 + 150, 55),
+                Size = new Point(150, 25),
+            };
+            create_Button.Click += delegate
+            {
+                Module.screenCaptureWindow.Visible = true;
+
+                if (!GameService.GameIntegration.Gw2Instance.IsInGame)
+                {
+                    var pos = new Module.RECT();
+                    Module.GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref pos);
+                    Module.MoveWindow(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, pos.Left, pos.Top, 1100, 800, false);
+
+                    this.Hide();
+                    Module.MainWidow.Hide();
+                    Module.screenCapture = true;
+                }
+            };
+
+            save_Button = new StandardButton()
+            {
+                Parent = this,
+                Text = Strings.common.Save,
+                Location = new Point(400, 10),
+                Size = new Point(125, 25),
+            };
+            save_Button.Click += delegate
+            {
+                assignedCharacter.Icon = selected_Image != null ? selected_Image.Name : "";
+                assignedCharacter.characterControl.UpdateUI();
+                Module.subWindow.setCharacter(assignedCharacter);
+                assignedCharacter.Save();
+                this.Visible = false;
+            };
+
+            cancel_Button = new StandardButton()
+            {
+                Parent = this,
+                Text = Strings.common.Cancel,
+                Location = new Point(550, 10),
+                Size = new Point(125, 25),
+            };
+            cancel_Button.Click += delegate
+            {
+                this.Visible = false;
+            };
+
+            images_Panel = new FlowPanel()
+            {
+                Parent = this,
+                Location = new Point(0, 75 + iPadding),
+                Height = Height - iPadding - 75,
+                CanScroll = true,
+                ControlPadding = new Vector2(8, 8),
+                ShowBorder = true,
+                //HeightSizingMode = SizingMode.Fill,
+                WidthSizingMode = SizingMode.Fill,
+            };
+        }
+        public void LoadImages()
+        {
+            
+            foreach (Texture2D pic in Textures.CustomImages)
+            {
+                if (pic != null && !ImageNames.Contains(pic.Name))
+                {
+                    var img = new Image()
+                    {
+                        Parent = images_Panel,
+                        Size = new Point(96, 96),
+                        Texture = pic,
+                    };
+                    img.MouseEntered += delegate 
+                    {
+                        selector_Image.Location = new Point(img.Location.X, img.Location.Y - images_Panel.VerticalScrollOffset);
+
+                        //selector_Image.Location = new Point(images_Panel.Location.X + img.Location.X, images_Panel.Location.Y + img.Location.Y - images_Panel.VerticalScrollOffset);
+                        //selector_Image.Visible = (images_Panel.AbsoluteBounds.Y <= selector_Image.AbsoluteBounds.Y);
+                    };
+
+                    img.Click += delegate
+                    {
+                        character_Image.Texture = img.Texture;
+                        selected_Image = pic;
+                    };
+
+                    ImageNames.Add(pic.Name);
+                }
+            }
+
+            images_Panel.Invalidate();
+        }
+        private void setCharacter()
+        {
+            name_Label.Text = assignedCharacter.Name;
+            character_Image.Texture = assignedCharacter.getProfessionTexture();
+        }
+        public void UpdateLanguage() 
+        {
+            header_HeaderUnderlined.Text = Strings.common.SelectImage;
+            save_Button.Text = Strings.common.Save;
+            create_Button.Text = Strings.common.CreateImages;
+            refresh_Button.Text = Strings.common.RefreshImages;
+            default_Button.Text = Strings.common.UseDefault;
+            cancel_Button.Text = Strings.common.Cancel;
+        }
+    }
     public class HeaderUnderlined : Panel
     {
         static ContentService contentService = new ContentService();
@@ -780,13 +1144,15 @@ namespace Kenedia.Modules.Characters
             get { return _Font; }
             set {
                 _Font = value;
+                textLabel.Font = value;
+                textLabel.Height = _Font.LineHeight + 4;
 
                 if (AlignCentered)
                 {
-                    textLabel.Height = _Font.LineHeight + 4;
                     textLabel.Width = Math.Max((int)Math.Ceiling(_Font.MeasureString(textLabel.Text).Width) + _HorizontalPadding, Width - (_HorizontalPadding * 2));
-                    Invalidate();
                 }
+
+                Invalidate();
             }
         }
         private bool AlignCentered;
@@ -833,8 +1199,8 @@ namespace Kenedia.Modules.Characters
                 Text = "",
                 Parent = this,
                 AutoSizeWidth = true,
-                Height = _Font.LineHeight + 4,
-                Font = _Font,
+                Height = Font.LineHeight + 4,
+                Font = Font,
             };
 
             Separator_Image = new Image()

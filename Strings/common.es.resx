@@ -133,6 +133,15 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
   <data name="Birthday" xml:space="preserve">
     <value>Cumpleaños</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Capture" xml:space="preserve">
+    <value>Captura</value>
+  </data>
+  <data name="CaptureAll" xml:space="preserve">
+    <value>Capturar todo</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Caracteres</value>
   </data>
@@ -142,8 +151,14 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
   <data name="Clear" xml:space="preserve">
     <value>Despejar</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
   <data name="CraftingProfession" xml:space="preserve">
     <value>Profesión de artesano</value>
+  </data>
+  <data name="CreateImages" xml:space="preserve">
+    <value>Crear imágenes</value>
   </data>
   <data name="CustomTags" xml:space="preserve">
     <value>Etiquetas personalizadas</value>
@@ -157,11 +172,20 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
   <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
     <value>Doble clic para intercambiar</value>
   </data>
+  <data name="DoubleClickToSwap" xml:space="preserve">
+    <value>Haz doble clic para cambiar a {0}.</value>
+  </data>
   <data name="EnterOnSwap_Description" xml:space="preserve">
     <value>Entrar en el juego automáticamente después de seleccionar el personaje en la selección de personajes</value>
   </data>
   <data name="EnterOnSwap_DisplayName" xml:space="preserve">
     <value>Registro tras la selección del personaje</value>
+  </data>
+  <data name="EnterToLogin_Description" xml:space="preserve">
+    <value>Cuando el cuadro de búsqueda está enfocado y se pulsa 'RETURN', se desplaza al primer carácter de la lista.</value>
+  </data>
+  <data name="EnterToLogin_DisplayName" xml:space="preserve">
+    <value>Pulse Enter para cambiar</value>
   </data>
   <data name="Error_Competivive" xml:space="preserve">
     <value>El cambio de personajes está desactivado en el modo de competición.</value>
@@ -222,11 +246,23 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="NoCraftingProfession" xml:space="preserve">
     <value>Sin profesión de artesano</value>
   </data>
+  <data name="OnlyMaxCrafting_Description" xml:space="preserve">
+    <value>Mostrar sólo los oficios que están en un rango de 500 (joyero y escriba en 400).</value>
+  </data>
+  <data name="OnlyMaxCrafting_DisplayName" xml:space="preserve">
+    <value>Mostrar sólo las artesanías máximas</value>
+  </data>
   <data name="Profession" xml:space="preserve">
     <value>Profesión</value>
   </data>
   <data name="Race" xml:space="preserve">
     <value>Carrera</value>
+  </data>
+  <data name="RefreshImages" xml:space="preserve">
+    <value>Actualizar imágenes</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
   </data>
   <data name="Scribe" xml:space="preserve">
     <value>Escriba</value>
@@ -243,11 +279,17 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
 -t Etiqueta personalizada
 -c Chef; -p Guerrero mostrará todos los guerreros y todos los chefs</value>
   </data>
+  <data name="SelectImage" xml:space="preserve">
+    <value>Seleccione una imagen</value>
+  </data>
   <data name="ShortcutToggle_Description" xml:space="preserve">
     <value>para acceder al menú de caracteres.</value>
   </data>
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Menú alternativo</value>
+  </data>
+  <data name="ShowHide_Tooltip" xml:space="preserve">
+    <value>Muestra/oculta {0} en la lista de caracteres.</value>
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Especialización</value>
@@ -258,6 +300,12 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="SwapDelay_DisplayName" xml:space="preserve">
     <value>Délai de chargement ({0} ms)</value>
+  </data>
+  <data name="SwapModifier_Description" xml:space="preserve">
+    <value>Sólo cuando se pulsa el modificador se desencadena el cambio de carácter. Así se evita el intercambio accidental.</value>
+  </data>
+  <data name="SwapModifier_DisplayName" xml:space="preserve">
+    <value>Modificador necesario para cambiar</value>
   </data>
   <data name="Switch" xml:space="preserve">
     <value>Cambiar a {0}</value>
@@ -270,6 +318,9 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="ToggleVisible" xml:space="preserve">
     <value>Mostrar/ocultar caracteres ocultos</value>
+  </data>
+  <data name="UISizeDisclaimer" xml:space="preserve">
+    <value>Tienes que ajustar el tamaño de la superficie de juego a "Más grande" para obtener los recortes correctos.</value>
   </data>
   <data name="Unkown" xml:space="preserve">
     <value>Desconocido</value>
@@ -285,6 +336,9 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="Updating" xml:space="preserve">
     <value>Actualizando {0}</value>
+  </data>
+  <data name="UseDefault" xml:space="preserve">
+    <value>Especificación</value>
   </data>
   <data name="Utility" xml:space="preserve">
     <value>Útil</value>

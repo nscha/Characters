@@ -133,6 +133,15 @@ Sobald es vollständig geladen ist, wechselt es zu dem Charakter, der als "Login
   <data name="Birthday" xml:space="preserve">
     <value>Geburtstag</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="Capture" xml:space="preserve">
+    <value>Erfassen</value>
+  </data>
+  <data name="CaptureAll" xml:space="preserve">
+    <value>Alle Erfassen</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Charaktere</value>
   </data>
@@ -142,8 +151,14 @@ Sobald es vollständig geladen ist, wechselt es zu dem Charakter, der als "Login
   <data name="Clear" xml:space="preserve">
     <value>Löschen</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
   <data name="CraftingProfession" xml:space="preserve">
     <value>Handwerksberuf</value>
+  </data>
+  <data name="CreateImages" xml:space="preserve">
+    <value>Bilder erstellen</value>
   </data>
   <data name="CustomTags" xml:space="preserve">
     <value>Benutzerdefinierte Tags</value>
@@ -157,11 +172,20 @@ Sobald es vollständig geladen ist, wechselt es zu dem Charakter, der als "Login
   <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
     <value>Doppelklick zum Wechseln</value>
   </data>
+  <data name="DoubleClickToSwap" xml:space="preserve">
+    <value>Doppelklicken um zu {0} zu wechseln!</value>
+  </data>
   <data name="EnterOnSwap_Description" xml:space="preserve">
     <value>Automatischer Spieleinstieg nach Auswahl des Charakters in der Charakterauswahl</value>
   </data>
   <data name="EnterOnSwap_DisplayName" xml:space="preserve">
     <value>Anmeldung nach Auswahl des Charakters</value>
+  </data>
+  <data name="EnterToLogin_Description" xml:space="preserve">
+    <value>Wenn das Suchfeld fokusiert ist und 'RETURN' gedrückt wird, wechsel zu dem ersten Charakter in der Liste.</value>
+  </data>
+  <data name="EnterToLogin_DisplayName" xml:space="preserve">
+    <value>Drücke Enter zum Wechseln</value>
   </data>
   <data name="Error_Competivive" xml:space="preserve">
     <value>Das Wechseln der Charaktere ist im Wettkampfmodus deaktiviert!</value>
@@ -222,11 +246,23 @@ Dies erfordert einen API-Schlüssel mit Berechtigungen zumindest für den Endpun
   <data name="NoCraftingProfession" xml:space="preserve">
     <value>Kein Handwerksberuf</value>
   </data>
+  <data name="OnlyMaxCrafting_Description" xml:space="preserve">
+    <value>Zeige nur Handwerksberufe, welche auf einem 500 Rang sind (Juwelier &amp; Schreiber auf 400).</value>
+  </data>
+  <data name="OnlyMaxCrafting_DisplayName" xml:space="preserve">
+    <value>Zeige nur maximale Handwerksberufe</value>
+  </data>
   <data name="Profession" xml:space="preserve">
     <value>Beruf</value>
   </data>
   <data name="Race" xml:space="preserve">
     <value>Rasse</value>
+  </data>
+  <data name="RefreshImages" xml:space="preserve">
+    <value>Bilder aktualisieren</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
   </data>
   <data name="Scribe" xml:space="preserve">
     <value>Schreiber</value>
@@ -243,14 +279,23 @@ Dies erfordert einen API-Schlüssel mit Berechtigungen zumindest für den Endpun
 -t BenutzerdefinierterTag
 -c Koch; -p Krieger zeigt alle Krieger und alle Köche</value>
   </data>
+  <data name="SelectImage" xml:space="preserve">
+    <value>Wähle ein Bild aus</value>
+  </data>
   <data name="ShortcutToggle_Description" xml:space="preserve">
     <value>Taste zum Drücken, um das Charaktermenü aufzurufen.</value>
   </data>
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Menü umschalten</value>
   </data>
+  <data name="ShowHide_Tooltip" xml:space="preserve">
+    <value>Zeigt/verbirgt {0} in der Charakterliste.</value>
+  </data>
   <data name="Specialization" xml:space="preserve">
     <value>Spezialisierung</value>
+  </data>
+  <data name="SpecIcon" xml:space="preserve">
+    <value>Spezifikationssymbol</value>
   </data>
   <data name="SwapDelay_Description" xml:space="preserve">
     <value>Durchschnittliche Ladezeit von Ingame bis zur Charakterauswahl.
@@ -258,6 +303,12 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   </data>
   <data name="SwapDelay_DisplayName" xml:space="preserve">
     <value>Ladeverzögerung ({0} ms)</value>
+  </data>
+  <data name="SwapModifier_Description" xml:space="preserve">
+    <value>Nur wenn der Modifikator gedrückt wird, wird das Wechseln des Charakters ausgelöst. Damit wird ein versehentliches Vertauschen verhindert!</value>
+  </data>
+  <data name="SwapModifier_DisplayName" xml:space="preserve">
+    <value>Erforderlicher Modifikator zum Wechseln</value>
   </data>
   <data name="Switch" xml:space="preserve">
     <value>Wechsel zu {0}</value>
@@ -270,6 +321,9 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   </data>
   <data name="ToggleVisible" xml:space="preserve">
     <value>Ausgeblendete Charaktere anzeigen/ausblenden</value>
+  </data>
+  <data name="UISizeDisclaimer" xml:space="preserve">
+    <value>Sie müssen die Größe der Spieloberfläche auf 'Größer' einstellen, um die richtigen Ausschnitte zu erhalten!</value>
   </data>
   <data name="Unkown" xml:space="preserve">
     <value>Unbekannte</value>

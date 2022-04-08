@@ -133,6 +133,15 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
   <data name="Birthday" xml:space="preserve">
     <value>Anniversaire</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="Capture" xml:space="preserve">
+    <value>Saisir</value>
+  </data>
+  <data name="CaptureAll" xml:space="preserve">
+    <value>Tout saisir</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Caractères</value>
   </data>
@@ -142,8 +151,14 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
   <data name="Clear" xml:space="preserve">
     <value>Clair</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
   <data name="CraftingProfession" xml:space="preserve">
     <value>Profession de l'artisanat</value>
+  </data>
+  <data name="CreateImages" xml:space="preserve">
+    <value>Créer des images</value>
   </data>
   <data name="CustomTags" xml:space="preserve">
     <value>Étiquettes personnalisées</value>
@@ -157,11 +172,20 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
   <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
     <value>Double-cliquez pour échanger</value>
   </data>
+  <data name="DoubleClickToSwap" xml:space="preserve">
+    <value>Double-cliquez pour passer à {0} !</value>
+  </data>
   <data name="EnterOnSwap_Description" xml:space="preserve">
     <value>Entrer dans le jeu automatiquement après avoir sélectionné le personnage dans la sélection des personnages.</value>
   </data>
   <data name="EnterOnSwap_DisplayName" xml:space="preserve">
     <value>Connexion après avoir choisi le personnage</value>
+  </data>
+  <data name="EnterToLogin_Description" xml:space="preserve">
+    <value>Si le champ de recherche est focalisé et que tu appuies sur 'RETURN', passe au premier personnage de la liste.</value>
+  </data>
+  <data name="EnterToLogin_DisplayName" xml:space="preserve">
+    <value>Appuie sur Entrée pour changer</value>
   </data>
   <data name="Error_Competivive" xml:space="preserve">
     <value>Le changement de personnage est désactivé en mode compétition !</value>
@@ -222,11 +246,23 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
   <data name="NoCraftingProfession" xml:space="preserve">
     <value>Pas de profession d'artisanat</value>
   </data>
+  <data name="OnlyMaxCrafting_Description" xml:space="preserve">
+    <value>N'affiche que les métiers qui sont de rang 500 (bijoutier &amp; scribe à 400).</value>
+  </data>
+  <data name="OnlyMaxCrafting_DisplayName" xml:space="preserve">
+    <value>Afficher uniquement les métiers maximum</value>
+  </data>
   <data name="Profession" xml:space="preserve">
     <value>Profession</value>
   </data>
   <data name="Race" xml:space="preserve">
     <value>Course</value>
+  </data>
+  <data name="RefreshImages" xml:space="preserve">
+    <value>Actualiser les images</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Enregistrer</value>
   </data>
   <data name="Scribe" xml:space="preserve">
     <value>Illustrateur</value>
@@ -243,11 +279,17 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
 -t CustomTag
 -c Chef ; -p Warrior affiche tous les guerriers et tous les chefs.</value>
   </data>
+  <data name="SelectImage" xml:space="preserve">
+    <value>Choisis une image</value>
+  </data>
   <data name="ShortcutToggle_Description" xml:space="preserve">
     <value>Touche à presser pour accéder au menu des personnages.</value>
   </data>
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Changer de menu</value>
+  </data>
+  <data name="ShowHide_Tooltip" xml:space="preserve">
+    <value>Affiche/cache {0} dans la liste des personnages.</value>
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Spécialisation</value>
@@ -258,6 +300,12 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   </data>
   <data name="SwapDelay_DisplayName" xml:space="preserve">
     <value>Délai de chargement ({0} ms)</value>
+  </data>
+  <data name="SwapModifier_Description" xml:space="preserve">
+    <value>Ce n'est que lorsque le modificateur est pressé que le changement de personnage est déclenché. Cela permet d'éviter une permutation accidentelle !</value>
+  </data>
+  <data name="SwapModifier_DisplayName" xml:space="preserve">
+    <value>Modificateur nécessaire pour changer</value>
   </data>
   <data name="SwitchTo" xml:space="preserve">
     <value>Passer à {0}</value>
@@ -270,6 +318,9 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   </data>
   <data name="ToggleVisible" xml:space="preserve">
     <value>Afficher/masquer les personnages cachés</value>
+  </data>
+  <data name="UISizeDisclaimer" xml:space="preserve">
+    <value>Vous devez régler la taille de l'interface de jeu sur 'Plus grand' pour obtenir les bonnes découpes !</value>
   </data>
   <data name="Unkown" xml:space="preserve">
     <value>Inconnu</value>
@@ -285,6 +336,9 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   </data>
   <data name="Updating" xml:space="preserve">
     <value>Mise à jour de {0}</value>
+  </data>
+  <data name="UseDefault" xml:space="preserve">
+    <value>Spécification</value>
   </data>
   <data name="Utility" xml:space="preserve">
     <value>Utile</value>

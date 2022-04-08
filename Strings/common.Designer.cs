@@ -107,6 +107,33 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capture.
+        /// </summary>
+        internal static string Capture {
+            get {
+                return ResourceManager.GetString("Capture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capture All.
+        /// </summary>
+        internal static string CaptureAll {
+            get {
+                return ResourceManager.GetString("CaptureAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Characters.
         /// </summary>
         internal static string Characters {
@@ -134,11 +161,29 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crafting Profession.
         /// </summary>
         internal static string CraftingProfession {
             get {
                 return ResourceManager.GetString("CraftingProfession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Images.
+        /// </summary>
+        internal static string CreateImages {
+            get {
+                return ResourceManager.GetString("CreateImages", resourceCulture);
             }
         }
         
@@ -397,7 +442,7 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show only those crafting Professions which are at 500 rating (Jeweler 400)..
+        ///   Looks up a localized string similar to Show only crafts that are at a 500 rank (Jeweler &amp; Scribe at 400)..
         /// </summary>
         internal static string OnlyMaxCrafting_Description {
             get {
@@ -433,6 +478,24 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresh Images.
+        /// </summary>
+        internal static string RefreshImages {
+            get {
+                return ResourceManager.GetString("RefreshImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scribe.
         /// </summary>
         internal static string Scribe {
@@ -462,6 +525,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string SearchGuide {
             get {
                 return ResourceManager.GetString("SearchGuide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a picture.
+        /// </summary>
+        internal static string SelectImage {
+            get {
+                return ResourceManager.GetString("SelectImage", resourceCulture);
             }
         }
         
@@ -575,6 +647,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You will have to set the games Interface Size to &apos;Larger&apos; to get the correct cut outs!.
+        /// </summary>
+        internal static string UISizeDisclaimer {
+            get {
+                return ResourceManager.GetString("UISizeDisclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unkown.
         /// </summary>
         internal static string Unkown {
@@ -616,6 +697,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string Updating {
             get {
                 return ResourceManager.GetString("Updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Spec Icon.
+        /// </summary>
+        internal static string UseDefault {
+            get {
+                return ResourceManager.GetString("UseDefault", resourceCulture);
             }
         }
         

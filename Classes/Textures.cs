@@ -1,10 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Kenedia.Modules.Characters
 {
     public static class Textures
     {
         public static bool Loaded;
+        public static List<string> CustomImageNames = new List<string>();
         public static Texture2D[] CustomImages;
         public static Texture2D[] CustomGlobalImages;
 

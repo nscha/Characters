@@ -133,6 +133,15 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="Birthday" xml:space="preserve">
     <value>Birthday</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Capture" xml:space="preserve">
+    <value>Capture</value>
+  </data>
+  <data name="CaptureAll" xml:space="preserve">
+    <value>Capture All</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Characters</value>
   </data>
@@ -142,8 +151,14 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="CraftingProfession" xml:space="preserve">
     <value>Crafting Profession</value>
+  </data>
+  <data name="CreateImages" xml:space="preserve">
+    <value>Create Images</value>
   </data>
   <data name="CustomTags" xml:space="preserve">
     <value>Custom Tags</value>
@@ -232,7 +247,7 @@ This will require an API-Key with permissions at least for the 'characters' endp
     <value>No Crafting Profession</value>
   </data>
   <data name="OnlyMaxCrafting_Description" xml:space="preserve">
-    <value>Show only those crafting Professions which are at 500 rating (Jeweler 400).</value>
+    <value>Show only crafts that are at a 500 rank (Jeweler &amp; Scribe at 400).</value>
   </data>
   <data name="OnlyMaxCrafting_DisplayName" xml:space="preserve">
     <value>Show only maxed out crafting Professions</value>
@@ -242,6 +257,12 @@ This will require an API-Key with permissions at least for the 'characters' endp
   </data>
   <data name="Race" xml:space="preserve">
     <value>Race</value>
+  </data>
+  <data name="RefreshImages" xml:space="preserve">
+    <value>Refresh Images</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="Scribe" xml:space="preserve">
     <value>Scribe</value>
@@ -257,6 +278,9 @@ This will require an API-Key with permissions at least for the 'characters' endp
 -m MapName
 -t CustomTag
 -c Chef; -p Warrior will show all warriors and all chefs</value>
+  </data>
+  <data name="SelectImage" xml:space="preserve">
+    <value>Choose a picture</value>
   </data>
   <data name="ShortcutToggle_Description" xml:space="preserve">
     <value>Key to Press to toggle the characters menu.</value>
@@ -295,6 +319,9 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="ToggleVisible" xml:space="preserve">
     <value>Show/Hide hidden Characters</value>
   </data>
+  <data name="UISizeDisclaimer" xml:space="preserve">
+    <value>You will have to set the games Interface Size to 'Larger' to get the correct cut outs!</value>
+  </data>
   <data name="Unkown" xml:space="preserve">
     <value>Unkown</value>
   </data>
@@ -309,6 +336,9 @@ To get the current value you will have to swap module tabs once to update the se
   </data>
   <data name="Updating" xml:space="preserve">
     <value>Updating {0}</value>
+  </data>
+  <data name="UseDefault" xml:space="preserve">
+    <value>Use Spec Icon</value>
   </data>
   <data name="Utility" xml:space="preserve">
     <value>Utility</value>

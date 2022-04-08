@@ -51,9 +51,9 @@ namespace Kenedia.Modules.Characters
 
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+        public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
         [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
+        public struct RECT
         {
             public int Left;
             public int Top;
@@ -62,15 +62,13 @@ namespace Kenedia.Modules.Characters
         }
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int Width, int Height, bool Repaint);
-
-
-
+        public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int Width, int Height, bool Repaint);
 
         #region Global Variables
         public static _Settings Settings = new _Settings();
 
         //GUI
+        public static RECT GameWindow_Rectangle;
         public static StandardWindow MainWidow { get; private set; }
 
         public static FlowPanel CharacterPanel;
@@ -92,7 +90,8 @@ namespace Kenedia.Modules.Characters
         public static FlowPanel filterTagsPanel;
 
         public static CharacterDetailWindow subWindow { get; private set; }
-        public static BasicContainer screenCaptureWindow { get; private set; }
+        public static ImageSelector ImageSelectorWindow { get; private set; }
+        public static ScreenCaptureWindow screenCaptureWindow { get; private set; }
         public static BasicContainer captureBox;
 
         //States
@@ -100,6 +99,7 @@ namespace Kenedia.Modules.Characters
         public static bool saveCharacters;
         public static bool loginCharacter_Swapped;
         public static bool showAllCharacters;
+        public static bool screenCapture;
 
         public static Character loginCharacter;
         private static class Last
@@ -137,6 +137,10 @@ namespace Kenedia.Modules.Characters
         public static Character swapCharacter;
         #endregion
 
+        public static void ResetGameWindow()
+        {
+            MoveWindow(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, GameWindow_Rectangle.Left, GameWindow_Rectangle.Top, GameWindow_Rectangle.Right - GameWindow_Rectangle.Left, GameWindow_Rectangle.Bottom - GameWindow_Rectangle.Top, false);
+        }
 
         protected override void Initialize()
         {
@@ -163,6 +167,10 @@ namespace Kenedia.Modules.Characters
 
             Settings.SwapModifier.Value.Enabled = true;
             Settings.SwapModifier.Value.Activated += OnKeyPressed_LogoutMod;
+
+            var pos = new Module.RECT();
+            Module.GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref pos);
+            Module.GameWindow_Rectangle = pos;
         }
 
         private void LoadCustomImages()
@@ -170,6 +178,7 @@ namespace Kenedia.Modules.Characters
             var global_images = Directory.GetFiles(GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
 
             Textures.CustomImages = new Texture2D[global_images.Count + 100];
+            Textures.CustomImageNames = new List<string>();
 
             GameService.Graphics.QueueMainThreadRender((graphicsDevice) => {
                 Logger.Debug("Loading all custom Images ... ");
@@ -180,10 +189,12 @@ namespace Kenedia.Modules.Characters
                 {
                     Textures.CustomImages[i] = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(image_path, FileMode.Open));
                     Textures.CustomImages[i].Name = image_path.Replace(basePath, "");
+                    Textures.CustomImageNames.Add(Textures.CustomImages[i].Name);
                     i++;
                 }
 
                 Textures.Loaded = true;
+                ImageSelectorWindow.LoadImages();
             });
         }
 
@@ -247,6 +258,9 @@ namespace Kenedia.Modules.Characters
         }
         private void Load_UserLocale()
         {
+            ImageSelectorWindow.UpdateLanguage();
+            if(screenCaptureWindow != null) screenCaptureWindow.UpdateLanguage();
+
             foreach (Character c in Characters)
             {
                 CharacterTooltip ttp = (CharacterTooltip)c.characterControl.Tooltip;
@@ -276,7 +290,6 @@ namespace Kenedia.Modules.Characters
             {
                 c.UpdateLanguage();
             }
-
             foreach (ToggleIcon toggle in filterProfessions)
             {
                 if (toggle != null)
@@ -284,7 +297,6 @@ namespace Kenedia.Modules.Characters
                     toggle.BasicTooltipText = DataManager.getProfessionName(toggle.Id);
                 }
             }
-
             foreach (ToggleIcon toggle in filterBaseSpecs)
             {
                 if (toggle != null)
@@ -292,7 +304,6 @@ namespace Kenedia.Modules.Characters
                     toggle.BasicTooltipText = DataManager.getProfessionName(toggle.Id);
                 }
             }
-
             foreach (ToggleIcon toggle in filterCrafting)
             {
                 if (toggle != null)
@@ -301,7 +312,6 @@ namespace Kenedia.Modules.Characters
                     if (toggle.Id == 0) toggle.BasicTooltipText = Strings.common.NoCraftingProfession;
                 }
             }
-
             foreach (ToggleIcon toggle in filterSpecs)
             {
                 if (toggle != null)
@@ -309,7 +319,6 @@ namespace Kenedia.Modules.Characters
                     toggle.BasicTooltipText = DataManager.getSpecName(toggle.Id);
                 }
             }
-
             foreach (ToggleIcon toggle in filterRaces)
             {
                 if (toggle != null)
@@ -722,7 +731,13 @@ namespace Kenedia.Modules.Characters
             CreateWindow();
             CreateFilterWindow();
             CreateSubWindow();
-            CreateScreenCapture();
+            CreateImageSelector();
+
+            Settings.SwapModifier.Value.Activated += delegate
+            {
+                ImageSelectorWindow.Dispose();
+                CreateImageSelector();
+            };
 
             GameService.Graphics.SpriteScreen.Resized += delegate
             {
@@ -732,10 +747,7 @@ namespace Kenedia.Modules.Characters
                 {
                     screenCaptureWindow.Dispose();
                     CreateScreenCapture();
-                    screenCaptureWindow.Visible = captureResolution;
                 }
-
-                screenCaptureWindow.Visible = captureResolution; //captureResolution
             };
 
             var player = GameService.Gw2Mumble.PlayerCharacter;
@@ -800,11 +812,14 @@ namespace Kenedia.Modules.Characters
             {
                 subWindow.Hide();
                 filterWindow.Hide();
+                ImageSelectorWindow.Hide();
             };
             MainWidow.Shown += delegate
             {
                 subWindow.Hide();
                 filterWindow.Hide();
+                ImageSelectorWindow.Hide();
+
                 if (Settings.FocusFilter.Value) {
                     Control.ActiveControl = filterTextBox;
                     filterTextBox.Focused = true;
@@ -1197,7 +1212,7 @@ namespace Kenedia.Modules.Characters
         private void CreateSubWindow()
         {
             ContentService contentService = new ContentService();
-            var offset = (190 - 16 - 5);
+            var offset = (105);
             subWindow = new CharacterDetailWindow()
             {
                 //Size = new Point(350, MainWidow.Height - offset),
@@ -1239,19 +1254,15 @@ namespace Kenedia.Modules.Characters
                 Parent = subWindow,
             };
             subWindow.spec_Image.MouseEntered += delegate {
-                if (!GameService.GameIntegration.Gw2Instance.IsInGame) subWindow.spec_Image.Texture = Textures.Icons[(int)Icons.CogMedium];
+                if (!GameService.GameIntegration.Gw2Instance.IsInGame) subWindow.spec_Image.Texture = Textures.Icons[(int)Icons.CogBig];
             };
             subWindow.spec_Image.MouseLeft += delegate {
                 subWindow.spec_Image.Texture = subWindow.assignedCharacter.getProfessionTexture();
             };
             subWindow.spec_Image.Click += delegate
             {
-                if (!GameService.GameIntegration.Gw2Instance.IsInGame)
-                {
-                    var pos = new RECT();
-                    GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref pos);
-                    MoveWindow(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, pos.Left, pos.Top, 1100, 800, false);
-                }
+                ImageSelectorWindow.assignedCharacter = subWindow.assignedCharacter;
+                ImageSelectorWindow.Visible = true;
             };
 
             //Character Name
@@ -1415,153 +1426,43 @@ namespace Kenedia.Modules.Characters
         }
         private void CreateScreenCapture()
         {
-            // UI Scale Larger
-            // WinSize
-
-            double scale = GameService.Graphics.UIScaleMultiplier;
-
             var resolution = GameService.Graphics.Resolution;
             var sidePadding = 255 ;
             var bottomPadding = 100;
-
-            var CharacterImageSize = (int)(140);
-            var Image_Gap = -10;
             var topMenuHeight = 60;
 
-            
-            screenCaptureWindow = new BasicContainer()
+
+            screenCaptureWindow = new ScreenCaptureWindow(new Point(resolution.X - (sidePadding - 90), topMenuHeight))
             {
                 showBackground = false,
                 FrameColor = Color.Transparent,
                 Parent = GameService.Graphics.SpriteScreen,
                 Location = new Point(sidePadding, resolution.Y - (bottomPadding) - topMenuHeight),
-                //Size = new Point(resolution.X - (sidePadding - 90 ), CharacterImageSize + 5 + topMenuHeight * 20),
-                Size = new Point(resolution.X - (sidePadding - 90 ), topMenuHeight),
+                Visible = screenCapture,
+                LoadCustomImages = LoadCustomImages,
+            };
+
+        }
+        private void CreateImageSelector()
+        {
+            var offset = (105);
+
+            ImageSelectorWindow = new ImageSelector(987, MainWidow.Height - offset - 10)
+            {
+                //Size = new Point(350, MainWidow.Height - offset),
+                Location = new Point(MainWidow.Location.X + WINDOW_WIDTH - 25, MainWidow.Location.Y + offset),
+                Parent = GameService.Graphics.SpriteScreen,
+                Texture = Textures.Backgrounds[(int)_Backgrounds.BigGray_PlainBorder],
+                FrameColor = Color.AliceBlue,
                 Visible = false,
             };
 
-            Image_Gap = 17;
-            CharacterImageSize = 124;
-
-            var captureAllbtn = new StandardButton()
-            {
-                Parent = screenCaptureWindow,
-                Text = "Capture All",
-                Location = new Point(4 + 2 + (5 * (CharacterImageSize + Image_Gap)), 0),
-                Size = new Point(CharacterImageSize, topMenuHeight - 30),
+            MainWidow.Moved += delegate {
+                ImageSelectorWindow.Location = new Point(MainWidow.Location.X + WINDOW_WIDTH - 25, MainWidow.Location.Y + offset);
             };
-
-            for (int i = 0; i < (5); i++)
-            {
-                int[] offsets = { -1, 0, 0, 1, 1 };
-                var ctn = new BasicContainer()
-                {
-                    showBackground = false,
-                    FrameColor = Color.Transparent,
-                    Parent = screenCaptureWindow,
-                    Location = new Point(4  + offsets[i] + (i * (CharacterImageSize + Image_Gap)), 1 + topMenuHeight),
-                    Size = new Point(CharacterImageSize, CharacterImageSize),
-                    Visible = false,
-                };
-
-                var btn = new StandardButton()
-                {
-                    Parent = screenCaptureWindow,
-                    Text = "Capture",
-                    Location = new Point(4 + offsets[i] + (i * (CharacterImageSize + Image_Gap)), 0),
-                    Size = new Point(CharacterImageSize, topMenuHeight - 30),
-                };
-
-                void click ()
-                {
-                    var images = Directory.GetFiles(GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
-
-                    //Last.Tick_ImageSave = DateTime.Now;
-                    CharacterImageSize = 110;
-                    var TitleBarHeight = 33;
-                    var SideBarWidth = 10;
-                    var clientRectangle = new RECT();
-                    GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref clientRectangle);
-
-                    var cPos = ctn.AbsoluteBounds;
-                    double factor = GameService.Graphics.UIScaleMultiplier;
-
-                    using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(CharacterImageSize, CharacterImageSize))
-                    {
-                        using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
-                        {
-                            var x = (int)(cPos.X * factor);
-                            var y = (int)(cPos.Y * factor);
-
-                            g.CopyFromScreen(new System.Drawing.Point(clientRectangle.Left + x + SideBarWidth, clientRectangle.Top + y + TitleBarHeight), System.Drawing.Point.Empty, new System.Drawing.Size(CharacterImageSize, CharacterImageSize));
-                        }
-                        bitmap.Save(GlobalImagesPath + "Image " + (images.Count + 1) + ".png", System.Drawing.Imaging.ImageFormat.Png);
-                    }
-
-                    LoadCustomImages();
-                };
-
-                btn.Click += delegate { click(); };
-                captureAllbtn.Click += delegate { click(); };
-
-            }     
-            
-
-        }
-        private void CreateScreenCapture_NormalSize()
-        {
-
-            var resolution = GameService.Graphics.Resolution;
-            var sidePadding = 200;
-            var bottomPadding = 0;
-
-            var CharacterImageSize = 102;
-            var Image_Gap = -10;
-            var topMenuHeight = 60;
-
-            
-            Logger.Debug("X: " + resolution.X + "; Y:" + resolution.Y);
-            screenCaptureWindow = new BasicContainer()
-            {
-                showBackground = false,
-                FrameColor = Color.Transparent,
-                Parent = GameService.Graphics.SpriteScreen,
-                Location = new Point(sidePadding, resolution.Y - (bottomPadding) - topMenuHeight),
-                Size = new Point(resolution.X - (sidePadding - 90 ), CharacterImageSize + 5 + topMenuHeight),
-            };
-
-            Image_Gap = 4;
-            CharacterImageSize = 102;
-
-            for (int i = 0; i < (resolution.X / CharacterImageSize); i++)
-            {
-
-                var ctn = new BasicContainer()
-                {
-                    showBackground = false,
-                    FrameColor = Color.Red,
-                    Parent = screenCaptureWindow,
-                    Location = new Point(Image_Gap + (i * (CharacterImageSize + Image_Gap + (11))), 1 + topMenuHeight),
-                    Size = new Point(CharacterImageSize, CharacterImageSize),
-                };
-
-                var btn = new StandardButton()
-                {
-                    Parent = screenCaptureWindow,
-                    Text = "Capture",
-                    Location = new Point(Image_Gap + (i * (CharacterImageSize + Image_Gap + (11))), 0),
-                    Size = new Point(CharacterImageSize, topMenuHeight - 30),
-                };
-
-                btn.Click += delegate
-                {
-                    captureBox = ctn;
-                };
-            }        
         }
         private void OnKeyPressed_LogoutMod(object o, EventArgs e)
         {
-            Logger.Debug("Logout Mod Click: ACTIVATED!");
             Settings.SwapModifierPressed = DateTime.Now;
         }
 
@@ -1582,10 +1483,13 @@ namespace Kenedia.Modules.Characters
             Last.Tick_PanelUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
             Last.Tick_FadeEffect += gameTime.ElapsedGameTime.TotalMilliseconds;
 
+
             if (charactersLoaded && Last.Tick_Update > 250)
             {
                 Last.Tick_Update = -250;
                 Update_CurrentCharacter();
+
+                if (screenCaptureWindow == null) CreateScreenCapture();
 
                 foreach (Character character in Characters)
                 {

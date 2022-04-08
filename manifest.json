@@ -1,10 +1,10 @@
 {
   "name": "Characters",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "namespace": "Kenedia.Modules.Characters",
   "package": "Characters.dll",
   "manifest_version": 1,
-  "directories": [ "characters" ],
+  "directories": [ "characters", "characters/images" ],
   "description": "A tool to easily switch characters even with a lot of them!\nDISCLAIMER: Guild Wars 2 has randomly issues with sorting your characters if you log into them only for a short time. This will mess with this module, there is nothing that can be done about it sadly. Once the API updates the character list they will get sorted again!",
   "dependencies": {
     "bh.blishhud": ">=0.5.2"

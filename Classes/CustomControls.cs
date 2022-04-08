@@ -1034,8 +1034,6 @@ namespace Kenedia.Modules.Characters
             };
             create_Button.Click += delegate
             {
-                Module.screenCaptureWindow.Visible = true;
-
                 if (!GameService.GameIntegration.Gw2Instance.IsInGame)
                 {
                     var pos = new Module.RECT();
@@ -1045,6 +1043,7 @@ namespace Kenedia.Modules.Characters
                     this.Hide();
                     Module.MainWidow.Hide();
                     Module.screenCapture = true;
+                    Module.screenCaptureWindow.Visible = true;
                 }
             };
 

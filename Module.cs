@@ -175,27 +175,31 @@ namespace Kenedia.Modules.Characters
 
         private void LoadCustomImages()
         {
-            var global_images = Directory.GetFiles(GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
+            if (Directory.Exists(GlobalImagesPath))
+            {
+                var global_images = Directory.GetFiles(GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
 
-            Textures.CustomImages = new Texture2D[global_images.Count + 100];
-            Textures.CustomImageNames = new List<string>();
+                Textures.CustomImages = new Texture2D[global_images.Count + 100];
+                Textures.CustomImageNames = new List<string>();
 
-            GameService.Graphics.QueueMainThreadRender((graphicsDevice) => {
-                Logger.Debug("Loading all custom Images ... ");
-                var basePath = DirectoriesManager.GetFullDirectoryPath("characters");
-                var i = 0;
-
-                foreach (string image_path in global_images)
+                GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
                 {
-                    Textures.CustomImages[i] = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(image_path, FileMode.Open));
-                    Textures.CustomImages[i].Name = image_path.Replace(basePath, "");
-                    Textures.CustomImageNames.Add(Textures.CustomImages[i].Name);
-                    i++;
-                }
+                    Logger.Debug("Loading all custom Images ... ");
+                    var basePath = DirectoriesManager.GetFullDirectoryPath("characters");
+                    var i = 0;
 
-                Textures.Loaded = true;
-                ImageSelectorWindow.LoadImages();
-            });
+                    foreach (string image_path in global_images)
+                    {
+                        Textures.CustomImages[i] = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(image_path, FileMode.Open));
+                        Textures.CustomImages[i].Name = image_path.Replace(basePath, "");
+                        Textures.CustomImageNames.Add(Textures.CustomImages[i].Name);
+                        i++;
+                    }
+
+                    Textures.Loaded = true;
+                    ImageSelectorWindow.LoadImages();
+                });
+            }
         }
 
         private void LoadTextures()

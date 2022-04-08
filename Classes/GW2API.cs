@@ -121,6 +121,10 @@ namespace Kenedia.Modules.Characters
                     CharactersPath = path + @"\characters.json";
                     AccountPath = path + @"\account.json";
                     AccountImagesPath = path + @"\images\";
+                    if (!Directory.Exists(AccountImagesPath))
+                    {
+                        Directory.CreateDirectory(AccountImagesPath);
+                    }
 
                     if (userAccount == null)
                     {

@@ -157,7 +157,7 @@ namespace Kenedia.Modules.Characters
             }
             else
             {
-                if (includeCustom && Icon != null && Icon != "")
+                if (includeCustom && Icon != null && Icon != "" && Textures.CustomImages != null)
                 {
                     foreach (Texture2D Texture in Textures.CustomImages)
                     {

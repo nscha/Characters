@@ -142,6 +142,9 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="CaptureAll" xml:space="preserve">
     <value>Capture All</value>
   </data>
+  <data name="CaptureNotification" xml:space="preserve">
+    <value>Saved as {0}!</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Characters</value>
   </data>
@@ -318,6 +321,9 @@ To get the current value you will have to swap module tabs once to update the se
   </data>
   <data name="ToggleVisible" xml:space="preserve">
     <value>Show/Hide hidden Characters</value>
+  </data>
+  <data name="UIScale_Error" xml:space="preserve">
+    <value>Please set the game to 'WINDOWED' {0} and the UI Scale to 'Larger'!</value>
   </data>
   <data name="UISizeDisclaimer" xml:space="preserve">
     <value>You will have to set the games Interface Size to 'Larger' to get the correct cut outs!</value>

@@ -816,7 +816,7 @@ namespace Kenedia.Modules.Characters
             {
                 Parent = this,
                 Text = Strings.common.UISizeDisclaimer,
-                Location = new Point(0, 30),
+                Location = new Point(0, 25),
                 Size = new Point(Width - CharacterImageSize - Image_Gap, topMenuHeight - 30),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 TextColor = Color.Red,
@@ -837,6 +837,7 @@ namespace Kenedia.Modules.Characters
                 Module.MainWidow.Show();
                 Module.ImageSelectorWindow.Show();
                 Module.ResetGameWindow();
+                if (LoadCustomImages!=null) LoadCustomImages();
             };
 
             for (int i = 0; i < (5); i++)
@@ -862,31 +863,39 @@ namespace Kenedia.Modules.Characters
 
                 void click()
                 {
-                    var images = Directory.GetFiles(Module.GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
+                    if (GameService.GameIntegration.GfxSettings.ScreenMode == Blish_HUD.GameIntegration.GfxSettings.ScreenModeSetting.Windowed) {
+                        var images = Directory.GetFiles(Module.GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
 
-                    //Last.Tick_ImageSave = DateTime.Now;
-                    CharacterImageSize = 110;
-                    var TitleBarHeight = 33;
-                    var SideBarWidth = 10;
-                    var clientRectangle = new Module.RECT();
-                    Module.GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref clientRectangle);
+                        //Last.Tick_ImageSave = DateTime.Now;
+                        CharacterImageSize = 110;
+                        var TitleBarHeight = 33;
+                        var SideBarWidth = 10;
+                        var clientRectangle = new Module.RECT();
+                        Module.GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref clientRectangle);
 
-                    var cPos = ctn.AbsoluteBounds;
-                    double factor = GameService.Graphics.UIScaleMultiplier;
+                        var cPos = ctn.AbsoluteBounds;
+                        double factor = GameService.Graphics.UIScaleMultiplier;
 
-                    using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(CharacterImageSize, CharacterImageSize))
-                    {
-                        using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
+                        using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(CharacterImageSize, CharacterImageSize))
                         {
-                            var x = (int)(cPos.X * factor);
-                            var y = (int)(cPos.Y * factor);
+                            using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
+                            {
+                                var x = (int)(cPos.X * factor);
+                                var y = (int)(cPos.Y * factor);
 
-                            g.CopyFromScreen(new System.Drawing.Point(clientRectangle.Left + x + SideBarWidth, clientRectangle.Top + y + TitleBarHeight), System.Drawing.Point.Empty, new System.Drawing.Size(CharacterImageSize, CharacterImageSize));
+                                g.CopyFromScreen(new System.Drawing.Point(clientRectangle.Left + x + SideBarWidth, clientRectangle.Top + y + TitleBarHeight), System.Drawing.Point.Empty, new System.Drawing.Size(CharacterImageSize, CharacterImageSize));
+                            }
+
+                            bitmap.Save(Module.GlobalImagesPath + "Image " + (images.Count + 1) + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                            ScreenNotification.ShowNotification(string.Format(Strings.common.CaptureNotification, "Image " + (images.Count + 1) + ".png"), ScreenNotification.NotificationType.Warning);
                         }
-                        bitmap.Save(Module.GlobalImagesPath + "Image " + (images.Count + 1) + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                    }
+                    else
+                    {
+                        ScreenNotification.ShowNotification(string.Format(Strings.common.UIScale_Error, Environment.NewLine), ScreenNotification.NotificationType.Error);
                     }
 
-                    LoadCustomImages();
+                    //LoadCustomImages();
                 };
 
                 btn.Click += delegate { click(); };

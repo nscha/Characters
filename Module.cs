@@ -189,8 +189,8 @@ namespace Kenedia.Modules.Characters
                     var i = 0;
 
                     foreach (string image_path in global_images)
-                    {
-                        Textures.CustomImages[i] = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(image_path, FileMode.Open));
+                    {                        
+                        Textures.CustomImages[i] = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(image_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                         Textures.CustomImages[i].Name = image_path.Replace(basePath, "");
                         Textures.CustomImageNames.Add(Textures.CustomImages[i].Name);
                         i++;

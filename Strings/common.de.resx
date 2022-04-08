@@ -142,6 +142,9 @@ Sobald es vollständig geladen ist, wechselt es zu dem Charakter, der als "Login
   <data name="CaptureAll" xml:space="preserve">
     <value>Alle Erfassen</value>
   </data>
+  <data name="CaptureNotification" xml:space="preserve">
+    <value>Gespeichert als {0}!</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Charaktere</value>
   </data>
@@ -321,6 +324,9 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   </data>
   <data name="ToggleVisible" xml:space="preserve">
     <value>Ausgeblendete Charaktere anzeigen/ausblenden</value>
+  </data>
+  <data name="UIScale_Error" xml:space="preserve">
+    <value>Bitte stellen Sie das Spiel auf 'WINDOWED' {0} und die UI Scale auf 'Larger'!</value>
   </data>
   <data name="UISizeDisclaimer" xml:space="preserve">
     <value>Sie müssen die Größe der Spieloberfläche auf 'Größer' einstellen, um die richtigen Ausschnitte zu erhalten!</value>

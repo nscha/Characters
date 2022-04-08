@@ -142,6 +142,9 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
   <data name="CaptureAll" xml:space="preserve">
     <value>Capturar todo</value>
   </data>
+  <data name="CaptureNotification" xml:space="preserve">
+    <value>Guardado como {0}!</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Caracteres</value>
   </data>
@@ -318,6 +321,9 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="ToggleVisible" xml:space="preserve">
     <value>Mostrar/ocultar caracteres ocultos</value>
+  </data>
+  <data name="UIScale_Error" xml:space="preserve">
+    <value>Por favor, pon el juego en 'WINDOWED' {0} y la escala de la interfaz de usuario en 'Larger'.</value>
   </data>
   <data name="UISizeDisclaimer" xml:space="preserve">
     <value>Tienes que ajustar el tamaño de la superficie de juego a "Más grande" para obtener los recortes correctos.</value>

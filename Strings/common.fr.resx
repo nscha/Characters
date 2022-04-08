@@ -142,6 +142,9 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
   <data name="CaptureAll" xml:space="preserve">
     <value>Tout saisir</value>
   </data>
+  <data name="CaptureNotification" xml:space="preserve">
+    <value>Enregistré sous {0}!</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Caractères</value>
   </data>
@@ -318,6 +321,9 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   </data>
   <data name="ToggleVisible" xml:space="preserve">
     <value>Afficher/masquer les personnages cachés</value>
+  </data>
+  <data name="UIScale_Error" xml:space="preserve">
+    <value>Veuillez régler le jeu sur 'WINDOWED' {0} et l'échelle de l'interface utilisateur sur 'Larger' !</value>
   </data>
   <data name="UISizeDisclaimer" xml:space="preserve">
     <value>Vous devez régler la taille de l'interface de jeu sur 'Plus grand' pour obtenir les bonnes découpes !</value>

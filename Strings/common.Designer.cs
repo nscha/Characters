@@ -134,6 +134,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saved as {0}!.
+        /// </summary>
+        internal static string CaptureNotification {
+            get {
+                return ResourceManager.GetString("CaptureNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Characters.
         /// </summary>
         internal static string Characters {
@@ -643,6 +652,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string ToggleVisible {
             get {
                 return ResourceManager.GetString("ToggleVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please set the game to &apos;WINDOWED&apos; {0} and the UI Scale to &apos;Larger&apos;!.
+        /// </summary>
+        internal static string UIScale_Error {
+            get {
+                return ResourceManager.GetString("UIScale_Error", resourceCulture);
             }
         }
         

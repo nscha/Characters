@@ -106,7 +106,6 @@ namespace Kenedia.Modules.Characters
             try
             {
                 Logger.Debug("API Subtoken Updated!");
-
                 if (Gw2ApiManager.HasPermissions(new[] { TokenPermission.Account, TokenPermission.Characters }))
                 {
                     var account = await Gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();

@@ -64,6 +64,10 @@ namespace Kenedia.Modules.Characters
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int Width, int Height, bool Repaint);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
+
         #region Global Variables
         public static _Settings Settings = new _Settings();
 
@@ -145,6 +149,13 @@ namespace Kenedia.Modules.Characters
         protected override void Initialize()
         {
             Logger.Debug("Initializing ...");
+
+            var item = new Item();
+            item.Name = "APFELSINE";
+            Logger.Debug(item.Name.ToString());
+
+            var baseobj = (Gw2Sharp.WebApi.V2.ApiV2BaseObject)item;
+            Logger.Debug(item.Name.ToString() + "casted to Base: " + (baseobj != null));
 
             ModKeyMapping = new VirtualKeyShort[5];
             ModKeyMapping[(int)ModifierKeys.Ctrl] = VirtualKeyShort.CONTROL;

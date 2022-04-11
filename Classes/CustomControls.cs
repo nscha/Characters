@@ -868,10 +868,15 @@ namespace Kenedia.Modules.Characters
 
                         //Last.Tick_ImageSave = DateTime.Now;
                         CharacterImageSize = 110;
-                        var TitleBarHeight = 33;
-                        var SideBarWidth = 10;
+
+                        var hWnd = GameService.GameIntegration.Gw2Instance.Gw2WindowHandle;
+                        var wndBounds = new Module.RECT();
                         var clientRectangle = new Module.RECT();
-                        Module.GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref clientRectangle);
+                        Module.GetWindowRect(hWnd, ref wndBounds);
+                        Module.GetClientRect(hWnd, out clientRectangle);
+
+                        var TitleBarHeight = wndBounds.Bottom - wndBounds.Top - (clientRectangle.Bottom - clientRectangle.Top);
+                        var SideBarWidth = wndBounds.Right - wndBounds.Left - (clientRectangle.Right - clientRectangle.Left);
 
                         var cPos = ctn.AbsoluteBounds;
                         double factor = GameService.Graphics.UIScaleMultiplier;

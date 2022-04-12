@@ -183,7 +183,20 @@ namespace Kenedia.Modules.Characters
             Module.GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref pos);
             Module.GameWindow_Rectangle = pos;
         }
+        private void CreateFolders()
+        {
+            string basePath = DirectoriesManager.GetFullDirectoryPath("characters");
+            List<string> Paths = new List<string>() 
+            {
+                @"\images",
+            };
 
+
+            foreach (string Path in Paths)
+            {
+                if (!Directory.Exists(basePath + Path)) Directory.CreateDirectory(basePath + Path);
+            }
+        }
         private void LoadCustomImages()
         {
             if (Directory.Exists(GlobalImagesPath))

@@ -150,13 +150,6 @@ namespace Kenedia.Modules.Characters
         {
             Logger.Debug("Initializing ...");
 
-            var item = new Item();
-            item.Name = "APFELSINE";
-            Logger.Debug(item.Name.ToString());
-
-            var baseobj = (Gw2Sharp.WebApi.V2.ApiV2BaseObject)item;
-            Logger.Debug(item.Name.ToString() + "casted to Base: " + (baseobj != null));
-
             ModKeyMapping = new VirtualKeyShort[5];
             ModKeyMapping[(int)ModifierKeys.Ctrl] = VirtualKeyShort.CONTROL;
             ModKeyMapping[(int)ModifierKeys.Alt] = VirtualKeyShort.MENU;
@@ -182,6 +175,8 @@ namespace Kenedia.Modules.Characters
             var pos = new Module.RECT();
             Module.GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref pos);
             Module.GameWindow_Rectangle = pos;
+
+            CreateFolders();
         }
         private void CreateFolders()
         {

@@ -208,7 +208,7 @@ namespace Kenedia.Modules.Characters
                     }
 
                     Textures.Loaded = true;
-                    ImageSelectorWindow.LoadImages();
+                    if(ImageSelectorWindow!=null) ImageSelectorWindow.LoadImages();
                 });
             }
         }
@@ -747,12 +747,6 @@ namespace Kenedia.Modules.Characters
             CreateFilterWindow();
             CreateSubWindow();
             CreateImageSelector();
-
-            Settings.SwapModifier.Value.Activated += delegate
-            {
-                ImageSelectorWindow.Dispose();
-                CreateImageSelector();
-            };
 
             GameService.Graphics.SpriteScreen.Resized += delegate
             {

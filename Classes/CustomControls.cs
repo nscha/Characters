@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BitmapFont = MonoGame.Extended.BitmapFonts.BitmapFont;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Kenedia.Modules.Characters
 {
@@ -864,7 +865,9 @@ namespace Kenedia.Modules.Characters
                 void click()
                 {
                     if (GameService.GameIntegration.GfxSettings.ScreenMode == Blish_HUD.GameIntegration.GfxSettings.ScreenModeSetting.Windowed) {
-                        var images = Directory.GetFiles(Module.GlobalImagesPath, "*.png", SearchOption.AllDirectories).ToList();
+
+                        Regex regex = new Regex("Image.*[0-9].png");
+                        var images = Directory.GetFiles(Module.GlobalImagesPath, "*.png", SearchOption.AllDirectories).Where(path => regex.IsMatch(path)).ToList();
 
                         //Last.Tick_ImageSave = DateTime.Now;
                         CharacterImageSize = 110;

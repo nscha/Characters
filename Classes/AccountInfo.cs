@@ -21,7 +21,7 @@ namespace Kenedia.Modules.Characters
                 string json = JsonConvert.SerializeObject(_data.ToArray());
 
                 //write string to file
-                System.IO.File.WriteAllText(Module.AccountPath, json);
+                System.IO.File.WriteAllText(Module.AccountInfoPath, json);
             }
         }
         public bool CharacterUpdateNeeded()

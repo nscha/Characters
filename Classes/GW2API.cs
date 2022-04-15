@@ -117,8 +117,9 @@ namespace Kenedia.Modules.Characters
                         Directory.CreateDirectory(path);
                     }
 
+                    AccountPath = path;
                     CharactersPath = path + @"\characters.json";
-                    AccountPath = path + @"\account.json";
+                    AccountInfoPath = path + @"\account.json";
                     AccountImagesPath = path + @"\images\";
                     if (!Directory.Exists(AccountImagesPath))
                     {
@@ -134,10 +135,10 @@ namespace Kenedia.Modules.Characters
                         };
                     }
 
-                    if (System.IO.File.Exists(AccountPath))
+                    if (System.IO.File.Exists(AccountInfoPath))
                     {
                         requestAPI = false;
-                        List<AccountInfo> accountInfos = JsonConvert.DeserializeObject<List<AccountInfo>>(System.IO.File.ReadAllText(AccountPath));
+                        List<AccountInfo> accountInfos = JsonConvert.DeserializeObject<List<AccountInfo>>(System.IO.File.ReadAllText(AccountInfoPath));
 
                         foreach (AccountInfo acc in accountInfos)
                         {

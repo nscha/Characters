@@ -291,6 +291,12 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Changer de menu</value>
   </data>
+  <data name="ShowCornerIcon_Description" xml:space="preserve">
+    <value>Afficher/masquer l'icône de coin</value>
+  </data>
+  <data name="ShowCornerIcon_DisplayName" xml:space="preserve">
+    <value>Afficher l'icône de coin</value>
+  </data>
   <data name="ShowHide_Tooltip" xml:space="preserve">
     <value>Affiche/cache {0} dans la liste des personnages.</value>
   </data>

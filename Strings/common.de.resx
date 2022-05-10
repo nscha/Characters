@@ -291,6 +291,12 @@ Dies erfordert einen API-Schlüssel mit Berechtigungen zumindest für den Endpun
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Menü umschalten</value>
   </data>
+  <data name="ShowCornerIcon_Description" xml:space="preserve">
+    <value>Eckensymbol ein-/ausblenden</value>
+  </data>
+  <data name="ShowCornerIcon_DisplayName" xml:space="preserve">
+    <value>Eckensymbol einblenden</value>
+  </data>
   <data name="ShowHide_Tooltip" xml:space="preserve">
     <value>Zeigt/verbirgt {0} in der Charakterliste.</value>
   </data>

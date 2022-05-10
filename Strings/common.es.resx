@@ -291,6 +291,12 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Menú alternativo</value>
   </data>
+  <data name="ShowCornerIcon_Description" xml:space="preserve">
+    <value>Mostrar/Ocultar el icono de la esquina</value>
+  </data>
+  <data name="ShowCornerIcon_DisplayName" xml:space="preserve">
+    <value>Mostrar el icono de la esquina</value>
+  </data>
   <data name="ShowHide_Tooltip" xml:space="preserve">
     <value>Muestra/oculta {0} en la lista de caracteres.</value>
   </data>

@@ -102,6 +102,7 @@ namespace Kenedia.Modules.Characters
 
         //States
         public static bool charactersLoaded;
+        public static bool charactersLoaded_Failed;
         public static bool saveCharacters;
         public static bool loginCharacter_Swapped;
         public static bool showAllCharacters;
@@ -174,12 +175,21 @@ namespace Kenedia.Modules.Characters
             Settings.SwapModifier.Value.Enabled = true;
             Settings.SwapModifier.Value.Activated += OnKeyPressed_LogoutMod;
 
+
+            Settings.ShowCornerIcon.SettingChanged += ShowCornerIcon_SettingChanged;
+
             var pos = new Module.RECT();
             Module.GetWindowRect(GameService.GameIntegration.Gw2Instance.Gw2WindowHandle, ref pos);
             Module.GameWindow_Rectangle = pos;
 
             CreateFolders();
         }
+
+        private void ShowCornerIcon_SettingChanged(object sender, ValueChangedEventArgs<bool> e)
+        {
+            if (cornerButton != null) cornerButton.Visible = e.NewValue;
+        }
+
         private void CreateFolders()
         {
             string basePath = DirectoriesManager.GetFullDirectoryPath("characters");
@@ -502,7 +512,8 @@ namespace Kenedia.Modules.Characters
                 IconName = "Characters",
                 Icon = Textures.Icons[(int)Icons.People],
                 HoverIcon = Textures.Icons[(int)Icons.PeopleWhite],
-                Priority = 4
+                Priority = 4,
+                Visible = Settings.ShowCornerIcon.Value,
             };
             cornerButton.Click += delegate { MainWidow.ToggleWindow(); };
         }
@@ -710,7 +721,7 @@ namespace Kenedia.Modules.Characters
                         {
                             foreach (CharacterCrafting crafting in c.Crafting)
                             {
-                                if (crafting.Active && toggle.Id == crafting.Id && (!Settings.OnlyMaxCrafting.Value || crafting.Rating == 500 || (crafting.Id == 4 || crafting.Id == 7) && crafting.Rating == 400)) craftingMatch.match = true;
+                                if (crafting.Active && toggle.Id == crafting.Id && (!Settings.OnlyMaxCrafting.Value || crafting.Rating == 500 || ((crafting.Id == 4 || crafting.Id == 7) && crafting.Rating == 400))) craftingMatch.match = true;
                             }
                         }
                     }
@@ -1577,6 +1588,16 @@ namespace Kenedia.Modules.Characters
                     }
                 }
             }
+            else if (charactersLoaded_Failed)
+            {
+                if (Last.Tick_APIUpdate > 30000 && userAccount != null)
+                {
+                    charactersLoaded_Failed = false;
+                    Logger.Debug("Starting another Loading attempt!");
+                    Last.Tick_APIUpdate = -30000;
+                    Gw2ApiManager_SubtokenUpdated(null, null);
+                }
+            }
 
 
             if (Settings.FadeSubWindows.Value && Last.Tick_FadeEffect > 30)
@@ -1594,6 +1615,7 @@ namespace Kenedia.Modules.Characters
                     if (subWindow.Opacity <= (float) 0) subWindow.Hide();
                 }
             }
+            
         }
 
         /// <inheritdoc />

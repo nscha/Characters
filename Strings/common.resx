@@ -291,6 +291,12 @@ This will require an API-Key with permissions at least for the 'characters' endp
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Toggle Menu</value>
   </data>
+  <data name="ShowCornerIcon_Description" xml:space="preserve">
+    <value>Show/Hide Corner Icon</value>
+  </data>
+  <data name="ShowCornerIcon_DisplayName" xml:space="preserve">
+    <value>Show Corner Icon</value>
+  </data>
   <data name="ShowHide_Tooltip" xml:space="preserve">
     <value>Show/Hides {0} in the character list.</value>
   </data>

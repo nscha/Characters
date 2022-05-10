@@ -12,8 +12,68 @@ using System.Linq;
 
 namespace Kenedia.Modules.Characters
 {
+    public static class ExtsionMethods {
+        public static bool IsValidJson(this string strInput)
+        {
+            if (string.IsNullOrWhiteSpace(strInput)) { return false; }
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    var obj = Newtonsoft.Json.Linq.JToken.Parse(strInput);
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    //Exception in parsing json
+                    Console.WriteLine(jex.Message);
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    Console.WriteLine(ex.ToString());
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
     public partial class Module : Blish_HUD.Modules.Module
     {
+        private string LoadFile(string path, List<string> filesToDelete)
+        {
+            var txt = "";
+
+            {
+                try
+                {
+                    txt = System.IO.File.ReadAllText(path);
+                }
+                catch (InvalidOperationException)
+                {
+                    if (System.IO.File.Exists(path)) filesToDelete.Add(path);
+                }
+                catch (UnauthorizedAccessException)
+                {
+
+                }
+                catch (FileNotFoundException)
+                {
+                }
+                catch (FileLoadException)
+                {
+
+                }
+            }
+
+            return txt;
+        }
+
         public async void FetchAPI(bool force = false)
         {
             try
@@ -135,10 +195,49 @@ namespace Kenedia.Modules.Characters
                         };
                     }
 
+                    List<string> filesToDelete = new List<string>();
+
                     if (System.IO.File.Exists(AccountInfoPath))
                     {
                         requestAPI = false;
-                        List<AccountInfo> accountInfos = JsonConvert.DeserializeObject<List<AccountInfo>>(System.IO.File.ReadAllText(AccountInfoPath));
+
+                        var text = LoadFile(AccountInfoPath, filesToDelete);
+                        if(text == "" || !text.IsValidJson())
+                        {
+                            ScreenNotification.ShowNotification("Failed to load the account information file. Retry in 1 minute!", ScreenNotification.NotificationType.Error);
+                            Logger.Warn("The file '{0}' could not be loaded. Deleting it.", AccountInfoPath);
+
+                            try
+                            {
+                                System.IO.File.Delete(AccountInfoPath);
+                            }
+                            catch (IOException)
+                            {
+                            }
+                            charactersLoaded_Failed = true;
+                            return;
+                        }
+
+                        List<AccountInfo> accountInfos = new List<AccountInfo>();
+
+                        try
+                        {
+                           accountInfos = JsonConvert.DeserializeObject<List<AccountInfo>>(text);
+                        }
+                        catch(Exception ex)
+                        {
+                            ScreenNotification.ShowNotification("Failed to load the account information file. Retry in 1 minute!", ScreenNotification.NotificationType.Error);
+                            Logger.Warn(ex, "The file '{0}' could not be loaded. Deleting it.");
+                            try
+                            {
+                                System.IO.File.Delete(AccountInfoPath);
+                            }
+                            catch (IOException)
+                            {
+                            }
+                            charactersLoaded_Failed = true;
+                            return;
+                        }
 
                         foreach (AccountInfo acc in accountInfos)
                         {
@@ -237,6 +336,7 @@ namespace Kenedia.Modules.Characters
             catch (Exception ex)
             {
                 Logger.Warn(ex, "Failed to fetch characters from the API.");
+
             }
         }
     }

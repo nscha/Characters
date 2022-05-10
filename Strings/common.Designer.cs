@@ -565,6 +565,24 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show/Hide Corner Icon.
+        /// </summary>
+        internal static string ShowCornerIcon_Description {
+            get {
+                return ResourceManager.GetString("ShowCornerIcon_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Corner Icon.
+        /// </summary>
+        internal static string ShowCornerIcon_DisplayName {
+            get {
+                return ResourceManager.GetString("ShowCornerIcon_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show/Hides {0} in the character list..
         /// </summary>
         internal static string ShowHide_Tooltip {

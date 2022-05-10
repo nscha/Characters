@@ -203,7 +203,7 @@ namespace Kenedia.Modules.Characters
                             Texture = Textures.Crafting[crafting.Id],
                             Size = new Point(24, 24),
                             Parent = crafting_Panel,
-                            Visible = (!Module.Settings.OnlyMaxCrafting.Value) || (crafting.Id == 4 || crafting.Id == 7 && crafting.Rating == 400) || (crafting.Rating == 500),
+                            Visible = (!Module.Settings.OnlyMaxCrafting.Value) || ((crafting.Id == 4 || crafting.Id == 7) && crafting.Rating == 400) || (crafting.Rating == 500),
                             Id = crafting.Id,
                             Crafting = crafting,
                             Tooltip = Tooltip,

@@ -10,6 +10,7 @@ namespace Kenedia.Modules.Characters
         public SettingEntry<Blish_HUD.Input.KeyBinding> LogoutKey;
         public SettingEntry<Blish_HUD.Input.KeyBinding> ShortcutKey;
         public SettingEntry<Blish_HUD.Input.KeyBinding> SwapModifier;
+        public SettingEntry<bool> ShowCornerIcon;
         public SettingEntry<bool> EnterOnSwap;
         public SettingEntry<bool> AutoLogin;
         public SettingEntry<bool> DoubleClickToEnter;
@@ -70,7 +71,7 @@ namespace Kenedia.Modules.Characters
                     {
                         foreach(DataImage image in c.characterControl.crafting_Images)
                         {
-                            image.Visible = (!Module.Settings.OnlyMaxCrafting.Value) || (image.Crafting.Id == 4 && image.Crafting.Rating == 400) || (image.Crafting.Rating == 500);
+                            image.Visible = (!Module.Settings.OnlyMaxCrafting.Value) || ((image.Crafting.Id == 4 || image.Crafting.Id == 7) && image.Crafting.Rating == 400) || (image.Crafting.Rating == 500);
                         }
                         c.characterControl.crafting_Panel.Invalidate();
                     }
@@ -82,10 +83,16 @@ namespace Kenedia.Modules.Characters
                                                               () => Strings.common.FocusFilter_DisplayName,
                                                               () => Strings.common.FocusFilter_Description);
 
+            Settings.ShowCornerIcon = settings.DefineSetting(nameof(Settings.ShowCornerIcon),
+                                                              true,
+                                                              () => Strings.common.ShowCornerIcon_DisplayName,
+                                                              () => Strings.common.ShowCornerIcon_Description);
+
             Settings.FilterDelay = settings.DefineSetting(nameof(Settings.FilterDelay),
                                                               150,
                                                               () => string.Format(Strings.common.FilterDelay_DisplayName, Settings.FilterDelay.Value),
                                                               () => Strings.common.FilterDelay_Description);
+
             Settings.FilterDelay.SetRange(0, 500);
             Settings.FilterDelay.SettingChanged += delegate { Settings._FilterDelay = Settings.FilterDelay.Value / 2; };
             Settings._FilterDelay = Settings.FilterDelay.Value / 2;

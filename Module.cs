@@ -874,6 +874,8 @@ namespace Kenedia.Modules.Characters
                 if (Settings.FocusFilter.Value) {
                     Control.ActiveControl = filterTextBox;
                     filterTextBox.Focused = true;
+                    filterTextBox.SelectionStart = 0;
+                    filterTextBox.SelectionEnd = filterTextBox.Length;
                 };
             };            
 

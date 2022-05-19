@@ -287,6 +287,9 @@ namespace Kenedia.Modules.Characters
 
                         Blish_HUD.Controls.Intern.Keyboard.Stroke(primary, false);
 
+                        //Trigger other Modules such as GatherTools
+                        Blish_HUD.Controls.Intern.Keyboard.Stroke(primary, true); 
+
                         foreach (ModifierKeys mod in Enum.GetValues(typeof(ModifierKeys)))
                         {
                             if (mod != ModifierKeys.None && mods.HasFlag(mod))

@@ -58,7 +58,6 @@ namespace Kenedia.Modules.Characters
 
         public CharacterControl(Character c)
         {
-            ContentService contentService = new ContentService();
             assignedCharacter = c;
             Height = 76;
             WidthSizingMode = SizingMode.Fill;
@@ -111,7 +110,7 @@ namespace Kenedia.Modules.Characters
                 Parent = this,
                 AutoSizeWidth = true,
                 Location = new Point(character_Image.Location.X + 5, character_Image.Location.Y + character_Image.Height - 12),
-                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size11, ContentService.FontStyle.Regular),
+                Font = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size11, ContentService.FontStyle.Regular),
 
                 Text = c.Level.ToString(),
                 Tooltip = Tooltip,
@@ -136,7 +135,7 @@ namespace Kenedia.Modules.Characters
                 Parent = this,
                 AutoSizeWidth = true,
                 Location = new Point(character_Image.Location.X + character_Image.Width + (_Padding * 2) + _FramePadding, 0 + _Padding),
-                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular),
+                Font = GameService.Content.DefaultFont18,
 
                 Text = c.Name,
                 Tooltip = Tooltip,
@@ -157,12 +156,12 @@ namespace Kenedia.Modules.Characters
             //Time since Login
             time_Label = new Label()
             {
-                Location = new Point(character_Image.Location.X + character_Image.Width + (_Padding * 2) + _FramePadding, (ContentRegion.Height / 2) + _Padding - (contentService.DefaultFont18.LineHeight - contentService.DefaultFont12.LineHeight)),
+                Location = new Point(character_Image.Location.X + character_Image.Width + (_Padding * 2) + _FramePadding, (ContentRegion.Height / 2) + _Padding - (GameService.Content.DefaultFont18.LineHeight - GameService.Content.DefaultFont12.LineHeight)),
                 Text = "00:00:00",
                 Parent = this,
                 Height = (ContentRegion.Height - (_Padding * 2)) / 2,
                 AutoSizeWidth = true,
-                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size12, ContentService.FontStyle.Regular),
+                Font = GameService.Content.DefaultFont12,
                 VerticalAlignment = VerticalAlignment.Middle,
                 Tooltip = Tooltip,
             };
@@ -460,7 +459,6 @@ namespace Kenedia.Modules.Characters
     }
     public class CharacterTooltip : Tooltip
     {
-        public static ContentService ContentService = new ContentService();
         public Character assignedCharacter;
 
         public IconLabel _Name;
@@ -510,7 +508,7 @@ namespace Kenedia.Modules.Characters
                 Texture = Textures.Icons[(int) Icons.People],
                 Parent = ContentRegion,
                 Text = c.Name,
-                Font = new ContentService().GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size20, ContentService.FontStyle.Regular),
+                Font = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size20, ContentService.FontStyle.Regular),
                 Gap = 4,
             };
 
@@ -599,7 +597,7 @@ namespace Kenedia.Modules.Characters
             {
                 Text = "- " + string.Format(Strings.common.DoubleClickToSwap, assignedCharacter.Name) + " -",
                 Parent = p,
-                Font = ContentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size12, ContentService.FontStyle.Regular),
+                Font = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size12, ContentService.FontStyle.Regular),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 TextColor = Color.LightGray,
             };
@@ -623,7 +621,6 @@ namespace Kenedia.Modules.Characters
         {
             if (assignedCharacter != null && assignedCharacter.characterControl != null)
             {
-                ContentService contentService = new ContentService();
                 var c = assignedCharacter;
 
                 var t = TimeSpan.FromSeconds(c.seconds);
@@ -665,7 +662,7 @@ namespace Kenedia.Modules.Characters
                     Tags.ClearChildren();
                     foreach (string tag in c.Tags)
                     {
-                        new TagEntry(tag, c, Tags, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size12, ContentService.FontStyle.Regular));
+                        new TagEntry(tag, c, Tags, false, GameService.Content.DefaultFont12);
                     }
                 }
             }
@@ -812,7 +809,6 @@ namespace Kenedia.Modules.Characters
                 Size = new Point(CharacterImageSize, topMenuHeight - 30),
             };
 
-            var contentService = new ContentService();
             disclaimer_Label = new Label()
             {
                 Parent = this,
@@ -821,7 +817,7 @@ namespace Kenedia.Modules.Characters
                 Size = new Point(Width - CharacterImageSize - Image_Gap, topMenuHeight - 30),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 TextColor = Color.Red,
-                Font = contentService.DefaultFont18,
+                Font = GameService.Content.DefaultFont18,
                 //BackgroundColor = Color.Black,
             };
 
@@ -956,7 +952,6 @@ namespace Kenedia.Modules.Characters
             Width = width;
             Height = height;
 
-            var contentService = new ContentService();
             var iPadding = 5;
 
             var set_img = new Image()
@@ -975,7 +970,7 @@ namespace Kenedia.Modules.Characters
                 Parent = this,
                 Text = Strings.common.SelectImage,
                 Location = new Point(72, iPadding),
-                Font = contentService.DefaultFont32,
+                Font = GameService.Content.DefaultFont32,
                 Width = 300,
             };
             character_Image = new Image()
@@ -1010,7 +1005,7 @@ namespace Kenedia.Modules.Characters
                 Parent = this,
                 Text = "Character Name",
                 AutoSizeWidth = true,
-                Font = contentService.DefaultFont18,
+                Font = GameService.Content.DefaultFont18,
                 AutoSizeHeight = true,
                 VerticalAlignment = VerticalAlignment.Top,
             };
@@ -1154,7 +1149,6 @@ namespace Kenedia.Modules.Characters
     }
     public class HeaderUnderlined : Panel
     {
-        static ContentService contentService = new ContentService();
         private BitmapFont _Font;
         public BitmapFont Font {
             get { return _Font; }
@@ -1207,7 +1201,7 @@ namespace Kenedia.Modules.Characters
         {
             WidthSizingMode = SizingMode.AutoSize;
             HeightSizingMode = SizingMode.AutoSize;
-            _Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
+            _Font = GameService.Content.DefaultFont18;
 
             textLabel = new Label()
             {
@@ -1241,7 +1235,7 @@ namespace Kenedia.Modules.Characters
 
             WidthSizingMode = AlignCentered ? SizingMode.Standard: SizingMode.AutoSize;
             HeightSizingMode = SizingMode.AutoSize;
-            _Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
+            _Font = GameService.Content.DefaultFont18;
 
             textLabel = new Label()
             {
@@ -1343,8 +1337,7 @@ namespace Kenedia.Modules.Characters
 
         public TagEntry(string txt, Character character, FlowPanel parent, bool showButton = true, MonoGame.Extended.BitmapFonts.BitmapFont font = default)
         {
-            ContentService contentService = new ContentService();
-            var textFont = (font == default) ? contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular) : font;
+            var textFont = (font == default) ? GameService.Content.DefaultFont14 : font;
 
             assignedCharacter = character;
             Parent = parent;
@@ -1611,7 +1604,7 @@ namespace Kenedia.Modules.Characters
         {
             HeightSizingMode = SizingMode.AutoSize;
             WidthSizingMode = SizingMode.AutoSize;
-            _Font = new ContentService().GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
+            _Font = GameService.Content.DefaultFont18;
 
             Image = new Image()
             {

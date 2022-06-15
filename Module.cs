@@ -39,7 +39,6 @@ namespace Kenedia.Modules.Characters
         public DirectoriesManager DirectoriesManager => this.ModuleParameters.DirectoriesManager;
         public Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
 
-        public ContentService contentService = new ContentService();
         #endregion
         public static string CharactersPath;
         public static string AccountInfoPath;
@@ -419,7 +418,7 @@ namespace Kenedia.Modules.Characters
                             //var iC = new Character();
                             foreach (string txt in Tags)
                             {
-                                var entry = new TagEntry(txt, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));
+                                var entry = new TagEntry(txt, new Character(), filterTagsPanel, false, GameService.Content.DefaultFont14);
                                 entry.Click += delegate
                                 {
                                     if (filterTextBox.Text.ToLower().Contains(txt.ToLower()))
@@ -965,7 +964,6 @@ namespace Kenedia.Modules.Characters
         }
         private void CreateFilterWindow()
         {
-            ContentService contentService = new ContentService();
             Specializations[] specs = {
                 //HoT
                 Specializations.Dragonhunter,
@@ -1264,7 +1262,6 @@ namespace Kenedia.Modules.Characters
         }
         private void CreateSubWindow()
         {
-            ContentService contentService = new ContentService();
             var offset = (105);
             subWindow = new CharacterDetailWindow()
             {
@@ -1326,7 +1323,7 @@ namespace Kenedia.Modules.Characters
                 Parent = subWindow,
                 Height = 25,
                 Width = subWindow.Width - 60 - 32 - 5,
-                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular),
+                Font = GameService.Content.DefaultFont18,
                 VerticalAlignment = VerticalAlignment.Middle,
             };
 
@@ -1363,7 +1360,7 @@ namespace Kenedia.Modules.Characters
                 Parent = subWindow,
                 Height = 25,
                 Width = subWindow.Width - 165,
-                Font = contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular),
+                Font = GameService.Content.DefaultFont18,
                 VerticalAlignment = VerticalAlignment.Middle,
                 Visible = false,
             };
@@ -1424,7 +1421,7 @@ namespace Kenedia.Modules.Characters
                     if (!Tags.Contains(txt))
                     {
                         Tags.Add(txt);
-                        var entry = new TagEntry(txt, new Character(), filterTagsPanel, false, contentService.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size14, ContentService.FontStyle.Regular));
+                        var entry = new TagEntry(txt, new Character(), filterTagsPanel, false, GameService.Content.DefaultFont14);
                         entry.Click += delegate
                         {
                             if (filterTextBox.Text.ToLower().Contains(txt.ToLower()))

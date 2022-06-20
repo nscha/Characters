@@ -1566,6 +1566,7 @@ namespace Kenedia.Modules.Characters
                 if (Last.Tick_Save > 250 && saveCharacters)
                 {
                     Last.Tick_Save = -250;
+                    saveCharacters = false;
                     SaveCharacters();
                 }
 

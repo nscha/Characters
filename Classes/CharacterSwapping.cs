@@ -117,7 +117,7 @@ namespace Kenedia.Modules.Characters.Classes
         bool Login()
         {
             if (Characters.ModuleInstance.Settings.EnterOnSwap.Value) Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
-            return true;
+            return true; 
         }
 
         bool IsLoaded()

@@ -26,7 +26,6 @@ namespace Kenedia.Modules.Characters.Classes
         SortingState SubState = SortingState.Selected;
 
         int _currentIndex = 0;
-        DateTime _curDateTime;
 
         public event EventHandler Finished;
         public CharacterSorting(List<Character_Model> models)

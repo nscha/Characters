@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Activated" xml:space="preserve">
+    <value>activated</value>
+  </data>
+  <data name="Armorsmith" xml:space="preserve">
+    <value>Armorsmith</value>
+  </data>
+  <data name="Artificer" xml:space="preserve">
+    <value>Artificer</value>
+  </data>
+  <data name="AutoLogin_Description" xml:space="preserve">
+    <value>If enabled on the first load of Blish and beeing in character selection the module enters the game. After entering the game it will wait until the MumbleLink and API Token is fully loaded.
+Once fully loaded it will switch to the character which is set to be the "Login Character".</value>
+  </data>
+  <data name="AutoLogin_DisplayName" xml:space="preserve">
+    <value>Auto Login to selected Character</value>
+  </data>
+  <data name="Birthday" xml:space="preserve">
+    <value>Birthday</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Capture" xml:space="preserve">
+    <value>Capture</value>
+  </data>
+  <data name="CaptureAll" xml:space="preserve">
+    <value>Capture All</value>
+  </data>
+  <data name="CaptureNotification" xml:space="preserve">
+    <value>Saved as {0}!</value>
+  </data>
+  <data name="Characters" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="Chef" xml:space="preserve">
+    <value>Chef</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CraftingProfession" xml:space="preserve">
+    <value>Crafting Profession</value>
+  </data>
+  <data name="CreateImages" xml:space="preserve">
+    <value>Create Images</value>
+  </data>
+  <data name="CustomTags" xml:space="preserve">
+    <value>Custom Tags</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Deactivated" xml:space="preserve">
+    <value>deactivated</value>
+  </data>
+  <data name="DoubleClickToEnter_Description" xml:space="preserve">
+    <value>Enables double clicking the character in the character list to login to that character.</value>
+  </data>
+  <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
+    <value>Double Click to Swap</value>
+  </data>
+  <data name="DoubleClickToSwap" xml:space="preserve">
+    <value>Doubleclick to swap to {0}!</value>
+  </data>
+  <data name="EnterOnSwap_Description" xml:space="preserve">
+    <value>Enter the game automatically after selecting the character in the character selection</value>
+  </data>
+  <data name="EnterOnSwap_DisplayName" xml:space="preserve">
+    <value>Login after selecting the character</value>
+  </data>
+  <data name="EnterToLogin_Description" xml:space="preserve">
+    <value>If the searchbox is focused pressing 'RETURN' will log to the first character in the list.</value>
+  </data>
+  <data name="EnterToLogin_DisplayName" xml:space="preserve">
+    <value>Press Enter to swap</value>
+  </data>
+  <data name="Error_Competivive" xml:space="preserve">
+    <value>Character swapping is disabled in competition mode!</value>
+  </data>
+  <data name="Error_InvalidPermissions" xml:space="preserve">
+    <value>This API key does not have the required permissions.</value>
+  </data>
+  <data name="FadeOut_Description" xml:space="preserve">
+    <value>Fade the filter and character window automatically after 2500 ms</value>
+  </data>
+  <data name="FadeOut_DisplayName" xml:space="preserve">
+    <value>Fade extra window</value>
+  </data>
+  <data name="FilterDelay_Description" xml:space="preserve">
+    <value>Average time in milliseconds waited between filtering your characters' panel.
+To get the current value you will have to swap module tabs once to update the settings page!</value>
+  </data>
+  <data name="FilterDelay_DisplayName" xml:space="preserve">
+    <value>Filter Delay ({0} ms)</value>
+  </data>
+  <data name="FocusFilter_Description" xml:space="preserve">
+    <value>When toggling the main menu to show, automatically focus the search field</value>
+  </data>
+  <data name="FocusFilter_DisplayName" xml:space="preserve">
+    <value>Focus search field</value>
+  </data>
+  <data name="Huntsman" xml:space="preserve">
+    <value>Huntsman</value>
+  </data>
+  <data name="Jeweler" xml:space="preserve">
+    <value>Jeweler</value>
+  </data>
+  <data name="Leatherworker" xml:space="preserve">
+    <value>Leatherworker</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level {0}</value>
+  </data>
+  <data name="LoginAfterSelect" xml:space="preserve">
+    <value>Enter the game automatically after selecting the character in the character selection</value>
+  </data>
+  <data name="LoginCharacter" xml:space="preserve">
+    <value>Log in character</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="LogoutDescription" xml:space="preserve">
+    <value>Key to Press to open the logout menu. Must be the same as the game keybind for 'Logout'!</value>
+  </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="ModuleDescription" xml:space="preserve">
+    <value>A tool to easily switch characters even with a lot of them!
+This will require an API-Key with permissions at least for the 'characters' endpoint!</value>
+  </data>
+  <data name="NoCraftingProfession" xml:space="preserve">
+    <value>No Crafting Profession</value>
+  </data>
+  <data name="OnlyMaxCrafting_Description" xml:space="preserve">
+    <value>Show only crafts that are at a 500 rank (Jeweler &amp; Scribe at 400).</value>
+  </data>
+  <data name="OnlyMaxCrafting_DisplayName" xml:space="preserve">
+    <value>Show only maxed out crafting Professions</value>
+  </data>
+  <data name="Profession" xml:space="preserve">
+    <value>Profession</value>
+  </data>
+  <data name="Race" xml:space="preserve">
+    <value>Race</value>
+  </data>
+  <data name="RefreshImages" xml:space="preserve">
+    <value>Refresh Images</value>
+  </data>
+  <data name="RunStateChange" xml:space="preserve">
+    <value>{0} {1} !</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Scribe" xml:space="preserve">
+    <value>Scribe</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Search for ...</value>
+  </data>
+  <data name="SearchGuide" xml:space="preserve">
+    <value>-c Crafting Profession
+-p Profession/Specialization
+-r Race
+-b Birthday
+-m MapName
+-t CustomTag
+-c Chef; -p Warrior will show all warriors and all chefs</value>
+  </data>
+  <data name="SelectImage" xml:space="preserve">
+    <value>Choose a picture</value>
+  </data>
+  <data name="ShortcutToggle_Description" xml:space="preserve">
+    <value>Key to Press to toggle the characters menu.</value>
+  </data>
+  <data name="ShortcutToggle_DisplayName" xml:space="preserve">
+    <value>Toggle Menu</value>
+  </data>
+  <data name="ShowCornerIcon_Description" xml:space="preserve">
+    <value>Show/Hide Corner Icon</value>
+  </data>
+  <data name="ShowCornerIcon_DisplayName" xml:space="preserve">
+    <value>Show Corner Icon</value>
+  </data>
+  <data name="ShowCorner_Name" xml:space="preserve">
+    <value>Show Corner Icon</value>
+  </data>
+  <data name="ShowCorner_Tooltip" xml:space="preserve">
+    <value>Show / Hide the Corner Icon of {0}.</value>
+  </data>
+  <data name="ShowHide_Tooltip" xml:space="preserve">
+    <value>Show/Hides {0} in the character list.</value>
+  </data>
+  <data name="Specialization" xml:space="preserve">
+    <value>Specialization</value>
+  </data>
+  <data name="SwapDelay_Description" xml:space="preserve">
+    <value>Avg. loading time from ingame to character selection.
+To get the current value you will have to swap module tabs once to update the settings page!</value>
+  </data>
+  <data name="SwapDelay_DisplayName" xml:space="preserve">
+    <value>Loading Delay ({0} ms)</value>
+  </data>
+  <data name="SwapModifier_Description" xml:space="preserve">
+    <value>Only if the Modifier is pressed trigger character swapping. This will prevent accidientally swapping!</value>
+  </data>
+  <data name="SwapModifier_DisplayName" xml:space="preserve">
+    <value>Require Modifier to swap</value>
+  </data>
+  <data name="Switch" xml:space="preserve">
+    <value>Switch to {0}</value>
+  </data>
+  <data name="Tailor" xml:space="preserve">
+    <value>Tailor</value>
+  </data>
+  <data name="Toggle" xml:space="preserve">
+    <value>Toggle {0}</value>
+  </data>
+  <data name="ToggleAll" xml:space="preserve">
+    <value>Toggle All</value>
+  </data>
+  <data name="ToggleVisible" xml:space="preserve">
+    <value>Show/Hide hidden Characters</value>
+  </data>
+  <data name="UIScale_Error" xml:space="preserve">
+    <value>Please set the game to 'WINDOWED' {0} and the UI Scale to 'Larger'!</value>
+  </data>
+  <data name="UISizeDisclaimer" xml:space="preserve">
+    <value>You will have to set the games Interface Size to 'Larger' to get the correct cut outs!</value>
+  </data>
+  <data name="Unkown" xml:space="preserve">
+    <value>Unkown</value>
+  </data>
+  <data name="UntilBirthday" xml:space="preserve">
+    <value>until Birthday</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update {0}</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>Updated {0}</value>
+  </data>
+  <data name="Updating" xml:space="preserve">
+    <value>Updating {0}</value>
+  </data>
+  <data name="UseDefault" xml:space="preserve">
+    <value>Use Spec Icon</value>
+  </data>
+  <data name="Utility" xml:space="preserve">
+    <value>Utility</value>
+  </data>
+  <data name="Weaponsmith" xml:space="preserve">
+    <value>Weaponsmith</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>Years</value>
+  </data>
+</root>

@@ -476,7 +476,7 @@ namespace Kenedia.Modules.Characters
             map.MapChanged -= ForceUpdate;
 
             GameService.GameIntegration.Gw2Instance.IsInGameChanged -= ForceUpdate;
-
+             
             ModuleInstance = null;
         }
 

@@ -11,42 +11,43 @@
 
     public class IconLabel : Control
     {
-        private readonly string text;
+        private AsyncTexture2D icon;
+        private BitmapFont font = GameService.Content.DefaultFont14;
+        private string text;
+        private Rectangle iconRectangle = Rectangle.Empty;
+        private Rectangle textRectangle = Rectangle.Empty;
 
         public string Text
         {
-            get => this.Text;
+            get => this.text;
             set
             {
-                this.Text = value;
+                this.text = value;
                 this.UpdateLayout();
             }
         }
 
-        public Color TextColor = Color.White;
-        private readonly AsyncTexture2D icon;
+        public Color TextColor { get; set; } = Color.White;
 
         public AsyncTexture2D Icon
         {
-            get => this.Icon;
+            get => this.icon;
             set
             {
-                this.Icon = value;
+                this.icon = value;
                 if (value != null)
                 {
                     this.UpdateLayout();
                 }
             }
         }
-
-        private readonly BitmapFont font = GameService.Content.DefaultFont14;
 
         public BitmapFont Font
         {
-            get => this.Font;
+            get => this.font;
             set
             {
-                this.Font = value;
+                this.font = value;
                 if (value != null)
                 {
                     this.UpdateLayout();
@@ -54,20 +55,11 @@
             }
         }
 
-        public bool AutoSizeWidth;
-        public bool AutoSizeHeight;
+        public bool AutoSizeWidth { get; set; }
 
-        public Rectangle TextureRectangle = Rectangle.Empty;
-        private Rectangle iconRectangle = Rectangle.Empty;
-        private Rectangle textRectangle = Rectangle.Empty;
+        public bool AutoSizeHeight { get; set; }
 
-        private void UpdateLayout()
-        {
-            this.Width = Math.Max((int)this.Font.MeasureString(this.Text).Width + 4 + (this.Icon == null ? 0 : this.Height + 5), this.Height);
-
-            this.iconRectangle = this.Icon == null ? Rectangle.Empty : new Rectangle(2, 2, this.LocalBounds.Height - 4, this.LocalBounds.Height - 4);
-            this.textRectangle = new Rectangle(this.iconRectangle.Right + (this.Icon == null ? 0 : 5), 2, this.LocalBounds.Width - (this.iconRectangle.Right + (this.Icon == null ? 0 : 5) + 2), this.LocalBounds.Height - 4);
-        }
+        public Rectangle TextureRectangle { get; set; } = Rectangle.Empty;
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
@@ -93,6 +85,14 @@
                     false,
                     HorizontalAlignment.Left,
                     VerticalAlignment.Middle);
+        }
+
+        private void UpdateLayout()
+        {
+            this.Width = Math.Max((int)this.Font.MeasureString(this.Text).Width + 4 + (this.Icon == null ? 0 : this.Height + 5), this.Height);
+
+            this.iconRectangle = this.Icon == null ? Rectangle.Empty : new Rectangle(2, 2, this.LocalBounds.Height - 4, this.LocalBounds.Height - 4);
+            this.textRectangle = new Rectangle(this.iconRectangle.Right + (this.Icon == null ? 0 : 5), 2, this.LocalBounds.Width - (this.iconRectangle.Right + (this.Icon == null ? 0 : 5) + 2), this.LocalBounds.Height - 4);
         }
     }
 }

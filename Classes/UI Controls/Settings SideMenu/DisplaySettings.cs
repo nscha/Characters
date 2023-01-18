@@ -198,7 +198,7 @@
 
         private void LayoutDropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            var layout = Regex.Replace(this.layoutDropdown.SelectedItem, @"\s+", "");
+            var layout = Regex.Replace(this.layoutDropdown.SelectedItem, @"\s+", string.Empty);
             CharacterPanelLayout result;
 
             if (Enum.TryParse(layout, out result))
@@ -210,7 +210,7 @@
 
         private void PanelSizeDropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            var layout = Regex.Replace(this.panelSizeDropdown.SelectedItem, @"\s+", "");
+            var layout = Regex.Replace(this.panelSizeDropdown.SelectedItem, @"\s+", string.Empty);
             PanelSizes result;
 
             if (Enum.TryParse(layout, out result))

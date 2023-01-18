@@ -6,86 +6,35 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using Blish_HUD;
-    using Blish_HUD.Content;
     using Blish_HUD.Controls;
     using Blish_HUD.Input;
     using Kenedia.Modules.Characters.Classes.UI_Controls;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using static Kenedia.Modules.Characters.Classes.WindowsUtil.WindowsUtil;
     using Color = Microsoft.Xna.Framework.Color;
     using Point = Microsoft.Xna.Framework.Point;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
-    public class BasicFrameContainer : Container
-    {
-        public Color FrameColor = Color.Honeydew;
-        public AsyncTexture2D Background;
-        public Rectangle TextureRectangle = Rectangle.Empty;
-
-        public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
-        {
-            base.PaintBeforeChildren(spriteBatch, bounds);
-
-            if (this.Background != null)
-            {
-                spriteBatch.DrawOnCtrl(
-                    this,
-                    this.Background,
-                    bounds,
-                    this.TextureRectangle != Rectangle.Empty ? this.TextureRectangle : this.Background.Bounds,
-                    Color.Black * 0.9f,
-                    0f,
-                    default);
-            }
-
-            var color = this.FrameColor;
-
-            // Top
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
-
-            // Bottom
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 2, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 1, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
-
-            // Left
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
-
-            // Right
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 2, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
-        }
-    }
-
     public class CharacterPotraitCapture : Container
     {
-        private DateTime capturePotraits;
-        private int characterPotraitSize = 130;
-        private int gap = 13;
         private readonly Checkbox windowedCheckbox;
         private readonly ImageButton captureButton;
         private readonly ImageButton addButton;
         private readonly ImageButton removeButton;
         private readonly Label disclaimer;
         private readonly BasicFrameContainer disclaimerBackground;
-
-        private bool dragging;
-        private Point draggingStart;
         private readonly ImageButton dragButton;
         private readonly TextBox sizeBox;
         private readonly TextBox gapBox;
         private readonly FlowPanel portraitsPanel;
-        private readonly List<BasicFrameContainer> characterPotraits = new List<BasicFrameContainer>();
 
-        /// <summary>
-        /// 358353 Potrait
-        /// 255297 Plus
-        /// 255301 Minus
-        /// 358376 Zoom In
-        /// 358378 Zoom Out
-        /// </summary>
+        private bool dragging;
+        private Point draggingStart;
+
+        private DateTime capturePotraits;
+        private int characterPotraitSize = 130;
+        private int gap = 13;
+
         public CharacterPotraitCapture()
         {
             var res = GameService.Graphics.Resolution;
@@ -177,7 +126,6 @@
             this.disclaimer.Resized += this.Disclaimer_Resized;
 
             // _disclaimerBackground.Size = (_disclaimer.Size).Add(new Point(_windowedCheckbox.Width + 15, 0));
-
             this.sizeBox = new TextBox()
             {
                 Parent = this,
@@ -210,6 +158,44 @@
 
             this.AddPotrait();
             this.AddPotrait();
+        }
+
+        public override void UpdateContainer(GameTime gameTime)
+        {
+            base.UpdateContainer(gameTime);
+
+            this.dragging = this.dragging && this.MouseOver;
+
+            if (this.dragging)
+            {
+                this.Location = Input.Mouse.Position.Add(new Point(-this.draggingStart.X, -this.draggingStart.Y));
+            }
+
+            if (this.capturePotraits > DateTime.MinValue && DateTime.Now.Subtract(this.capturePotraits).TotalMilliseconds >= 5)
+            {
+                foreach (Control c in this.portraitsPanel.Children)
+                {
+                    this.CapturePotrait(c.AbsoluteBounds);
+                }
+
+                foreach (Control c in this.portraitsPanel.Children)
+                {
+                    c.Show();
+                }
+
+                this.capturePotraits = DateTime.MinValue;
+                Characters.ModuleInstance.MainWindow.CharacterEdit.LoadImages(null, null);
+            }
+        }
+
+        protected override void OnResized(ResizedEventArgs e)
+        {
+            base.OnResized(e);
+        }
+
+        protected override void OnClick(MouseEventArgs e)
+        {
+            base.OnClick(e);
         }
 
         private void WindowedCheckbox_CheckedChanged(object sender, CheckChangedEvent e)
@@ -289,44 +275,6 @@
             this.draggingStart = this.dragging ? this.RelativeMousePosition : Point.Zero;
         }
 
-        protected override void OnResized(ResizedEventArgs e)
-        {
-            base.OnResized(e);
-        }
-
-        protected override void OnClick(MouseEventArgs e)
-        {
-            base.OnClick(e);
-        }
-
-        public override void UpdateContainer(GameTime gameTime)
-        {
-            base.UpdateContainer(gameTime);
-
-            this.dragging = this.dragging && this.MouseOver;
-
-            if (this.dragging)
-            {
-                this.Location = Input.Mouse.Position.Add(new Point(-this.draggingStart.X, -this.draggingStart.Y));
-            }
-
-            if (this.capturePotraits > DateTime.MinValue && DateTime.Now.Subtract(this.capturePotraits).TotalMilliseconds >= 5)
-            {
-                foreach (Control c in this.portraitsPanel.Children)
-                {
-                    this.CapturePotrait(c.AbsoluteBounds);
-                }
-
-                foreach (Control c in this.portraitsPanel.Children)
-                {
-                    c.Show();
-                }
-
-                this.capturePotraits = DateTime.MinValue;
-                Characters.ModuleInstance.MainWindow.CharacterEdit.LoadImages(null, null);
-            }
-        }
-
         private void CapturePotrait(Rectangle bounds)
         {
             var path = Characters.ModuleInstance.AccountImagesPath;
@@ -336,8 +284,8 @@
 
             var hWnd = GameService.GameIntegration.Gw2Instance.Gw2WindowHandle;
 
-            var wndBounds = new RECT();
-            var clientRectangle = new RECT();
+            var wndBounds = default(RECT);
+            var clientRectangle = default(RECT);
             GetWindowRect(hWnd, ref wndBounds);
             GetClientRect(hWnd, out clientRectangle);
 

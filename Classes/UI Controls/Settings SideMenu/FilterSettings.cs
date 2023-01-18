@@ -27,7 +27,6 @@
             this.ControlPadding = new Vector2(5, 5);
             this.Location = new Point(0, 25);
 
-
             this.matchingDropdown = new Dropdown()
             {
                 Parent = this,
@@ -79,7 +78,6 @@
                 Text = "Check Profession",
             };
             this.professionCheckbox.CheckedChanged += this.CheckedChanged;
-
 
             this.mapCheckbox = new Checkbox()
             {

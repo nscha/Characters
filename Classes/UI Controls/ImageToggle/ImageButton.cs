@@ -10,7 +10,13 @@
 
     public class ImageButton : Control
     {
+        private static Color defaultColorHovered = new (255, 255, 255, 255);
+        private static Color defaultColorClicked = new (255, 255, 255, 255);
+        private static Color defaultColor = new (255, 255, 255, 255);
+
         private AsyncTexture2D texture;
+        private Rectangle textureRectangle = Rectangle.Empty;
+        private bool clicked;
 
         public AsyncTexture2D Texture
         {
@@ -21,38 +27,11 @@
             }
         }
 
-        public AsyncTexture2D HoveredTexture;
-        public AsyncTexture2D ClickedTexture;
+        public AsyncTexture2D HoveredTexture { get; set; }
 
-        private bool clicked;
+        public AsyncTexture2D ClickedTexture { get; set; }
 
-        public static Color[] palColorArray = new Color[]
-            {
-                    new Color(191, 191, 191),
-                    new Color(000, 000, 000),
-                    new Color(255, 255, 255),
-                    new Color(255, 000, 000),
-                    new Color(191, 000, 000),
-                    new Color(255, 191, 191),
-                    new Color(255, 255, 000),
-                    new Color(191, 191, 000),
-                    new Color(255, 255, 191),
-                    new Color(000, 255, 000),
-                    new Color(000, 191, 000),
-                    new Color(191, 255, 191),
-                    new Color(000, 255, 255),
-                    new Color(000, 191, 191),
-                    new Color(191, 255, 255),
-                    new Color(000, 000, 255),
-                    new Color(000, 000, 191),
-                    new Color(191, 191, 255),
-                    new Color(255, 000, 255),
-                    new Color(191, 000, 191),
-                    new Color(255, 191, 255),
-            };
-
-        private Rectangle textureRectangle = Rectangle.Empty;
-        public Rectangle SizeRectangle;
+        public Rectangle SizeRectangle { get; set; }
 
         public Rectangle TextureRectangle
         {
@@ -60,19 +39,17 @@
             set => this.textureRectangle = value;
         }
 
-        public Color ColorHovered = new Color(255, 255, 255, 255);
-        public Color ColorClicked = new Color(0, 0, 255, 255);
-        public Color ColorDefault = new Color(255, 255, 255, 255);
+        public Color ColorHovered { get; set; } = new (255, 255, 255, 255);
 
-        static public Color DefaultColorHovered = new Color(255, 255, 255, 255);
-        static public Color DefaultColorClicked = new Color(255, 255, 255, 255);
-        static public Color DefaultColor = new Color(255, 255, 255, 255);
+        public Color ColorClicked { get; set; } = new (0, 0, 255, 255);
+
+        public Color ColorDefault { get; set; } = new (255, 255, 255, 255);
 
         public void ResetColors()
         {
-            this.ColorHovered = DefaultColorHovered;
-            this.ColorClicked = DefaultColorClicked;
-            this.ColorDefault = DefaultColor;
+            this.ColorHovered = defaultColorHovered;
+            this.ColorClicked = defaultColorClicked;
+            this.ColorDefault = defaultColor;
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
@@ -106,4 +83,3 @@
         }
     }
 }
-

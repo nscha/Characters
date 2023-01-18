@@ -157,7 +157,6 @@
                     default);
             }
 
-
             var color = Color.Black;
 
             // Top

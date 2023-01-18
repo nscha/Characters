@@ -20,6 +20,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
     using Newtonsoft.Json;
+    using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
     using static Kenedia.Modules.Characters.Classes.WindowsUtil.WindowsUtil;
     using Point = Microsoft.Xna.Framework.Point;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -649,14 +650,14 @@
         {
             if (this.MainWindow == null || force)
             {
-                var bg = GameService.Content.DatAssetCache.GetTextureFromAssetId(155985).Texture;
-                bg = this.TextureManager.GetBackground(Backgrounds.MainWindow);
-                bg = bg.GetRegion(25, 25, bg.Width - 100, bg.Height - 325);
+                // var bg = GameService.Content.DatAssetCache.GetTextureFromAssetId(155985).Texture;
+                var bg = this.TextureManager.GetBackground(Backgrounds.MainWindow);
+                var cutBg = bg.GetRegion(25, 25, bg.Width - 100, bg.Height - 325);
 
                 this.MainWindow = new MainWindow(
                     bg,
-                    new Rectangle(25, 25, bg.Width + 10, bg.Height),
-                    new Rectangle(35, 14, bg.Width - 10, bg.Height - 10))
+                    new Rectangle(25, 25, cutBg.Width + 10, cutBg.Height),
+                    new Rectangle(35, 14, cutBg.Width - 10, cutBg.Height - 10))
                 {
                     Parent = GameService.Graphics.SpriteScreen,
                     Title = "❤",

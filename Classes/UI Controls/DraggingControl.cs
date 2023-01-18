@@ -10,20 +10,31 @@
 
     public class DraggingControl : Control
     {
-        private readonly CharacterControl characterControl;
+        private CharacterControl characterControl;
 
         public CharacterControl CharacterControl
         {
-            get => this.CharacterControl;
+            get => this.characterControl;
             set
             {
-                this.CharacterControl = value;
+                this.characterControl = value;
                 this.Visible = value != null;
                 if (this.Visible)
                 {
                     this.Size = value.Size;
                     this.BackgroundColor = new Color(0, 0, 0, 175);
                 }
+            }
+        }
+
+        public override void DoUpdate(GameTime gameTime)
+        {
+            base.DoUpdate(gameTime);
+
+            if (this.CharacterControl != null)
+            {
+                var m = Input.Mouse;
+                this.Location = new Point(m.Position.X - 15, m.Position.Y - 15);
             }
         }
 
@@ -40,17 +51,6 @@
                     false,
                     HorizontalAlignment.Center,
                     VerticalAlignment.Middle);
-            }
-        }
-
-        public override void DoUpdate(GameTime gameTime)
-        {
-            base.DoUpdate(gameTime);
-
-            if (this.CharacterControl != null)
-            {
-                var m = Input.Mouse;
-                this.Location = new Point(m.Position.X - 15, m.Position.Y - 15);
             }
         }
     }

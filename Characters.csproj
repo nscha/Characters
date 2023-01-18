@@ -186,6 +186,7 @@
     <Compile Include="Classes\Characters\Names.cs" />
     <Compile Include="Classes\Data.cs" />
     <Compile Include="Classes\Characters\Map.cs" />
+    <Compile Include="Classes\UI Controls\CharacterPotraitCapture\BasicFrameContainer.cs" />
     <Compile Include="Extensions\ContainerExtensions.cs" />
     <Compile Include="Extensions\DisposableExtensions.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />

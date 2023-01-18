@@ -120,7 +120,6 @@
                 });
             }
 
-
             for (int i = 0; i < 3; i++)
             {
                 foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> p in profs)

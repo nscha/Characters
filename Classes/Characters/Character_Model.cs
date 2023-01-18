@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Runtime.CompilerServices;
     using Blish_HUD;
@@ -65,6 +66,7 @@
         private int position;
         private int index;
         private bool initialized;
+        private bool pathChecked;
 
         public Character_Model()
         {
@@ -141,6 +143,7 @@
             {
                 this.iconPath = value;
                 this.icon = null;
+                this.pathChecked = false;
                 this.OnUpdated();
             }
         }
@@ -149,14 +152,22 @@
         {
             get
             {
-                if (this.icon == null && this.IconPath != null && this.IconPath.Length > 1)
+                if (!this.pathChecked)
                 {
-                    GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
+                    var path = Characters.ModuleInstance.BasePath + (this.IconPath ?? string.Empty);
+
+                    if (this.IconPath != null && File.Exists(path))
                     {
-                        this.icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + this.IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-                    });
+                        GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
+                        {
+                            this.icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + this.IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                        });
+                    }
+
+                    this.pathChecked = true;
                 }
-                else if (this.IconPath == null || this.icon == null)
+
+                if (this.icon == null)
                 {
                     if (Enum.IsDefined(typeof(SpecializationType), this.Specialization) && this.Specialization != SpecializationType.None)
                     {

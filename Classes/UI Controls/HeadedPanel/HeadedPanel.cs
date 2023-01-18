@@ -33,7 +33,7 @@
             Location = new Point(0, 25),
         };
 
-        private string header = "";
+        private string header = string.Empty;
 
         public string Header
         {
@@ -71,7 +71,6 @@
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
-
 
             var color = Color.Black;
             var b = this.contentPanel.LocalBounds;

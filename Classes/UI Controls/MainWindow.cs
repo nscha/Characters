@@ -16,17 +16,99 @@
 
     public class MainWindow : StandardWindow
     {
-        public List<CharacterControl> CharacterControls = new List<CharacterControl>();
-        public FlowPanel ContentPanel;
-        public DraggingControl DraggingControl = new DraggingControl()
-        {
-            Parent = GameService.Graphics.SpriteScreen,
-            Visible = false,
-            ZIndex = 999,
-            Enabled = false,
-        };
+        private readonly AsyncTexture2D windowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
 
-        public Dictionary<object, List<object>> CategoryFilters = new Dictionary<object, List<object>>()
+        private readonly Image displaySettingsButton;
+        private readonly ImageButton clearButton;
+        private readonly FlowPanel dropdownPanel;
+        private readonly SettingsSideMenu settingsSideMenu;
+        private readonly Filter_SideMenu filterSideMenu;
+
+        private bool filterCharacters;
+        private bool updateLayout;
+        private double tick = 0;
+        private double filterTick = 0;
+
+        public MainWindow(Texture2D background, Rectangle windowRegion, Rectangle contentRegion)
+            : base(background, windowRegion, contentRegion)
+        {
+            this.ContentPanel = new FlowPanel()
+            {
+                Parent = this,
+                Location = new Point(0, 38),
+                Size = this.Size,
+                ControlPadding = new Vector2(2, 4),
+                CanScroll = true,
+            };
+
+            this.DraggingControl.LeftMouseButtonReleased += this.DraggingControl_LeftMouseButtonReleased;
+
+            this.dropdownPanel = new FlowPanel()
+            {
+                Parent = this,
+                Location = new Point(0, 2),
+                FlowDirection = ControlFlowDirection.SingleRightToLeft,
+                OuterControlPadding = new Vector2(0, 2),
+                ControlPadding = new Vector2(6, 0),
+            };
+
+            this.displaySettingsButton = new Image()
+            {
+                Parent = this.dropdownPanel,
+                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052),
+                Size = new Point(25, 25),
+                BasicTooltipText = "Show Display Settings",
+            };
+            this.displaySettingsButton.MouseEntered += this.DisplaySettingsButton_MouseEntered;
+            this.displaySettingsButton.MouseLeft += this.DisplaySettingsButton_MouseLeft;
+            this.displaySettingsButton.Click += this.DisplaySettingsButton_Click;
+
+            this.clearButton = new ImageButton()
+            {
+                Parent = this,
+                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175783),
+                HoveredTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175782),
+                ClickedTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175784),
+                Size = new Point(20, 20),
+                BasicTooltipText = "Clear Filters",
+                Visible = false,
+            };
+            this.clearButton.Click += this.ClearButton_Click;
+
+            this.FilterBox = new TextBox()
+            {
+                Parent = this.dropdownPanel,
+                PlaceholderText = "Search ...",
+                Width = this.dropdownPanel.Width - this.displaySettingsButton.Width - 5,
+            };
+            this.FilterBox.TextChanged += this.FilterCharacters;
+            this.FilterBox.Click += this.FilterBox_Click;
+            this.FilterBox.EnterPressed += this.FilterBox_EnterPressed;
+
+            this.settingsSideMenu = new SettingsSideMenu()
+            {
+                TextureOffset = new Point(25, 25),
+                Visible = false,
+            };
+
+            this.filterSideMenu = new Filter_SideMenu()
+            {
+                TextureOffset = new Point(25, 25),
+                Visible = false,
+            };
+
+            this.CharacterEdit = new CharacterEdit()
+            {
+                TextureOffset = new Point(25, 25),
+                Visible = false,
+            };
+            this.CharacterEdit.Shown += this.CharacterEdit_Shown;
+
+            this.clearButton.Location = new Point(this.FilterBox.LocalBounds.Right - 25, this.FilterBox.LocalBounds.Top + 5);
+            Characters.ModuleInstance.LanguageChanged += this.ModuleInstance_LanguageChanged;
+        }
+
+        public Dictionary<object, List<object>> CategoryFilters { get; set; } = new Dictionary<object, List<object>>()
         {
             {
                 FilterCategory.Race,
@@ -58,172 +140,21 @@
             },
         };
 
-        public Image DisplaySettingsButton;
-        public ImageButton ClearButton;
-        public TextBox FilterBox;
-        public FlowPanel DropdownPanel;
-        public SettingsSideMenu SettingsSideMenu;
-        public Filter_SideMenu FilterSideMenu;
-        public CharacterEdit CharacterEdit;
+        public List<CharacterControl> CharacterControls { get; set; } = new List<CharacterControl>();
 
-        private bool filterCharacters;
-        private bool updateLayout;
-        private double tick = 0;
-        private double filterTick = 0;
+        public CharacterEdit CharacterEdit { get; set; }
 
-        private readonly AsyncTexture2D windowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
+        public TextBox FilterBox { get; set; }
 
-        public MainWindow(Texture2D background, Rectangle windowRegion, Rectangle contentRegion)
-            : base(background, windowRegion, contentRegion)
+        public DraggingControl DraggingControl { get; set; } = new DraggingControl()
         {
-            this.ContentPanel = new FlowPanel()
-            {
-                Parent = this,
-                Location = new Point(0, 38),
-                Size = this.Size,
-                ControlPadding = new Vector2(2, 4),
-                CanScroll = true,
-            };
+            Parent = GameService.Graphics.SpriteScreen,
+            Visible = false,
+            ZIndex = 999,
+            Enabled = false,
+        };
 
-            // ContentPanel.BackgroundColor = Color.Magenta;
-
-            this.DraggingControl.LeftMouseButtonReleased += this.DraggingControl_LeftMouseButtonReleased;
-
-            this.DropdownPanel = new FlowPanel()
-            {
-                Parent = this,
-                Location = new Point(0, 2),
-                FlowDirection = ControlFlowDirection.SingleRightToLeft,
-                OuterControlPadding = new Vector2(0, 2),
-                ControlPadding = new Vector2(6, 0),
-            };
-
-            this.DisplaySettingsButton = new Image()
-            {
-                Parent = this.DropdownPanel,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052),
-                Size = new Point(25, 25),
-                BasicTooltipText = "Show Display Settings",
-            };
-            this.DisplaySettingsButton.MouseEntered += this.DisplaySettingsButton_MouseEntered;
-            this.DisplaySettingsButton.MouseLeft += this.DisplaySettingsButton_MouseLeft;
-            this.DisplaySettingsButton.Click += this.DisplaySettingsButton_Click;
-
-            this.ClearButton = new ImageButton()
-            {
-                Parent = this,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175783),
-                HoveredTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175782),
-                ClickedTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175784),
-                Size = new Point(20, 20),
-                BasicTooltipText = "Clear Filters",
-                Visible = false,
-            };
-            this.ClearButton.Click += this.ClearButton_Click;
-
-            // 156869
-
-            this.FilterBox = new TextBox()
-            {
-                Parent = this.DropdownPanel,
-                PlaceholderText = "Search ...",
-                Width = this.DropdownPanel.Width - this.DisplaySettingsButton.Width - 5,
-            };
-            this.FilterBox.TextChanged += this.FilterCharacters;
-            this.FilterBox.Click += this.FilterBox_Click;
-            this.FilterBox.EnterPressed += this.FilterBox_EnterPressed;
-
-            this.SettingsSideMenu = new SettingsSideMenu()
-            {
-                TextureOffset = new Point(25, 25),
-                Visible = false,
-            };
-
-            this.FilterSideMenu = new Filter_SideMenu()
-            {
-                TextureOffset = new Point(25, 25),
-                Visible = false,
-            };
-
-            this.CharacterEdit = new CharacterEdit()
-            {
-                TextureOffset = new Point(25, 25),
-                Visible = false,
-            };
-            this.CharacterEdit.Shown += this.CharacterEdit_Shown;
-
-            this.ClearButton.Location = new Point(this.FilterBox.LocalBounds.Right - 25, this.FilterBox.LocalBounds.Top + 5);
-            Characters.ModuleInstance.LanguageChanged += this.ModuleInstance_LanguageChanged;
-        }
-
-        private void FilterBox_EnterPressed(object sender, EventArgs e)
-        {
-            if (Characters.ModuleInstance.Settings.EnterToLogin.Value)
-            {
-                this.PerformFiltering();
-                var c = (CharacterControl)this.ContentPanel.Children.Where(e => e.Visible).FirstOrDefault();
-
-                if (c != null)
-                {
-                    Debug.WriteLine(c.Character.Name);
-                    Characters.ModuleInstance.SwapTo(c.Character);
-                }
-            }
-        }
-
-        private void CharacterEdit_Shown(object sender, EventArgs e)
-        {
-            this.FilterSideMenu?.Hide();
-            this.SettingsSideMenu?.Hide();
-
-            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
-            {
-                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
-        }
-
-        private void ModuleInstance_LanguageChanged(object sender, EventArgs e)
-        {
-            this.tick = this.tick + 10;
-            this.updateLayout = true;
-        }
-
-        private void ClearButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            this.ResetFilters();
-        }
-
-        private void ResetFilters()
-        {
-            this.CategoryFilters[FilterCategory.Race].Clear();
-            this.CategoryFilters[FilterCategory.Crafting].Clear();
-            this.CategoryFilters[FilterCategory.Profession].Clear();
-            this.CategoryFilters[FilterCategory.ProfessionSpecialization].Clear();
-            this.CategoryFilters[FilterCategory.Specialization].Clear();
-            this.CategoryFilters[FilterCategory.Hidden].Clear();
-            this.CategoryFilters[FilterCategory.Birthday].Clear();
-
-            this.FilterSideMenu.ResetToggles();
-            this.FilterBox.Text = null;
-            this.filterCharacters = true;
-            this.FilterSideMenu.Tags.ForEach(t => t.Active = false);
-        }
-
-        private void FilterBox_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            this.SettingsSideMenu.Hide();
-            this.FilterSideMenu.Show();
-            this.CharacterEdit.Hide();
-        }
-
-        private void DisplaySettingsButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            this.FilterSideMenu.Hide();
-            this.SettingsSideMenu.Show();
-            this.SettingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            this.SettingsSideMenu.Opacity = 1f;
-            this.CharacterEdit.Hide();
-        }
+        public FlowPanel ContentPanel { get; private set; }
 
         public void FilterCharacters(object sender = null, EventArgs e = null)
         {
@@ -240,7 +171,7 @@
             var s = Characters.ModuleInstance.Settings;
             var data = Characters.ModuleInstance.Data;
 
-            var activeTags = this.FilterSideMenu.Tags.Where(e => e.Active);
+            var activeTags = this.filterSideMenu.Tags.Where(e => e.Active);
 
             var anyTag = activeTags.Count() == 0;
             var raceAny = this.CategoryFilters[FilterCategory.Race].Count == 0;
@@ -271,23 +202,23 @@
                     },
                     new FilterTag()
                     {
-                        Result = craftAny|| (any ? crafting_Any : crafting_All),
+                        Result = craftAny || (any ? crafting_Any : crafting_All),
                     },
                     new FilterTag()
                     {
-                        Result = profAny|| ((any || this.CategoryFilters[FilterCategory.Profession].Count == 1) && this.CategoryFilters[FilterCategory.Profession].Contains(c.Character.Profession)),
+                        Result = profAny || ((any || this.CategoryFilters[FilterCategory.Profession].Count == 1) && this.CategoryFilters[FilterCategory.Profession].Contains(c.Character.Profession)),
                     },
                     new FilterTag()
                     {
-                        Result = birthAny|| c.Character.HasBirthdayPresent,
+                        Result = birthAny || c.Character.HasBirthdayPresent,
                     },
                     new FilterTag()
                     {
-                        Result = (specProfAny && specAny) || ((any ||this.CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 1) && c.Character.Specialization == SpecializationType.None && this.CategoryFilters[FilterCategory.ProfessionSpecialization].Contains(c.Character.Profession)) || this.CategoryFilters[FilterCategory.Specialization].Contains(c.Character.Specialization),
+                        Result = (specProfAny && specAny) || ((any || this.CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 1) && c.Character.Specialization == SpecializationType.None && this.CategoryFilters[FilterCategory.ProfessionSpecialization].Contains(c.Character.Profession)) || this.CategoryFilters[FilterCategory.Specialization].Contains(c.Character.Specialization),
                     },
                 };
 
-                List<FilterTag> filterTags = this.FilterSideMenu.Tags.Where(e => e.Active).Select(e => e.Text).ToList().CreateFilterTagList();
+                List<FilterTag> filterTags = this.filterSideMenu.Tags.Where(e => e.Active).Select(e => e.Text).ToList().CreateFilterTagList();
                 List<FilterTag> filterStrings = textStrings.CreateFilterTagList();
 
                 if (!anyTag)
@@ -468,21 +399,10 @@
                 c.Visible = (c.Character.Show || includeHidden) && (s.FilterDirection.Value == FilterBehavior.Include ? matched && catMatched && tagMatched : !matched && !catMatched && !tagMatched);
             }
 
-            this.ClearButton.Visible = !anyCategory || !matchAny || !anyTag;
+            this.clearButton.Visible = !anyCategory || !matchAny || !anyTag;
             this.SortCharacters();
             this.ContentPanel.Invalidate();
         }
-
-        private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            this.DisplaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052);
-        }
-
-        private void DisplaySettingsButton_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            this.DisplaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157110);
-        }
-
 
         public void UpdateLayout()
         {
@@ -493,7 +413,7 @@
             var size = Point.Zero;
             var nameFont = GameService.Content.DefaultFont14;
             var font = GameService.Content.DefaultFont12;
-            var testString = Characters.ModuleInstance.CharacterModels.Aggregate("", (max, cur) => max.Length > cur.Name.Length ? max : cur.Name);
+            var testString = Characters.ModuleInstance.CharacterModels.Aggregate(string.Empty, (max, cur) => max.Length > cur.Name.Length ? max : cur.Name);
 
             switch (panelSize)
             {
@@ -577,13 +497,10 @@
 
             var maxWidth = this.ContentPanel.Children.Count > 0 ? this.ContentPanel.Children.Cast<CharacterControl>().Max(t => t.TotalWidth) : this.Width;
 
-            foreach (CharacterControl c in this.ContentPanel.Children) { c.Width = maxWidth; }
-        }
-
-        private void DraggingControl_LeftMouseButtonReleased(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            this.SetNewIndex(this.DraggingControl.CharacterControl);
-            this.DraggingControl.CharacterControl = null;
+            foreach (CharacterControl c in this.ContentPanel.Children)
+            {
+                c.Width = maxWidth;
+            }
         }
 
         public void SortCharacters()
@@ -715,78 +632,26 @@
             return characterControl.Index;
         }
 
-        protected override void OnResized(ResizedEventArgs e)
+        public override void UpdateContainer(GameTime gameTime)
         {
-            base.OnResized(e);
+            base.UpdateContainer(gameTime);
 
-            if (this.ContentPanel != null)
+            if (this.filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - this.filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
             {
-                this.ContentPanel.Size = new Point(this.ContentRegion.Size.X, this.ContentRegion.Size.Y - 35);
+                this.filterTick = gameTime.TotalGameTime.TotalMilliseconds;
+                this.PerformFiltering();
+                this.filterCharacters = false;
             }
 
-            if (this.DropdownPanel != null)
+            if (gameTime.TotalGameTime.TotalMilliseconds - this.tick > 50)
             {
-                this.DropdownPanel.Size = new Point(this.ContentRegion.Size.X, 31);
-                this.FilterBox.Width = this.DropdownPanel.Width - this.DisplaySettingsButton.Width - 5;
-                this.ClearButton.Location = new Point(this.FilterBox.LocalBounds.Right - 23, this.FilterBox.LocalBounds.Top + 6);
+                this.tick = gameTime.TotalGameTime.TotalMilliseconds;
+
+                if (this.updateLayout)
+                {
+                    this.UpdateLayout();
+                }
             }
-
-            if (e.CurrentSize.Y < 135)
-            {
-                this.Size = new Point(this.Size.X, 135);
-            }
-
-            if (this.SettingsSideMenu != null && this.SettingsSideMenu.Visible)
-            {
-                this.SettingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
-
-            if (this.FilterSideMenu != null && this.FilterSideMenu.Visible)
-            {
-                this.FilterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
-
-            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
-            {
-                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
-        }
-
-        protected override void OnMoved(MovedEventArgs e)
-        {
-            base.OnMoved(e);
-
-            if (this.SettingsSideMenu != null && this.SettingsSideMenu.Visible)
-            {
-                this.SettingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
-
-            if (this.FilterSideMenu != null && this.FilterSideMenu.Visible)
-            {
-                this.FilterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
-
-            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
-            {
-                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
-        }
-
-        protected override void DisposeControl()
-        {
-            base.DisposeControl();
-
-            this.CharacterControls?.DisposeAll();
-
-            this.ContentPanel?.Dispose();
-            this.DraggingControl?.Dispose();
-            this.SettingsSideMenu?.Dispose();
-            this.FilterSideMenu?.Dispose();
-            this.CharacterEdit?.Dispose();
-
-            this.DropdownPanel?.Dispose();
-            this.DisplaySettingsButton?.Dispose();
-            this.FilterBox?.Dispose();
         }
 
         public override void PaintAfterChildren(SpriteBatch spriteBatch, Rectangle bounds)
@@ -820,31 +685,168 @@
         {
             base.OnHidden(e);
 
-            this.FilterSideMenu?.Hide();
-            this.SettingsSideMenu?.Hide();
+            this.filterSideMenu?.Hide();
+            this.settingsSideMenu?.Hide();
             this.CharacterEdit?.Hide();
         }
 
-        public override void UpdateContainer(GameTime gameTime)
+        protected override void OnResized(ResizedEventArgs e)
         {
-            base.UpdateContainer(gameTime);
+            base.OnResized(e);
 
-            if (this.filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - this.filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
+            if (this.ContentPanel != null)
             {
-                this.filterTick = gameTime.TotalGameTime.TotalMilliseconds;
-                this.PerformFiltering();
-                this.filterCharacters = false;
+                this.ContentPanel.Size = new Point(this.ContentRegion.Size.X, this.ContentRegion.Size.Y - 35);
             }
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - this.tick > 50)
+            if (this.dropdownPanel != null)
             {
-                this.tick = gameTime.TotalGameTime.TotalMilliseconds;
+                this.dropdownPanel.Size = new Point(this.ContentRegion.Size.X, 31);
+                this.FilterBox.Width = this.dropdownPanel.Width - this.displaySettingsButton.Width - 5;
+                this.clearButton.Location = new Point(this.FilterBox.LocalBounds.Right - 23, this.FilterBox.LocalBounds.Top + 6);
+            }
 
-                if (this.updateLayout)
+            if (e.CurrentSize.Y < 135)
+            {
+                this.Size = new Point(this.Size.X, 135);
+            }
+
+            if (this.settingsSideMenu != null && this.settingsSideMenu.Visible)
+            {
+                this.settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+
+            if (this.filterSideMenu != null && this.filterSideMenu.Visible)
+            {
+                this.filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+
+            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
+            {
+                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+        }
+
+        protected override void OnMoved(MovedEventArgs e)
+        {
+            base.OnMoved(e);
+
+            if (this.settingsSideMenu != null && this.settingsSideMenu.Visible)
+            {
+                this.settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+
+            if (this.filterSideMenu != null && this.filterSideMenu.Visible)
+            {
+                this.filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+
+            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
+            {
+                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+        }
+
+        protected override void DisposeControl()
+        {
+            base.DisposeControl();
+
+            this.CharacterControls?.DisposeAll();
+
+            this.ContentPanel?.Dispose();
+            this.DraggingControl?.Dispose();
+            this.settingsSideMenu?.Dispose();
+            this.filterSideMenu?.Dispose();
+            this.CharacterEdit?.Dispose();
+
+            this.dropdownPanel?.Dispose();
+            this.displaySettingsButton?.Dispose();
+            this.FilterBox?.Dispose();
+        }
+
+        private void FilterBox_EnterPressed(object sender, EventArgs e)
+        {
+            if (Characters.ModuleInstance.Settings.EnterToLogin.Value)
+            {
+                this.PerformFiltering();
+                var c = (CharacterControl)this.ContentPanel.Children.Where(e => e.Visible).FirstOrDefault();
+
+                if (c != null)
                 {
-                    this.UpdateLayout();
+                    Debug.WriteLine(c.Character.Name);
+                    Characters.ModuleInstance.SwapTo(c.Character);
                 }
             }
+        }
+
+        private void CharacterEdit_Shown(object sender, EventArgs e)
+        {
+            this.filterSideMenu?.Hide();
+            this.settingsSideMenu?.Hide();
+
+            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
+            {
+                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+        }
+
+        private void ModuleInstance_LanguageChanged(object sender, EventArgs e)
+        {
+            this.tick = this.tick + 10;
+            this.updateLayout = true;
+        }
+
+        private void ClearButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            this.ResetFilters();
+        }
+
+        private void ResetFilters()
+        {
+            this.CategoryFilters[FilterCategory.Race].Clear();
+            this.CategoryFilters[FilterCategory.Crafting].Clear();
+            this.CategoryFilters[FilterCategory.Profession].Clear();
+            this.CategoryFilters[FilterCategory.ProfessionSpecialization].Clear();
+            this.CategoryFilters[FilterCategory.Specialization].Clear();
+            this.CategoryFilters[FilterCategory.Hidden].Clear();
+            this.CategoryFilters[FilterCategory.Birthday].Clear();
+
+            this.filterSideMenu.ResetToggles();
+            this.FilterBox.Text = null;
+            this.filterCharacters = true;
+            this.filterSideMenu.Tags.ForEach(t => t.Active = false);
+        }
+
+        private void FilterBox_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            this.settingsSideMenu.Hide();
+            this.filterSideMenu.Show();
+            this.CharacterEdit.Hide();
+        }
+
+        private void DisplaySettingsButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            this.filterSideMenu.Hide();
+            this.settingsSideMenu.Show();
+            this.settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            this.settingsSideMenu.Opacity = 1f;
+            this.CharacterEdit.Hide();
+        }
+
+        private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            this.displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052);
+        }
+
+        private void DisplaySettingsButton_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            this.displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157110);
+        }
+
+        private void DraggingControl_LeftMouseButtonReleased(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            this.SetNewIndex(this.DraggingControl.CharacterControl);
+            this.DraggingControl.CharacterControl = null;
         }
     }
 }

@@ -114,9 +114,9 @@
         public Color ColorActive = new Color(200, 200, 200, 200);
         public Color ColorInActive = new Color(175, 175, 175, 255);
         public float Alpha = 0.25f;
-        static public Color DefaultColorHovered = new Color(255, 255, 255, 255);
-        static public Color DefaultColorActive = new Color(200, 200, 200, 200);
-        static public Color DefaultColorInActive = new Color(175, 175, 175, 255);
+        public static Color DefaultColorHovered = new Color(255, 255, 255, 255);
+        public static Color DefaultColorActive = new Color(200, 200, 200, 200);
+        public static Color DefaultColorInActive = new Color(175, 175, 175, 255);
 
         public void ResetColors()
         {

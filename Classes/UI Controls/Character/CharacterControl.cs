@@ -399,11 +399,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                     {
                         var texture = Characters.ModuleInstance.Data.Professions[Character.Profession].IconBig;
 
-                        if (Character.Specialization == SpecializationType.None)
-                        {
-                            texture = Characters.ModuleInstance.Data.Professions[Character.Profession].IconBig;
-                        }
-                        else
+                        if (Character.Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), Character.Specialization))
                         {
                             texture = Characters.ModuleInstance.Data.Specializations[Character.Specialization].TempIcon;
                         }

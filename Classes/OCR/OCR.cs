@@ -25,15 +25,40 @@ using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using static Kenedia.Modules.Characters.Classes.WindowsUtil.WindowsUtil;
 using System.Diagnostics;
+using Kenedia.Modules.Characters.Classes.Classes.UI_Controls;
+using System.Globalization;
 
 namespace Kenedia.Modules.Characters.Classes
 {
     public class OCR : IDisposable
     {
+        BasicFrameContainer ContentContainer;
+
+        private Rectangle CustomOffset
+        {
+            get => Characters.ModuleInstance.Settings._OCRCustomOffset.Value;
+            set => Characters.ModuleInstance.Settings._OCRCustomOffset.Value = value;
+        }
+        private int CustomThreshold
+        {
+            get => Characters.ModuleInstance.Settings._OCRNoPixelColumns.Value;
+            set => Characters.ModuleInstance.Settings._OCRNoPixelColumns.Value = value;
+        }
+
+        private Point WindowOffset = new Point(0, 0);
+        private System.Drawing.Color spacingColor = System.Drawing.Color.FromArgb(255, 200, 200, 200);
+        private System.Drawing.Color ignoredColor = System.Drawing.Color.FromArgb(255, 100, 100, 100);
+
+        TextBox LeftBox;
+        TextBox TopBox;
+        TextBox RightBox;
+        TextBox BottomBox;
+        TextBox ColumnBox;
 
         Label Instructions;
         Label Result;
         Image OCR_ResultImage;
+        Image OCR_ResultImageBlackWhite;
         SizeablePanel Container;
         OcrApi _ocrApi;
         string BasePath
@@ -48,33 +73,149 @@ namespace Kenedia.Modules.Characters.Classes
             _ocrApi = OcrApi.Create();
             _ocrApi.Init(BasePath + @"\", "gw2");
 
-            Result = new Label()
+            var tM = Characters.ModuleInstance.TextureManager;
+
+
+            ContentContainer = new BasicFrameContainer()
             {
                 Parent = GameService.Graphics.SpriteScreen,
+                FrameColor = Color.Black,// new Color(32, 32 , 32),
+                Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003),
+                TextureRectangle = new Rectangle(50, 50, 500, 500),
+                WidthSizingMode = SizingMode.AutoSize,
+                HeightSizingMode = SizingMode.AutoSize,
                 ZIndex = 999,
                 Visible = false,
+            };
+
+            var contentFlowPanel = new FlowPanel()
+            {
+                Parent = ContentContainer,
+                WidthSizingMode = SizingMode.AutoSize,
+                HeightSizingMode = SizingMode.AutoSize,
+                AutoSizePadding = new Point(5, 5),
+                OuterControlPadding = new Vector2(5, 5),
+                FlowDirection = ControlFlowDirection.SingleTopToBottom,
+            };
+
+            Instructions = new Label()
+            {
+                Text = "Move and Size the yellow frame to contain only the character name row in the character selection!",
+                Parent = contentFlowPanel,
                 AutoSizeHeight = true,
+                AutoSizeWidth = true,
+                TextColor = ContentService.Colors.ColonialWhite,
+            };
+
+            var flowPanel = new FlowPanel()
+            {
+                Parent = contentFlowPanel,
+                WidthSizingMode = SizingMode.AutoSize,
+                HeightSizingMode = SizingMode.AutoSize,
+                AutoSizePadding = new Point(5, 5),
+                OuterControlPadding = new Vector2(5, 5),
+                ControlPadding = new Vector2(5, 5),
+                FlowDirection = ControlFlowDirection.SingleLeftToRight,
+            };
+
+            var OffsetLabel = new Label()
+            {
+                Parent = flowPanel,
+                Text = "Offset",
+                Height = 25,
+                AutoSizeWidth = true,
+                TextColor = ContentService.Colors.ColonialWhite,
+                BasicTooltipText = "Custom Offset to make sure the frame is not included in the capture."
+            };
+
+            LeftBox = new TextBox()
+            {
+                Parent = flowPanel,
+                Size = new Point(50, 25),
+                Text = CustomOffset.Left.ToString(),
+                BasicTooltipText = "Left Offset",
+            };
+            LeftBox.TextChanged += OffsetChanged;
+
+            TopBox = new TextBox()
+            {
+                Parent = flowPanel,
+                Size = new Point(50, 25),
+                Text = CustomOffset.Top.ToString(),
+                BasicTooltipText = "Top Offset",
+            };
+            TopBox.TextChanged += OffsetChanged;
+
+            RightBox = new TextBox()
+            {
+                Parent = flowPanel,
+                Size = new Point(50, 25),
+                Text = CustomOffset.Right.ToString(),
+                BasicTooltipText = "Right Offset",
+            };
+            RightBox.TextChanged += OffsetChanged;
+
+            BottomBox = new TextBox()
+            {
+                Parent = flowPanel,
+                Size = new Point(50, 25),
+                Text = CustomOffset.Bottom.ToString(),
+                BasicTooltipText = "Bottom Offset",
+            };
+            BottomBox.TextChanged += OffsetChanged;
+
+
+            var ThresholdLabel = new Label()
+            {
+                Parent = flowPanel,
+                Text = "Empty Columns",
+                Height = 25,
+                AutoSizeWidth = true,
+                TextColor = ContentService.Colors.ColonialWhite,
+                BasicTooltipText = "Threshold of how many pixel columns are allowed to contain no content"
+            };
+            ColumnBox = new TextBox()
+            {
+                Parent = flowPanel,
+                Size = new Point(50, 25),
+                Text = CustomThreshold.ToString(),
+                BasicTooltipText = "Number of rows",
+            };
+            ColumnBox.TextChanged += ColumnThresholdChanged;
+
+            new Panel()
+            {
+                Parent = flowPanel,
+                BackgroundColor = new Color(ignoredColor.R, ignoredColor.G, ignoredColor.B, ignoredColor.A),
+                Size = new Point(25, 25),
+            };
+
+            new Panel()
+            {
+                Parent = flowPanel,
+                BackgroundColor = new Color(ignoredColor.R, ignoredColor.G, ignoredColor.B, ignoredColor.A),
+                Size = new Point(25, 25),
+            };
+
+
+            Result = new Label()
+            {
+                Parent = contentFlowPanel,
+                AutoSizeHeight = false,
+                Height = 50,
                 AutoSizeWidth = true,
                 TextColor = ContentService.Colors.ColonialWhite,
                 Font = GameService.Content.DefaultFont32,
             };
 
-            Instructions = new Label()
-            {
-                Text = "Move and Size the container to contain only the character name row in the character selection!",
-                Parent = GameService.Graphics.SpriteScreen,
-                ZIndex = 999,
-                Visible = false,
-                AutoSizeHeight = true,
-                AutoSizeWidth = true,
-                TextColor = ContentService.Colors.ColonialWhite,
-            };
-
             OCR_ResultImage = new Image()
             {
-                Parent = GameService.Graphics.SpriteScreen,
-                ZIndex = 999,
-                Visible = false,
+                Parent = contentFlowPanel,
+            };
+
+            OCR_ResultImageBlackWhite = new Image()
+            {
+                Parent = contentFlowPanel,
             };
 
             Container = new SizeablePanel()
@@ -84,26 +225,57 @@ namespace Kenedia.Modules.Characters.Classes
                 Visible = false,
                 Location = Characters.ModuleInstance.Settings.OCRRegion.Location,
                 Size = Characters.ModuleInstance.Settings.OCRRegion.Size,
+                TintOnHover = false,
+                ShowResizeOnlyOnMouseOver = true,
             };
             Container.Resized += Container_Changed;
             Container.Moved += Container_Changed;
             Container.LeftMouseButtonReleased += Container_LeftMouseButtonReleased;
+            Container.MouseLeft += Container_LeftMouseButtonReleased;
 
-            Instructions.Location = new Point(Container.Left, Container.Top - Instructions.Height - 2);
-            Result.Location = new Point(Container.Left, Container.Top - Instructions.Height - 2 - Result.Height - 20);
-
+            ContentContainer.Location = new Point(Container.Left, Container.Top - (Container.Height * 3) - 60);
         }
 
-        private void Container_LeftMouseButtonReleased(object sender, MouseEventArgs e)
+        private void ColumnThresholdChanged(object sender, EventArgs e)
         {
+            if (int.TryParse(ColumnBox.Text, out int threshold))
+            {
+                CustomThreshold = threshold;
+            }
+        }
+
+        private async void Container_LeftMouseButtonReleased(object sender, MouseEventArgs e)
+        {
+            if (!Container.MouseOver)
+            {
+                await DelayedRead();
+            }
+        }
+
+        private async Task DelayedRead()
+        {
+            await Task.Delay(5);
+            Read(true);
+        }
+
+        private void OffsetChanged(object sender, EventArgs e)
+        {
+            int left = CustomOffset.Left, top = CustomOffset.Top, right = CustomOffset.Right, bottom = CustomOffset.Bottom;
+
+            int.TryParse(LeftBox.Text, out left);
+            int.TryParse(TopBox.Text, out top);
+            int.TryParse(RightBox.Text, out right);
+            int.TryParse(BottomBox.Text, out bottom);
+
+            CustomOffset = new Rectangle(left, top, right, bottom);
+            Read(true);
         }
 
         private void Container_Changed(object sender, EventArgs e)
         {
             var res = GameService.Graphics.Resolution.ToString();
             var regions = Characters.ModuleInstance.Settings._OCRRegions.Value;
-            Instructions.Location = new Point(Container.Left, Container.Top - Instructions.Height - 2);
-            Result.Location = new Point(Container.Left, Container.Top - Instructions.Height - 2 - Result.Height - 20);
+
             Read(true);
 
             if (!regions.ContainsKey(res))
@@ -114,15 +286,19 @@ namespace Kenedia.Modules.Characters.Classes
             {
                 regions[res] = Container.LocalBounds;
             }
+
+            ContentContainer.Location = new Point(Container.Left, Container.Top - ContentContainer.Height - 5);
         }
 
         public void ToggleContainer()
         {
-            Debug.WriteLine("TOGGLE CONTAINER");
-            Instructions?.ToggleVisibility();
+            ContentContainer?.ToggleVisibility();
             Container?.ToggleVisibility();
-            OCR_ResultImage?.ToggleVisibility();
-            //Result?.ToggleVisibility();
+
+            if (Container.Visible)
+            {
+                Read(true);
+            }
         }
 
         private bool disposed = false;
@@ -134,13 +310,16 @@ namespace Kenedia.Modules.Characters.Classes
                 Container?.Dispose();
                 Instructions?.Dispose();
                 OCR_ResultImage?.Dispose();
+                OCR_ResultImageBlackWhite?.Dispose();
                 Result?.Dispose();
+                ContentContainer?.Dispose();
             }
         }
 
         public string? Read(bool show = false)
         {
             string plainText = null;
+            string finalText = null;
 
             if (Container.Visible && !show)
             {
@@ -158,62 +337,116 @@ namespace Kenedia.Modules.Characters.Classes
 
             using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(size.X, size.Y))
             {
+                System.Drawing.Bitmap spacingVisibleBitmap = new System.Drawing.Bitmap(size.X, size.Y);
 
                 using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
                 {
+                    WindowOffset = new Point(TitleBarHeight, SideBarWidth);
+
                     var left = (int)((wndBounds.Left + SideBarWidth));
                     var top = (int)((wndBounds.Top + TitleBarHeight));
 
-                    var x = (int)Math.Ceiling((Container.Left - 10) * factor);
-                    var y = (int)Math.Ceiling((Container.Top - 10) * factor);
+                    var x = (int)Math.Ceiling((Container.Left - 10 + CustomOffset.Left) * factor);
+                    var y = (int)Math.Ceiling((Container.Top - 10 + CustomOffset.Top) * factor);
 
-                    g.CopyFromScreen(new System.Drawing.Point(left + x, top + y), System.Drawing.Point.Empty, new System.Drawing.Size(size.X, size.Y));
+                    g.CopyFromScreen(new System.Drawing.Point(left + x, top + y), System.Drawing.Point.Empty, new System.Drawing.Size(size.X - CustomOffset.Right, size.Y - CustomOffset.Bottom));
 
-                    var blackAndWhite = !show;
 
-                    if (blackAndWhite)
+                    if (show)
                     {
-                        for (int i = 0; i < bitmap.Width; i++)
+                        using (MemoryStream s = new MemoryStream())
                         {
-                            for (int j = 0; j < bitmap.Height; j++)
-                            {
-                                System.Drawing.Color oc = bitmap.GetPixel(i, j);
-                                var threshold = 150;
+                            bitmap.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
 
-                                if (oc.R >= threshold && oc.G >= threshold && oc.B >= threshold)
+                            OCR_ResultImage.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
+                            OCR_ResultImage.Texture = s.CreateTexture2D();
+                        }
+                    }
+
+                    var black = System.Drawing.Color.FromArgb(255, 0, 0, 0);
+                    var white = System.Drawing.Color.FromArgb(255, 255, 255, 255);
+
+                    Debug.WriteLine($"CustomThreshold: {CustomThreshold}");
+                    var emptyPixelRow = 0;
+                    for (int i = 0; i < bitmap.Width; i++)
+                    {
+                        var containsPixel = false;
+
+                        for (int j = 0; j < bitmap.Height; j++)
+                        {
+                            System.Drawing.Color oc = bitmap.GetPixel(i, j);
+                            var threshold = 150;
+
+                            if (oc.R >= threshold && oc.G >= threshold && oc.B >= threshold && emptyPixelRow < CustomThreshold)
+                            {
+                                bitmap.SetPixel(i, j, black);
+                                spacingVisibleBitmap.SetPixel(i, j, black);
+                                containsPixel = true;
+                            }
+                            else if (emptyPixelRow >= CustomThreshold)
+                            {
+                                spacingVisibleBitmap.SetPixel(i, j, ignoredColor);
+                                bitmap.SetPixel(i, j, white);
+                            }
+                            else
+                            {
+                                spacingVisibleBitmap.SetPixel(i, j, white);
+                                bitmap.SetPixel(i, j, white);
+                            }
+                        }
+
+                        if (emptyPixelRow < CustomThreshold)
+                        {
+                            if (!containsPixel)
+                            {
+                                for (int j = 0; j < bitmap.Height; j++)
                                 {
-                                    System.Drawing.Color nc = System.Drawing.Color.FromArgb(255, 0, 0, 0);
-                                    bitmap.SetPixel(i, j, nc);
+                                    spacingVisibleBitmap.SetPixel(i, j, spacingColor);
                                 }
-                                else
-                                {
-                                    System.Drawing.Color nc = System.Drawing.Color.FromArgb(255, 255, 255, 255);
-                                    bitmap.SetPixel(i, j, nc);
-                                }
+
+                                emptyPixelRow++;
+                            }
+                            else
+                            {
+                                emptyPixelRow = 0;
                             }
                         }
                     }
 
                     using (MemoryStream s = new MemoryStream())
                     {
-                        bitmap.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
+                        spacingVisibleBitmap.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
 
                         if (show)
                         {
-                            OCR_ResultImage.Size = size;
-                            OCR_ResultImage.Texture = s.CreateTexture2D();
-                            OCR_ResultImage.Location = new Point(Container.Left, Instructions.Top - size.Y - 5);
+                            OCR_ResultImageBlackWhite.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
+                            OCR_ResultImageBlackWhite.Texture = s.CreateTexture2D();
                         }
                     }
                 }
 
                 plainText = _ocrApi.GetTextFromImage(bitmap);
+                //plainText = plainText?.TrimEnd();
 
-                plainText = plainText?.Trim();
-                Result.Text = plainText;
+                foreach (string word in plainText.Split(' '))
+                {
+                    Debug.WriteLine(word);
+                    var wordText = word.Trim();
+
+                    if (wordText.StartsWith("l"))
+                    {
+                        wordText = 'I' + wordText.Remove(0, 1);
+                    }
+
+                    finalText = finalText == null ? wordText : finalText + " " + wordText;
+                }
+
+                finalText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(finalText.ToLower());
+
+                Result.Text = finalText;
             }
 
-            return plainText;
+            return finalText;
         }
     }
 }

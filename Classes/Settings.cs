@@ -139,7 +139,7 @@ namespace Kenedia.Modules.Characters.Classes
                     return MatchingBehavior.MatchAny;
 
                 case "Match All Filter":
-                    return MatchingBehavior.MatchAll ;
+                    return MatchingBehavior.MatchAll;
             }
 
             return MatchingBehavior.MatchAny;
@@ -214,11 +214,13 @@ namespace Kenedia.Modules.Characters.Classes
                 var key = GameService.Graphics.Resolution.ToString();
                 var regions = _OCRRegions.Value;
 
-                return regions.ContainsKey(key) ? regions[key] : new Rectangle(0,0, 200, 50);
+                return regions.ContainsKey(key) ? regions[key] : new Rectangle(0, 0, 200, 50);
             }
         }
         public SettingEntry<Rectangle> _OCRRegion;
         public SettingEntry<Dictionary<string, Rectangle>> _OCRRegions;
+        public SettingEntry<Rectangle> _OCRCustomOffset;
+        public SettingEntry<int> _OCRNoPixelColumns;
 
         public SettingEntry<PanelSizes> PanelSize;
         public SettingEntry<CharacterPanelLayout> PanelLayout;
@@ -315,8 +317,10 @@ namespace Kenedia.Modules.Characters.Classes
             _WindowedMode = internalSettings.DefineSetting(nameof(_WindowedMode), false);
             _UseOCR = internalSettings.DefineSetting(nameof(_UseOCR), false);
             _AutoSortCharacters = internalSettings.DefineSetting(nameof(_AutoSortCharacters), false);
-            _OCRRegion = internalSettings.DefineSetting(nameof(OCRRegion), new Rectangle((res.X - 200) /2, (res.Y - 250), 200, 50));
+            _OCRRegion = internalSettings.DefineSetting(nameof(OCRRegion), new Rectangle((res.X - 200) / 2, (res.Y - 250), 200, 200));
             _OCRRegions = internalSettings.DefineSetting(nameof(_OCRRegions), new Dictionary<string, Rectangle>());
+            _OCRCustomOffset = internalSettings.DefineSetting(nameof(_OCRCustomOffset), new Rectangle(3, 3, 5, 5));
+            _OCRNoPixelColumns = internalSettings.DefineSetting(nameof(_OCRNoPixelColumns), 20);
 
             PanelSize = internalSettings.DefineSetting(nameof(PanelSize), PanelSizes.Normal);
             PanelLayout = internalSettings.DefineSetting(nameof(PanelLayout), CharacterPanelLayout.IconAndText);

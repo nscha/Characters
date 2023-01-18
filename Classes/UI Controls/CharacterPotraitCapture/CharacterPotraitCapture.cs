@@ -28,14 +28,16 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
 {
 
-    public class CharacterPotraitContainer : Control
+    public class BasicFrameContainer : Container
     {
         public Color FrameColor = Color.Honeydew;
         public AsyncTexture2D Background;
         public Rectangle TextureRectangle = Rectangle.Empty;
 
-        protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
+        public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
+            base.PaintBeforeChildren(spriteBatch, bounds);
+
             if (Background != null)
             {
                 spriteBatch.DrawOnCtrl(this,
@@ -79,7 +81,7 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
         ImageButton _removeButton;
 
         Label _disclaimer;
-        CharacterPotraitContainer _disclaimerBackground;
+        BasicFrameContainer _disclaimerBackground;
 
         bool _dragging;
         Point _draggingStart;
@@ -89,7 +91,7 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
         TextBox _gapBox;
 
         FlowPanel _portraitsPanel;
-        List<CharacterPotraitContainer> _characterPotraits = new List<CharacterPotraitContainer>();
+        List<BasicFrameContainer> _characterPotraits = new List<BasicFrameContainer>();
 
         /// <summary>
         /// 358353 Potrait
@@ -152,21 +154,24 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
             };
             _captureButton.Click += _captureButton_Click;
 
-            _disclaimerBackground = new CharacterPotraitContainer()
+            _disclaimerBackground = new BasicFrameContainer()
             {
                 Parent = this,
                 Location = new Point((32 + 5) * 4, 0),
                 FrameColor = Color.Black,// new Color(32, 32 , 32),
                 Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003),
                 TextureRectangle = new Rectangle(50, 50, 500, 500),
+                WidthSizingMode = SizingMode.AutoSize,
+                AutoSizePadding= new Point(15, 0),
+                Height = 32,
             };
 
             _windowedCheckbox = new Checkbox()
             {
-                Parent = this,
+                Parent = _disclaimerBackground,
                 Text = "Game is in Windowed Mode",
                 Checked = Characters.ModuleInstance.Settings._WindowedMode.Value,
-                Location = new Point((32 + 5) * 4 + 5, 0),
+                Location = new Point(5, 0),
                 Height = 32,
             };
             _windowedCheckbox.CheckedChanged += _windowedCheckbox_CheckedChanged;
@@ -174,7 +179,7 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
 
             _disclaimer = new Label()
             {
-                Parent = this,
+                Parent = _disclaimerBackground,
                 Location = new Point(_windowedCheckbox.Right + 5, 0),
                 TextColor = ContentService.Colors.ColonialWhite,
                 AutoSizeWidth = true,
@@ -184,7 +189,7 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
                 Padding = new Thickness(0f, 0f),
             };
             _disclaimer.Resized += _disclaimer_Resized;
-            _disclaimerBackground.Size = (_disclaimer.Size).Add(new Point(_windowedCheckbox.Width + 15, 0));
+            //_disclaimerBackground.Size = (_disclaimer.Size).Add(new Point(_windowedCheckbox.Width + 15, 0));
 
             _sizeBox = new TextBox()
             {
@@ -274,7 +279,7 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
         }
         private void AddPotrait()
         {
-            new CharacterPotraitContainer()
+            new BasicFrameContainer()
             {
                 Parent = _portraitsPanel,
                 Size = new Point(_characterPotraitSize, _characterPotraitSize),

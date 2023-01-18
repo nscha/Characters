@@ -144,11 +144,11 @@ namespace Kenedia.Modules.Characters
             Settings = new SettingsModel(settings);
             Settings._ShowCornerIcon.SettingChanged += ShowCornerIcon_SettingChanged;
 
-            //ReloadKey = settings.DefineSetting(nameof(ReloadKey),
-            //                                              new Blish_HUD.Input.KeyBinding(ModifierKeys.Alt, Keys.R));
+            ReloadKey = settings.DefineSetting(nameof(ReloadKey),
+                                                          new Blish_HUD.Input.KeyBinding(ModifierKeys.Alt, Keys.R));
 
-            //ReloadKey.Value.Enabled = true;
-            //ReloadKey.Value.Activated += ReloadKey_Activated;
+            ReloadKey.Value.Enabled = true;
+            ReloadKey.Value.Activated += ReloadKey_Activated;
         }
 
         protected override void Initialize()
@@ -210,8 +210,10 @@ namespace Kenedia.Modules.Characters
             MainWindow?.Dispose();
             PotraitCapture?.Dispose();
             OCR?.Dispose();
-            CreateUI();
+            CreateUI(true);
             MainWindow?.ToggleWindow();
+            //OCR?.ToggleContainer();
+            //PotraitCapture?.Show();
         }
 
         protected override async Task LoadAsync()
@@ -272,6 +274,11 @@ namespace Kenedia.Modules.Characters
         private void CornerIcon_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
             MainWindow?.ToggleWindow();
+            if(MainWindow == null)
+            {
+                ScreenNotification.ShowNotification("New API Request sent...");
+                GW2API_Handler.CheckAPI();
+            }
         }
 
         private void Characters_DataLoaded_Event(object sender, EventArgs e)
@@ -508,9 +515,9 @@ namespace Kenedia.Modules.Characters
                 MainWindow.UpdateLayout();
             }
         }
-        private void CreateUI()
+        private void CreateUI(bool force = false)
         {
-            if (MainWindow == null)
+            if (MainWindow == null || force)
             {
                 var bg = GameService.Content.DatAssetCache.GetTextureFromAssetId(155985).Texture;
                 bg = TextureManager.getBackground(_Backgrounds.MainWindow);

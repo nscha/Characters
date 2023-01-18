@@ -33,6 +33,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         private const int RESIZEHANDLE_SIZE = 16;
         protected Rectangle ResizeHandleBounds { get; private set; } = Rectangle.Empty;
         bool MouseOverResizeHandle;
+        public bool ShowResizeOnlyOnMouseOver;
         public Point MaxSize = new Point(499, 499);
 
         Point _resizeStart;
@@ -136,7 +137,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
 
-            if (!TintOnHover || MouseOver)
+            if (TintOnHover && MouseOver)
             {
                 spriteBatch.DrawOnCtrl(this,
                         ContentService.Textures.Pixel,
@@ -147,7 +148,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
                         default);
             }
 
-            if (_resizeTexture != null)
+            if (_resizeTexture != null && (!ShowResizeOnlyOnMouseOver || MouseOver))
             {
                 spriteBatch.DrawOnCtrl(this,
                         _resizing || MouseOverResizeHandle ? _resizeTextureHovered :  _resizeTexture,
@@ -158,7 +159,8 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
                         default);
             }
 
-            var color = MouseOver ? ContentService.Colors.ColonialWhite : Color.Transparent;
+            //var color = MouseOver ? ContentService.Colors.ColonialWhite : Color.Transparent;
+            var color = ContentService.Colors.ColonialWhite;
 
             //Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);

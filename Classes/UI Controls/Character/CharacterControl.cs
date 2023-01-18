@@ -602,6 +602,12 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
         {
             base.OnClick(e);
 
+            if(e.IsDoubleClick && Characters.ModuleInstance.Settings.DoubleClickToEnter.Value)
+            {
+                Characters.ModuleInstance.SwapTo(Character);
+                return;
+            }
+            
             //Logout Icon Clicked!
             if (LoginRect.Contains(RelativeMousePosition))
             {

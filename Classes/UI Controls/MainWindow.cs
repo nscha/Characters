@@ -4,6 +4,7 @@ using Blish_HUD.Controls;
 using Blish_HUD.Modules;
 using Blish_HUD.Modules.Managers;
 using Blish_HUD.Settings;
+using Gw2Sharp.WebApi.V2.Models;
 using Kenedia.Modules.Characters.Classes;
 using Kenedia.Modules.Characters.Classes.UI_Controls;
 using Microsoft.Xna.Framework;
@@ -14,6 +15,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -136,6 +138,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
             };
             FilterBox.TextChanged += FilterCharacters;
             FilterBox.Click += FilterBox_Click;
+            FilterBox.EnterPressed += FilterBox_EnterPressed;
 
             SettingsSideMenu = new SettingsSideMenu()
             {
@@ -158,6 +161,21 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
 
             ClearButton.Location = new Point(FilterBox.LocalBounds.Right - 25, FilterBox.LocalBounds.Top + 5);
             Characters.ModuleInstance.LanguageChanged += ModuleInstance_LanguageChanged;
+        }
+
+        private void FilterBox_EnterPressed(object sender, EventArgs e)
+        {
+            if(Characters.ModuleInstance.Settings.EnterToLogin.Value)
+            {
+                PerformFiltering();
+                var c = (CharacterControl) ContentPanel.Children.Where(e => e.Visible).FirstOrDefault();
+
+                if(c != null)
+                {
+                    Debug.WriteLine(c.Character.Name);
+                    Characters.ModuleInstance.SwapTo(c.Character);
+                }
+            }
         }
 
         private void CharacterEdit_Shown(object sender, EventArgs e)
@@ -214,6 +232,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
         {
             _filterCharacters = true;
         }
+
         public void PerformFiltering()
         {
             var any = Characters.ModuleInstance.Settings.FilterMatching.Value == MatchingBehavior.MatchAny;

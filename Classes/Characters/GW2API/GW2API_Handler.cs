@@ -9,45 +9,19 @@
 
     public class GW2API_Handler
     {
-        private Account __account;
+        private Account account;
 
-        private Account Account
+        public Account Account
         {
-            get => this.__account;
+            get => this.account;
             set
             {
-                if (value != null && (this.__account == null || this.__account.Name != value.Name))
+                if (value != null && (this.account == null || this.account.Name != value.Name))
                 {
                     this.UpdateFolderPaths(value.Name);
                 }
 
-                this.__account = value;
-            }
-        }
-
-        private void UpdateFolderPaths(string accountName)
-        {
-            var mIns = Characters.ModuleInstance;
-            var b = mIns.BasePath;
-
-            mIns.AccountPath = b + @"\" + accountName;
-            mIns.CharactersPath = b + @"\" + accountName + @"\characters.json";
-            mIns.AccountInfoPath = b + @"\" + accountName + @"\account.json";
-            mIns.AccountImagesPath = b + @"\" + accountName + @"\images\";
-
-            if (!Directory.Exists(mIns.AccountPath))
-            {
-                Directory.CreateDirectory(mIns.AccountPath);
-            }
-
-            if (!Directory.Exists(mIns.AccountImagesPath))
-            {
-                Directory.CreateDirectory(mIns.AccountImagesPath);
-            }
-
-            if (Characters.ModuleInstance.CharacterModels.Count == 0)
-            {
-                Characters.ModuleInstance.LoadCharacterList();
+                this.account = value;
             }
         }
 
@@ -86,7 +60,7 @@
                         {
                             if (character_Model != null && character_Model.Created != c.Created)
                             {
-                                // Delete the old model!                                
+                                // Delete the old model!
                                 character_Model.Delete();
                             }
 
@@ -142,6 +116,32 @@
             }
 
             Characters.ModuleInstance.APISpinner?.Hide();
+        }
+
+        private void UpdateFolderPaths(string accountName)
+        {
+            var mIns = Characters.ModuleInstance;
+            var b = mIns.BasePath;
+
+            mIns.AccountPath = b + @"\" + accountName;
+            mIns.CharactersPath = b + @"\" + accountName + @"\characters.json";
+            mIns.AccountInfoPath = b + @"\" + accountName + @"\account.json";
+            mIns.AccountImagesPath = b + @"\" + accountName + @"\images\";
+
+            if (!Directory.Exists(mIns.AccountPath))
+            {
+                Directory.CreateDirectory(mIns.AccountPath);
+            }
+
+            if (!Directory.Exists(mIns.AccountImagesPath))
+            {
+                Directory.CreateDirectory(mIns.AccountImagesPath);
+            }
+
+            if (Characters.ModuleInstance.CharacterModels.Count == 0)
+            {
+                Characters.ModuleInstance.LoadCharacterList();
+            }
         }
     }
 }

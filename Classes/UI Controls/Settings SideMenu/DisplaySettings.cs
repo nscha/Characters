@@ -40,13 +40,14 @@
             foreach (string s in Enum.GetNames(typeof(PanelSizes)))
             {
                 string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
-                var entry = String.Join(" ", split);
+                var entry = string.Join(" ", split);
                 this.panelSizeDropdown.Items.Add(entry);
                 if (s == Characters.ModuleInstance.Settings.PanelSize.Value.ToString())
                 {
                     this.panelSizeDropdown.SelectedItem = entry;
                 }
             }
+
             this.panelSizeDropdown.ValueChanged += this.PanelSizeDropdown_ValueChanged;
 
             this.layoutDropdown = new Dropdown()
@@ -57,7 +58,7 @@
             foreach (string s in Enum.GetNames(typeof(CharacterPanelLayout)))
             {
                 string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
-                var entry = String.Join(" ", split);
+                var entry = string.Join(" ", split);
                 this.layoutDropdown.Items.Add(entry);
 
                 if (s == Characters.ModuleInstance.Settings.PanelLayout.Value.ToString())
@@ -65,6 +66,7 @@
                     this.layoutDropdown.SelectedItem = entry;
                 }
             }
+
             this.layoutDropdown.ValueChanged += this.LayoutDropdown_ValueChanged;
 
             this.nameCheckbox = new Checkbox()

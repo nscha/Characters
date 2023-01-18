@@ -2,10 +2,14 @@
 {
     public class Ticks
     {
-        public double Global;
-        public double APIUpdate;
-        public double Save;
-        public double Tags;
-        public double OCR;
+        public double Global { get; set; }
+
+        public double APIUpdate { get; set; }
+
+        public double Save { get; set; }
+
+        public double Tags { get; set; }
+
+        public double OCR { get; set; }
     }
 }

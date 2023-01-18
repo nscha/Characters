@@ -16,25 +16,7 @@
 
     public class CharacterTooltip : Container
     {
-        public Rectangle TextureRectangle = new Rectangle(40, 25, 250, 250);
         private readonly AsyncTexture2D iconFrame = GameService.Content.DatAssetCache.GetTextureFromAssetId(1414041);
-        public AsyncTexture2D Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
-        public Color BackgroundTint = Color.Honeydew * 0.95f;
-        public BitmapFont _Font = GameService.Content.DefaultFont14;
-
-        public BitmapFont Font
-        {
-            get => this._Font;
-            set
-            {
-                this._Font = value;
-            }
-        }
-
-        public BitmapFont NameFont = GameService.Content.DefaultFont18;
-
-        public Character_Model Character { get => this.character; set { this.character = value; this.ApplyCharacter(null, null); } }
-
         private readonly FlowPanel contentPanel;
         private readonly Dummy iconDummy;
 
@@ -49,134 +31,12 @@
         private readonly CraftingControl craftingControl;
         private readonly List<Control> dataControls;
 
-        private Rectangle _IconRectangle;
-        private Rectangle _ContentRectangle;
+        private Rectangle iconRectangle;
+        private Rectangle contentRectangle;
 
         private Point textureOffset = new Point(25, 25);
         private Character_Model character;
-
-        protected override void OnShown(EventArgs e)
-        {
-            base.OnShown(e);
-
-            this.Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 35);
-        }
-
-        public override void UpdateContainer(GameTime gameTime)
-        {
-            base.UpdateContainer(gameTime);
-            this.Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 35);
-
-            if (this.Character != null && this.lastLoginLabel.Visible && Characters.ModuleInstance.CurrentCharacterModel != this.Character)
-            {
-                var ts = DateTimeOffset.UtcNow.Subtract(this.Character.LastLogin);
-                this.lastLoginLabel.Text = string.Format("{0} days {1:00}:{2:00}:{3:00}", Math.Floor(ts.TotalDays), ts.Hours, ts.Minutes, ts.Seconds);
-            }
-        }
-
-        public void UpdateLayout()
-        {
-
-            if (this._IconRectangle.IsEmpty)
-            {
-                this._IconRectangle = new Rectangle(Point.Zero, new Point(Math.Min(this.Width, this.Height), Math.Min(this.Width, this.Height)));
-            }
-
-            this.UpdateLabelLayout();
-            this.UpdateSize();
-
-            this._ContentRectangle = new Rectangle(new Point(this._IconRectangle.Right, 0), this.contentPanel.Size);
-            this.contentPanel.Location = this._ContentRectangle.Location;
-        }
-
-        public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
-        {
-            base.PaintBeforeChildren(spriteBatch, bounds);
-
-            if (this.Background != null)
-            {
-                var rect = new Rectangle(this.textureOffset.X, this.textureOffset.Y, bounds.Width, bounds.Height);
-
-                spriteBatch.DrawOnCtrl(
-                    this,
-                    this.Background,
-                    bounds,
-                    rect,
-                    this.BackgroundTint,
-                    0f,
-                    default);
-            }
-
-            var color = Color.Black;
-
-            // Top
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
-
-            // Bottom
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 2, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 1, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
-
-            // Left
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
-
-            // Right
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 2, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
-
-            if (this.Character.IconPath != null && this.Character.Icon != null)
-            {
-                spriteBatch.DrawOnCtrl(
-                    this,
-                    this.Character.Icon,
-                    this._IconRectangle,
-                    this.Character.Icon.Bounds,
-                    Color.White,
-                    0f,
-                    default);
-            }
-            else
-            {
-
-                var texture = Characters.ModuleInstance.Data.Professions[this.Character.Profession].IconBig;
-
-                if (this.Character.Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), this.Character.Specialization))
-                {
-                    texture = Characters.ModuleInstance.Data.Specializations[this.Character.Specialization].IconBig;
-                }
-
-                if (texture != null)
-                {
-                    spriteBatch.DrawOnCtrl(
-                        this,
-                        this.iconFrame,
-                        new Rectangle(this._IconRectangle.X, this._IconRectangle.Y, this._IconRectangle.Width, this._IconRectangle.Height),
-                        this.iconFrame.Bounds,
-                        Color.White,
-                        0f,
-                        default);
-
-                    spriteBatch.DrawOnCtrl(
-                        this,
-                        this.iconFrame,
-                        new Rectangle(this._IconRectangle.Width, this._IconRectangle.Height, this._IconRectangle.Width, this._IconRectangle.Height),
-                        this.iconFrame.Bounds,
-                        Color.White,
-                        6.28f / 2,
-                        default);
-
-                    spriteBatch.DrawOnCtrl(
-                        this,
-                        texture,
-                        new Rectangle(8, 8, this._IconRectangle.Width - 16, this._IconRectangle.Height - 16),
-                        texture.Bounds,
-                        Color.White,
-                        0f,
-                        default);
-                }
-            }
-        }
+        private BitmapFont font = GameService.Content.DefaultFont14;
 
         public CharacterTooltip()
         {
@@ -269,72 +129,153 @@
             };
         }
 
-        private void Tag_Panel_Resized(object sender, ResizedEventArgs e)
+        public Rectangle TextureRectangle { get; set; } = new Rectangle(40, 25, 250, 250);
+
+        public AsyncTexture2D Background { get; set; } = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
+
+        public Color BackgroundTint { get; set; } = Color.Honeydew * 0.95f;
+
+        public BitmapFont Font
         {
+            get => this.font;
+            set
+            {
+                this.font = value;
+            }
         }
 
-        private void ApplyCharacter(object sender, EventArgs e)
+        public BitmapFont NameFont { get; set; } = GameService.Content.DefaultFont18;
+
+        public Character_Model Character
         {
-            this.nameLabel.Text = this.Character.Name;
-            this.nameLabel.TextColor = new Microsoft.Xna.Framework.Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255);
-
-            this.levelLabel.Text = "Level " + this.Character.Level.ToString();
-            this.levelLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
-            this.levelLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(157085);
-
-            if (Enum.IsDefined(typeof(SpecializationType), this.Character.Specialization) && this.Character.Specialization != SpecializationType.None)
+            get => this.character; set
             {
-                this.professionLabel.Icon = Characters.ModuleInstance.Data.Specializations[this.Character.Specialization].IconBig;
-                this.professionLabel.Text = Characters.ModuleInstance.Data.Specializations[this.Character.Specialization].Name;
+                this.character = value;
+                this.ApplyCharacter(null, null);
             }
-            else
+        }
+
+        public override void UpdateContainer(GameTime gameTime)
+        {
+            base.UpdateContainer(gameTime);
+            this.Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 35);
+
+            if (this.Character != null && this.lastLoginLabel.Visible && Characters.ModuleInstance.CurrentCharacterModel != this.Character)
             {
-                this.professionLabel.Icon = Characters.ModuleInstance.Data.Professions[this.Character.Profession].IconBig;
-                this.professionLabel.Text = Characters.ModuleInstance.Data.Professions[this.Character.Profession].Name;
+                var ts = DateTimeOffset.UtcNow.Subtract(this.Character.LastLogin);
+                this.lastLoginLabel.Text = string.Format("{0} days {1:00}:{2:00}:{3:00}", Math.Floor(ts.TotalDays), ts.Hours, ts.Minutes, ts.Seconds);
             }
+        }
 
-            if (this.professionLabel.Icon != null)
+        public void UpdateLayout()
+        {
+            if (this.iconRectangle.IsEmpty)
             {
-                this.professionLabel.TextureRectangle = this.professionLabel.Icon.Width == 32 ? new Rectangle(2, 2, 28, 28) : new Rectangle(4, 4, 56, 56);
-            }
-
-            this.raceLabel.Text = Characters.ModuleInstance.Data.Races[this.Character.Race].Name;
-            this.raceLabel.Icon = Characters.ModuleInstance.Data.Races[this.Character.Race].Icon;
-
-            this.mapLabel.Text = Characters.ModuleInstance.Data.GetMapById(this.Character.Map).Name;
-            this.mapLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
-            this.mapLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(358406); // 358406 //517180 //157122;
-
-            this.lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(841721);
-            this.lastLoginLabel.Text = String.Format("{0} days {1:00}:{2:00}:{3:00}", 0, 0, 0, 0);
-            this.lastLoginLabel.TextureRectangle = Rectangle.Empty;
-
-            this.tagPanel.ClearChildren();
-            foreach (var tagText in this.Character.Tags)
-            {
-                new Tag()
-                {
-                    Parent = this.tagPanel,
-                    Text = tagText,
-                    Active = true,
-                    ShowDelete = false,
-                };
+                this.iconRectangle = new Rectangle(Point.Zero, new Point(Math.Min(this.Width, this.Height), Math.Min(this.Width, this.Height)));
             }
 
-            this.craftingControl.Character = this.Character;
             this.UpdateLabelLayout();
             this.UpdateSize();
 
-            // UpdateLayout();
+            this.contentRectangle = new Rectangle(new Point(this.iconRectangle.Right, 0), this.contentPanel.Size);
+            this.contentPanel.Location = this.contentRectangle.Location;
+        }
+
+        public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
+        {
+            base.PaintBeforeChildren(spriteBatch, bounds);
+
+            if (this.Background != null)
+            {
+                var rect = new Rectangle(this.textureOffset.X, this.textureOffset.Y, bounds.Width, bounds.Height);
+
+                spriteBatch.DrawOnCtrl(
+                    this,
+                    this.Background,
+                    bounds,
+                    rect,
+                    this.BackgroundTint,
+                    0f,
+                    default);
+            }
+
+            var color = Color.Black;
+
+            // Top
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
+
+            // Bottom
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 2, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 1, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
+
+            // Left
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
+
+            // Right
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 2, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
+
+            if (this.Character.IconPath != null && this.Character.Icon != null)
+            {
+                spriteBatch.DrawOnCtrl(
+                    this,
+                    this.Character.Icon,
+                    this.iconRectangle,
+                    this.Character.Icon.Bounds,
+                    Color.White,
+                    0f,
+                    default);
+            }
+            else
+            {
+                var texture = Characters.ModuleInstance.Data.Professions[this.Character.Profession].IconBig;
+
+                if (this.Character.Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), this.Character.Specialization))
+                {
+                    texture = Characters.ModuleInstance.Data.Specializations[this.Character.Specialization].IconBig;
+                }
+
+                if (texture != null)
+                {
+                    spriteBatch.DrawOnCtrl(
+                        this,
+                        this.iconFrame,
+                        new Rectangle(this.iconRectangle.X, this.iconRectangle.Y, this.iconRectangle.Width, this.iconRectangle.Height),
+                        this.iconFrame.Bounds,
+                        Color.White,
+                        0f,
+                        default);
+
+                    spriteBatch.DrawOnCtrl(
+                        this,
+                        this.iconFrame,
+                        new Rectangle(this.iconRectangle.Width, this.iconRectangle.Height, this.iconRectangle.Width, this.iconRectangle.Height),
+                        this.iconFrame.Bounds,
+                        Color.White,
+                        6.28f / 2,
+                        default);
+
+                    spriteBatch.DrawOnCtrl(
+                        this,
+                        texture,
+                        new Rectangle(8, 8, this.iconRectangle.Width - 16, this.iconRectangle.Height - 16),
+                        texture.Bounds,
+                        Color.White,
+                        0f,
+                        default);
+                }
+            }
         }
 
         public void UpdateLabelLayout()
         {
             var onlyIcon = Characters.ModuleInstance.Settings.PanelLayout.Value == CharacterPanelLayout.OnlyIcons;
 
-            this.iconDummy.Visible = this._IconRectangle != Rectangle.Empty;
-            this.iconDummy.Size = this._IconRectangle.Size;
-            this.iconDummy.Location = this._IconRectangle.Location;
+            this.iconDummy.Visible = this.iconRectangle != Rectangle.Empty;
+            this.iconDummy.Size = this.iconRectangle.Size;
+            this.iconDummy.Location = this.iconRectangle.Location;
 
             this.nameLabel.Visible = true;
             this.nameLabel.Font = this.NameFont;
@@ -377,6 +318,72 @@
             this.contentPanel.Height = height;
             this.contentPanel.Width = width + (int)this.contentPanel.ControlPadding.X;
             this.tagPanel.Width = width;
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            this.Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 35);
+        }
+
+        private void Tag_Panel_Resized(object sender, ResizedEventArgs e)
+        {
+        }
+
+        private void ApplyCharacter(object sender, EventArgs e)
+        {
+            this.nameLabel.Text = this.Character.Name;
+            this.nameLabel.TextColor = new Microsoft.Xna.Framework.Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255);
+
+            this.levelLabel.Text = "Level " + this.Character.Level.ToString();
+            this.levelLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
+            this.levelLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(157085);
+
+            if (Enum.IsDefined(typeof(SpecializationType), this.Character.Specialization) && this.Character.Specialization != SpecializationType.None)
+            {
+                this.professionLabel.Icon = Characters.ModuleInstance.Data.Specializations[this.Character.Specialization].IconBig;
+                this.professionLabel.Text = Characters.ModuleInstance.Data.Specializations[this.Character.Specialization].Name;
+            }
+            else
+            {
+                this.professionLabel.Icon = Characters.ModuleInstance.Data.Professions[this.Character.Profession].IconBig;
+                this.professionLabel.Text = Characters.ModuleInstance.Data.Professions[this.Character.Profession].Name;
+            }
+
+            if (this.professionLabel.Icon != null)
+            {
+                this.professionLabel.TextureRectangle = this.professionLabel.Icon.Width == 32 ? new Rectangle(2, 2, 28, 28) : new Rectangle(4, 4, 56, 56);
+            }
+
+            this.raceLabel.Text = Characters.ModuleInstance.Data.Races[this.Character.Race].Name;
+            this.raceLabel.Icon = Characters.ModuleInstance.Data.Races[this.Character.Race].Icon;
+
+            this.mapLabel.Text = Characters.ModuleInstance.Data.GetMapById(this.Character.Map).Name;
+            this.mapLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
+            this.mapLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(358406); // 358406 //517180 //157122;
+
+            this.lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(841721);
+            this.lastLoginLabel.Text = string.Format("{0} days {1:00}:{2:00}:{3:00}", 0, 0, 0, 0);
+            this.lastLoginLabel.TextureRectangle = Rectangle.Empty;
+
+            this.tagPanel.ClearChildren();
+            foreach (var tagText in this.Character.Tags)
+            {
+                new Tag()
+                {
+                    Parent = this.tagPanel,
+                    Text = tagText,
+                    Active = true,
+                    ShowDelete = false,
+                };
+            }
+
+            this.craftingControl.Character = this.Character;
+            this.UpdateLabelLayout();
+            this.UpdateSize();
+
+            // UpdateLayout();
         }
     }
 }

@@ -18,20 +18,6 @@
     public class OCR : IDisposable
     {
         private readonly BasicFrameContainer contentContainer;
-
-        private Rectangle CustomOffset
-        {
-            get => Characters.ModuleInstance.Settings.OCRCustomOffset.Value;
-            set => Characters.ModuleInstance.Settings.OCRCustomOffset.Value = value;
-        }
-
-        private int CustomThreshold
-        {
-            get => Characters.ModuleInstance.Settings.OCRNoPixelColumns.Value;
-            set => Characters.ModuleInstance.Settings.OCRNoPixelColumns.Value = value;
-        }
-
-        private Point windowOffset = new Point(0, 0);
         private readonly System.Drawing.Color spacingColor = System.Drawing.Color.FromArgb(255, 200, 200, 200);
         private readonly System.Drawing.Color ignoredColor = System.Drawing.Color.FromArgb(255, 100, 100, 100);
         private readonly TextBox leftBox;
@@ -44,27 +30,22 @@
         private readonly Image oCRResultImage;
         private readonly Image oCRResultImageBlackWhite;
         private readonly SizeablePanel container;
-        private readonly OcrApi _ocrApi;
-
-        private string BasePath
-        {
-            get => Characters.ModuleInstance.BasePath;
-        }
+        private readonly OcrApi ocrApi;
+        private bool disposed = false;
 
         public OCR()
         {
             OcrApi.PathToEngine = this.BasePath + @"\tesseract.dll";
 
-            this._ocrApi = OcrApi.Create();
-            this._ocrApi.Init(this.BasePath + @"\", "gw2");
+            this.ocrApi = OcrApi.Create();
+            this.ocrApi.Init(this.BasePath + @"\", "gw2");
 
             var tM = Characters.ModuleInstance.TextureManager;
-
 
             this.contentContainer = new BasicFrameContainer()
             {
                 Parent = GameService.Graphics.SpriteScreen,
-                FrameColor = Color.Black,// new Color(32, 32 , 32),
+                FrameColor = Color.Black, // new Color(32, 32 , 32),
                 Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003),
                 TextureRectangle = new Rectangle(50, 50, 500, 500),
                 WidthSizingMode = SizingMode.AutoSize,
@@ -149,7 +130,6 @@
             };
             this.bottomBox.TextChanged += this.OffsetChanged;
 
-
             var thresholdLabel = new Label()
             {
                 Parent = flowPanel,
@@ -200,7 +180,6 @@
                 BasicTooltipText = "Ignored part of the image due to the empty column threshold",
             };
 
-
             this.result = new Label()
             {
                 Parent = contentFlowPanel,
@@ -239,58 +218,21 @@
             this.contentContainer.Location = new Point(this.container.Left, this.container.Top - (this.container.Height * 3) - 60);
         }
 
-        private void ColumnThresholdChanged(object sender, EventArgs e)
+        private Rectangle CustomOffset
         {
-            if (int.TryParse(this.columnBox.Text, out int threshold))
-            {
-                this.CustomThreshold = threshold;
-            }
+            get => Characters.ModuleInstance.Settings.OCRCustomOffset.Value;
+            set => Characters.ModuleInstance.Settings.OCRCustomOffset.Value = value;
         }
 
-        private async void Container_LeftMouseButtonReleased(object sender, MouseEventArgs e)
+        private int CustomThreshold
         {
-            if (!this.container.MouseOver)
-            {
-                await this.DelayedRead();
-            }
+            get => Characters.ModuleInstance.Settings.OCRNoPixelColumns.Value;
+            set => Characters.ModuleInstance.Settings.OCRNoPixelColumns.Value = value;
         }
 
-        private async Task DelayedRead()
+        private string BasePath
         {
-            await Task.Delay(5);
-            this.Read(true);
-        }
-
-        private void OffsetChanged(object sender, EventArgs e)
-        {
-            int left = this.CustomOffset.Left, top = this.CustomOffset.Top, right = this.CustomOffset.Right, bottom = this.CustomOffset.Bottom;
-
-            int.TryParse(this.leftBox.Text, out left);
-            int.TryParse(this.topBox.Text, out top);
-            int.TryParse(this.rightBox.Text, out right);
-            int.TryParse(this.bottomBox.Text, out bottom);
-
-            this.CustomOffset = new Rectangle(left, top, right, bottom);
-            this.Read(true);
-        }
-
-        private void Container_Changed(object sender, EventArgs e)
-        {
-            var res = GameService.Graphics.Resolution.ToString();
-            var regions = Characters.ModuleInstance.Settings.OCRRegions.Value;
-
-            this.Read(true);
-
-            if (!regions.ContainsKey(res))
-            {
-                regions.Add(res, this.container.LocalBounds);
-            }
-            else
-            {
-                regions[res] = this.container.LocalBounds;
-            }
-
-            this.contentContainer.Location = new Point(this.container.Left, this.container.Top - this.contentContainer.Height - 5);
+            get => Characters.ModuleInstance.BasePath;
         }
 
         public void ToggleContainer()
@@ -303,8 +245,6 @@
                 this.Read(true);
             }
         }
-
-        private bool disposed = false;
 
         public void Dispose()
         {
@@ -320,10 +260,11 @@
             }
         }
 
+#nullable enable
         public string? Read(bool show = false)
         {
-            string plainText = null;
-            string finalText = null;
+            string? plainText = null;
+            string? finalText = null;
 
             if (this.container.Visible && !show)
             {
@@ -345,8 +286,6 @@
 
                 using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
                 {
-                    this.windowOffset = new Point(titleBarHeight, sideBarWidth);
-
                     var left = (int)(wndBounds.Left + sideBarWidth);
                     var top = (int)(wndBounds.Top + titleBarHeight);
 
@@ -354,7 +293,6 @@
                     var y = (int)Math.Ceiling((this.container.Top - 10 + this.CustomOffset.Top) * factor);
 
                     g.CopyFromScreen(new System.Drawing.Point(left + x, top + y), System.Drawing.Point.Empty, new System.Drawing.Size(size.X - this.CustomOffset.Right, size.Y - this.CustomOffset.Bottom));
-
 
                     if (show)
                     {
@@ -440,8 +378,7 @@
                     }
                 }
 
-                plainText = this._ocrApi.GetTextFromImage(bitmap);
-                // plainText = plainText?.TrimEnd();
+                plainText = this.ocrApi.GetTextFromImage(bitmap);
 
                 foreach (string word in plainText.Split(' '))
                 {
@@ -455,12 +392,67 @@
                     finalText = finalText == null ? wordText : finalText + " " + wordText;
                 }
 
-                finalText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(finalText.ToLower());
+                finalText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(finalText?.ToLower());
 
                 this.result.Text = finalText;
             }
 
             return finalText;
+        }
+#nullable disable
+
+        private void ColumnThresholdChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.columnBox.Text, out int threshold))
+            {
+                this.CustomThreshold = threshold;
+            }
+        }
+
+        private async void Container_LeftMouseButtonReleased(object sender, MouseEventArgs e)
+        {
+            if (!this.container.MouseOver)
+            {
+                await this.DelayedRead();
+            }
+        }
+
+        private async Task DelayedRead()
+        {
+            await Task.Delay(5);
+            this.Read(true);
+        }
+
+        private void OffsetChanged(object sender, EventArgs e)
+        {
+            int left = this.CustomOffset.Left, top = this.CustomOffset.Top, right = this.CustomOffset.Right, bottom = this.CustomOffset.Bottom;
+
+            int.TryParse(this.leftBox.Text, out left);
+            int.TryParse(this.topBox.Text, out top);
+            int.TryParse(this.rightBox.Text, out right);
+            int.TryParse(this.bottomBox.Text, out bottom);
+
+            this.CustomOffset = new Rectangle(left, top, right, bottom);
+            this.Read(true);
+        }
+
+        private void Container_Changed(object sender, EventArgs e)
+        {
+            var res = GameService.Graphics.Resolution.ToString();
+            var regions = Characters.ModuleInstance.Settings.OCRRegions.Value;
+
+            this.Read(true);
+
+            if (!regions.ContainsKey(res))
+            {
+                regions.Add(res, this.container.LocalBounds);
+            }
+            else
+            {
+                regions[res] = this.container.LocalBounds;
+            }
+
+            this.contentContainer.Location = new Point(this.container.Left, this.container.Top - this.contentContainer.Height - 5);
         }
     }
 }

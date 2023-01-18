@@ -10,14 +10,14 @@
 
     public class DraggingControl : Control
     {
-        private CharacterControl _CharacterControl;
+        private readonly CharacterControl characterControl;
 
         public CharacterControl CharacterControl
         {
-            get => this._CharacterControl;
+            get => this.CharacterControl;
             set
             {
-                this._CharacterControl = value;
+                this.CharacterControl = value;
                 this.Visible = value != null;
                 if (this.Visible)
                 {

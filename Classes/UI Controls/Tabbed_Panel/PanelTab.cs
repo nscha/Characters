@@ -7,53 +7,53 @@
 
     public class PanelTab : Panel
     {
-        private TabButton _tabButton;
+        private TabButton tabButton;
 
         public TabButton TabButton
         {
-            get => this._tabButton;
-            private set => this._tabButton = value;
+            get => this.tabButton;
+            private set => this.tabButton = value;
         }
 
         private event EventHandler IconChanged;
 
-        private AsyncTexture2D _icon;
+        private AsyncTexture2D icon;
 
         public AsyncTexture2D Icon
         {
-            get => this._icon;
+            get => this.icon;
             set
             {
-                this._icon = value;
-                this._tabButton.Icon = this.Icon;
+                this.icon = value;
+                this.tabButton.Icon = this.Icon;
                 this.IconChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         private event EventHandler TextureRectangleChanged;
 
-        private Rectangle _textureRectangle = Rectangle.Empty;
+        private Rectangle textureRectangle = Rectangle.Empty;
 
         public Rectangle TextureRectangle
         {
-            get => this._textureRectangle;
+            get => this.textureRectangle;
             set
             {
-                this._textureRectangle = value;
-                this._tabButton.TextureRectangle = value;
+                this.textureRectangle = value;
+                this.tabButton.TextureRectangle = value;
                 this.TextureRectangleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        private string _name;
+        private string name;
 
         public string Name
         {
-            get => this._name;
+            get => this.name;
             set
             {
-                this._name = value;
-                this._tabButton.BasicTooltipText = value;
+                this.name = value;
+                this.tabButton.BasicTooltipText = value;
             }
         }
 
@@ -61,14 +61,14 @@
 
         private event EventHandler Deactivated;
 
-        private bool _active;
+        private bool active;
 
         public bool Active
         {
-            get => this._active;
+            get => this.active;
             set
             {
-                this._active = value;
+                this.active = value;
                 this.TabButton.Active = value;
 
                 if (value)
@@ -84,7 +84,7 @@
 
         public PanelTab()
         {
-            this._tabButton = new TabButton()
+            this.tabButton = new TabButton()
             {
                 BasicTooltipText = this.Name,
             };
@@ -106,8 +106,8 @@
         {
             base.DisposeControl();
 
-            this._tabButton?.Dispose();
-            this._icon = null;
+            this.tabButton?.Dispose();
+            this.icon = null;
         }
     }
 }

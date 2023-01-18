@@ -28,17 +28,146 @@
     public class CharacterSwapping
     {
         private double tick;
-        public SwappingState State = SwappingState.None;
-        public SwappingState SubState = SwappingState.None;
-        public Character_Model Character;
+
+        public CharacterSwapping(Character_Model character_Model)
+        {
+            this.Character = character_Model;
+        }
 
         public event EventHandler Succeeded;
 
         public event EventHandler Failed;
 
-        public CharacterSwapping(Character_Model character_Model)
+        public SwappingState State { get; set; } = SwappingState.None;
+
+        public SwappingState SubState { get; set; } = SwappingState.None;
+
+        public Character_Model Character { get; set; }
+
+        public void Run(GameTime gameTime)
         {
-            this.Character = character_Model;
+            this.tick += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (this.tick < 0)
+            {
+                return;
+            }
+
+            switch (this.State)
+            {
+                case SwappingState.None:
+                    if (this.LoggingOut())
+                    {
+                        this.State = SwappingState.LoggedOut;
+                        this.tick = -Characters.ModuleInstance.Settings.SwapDelay.Value;
+                    }
+                    else
+                    {
+                        this.tick = -1000;
+                    }
+
+                    break;
+
+                case SwappingState.LoggedOut:
+                    if (this.MoveToFirstCharacter())
+                    {
+                        this.State = SwappingState.MovedToStart;
+                    }
+
+                    break;
+
+                case SwappingState.MovedToStart:
+                    if (this.MoveToCharacter())
+                    {
+                        this.State = SwappingState.MovedToCharacter;
+                        this.tick = -750;
+                    }
+
+                    break;
+
+                case SwappingState.MovedToCharacter:
+                    if (this.ConfirmName())
+                    {
+                        this.State = SwappingState.CharacterFound;
+                    }
+                    else
+                    {
+                        this.State = SwappingState.CharacterLost;
+                    }
+
+                    break;
+
+                case SwappingState.CharacterRead:
+                    break;
+
+                case SwappingState.CharacterFound:
+                    if (this.Login())
+                    {
+                        this.State = SwappingState.LoggingIn;
+                        this.tick = -1000;
+                    }
+
+                    break;
+
+                case SwappingState.CharacterLost:
+                    switch (this.SubState)
+                    {
+                        case SwappingState.None:
+                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
+                            this.SubState = SwappingState.MovedLeft;
+                            this.tick = -750;
+                            break;
+
+                        case SwappingState.MovedLeft:
+                            if (this.ConfirmName())
+                            {
+                                this.State = SwappingState.CharacterFound;
+                            }
+                            else
+                            {
+                                this.SubState = SwappingState.CheckedLeft;
+                            }
+
+                            break;
+
+                        case SwappingState.CheckedLeft:
+                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
+                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
+                            this.tick = -750;
+                            this.SubState = SwappingState.MovedRight;
+                            break;
+
+                        case SwappingState.MovedRight:
+                            if (this.ConfirmName())
+                            {
+                                this.State = SwappingState.CharacterFound;
+                            }
+                            else
+                            {
+                                this.SubState = SwappingState.CheckedRight;
+                                this.State = SwappingState.CharacterFullyLost;
+                            }
+
+                            break;
+                    }
+
+                    break;
+
+                case SwappingState.CharacterFullyLost:
+                    this.Failed?.Invoke(null, null);
+                    break;
+                case SwappingState.LoggingIn:
+                    if (this.IsLoaded())
+                    {
+                        this.State = SwappingState.Done;
+                    }
+
+                    break;
+                case SwappingState.Done:
+                    this.Character.LastLogin = DateTime.UtcNow;
+                    this.Succeeded?.Invoke(null, null);
+                    break;
+            }
         }
 
         public void Reset()
@@ -132,125 +261,6 @@
         private bool IsLoaded()
         {
             return GameService.GameIntegration.Gw2Instance.IsInGame;
-        }
-
-        public void Run(GameTime gameTime)
-        {
-            this.tick += gameTime.ElapsedGameTime.TotalMilliseconds;
-            // Characters.Logger.Debug(State.ToString());
-
-            if (this.tick < 0)
-            {
-                return;
-            }
-
-            switch (this.State)
-            {
-                case SwappingState.None:
-                    if (this.LoggingOut())
-                    {
-                        this.State = SwappingState.LoggedOut;
-                        this.tick = -Characters.ModuleInstance.Settings.SwapDelay.Value;
-                    }
-                    else
-                    {
-                        this.tick = -1000;
-                    }
-                    break;
-
-                case SwappingState.LoggedOut:
-                    if (this.MoveToFirstCharacter())
-                    {
-                        this.State = SwappingState.MovedToStart;
-                    }
-                    break;
-
-                case SwappingState.MovedToStart:
-                    if (this.MoveToCharacter())
-                    {
-                        this.State = SwappingState.MovedToCharacter;
-                        this.tick = -750;
-                    }
-                    break;
-
-                case SwappingState.MovedToCharacter:
-                    if (this.ConfirmName())
-                    {
-                        this.State = SwappingState.CharacterFound;
-                    }
-                    else
-                    {
-                        this.State = SwappingState.CharacterLost;
-                    }
-                    break;
-
-                case SwappingState.CharacterRead:
-                    break;
-
-                case SwappingState.CharacterFound:
-                    if (this.Login())
-                    {
-                        this.State = SwappingState.LoggingIn;
-                        this.tick = -1000;
-                    }
-                    break;
-
-                case SwappingState.CharacterLost:
-                    switch (this.SubState)
-                    {
-                        case SwappingState.None:
-                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
-                            this.SubState = SwappingState.MovedLeft;
-                            this.tick = -750;
-                            break;
-
-                        case SwappingState.MovedLeft:
-                            if (this.ConfirmName())
-                            {
-                                this.State = SwappingState.CharacterFound;
-                            }
-                            else
-                            {
-                                this.SubState = SwappingState.CheckedLeft;
-                            }
-                            break;
-
-                        case SwappingState.CheckedLeft:
-                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-                            this.tick = -750;
-                            this.SubState = SwappingState.MovedRight;
-                            break;
-
-                        case SwappingState.MovedRight:
-                            if (this.ConfirmName())
-                            {
-                                this.State = SwappingState.CharacterFound;
-                            }
-                            else
-                            {
-                                this.SubState = SwappingState.CheckedRight;
-                                this.State = SwappingState.CharacterFullyLost;
-                            }
-                            break;
-                    }
-                    break;
-
-
-                case SwappingState.CharacterFullyLost:
-                    this.Failed?.Invoke(null, null);
-                    break;
-                case SwappingState.LoggingIn:
-                    if (this.IsLoaded())
-                    {
-                        this.State = SwappingState.Done;
-                    }
-                    break;
-                case SwappingState.Done:
-                    this.Character.LastLogin = DateTime.UtcNow;
-                    this.Succeeded?.Invoke(null, null);
-                    break;
-            }
         }
     }
 }

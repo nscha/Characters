@@ -50,132 +50,114 @@
 
     public class Character_Model
     {
-        public void Initialize()
-        {
-            this.Tags.CollectionChanged += this.Tags_CollectionChanged;
-            this.Initialized = true;
-        }
+        private string name;
+        private int level;
+        private int map = 0;
+        private Gw2Sharp.Models.RaceType race;
+        private Gw2Sharp.Models.ProfessionType profession;
+        private SpecializationType specialization;
+        private DateTimeOffset created;
+        private DateTime lastModified;
+        private DateTime lastLogin;
+        private string iconPath;
+        private AsyncTexture2D icon;
+        private bool show = true;
+        private int position;
+        private int index;
+        private bool initialized;
 
         public Character_Model()
         {
         }
 
-        private void Tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            Characters.Logger.Debug(nameof(this.Tags_CollectionChanged));
-            this.OnUpdated();
-        }
+        public event EventHandler Updated;
 
-        public string _name;
+        public event EventHandler Deleted;
 
         public string Name
         {
-            get => this._name;
-            set => this.SetProperty(ref this._name, value);
+            get => this.name;
+            set => this.SetProperty(ref this.name, value);
         }
-
-        public int _level;
 
         public int Level
         {
-            get => this._level;
-            set => this.SetProperty(ref this._level, value);
+            get => this.level;
+            set => this.SetProperty(ref this.level, value);
         }
-
-        public int _map = 0;
 
         public int Map
         {
-            get => this._map;
-            set => this.SetProperty(ref this._map, value);
+            get => this.map;
+            set => this.SetProperty(ref this.map, value);
         }
 
-        public List<CharacterCrafting> Crafting = new List<CharacterCrafting>();
-        public Gw2Sharp.Models.RaceType _race;
+        public List<CharacterCrafting> Crafting { get; set; } = new List<CharacterCrafting>();
 
         public Gw2Sharp.Models.RaceType Race
         {
-            get => this._race;
-            set => this.SetProperty(ref this._race, value);
+            get => this.race;
+            set => this.SetProperty(ref this.race, value);
         }
-
-        public Gw2Sharp.Models.ProfessionType _profession;
 
         public Gw2Sharp.Models.ProfessionType Profession
         {
-            get => this._profession;
-            set => this.SetProperty(ref this._profession, value);
+            get => this.profession;
+            set => this.SetProperty(ref this.profession, value);
         }
-
-        public SpecializationType _specialization;
 
         public SpecializationType Specialization
         {
-            get => this._specialization;
-            set => this.SetProperty(ref this._specialization, value);
+            get => this.specialization;
+            set => this.SetProperty(ref this.specialization, value);
         }
-
-        public DateTimeOffset _created;
 
         public DateTimeOffset Created
         {
-            get => this._created;
-            set => this.SetProperty(ref this._created, value);
+            get => this.created;
+            set => this.SetProperty(ref this.created, value);
         }
-
-        public DateTime _lastModified;
 
         public DateTime LastModified
         {
-            get => this._lastModified;
-            set => this.SetProperty(ref this._lastModified, value);
+            get => this.lastModified;
+            set => this.SetProperty(ref this.lastModified, value);
         }
 
-        public int OrderIndex = 0;
-        public int OrderOffset = 0;
-        public DateTime _lastLogin;
+        public int OrderIndex { get; set; } = 0;
+
+        public int OrderOffset { get; set; } = 0;
 
         public DateTime LastLogin
         {
-            get => this._lastLogin.AddMilliseconds(-this.OrderOffset);
-            set => this.SetProperty(ref this._lastLogin, value);
+            get => this.lastLogin.AddMilliseconds(-this.OrderOffset);
+            set => this.SetProperty(ref this.lastLogin, value);
         }
-
-        public string _iconPath;
 
         public string IconPath
         {
-            get => this._iconPath;
+            get => this.iconPath;
             set
             {
-                this._iconPath = value;
-                this._Icon = null;
+                this.iconPath = value;
+                this.icon = null;
                 this.OnUpdated();
             }
         }
 
-        private AsyncTexture2D _Icon;
-
         public AsyncTexture2D Icon
         {
-            set
-            {
-                this._Icon = value;
-                this.Updated?.Invoke(this, null);
-            }
-
             get
             {
-                if (this._Icon == null && this.IconPath != null && this.IconPath.Length > 1)
+                if (this.icon == null && this.IconPath != null && this.IconPath.Length > 1)
                 {
                     GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
                     {
-                        this._Icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + this.IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                        this.icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + this.IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                     });
                 }
-                else if (this.IconPath == null || this._Icon == null)
+                else if (this.IconPath == null || this.icon == null)
                 {
-
                     if (Enum.IsDefined(typeof(SpecializationType), this.Specialization) && this.Specialization != SpecializationType.None)
                     {
                         return Characters.ModuleInstance.Data.Specializations[this.Specialization].IconBig;
@@ -186,40 +168,40 @@
                     }
                 }
 
-                return this._Icon;
+                return this.icon;
+            }
+
+            set
+            {
+                this.icon = value;
+                this.Updated?.Invoke(this, null);
             }
         }
 
-        private bool _show = true;
-
         public bool Show
         {
-            get => this._show;
-            set => this.SetProperty(ref this._show, value);
+            get => this.show;
+            set => this.SetProperty(ref this.show, value);
         }
 
-        public TagList Tags = new TagList();
-
-        public int _position;
+        public TagList Tags { get; set; } = new TagList();
 
         public int Position
         {
-            get => this._position;
+            get => this.position;
             set
             {
-                this._position = value;
+                this.position = value;
                 this.Save();
             }
         }
 
-        public int _index;
-
         public int Index
         {
-            get => this._index;
+            get => this.index;
             set
             {
-                this._index = value;
+                this.index = value;
                 this.Save();
             }
         }
@@ -263,19 +245,24 @@
                     else
                     {
                         return false;
-                    };
+                    }
                 }
 
                 return false;
             }
         }
 
-        public event EventHandler Updated;
-
-        private void OnUpdated()
+        public void Delete()
         {
-            this.Updated?.Invoke(this, EventArgs.Empty);
+            this.Deleted?.Invoke(null, null);
+            Characters.ModuleInstance.CharacterModels.Remove(this);
             this.Save();
+        }
+
+        public void Initialize()
+        {
+            this.Tags.CollectionChanged += this.Tags_CollectionChanged;
+            this.initialized = true;
         }
 
         protected bool SetProperty<T>(ref T property, T newValue, [CallerMemberName] string caller = "")
@@ -286,27 +273,29 @@
             }
 
             property = newValue;
-            if (this.Initialized && caller != nameof(this.LastLogin) && caller != nameof(this.LastModified) && caller != nameof(this.LastLogin))
+            if (this.initialized && caller != nameof(this.LastLogin) && caller != nameof(this.LastModified) && caller != nameof(this.LastLogin))
             {
                 this.OnUpdated();
             }
+
             return true;
         }
 
-        public bool Initialized;
+        private void Tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            Characters.Logger.Debug(nameof(this.Tags_CollectionChanged));
+            this.OnUpdated();
+        }
+
+        private void OnUpdated()
+        {
+            this.Updated?.Invoke(this, EventArgs.Empty);
+            this.Save();
+        }
 
         private void Save()
         {
             Characters.ModuleInstance.SaveCharacters = true;
-        }
-
-        public event EventHandler Deleted;
-
-        public void Delete()
-        {
-            this.Deleted?.Invoke(null, null);
-            Characters.ModuleInstance.CharacterModels.Remove(this);
-            this.Save();
         }
     }
 }

@@ -11,10 +11,10 @@
 
     internal class HeadedPanel : Panel
     {
-        private readonly AsyncTexture2D _headerUnderline;
+        private readonly AsyncTexture2D headerUnderline;
         public bool TintContent = false;
-        private readonly bool _initialized = false;
-        private readonly Label _headerLabel = new Label()
+        private readonly bool initialized = false;
+        private readonly Label headerLabel = new Label()
         {
             Font = GameService.Content.DefaultFont16,
             Location = new Point(5, 3),
@@ -23,7 +23,7 @@
             Padding = new Thickness(4f),
         };
 
-        private readonly FlowPanel _contentPanel = new FlowPanel()
+        private readonly FlowPanel contentPanel = new FlowPanel()
         {
             WidthSizingMode = SizingMode.Fill,
             HeightSizingMode = SizingMode.AutoSize,
@@ -33,15 +33,15 @@
             Location = new Point(0, 25),
         };
 
-        private string _header = "";
+        private string header = "";
 
         public string Header
         {
-            get => this._header;
+            get => this.header;
             set
             {
-                this._header = value;
-                this._headerLabel.Text = value;
+                this.header = value;
+                this.headerLabel.Text = value;
             }
         }
 
@@ -50,21 +50,21 @@
             this.WidthSizingMode = SizingMode.Fill;
             this.HeightSizingMode = SizingMode.AutoSize;
 
-            this._headerLabel.Parent = this;
-            this._contentPanel.Parent = this;
+            this.headerLabel.Parent = this;
+            this.contentPanel.Parent = this;
 
-            this._headerUnderline = Characters.ModuleInstance.TextureManager.GetControlTexture(Controls.Separator);
+            this.headerUnderline = Characters.ModuleInstance.TextureManager.GetControlTexture(Controls.Separator);
 
-            this._initialized = true;
+            this.initialized = true;
         }
 
         protected override void OnChildAdded(ChildChangedEventArgs e)
         {
             base.OnChildAdded(e);
 
-            if (this._initialized)
+            if (this.initialized)
             {
-                e.ChangedChild.Parent = this._contentPanel;
+                e.ChangedChild.Parent = this.contentPanel;
             }
         }
 
@@ -74,7 +74,7 @@
 
 
             var color = Color.Black;
-            var b = this._contentPanel.LocalBounds;
+            var b = this.contentPanel.LocalBounds;
             var pad = 5;
 
             if (this.TintContent)
@@ -94,13 +94,13 @@
                 spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(b.Left, b.Top, b.Width - pad, b.Height), Rectangle.Empty, color * 0.5f);
             }
 
-            b = this._headerLabel.LocalBounds;
+            b = this.headerLabel.LocalBounds;
 
             spriteBatch.DrawOnCtrl(
                 this,
-                this._headerUnderline,
+                this.headerUnderline,
                 new Rectangle(bounds.Left, b.Bottom, bounds.Width, 5),
-                this._headerUnderline.Bounds,
+                this.headerUnderline.Bounds,
                 Color.White,
                 0f,
                 default);

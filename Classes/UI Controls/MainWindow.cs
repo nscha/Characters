@@ -66,10 +66,10 @@
         public Filter_SideMenu FilterSideMenu;
         public CharacterEdit CharacterEdit;
 
-        private bool _filterCharacters;
-        private bool _updateLayout;
-        private double _tick = 0;
-        private double _filterTick = 0;
+        private bool filterCharacters;
+        private bool updateLayout;
+        private double tick = 0;
+        private double filterTick = 0;
 
         private readonly AsyncTexture2D windowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
 
@@ -84,6 +84,7 @@
                 ControlPadding = new Vector2(2, 4),
                 CanScroll = true,
             };
+
             // ContentPanel.BackgroundColor = Color.Magenta;
 
             this.DraggingControl.LeftMouseButtonReleased += this.DraggingControl_LeftMouseButtonReleased;
@@ -119,6 +120,7 @@
                 Visible = false,
             };
             this.ClearButton.Click += this.ClearButton_Click;
+
             // 156869
 
             this.FilterBox = new TextBox()
@@ -182,8 +184,8 @@
 
         private void ModuleInstance_LanguageChanged(object sender, EventArgs e)
         {
-            this._tick = this._tick + 10;
-            this._updateLayout = true;
+            this.tick = this.tick + 10;
+            this.updateLayout = true;
         }
 
         private void ClearButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
@@ -203,7 +205,7 @@
 
             this.FilterSideMenu.ResetToggles();
             this.FilterBox.Text = null;
-            this._filterCharacters = true;
+            this.filterCharacters = true;
             this.FilterSideMenu.Tags.ForEach(t => t.Active = false);
         }
 
@@ -225,7 +227,7 @@
 
         public void FilterCharacters(object sender = null, EventArgs e = null)
         {
-            this._filterCharacters = true;
+            this.filterCharacters = true;
         }
 
         public void PerformFiltering()
@@ -273,7 +275,7 @@
                     },
                     new FilterTag()
                     {
-                        Result = profAny|| (any || this.CategoryFilters[FilterCategory.Profession].Count == 1) && this.CategoryFilters[FilterCategory.Profession].Contains(c.Character.Profession),
+                        Result = profAny|| ((any || this.CategoryFilters[FilterCategory.Profession].Count == 1) && this.CategoryFilters[FilterCategory.Profession].Contains(c.Character.Profession)),
                     },
                     new FilterTag()
                     {
@@ -281,7 +283,7 @@
                     },
                     new FilterTag()
                     {
-                        Result = specProfAny && specAny || (any ||this.CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 1) && c.Character.Specialization == SpecializationType.None && this.CategoryFilters[FilterCategory.ProfessionSpecialization].Contains(c.Character.Profession) || this.CategoryFilters[FilterCategory.Specialization].Contains(c.Character.Specialization),
+                        Result = (specProfAny && specAny) || ((any ||this.CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 1) && c.Character.Specialization == SpecializationType.None && this.CategoryFilters[FilterCategory.ProfessionSpecialization].Contains(c.Character.Profession)) || this.CategoryFilters[FilterCategory.Specialization].Contains(c.Character.Specialization),
                     },
                 };
 
@@ -442,7 +444,7 @@
 
                     if (s.CheckTags.Value)
                     {
-                        var tags = c.Character.Tags.ToList().ConvertAll(d => d.ToLower()); ;
+                        var tags = c.Character.Tags.ToList().ConvertAll(d => d.ToLower());
 
                         if (tags != null)
                         {
@@ -465,6 +467,7 @@
 
                 c.Visible = (c.Character.Show || includeHidden) && (s.FilterDirection.Value == FilterBehavior.Include ? matched && catMatched && tagMatched : !matched && !catMatched && !tagMatched);
             }
+
             this.ClearButton.Visible = !anyCategory || !matchAny || !anyTag;
             this.SortCharacters();
             this.ContentPanel.Invalidate();
@@ -483,7 +486,7 @@
 
         public void UpdateLayout()
         {
-            this._updateLayout = false;
+            this.updateLayout = false;
             var panelLayout = Characters.ModuleInstance.Settings.PanelLayout.Value;
             var panelSize = Characters.ModuleInstance.Settings.PanelSize.Value;
 
@@ -501,6 +504,7 @@
                         size = new Point(48 + 5 + (int)nameFont.MeasureString(testString).Width, 48);
                         break;
                     }
+
                 case PanelSizes.Normal:
                     {
                         font = GameService.Content.DefaultFont14;
@@ -508,6 +512,7 @@
                         size = new Point(64 + 5 + (int)nameFont.MeasureString(testString).Width, 64);
                         break;
                     }
+
                 case PanelSizes.Large:
                     {
                         font = GameService.Content.DefaultFont16;
@@ -515,6 +520,7 @@
                         size = new Point(96 + 5 + (int)nameFont.MeasureString(testString).Width, 96);
                         break;
                     }
+
                 case PanelSizes.Custom:
                     {
                         font = GameService.Content.DefaultFont18;
@@ -523,6 +529,7 @@
                         break;
                     }
             }
+
             switch (panelLayout)
             {
                 case CharacterPanelLayout.OnlyIcons:
@@ -538,6 +545,7 @@
 
                         break;
                     }
+
                 case CharacterPanelLayout.OnlyText:
                     {
                         var newSize = size;
@@ -548,8 +556,10 @@
                             c.NameFont = nameFont;
                             c.UpdateLayout();
                         }
+
                         break;
                     }
+
                 case CharacterPanelLayout.IconAndText:
                     {
                         var newSize = size;
@@ -560,6 +570,7 @@
                             c.NameFont = nameFont;
                             c.UpdateLayout();
                         }
+
                         break;
                     }
             }
@@ -571,7 +582,6 @@
 
         private void DraggingControl_LeftMouseButtonReleased(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-
             this.SetNewIndex(this.DraggingControl.CharacterControl);
             this.DraggingControl.CharacterControl = null;
         }
@@ -595,8 +605,10 @@
                                 this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Name.CompareTo(a.Character.Name));
                                 break;
                         }
+
                         break;
                     }
+
                 case SortType.SortByLastLogin:
                     {
                         switch (order)
@@ -609,8 +621,10 @@
                                 this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.LastLogin.CompareTo(b.Character.LastLogin));
                                 break;
                         }
+
                         break;
                     }
+
                 case SortType.SortByMap:
                     {
                         switch (order)
@@ -623,8 +637,10 @@
                                 this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Map.CompareTo(a.Character.Map));
                                 break;
                         }
+
                         break;
                     }
+
                 case SortType.SortByProfession:
                     {
                         switch (order)
@@ -637,12 +653,15 @@
                                 this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Profession.CompareTo(a.Character.Profession));
                                 break;
                         }
+
                         break;
                     }
+
                 case SortType.SortByTag:
                     {
                         break;
                     }
+
                 case SortType.Custom:
                     {
                         this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Index.CompareTo(b.Index));
@@ -653,6 +672,7 @@
                             c.Index = i;
                             i++;
                         }
+
                         break;
                     }
             }
@@ -687,7 +707,7 @@
                 lastControl = c;
             }
 
-            if (lastControl.AbsoluteBounds.Bottom < m.Position.Y || lastControl.AbsoluteBounds.Top < m.Position.Y && lastControl.AbsoluteBounds.Right < m.Position.X)
+            if (lastControl.AbsoluteBounds.Bottom < m.Position.Y || (lastControl.AbsoluteBounds.Top < m.Position.Y && lastControl.AbsoluteBounds.Right < m.Position.X))
             {
                 return this.CharacterControls.Count + 1;
             }
@@ -809,18 +829,18 @@
         {
             base.UpdateContainer(gameTime);
 
-            if (this._filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - this._filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
+            if (this.filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - this.filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
             {
-                this._filterTick = gameTime.TotalGameTime.TotalMilliseconds;
+                this.filterTick = gameTime.TotalGameTime.TotalMilliseconds;
                 this.PerformFiltering();
-                this._filterCharacters = false;
+                this.filterCharacters = false;
             }
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - this._tick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - this.tick > 50)
             {
-                this._tick = gameTime.TotalGameTime.TotalMilliseconds;
+                this.tick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (this._updateLayout)
+                if (this.updateLayout)
                 {
                     this.UpdateLayout();
                 }

@@ -11,27 +11,27 @@
 
     public class IconLabel : Control
     {
-        private string _Text;
+        private readonly string text;
 
         public string Text
         {
-            get => this._Text;
+            get => this.Text;
             set
             {
-                this._Text = value;
+                this.Text = value;
                 this.UpdateLayout();
             }
         }
 
         public Color TextColor = Color.White;
-        private AsyncTexture2D _Icon;
+        private readonly AsyncTexture2D icon;
 
         public AsyncTexture2D Icon
         {
-            get => this._Icon;
+            get => this.Icon;
             set
             {
-                this._Icon = value;
+                this.Icon = value;
                 if (value != null)
                 {
                     this.UpdateLayout();
@@ -39,14 +39,14 @@
             }
         }
 
-        private BitmapFont _Font = GameService.Content.DefaultFont14;
+        private readonly BitmapFont font = GameService.Content.DefaultFont14;
 
         public BitmapFont Font
         {
-            get => this._Font;
+            get => this.Font;
             set
             {
-                this._Font = value;
+                this.Font = value;
                 if (value != null)
                 {
                     this.UpdateLayout();

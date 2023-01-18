@@ -6,22 +6,6 @@
 
     internal class JsonCharacter_Model
     {
-        public string Name;
-        public int Level;
-        public int Map;
-        public List<CharacterCrafting> Crafting;
-        public Gw2Sharp.Models.RaceType Race;
-        public Gw2Sharp.Models.ProfessionType Profession;
-        public SpecializationType Specialization;
-        public DateTimeOffset Created;
-        public DateTime LastModified;
-        public DateTime LastLogin;
-        public string IconPath;
-        public List<string> Tags;
-        public int Index;
-        public int Position;
-        public bool Show;
-
         public JsonCharacter_Model(Character_Model c)
         {
             this.Name = c.Name;
@@ -40,5 +24,35 @@
             this.Position = c.Position;
             this.Show = c.Show;
         }
+
+        public string Name { get; set; }
+
+        public int Level { get; set; }
+
+        public int Map { get; set; }
+
+        public List<CharacterCrafting> Crafting { get; set; }
+
+        public Gw2Sharp.Models.RaceType Race { get; set; }
+
+        public Gw2Sharp.Models.ProfessionType Profession { get; set; }
+
+        public SpecializationType Specialization { get; set; }
+
+        public DateTimeOffset Created { get; set; }
+
+        public DateTime LastModified { get; set; }
+
+        public DateTime LastLogin { get; set; }
+
+        public string IconPath { get; set; }
+
+        public List<string> Tags { get; set; }
+
+        public int Index { get; set; }
+
+        public int Position { get; set; }
+
+        public bool Show { get; set; }
     }
 }

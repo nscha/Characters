@@ -10,11 +10,11 @@
 
     internal class Filters_Panel : FlowTab
     {
-        private readonly List<ImageColorToggle> _toggles = new List<ImageColorToggle>();
+        private readonly List<ImageColorToggle> toggles = new List<ImageColorToggle>();
 
         public void ResetToggles()
         {
-            foreach (ImageColorToggle t in this._toggles)
+            foreach (ImageColorToggle t in this.toggles)
             {
                 t.Active = false;
             }
@@ -33,7 +33,8 @@
             this.ControlPadding = new Vector2(5, 3);
             this.Location = new Point(0, 25);
 
-            var toggleDir = new Dictionary<Gw2Sharp.Models.ProfessionType, List<ImageColorToggle>>() {
+            var toggleDir = new Dictionary<Gw2Sharp.Models.ProfessionType, List<ImageColorToggle>>()
+            {
                 {
                     Gw2Sharp.Models.ProfessionType.Guardian,
                     new List<ImageColorToggle>()
@@ -78,7 +79,7 @@
             // Profession All Specs
             foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> profession in profs)
             {
-                this._toggles.Add(new ImageColorToggle()
+                this.toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = profession.Value.IconBig,
@@ -95,7 +96,7 @@
 
             foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> profession in profs)
             {
-                this._toggles.Add(new ImageColorToggle()
+                this.toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = profession.Value.IconBig,
@@ -124,10 +125,10 @@
             {
                 foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> p in profs)
                 {
-                    var t = specToggles.Find(e => p.Key == e.Profession && !this._toggles.Contains(e));
+                    var t = specToggles.Find(e => p.Key == e.Profession && !this.toggles.Contains(e));
                     if (t != null)
                     {
-                        this._toggles.Add(t);
+                        this.toggles.Add(t);
                     }
                 }
             }
@@ -148,11 +149,11 @@
                     };
                     img.TextureRectangle = crafting.Key > 0 ? new Rectangle(8, 7, 17, 19) : new Rectangle(4, 4, 24, 24);
                     img.SizeRectangle = new Rectangle(4, 4, 20, 20);
-                    this._toggles.Add(img);
+                    this.toggles.Add(img);
                 }
             }
 
-            this._toggles.Add(new ImageColorToggle()
+            this.toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(605021),
@@ -163,7 +164,7 @@
                 BasicTooltipText = "Show Hidden Characters",
             });
 
-            this._toggles.Add(new ImageColorToggle()
+            this.toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(593864),
@@ -176,7 +177,7 @@
 
             foreach (KeyValuePair<Gw2Sharp.Models.RaceType, Data.Race> race in Characters.ModuleInstance.Data.Races)
             {
-                this._toggles.Add(new ImageColorToggle()
+                this.toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = race.Value.Icon,
@@ -187,7 +188,7 @@
                 });
             }
 
-            foreach (ImageColorToggle t in this._toggles)
+            foreach (ImageColorToggle t in this.toggles)
             {
                 t.Parent = this;
             }

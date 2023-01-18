@@ -16,145 +16,10 @@
         Heavy,
         Medium,
         Light,
-    };
+    }
 
     public class Data
     {
-        public class CrafingProfession
-        {
-            public AsyncTexture2D Icon;
-            public int Id;
-            public string APIId;
-            public int MaxRating;
-            public Dictionary<Locale, string> _Names = new Dictionary<Locale, string>();
-
-            public string Name
-            {
-                get
-                {
-                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
-                    string name;
-
-                    return this._Names.TryGetValue(locale, out name) ? name : "No Name Set.";
-                }
-            }
-        }
-
-        public class Profession
-        {
-            public Color Color;
-            public ArmorWeight WeightClass;
-            public int Id;
-            public string APIId;
-            private AsyncTexture2D _Icon;
-
-            public AsyncTexture2D Icon
-            {
-                get => this._Icon;
-                set
-                {
-                    this._Icon = value;
-                    if (this._Icon != null)
-                    {
-                        this._Icon.TextureSwapped += this.Icon_TextureSwapped;
-                    }
-                }
-            }
-
-            private AsyncTexture2D _IconBig;
-
-            public AsyncTexture2D IconBig
-            {
-                get => this._IconBig;
-                set
-                {
-                    this._IconBig = value;
-                    if (this._IconBig != null)
-                    {
-                        this._IconBig.TextureSwapped += this.IconBig_TextureSwapped;
-                    }
-                }
-            }
-
-            public Dictionary<Locale, string> _Names = new Dictionary<Locale, string>();
-
-            public string Name
-            {
-                get
-                {
-                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
-                    string name;
-
-                    return this._Names.TryGetValue(locale, out name) ? name : "No Name Set.";
-                }
-            }
-
-            public Profession()
-            {
-            }
-
-            private void IconBig_TextureSwapped(object sender, ValueChangedEventArgs<Texture2D> e)
-            {
-                if (e.NewValue != null)
-                {
-                    this._IconBig.TextureSwapped -= this.IconBig_TextureSwapped;
-                    this._IconBig.SwapTexture(this._IconBig.Texture.GetRegion(new Rectangle(5, 5, this._IconBig.Width - 10, this._IconBig.Height - 10)));
-                }
-            }
-
-            private void Icon_TextureSwapped(object sender, ValueChangedEventArgs<Texture2D> e)
-            {
-                if (e.NewValue != null)
-                {
-                    this._Icon.TextureSwapped -= this.Icon_TextureSwapped;
-                    this._Icon.SwapTexture(this._Icon.Texture.GetRegion(new Rectangle(5, 5, this._Icon.Width - 10, this._Icon.Height - 10)));
-                }
-            }
-        }
-
-        public class Specialization
-        {
-            public int Id;
-            public int APIId;
-            public Gw2Sharp.Models.ProfessionType Profession;
-            public AsyncTexture2D Icon;
-            public AsyncTexture2D IconBig;
-            public Dictionary<Locale, string> _Names = new Dictionary<Locale, string>();
-
-            public string Name
-            {
-                get
-                {
-                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
-                    string name;
-
-                    return this._Names.TryGetValue(locale, out name) ? name : "No Name Set.";
-                }
-            }
-        }
-
-        public class Race
-        {
-            public int Id;
-            public string APIId;
-            public Dictionary<Locale, string> _Names = new Dictionary<Locale, string>();
-
-            public string Name
-            {
-                get
-                {
-                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
-                    string name;
-
-                    return this._Names.TryGetValue(locale, out name) ? name : "No Name Set.";
-                }
-            }
-
-            public AsyncTexture2D Icon;
-        }
-
-        public Map[] Maps;
-
         public Data()
         {
             var path = @"data\maps.json";
@@ -162,7 +27,7 @@
 
             string jsonString = new StreamReader(Characters.ModuleInstance.ContentsManager.GetFileStream(path)).ReadToEnd();
 
-            if (jsonString != null && jsonString != "")
+            if (jsonString != null && jsonString != string.Empty)
             {
                 List<JsonMap> localData = JsonConvert.DeserializeObject<List<JsonMap>>(jsonString);
                 JsonMap biggest = localData.Aggregate((i1, i2) => i1.Id > i2.Id ? i1 : i2);
@@ -170,25 +35,16 @@
 
                 foreach (JsonMap entry in localData)
                 {
-                    maps[entry.Id] = new Map() { _Names = entry._Names, APIId = entry.Id, Id = entry.Id };
+                    maps[entry.Id] = new Map() { Names = entry.Names, APIId = entry.Id, Id = entry.Id };
                 }
             }
 
             this.Maps = maps;
         }
 
-        public Map GetMapById(int id)
-        {
-            if (this.Maps.Length > id && this.Maps[id] != null)
-            {
-                return this.Maps[id];
-            }
+        public Map[] Maps { get; set; }
 
-            return new Map() { Name = "Unkown Map", Id = 0 };
-        }
-
-
-        public Dictionary<int, CrafingProfession> CrafingProfessions = new Dictionary<int, CrafingProfession>()
+        public Dictionary<int, CrafingProfession> CrafingProfessions { get; set; } = new Dictionary<int, CrafingProfession>()
         {
             // Unkown
             {
@@ -199,12 +55,12 @@
                     Id = 0,
                     APIId = "Unkown",
                     MaxRating = 0,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Unbekannt" },
-                        {Locale.English, "Unknown" },
-                        {Locale.Spanish, "Desconocido" },
-                        {Locale.French, "Inconnu" },
+                        { Locale.German, "Unbekannt" },
+                        { Locale.English, "Unknown" },
+                        { Locale.Spanish, "Desconocido" },
+                        { Locale.French, "Inconnu" },
                     },
                 }
             },
@@ -218,12 +74,12 @@
                     Id = 1,
                     APIId = "Artificer",
                     MaxRating = 500,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Konstrukteur" },
-                        {Locale.English, "Artificer" },
-                        {Locale.Spanish, "Artificiero" },
-                        {Locale.French, "Artificier" },
+                        { Locale.German, "Konstrukteur" },
+                        { Locale.English, "Artificer" },
+                        { Locale.Spanish, "Artificiero" },
+                        { Locale.French, "Artificier" },
                     },
                 }
             },
@@ -237,12 +93,12 @@
                     Id = 2,
                     APIId = "Armorsmith",
                     MaxRating = 500,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Rüstungsschmied" },
-                        {Locale.English, "Armorsmith" },
-                        {Locale.Spanish, "Forjador de armaduras" },
-                        {Locale.French, "Forgeron d'armures" },
+                        { Locale.German, "Rüstungsschmied" },
+                        { Locale.English, "Armorsmith" },
+                        { Locale.Spanish, "Forjador de armaduras" },
+                        { Locale.French, "Forgeron d'armures" },
                     },
                 }
             },
@@ -256,12 +112,12 @@
                     Id = 3,
                     APIId = "Chef",
                     MaxRating = 500,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Chefkoch" },
-                        {Locale.English, "Chef" },
-                        {Locale.Spanish, "Cocinero" },
-                        {Locale.French, "Maître-queux" },
+                        { Locale.German, "Chefkoch" },
+                        { Locale.English, "Chef" },
+                        { Locale.Spanish, "Cocinero" },
+                        { Locale.French, "Maître-queux" },
                     },
                 }
             },
@@ -275,12 +131,12 @@
                     Id = 4,
                     APIId = "Jeweler",
                     MaxRating = 400,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Juwelier" },
-                        {Locale.English, "Jeweler" },
-                        {Locale.Spanish, "Joyero" },
-                        {Locale.French, "Bijoutier" },
+                        { Locale.German, "Juwelier" },
+                        { Locale.English, "Jeweler" },
+                        { Locale.Spanish, "Joyero" },
+                        { Locale.French, "Bijoutier" },
                     },
                 }
             },
@@ -294,12 +150,12 @@
                     Id = 5,
                     APIId = "Huntsman",
                     MaxRating = 500,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Waidmann" },
-                        {Locale.English, "Huntsman" },
-                        {Locale.Spanish, "Cazador" },
-                        {Locale.French, "Chasseur" },
+                        { Locale.German, "Waidmann" },
+                        { Locale.English, "Huntsman" },
+                        { Locale.Spanish, "Cazador" },
+                        { Locale.French, "Chasseur" },
                     },
                 }
             },
@@ -313,12 +169,12 @@
                     Id = 6,
                     APIId = "Leatherworker",
                     MaxRating = 500,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Lederer" },
-                        {Locale.English, "Leatherworker" },
-                        {Locale.Spanish, "Peletero" },
-                        {Locale.French, "Travailleur du cuir" },
+                        { Locale.German, "Lederer" },
+                        { Locale.English, "Leatherworker" },
+                        { Locale.Spanish, "Peletero" },
+                        { Locale.French, "Travailleur du cuir" },
                     },
                 }
             },
@@ -332,12 +188,12 @@
                     Id = 7,
                     APIId = "Scribe",
                     MaxRating = 400,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Schreiber" },
-                        {Locale.English, "Scribe" },
-                        {Locale.Spanish, "Escriba" },
-                        {Locale.French, "Illustrateur" },
+                        { Locale.German, "Schreiber" },
+                        { Locale.English, "Scribe" },
+                        { Locale.Spanish, "Escriba" },
+                        { Locale.French, "Illustrateur" },
                     },
                 }
             },
@@ -351,12 +207,12 @@
                     Id = 8,
                     APIId = "Tailor",
                     MaxRating = 500,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Schneider" },
-                        {Locale.English, "Tailor" },
-                        {Locale.Spanish, "Sastre" },
-                        {Locale.French, "Tailleur" },
+                        { Locale.German, "Schneider" },
+                        { Locale.English, "Tailor" },
+                        { Locale.Spanish, "Sastre" },
+                        { Locale.French, "Tailleur" },
                     },
                 }
             },
@@ -370,35 +226,36 @@
                     Id = 9,
                     APIId = "Weaponsmith",
                     MaxRating = 500,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Waffenschmied" },
-                        {Locale.English, "Weaponsmith" },
-                        {Locale.Spanish, "Armero" },
-                        {Locale.French, "Forgeron d'armes" },
+                        { Locale.German, "Waffenschmied" },
+                        { Locale.English, "Weaponsmith" },
+                        { Locale.Spanish, "Armero" },
+                        { Locale.French, "Forgeron d'armes" },
                     },
                 }
             },
         };
 
-        public Dictionary<Gw2Sharp.Models.ProfessionType, Profession> Professions = new Dictionary<Gw2Sharp.Models.ProfessionType, Profession>()
+        public Dictionary<Gw2Sharp.Models.ProfessionType, Profession> Professions { get; set; } = new Dictionary<Gw2Sharp.Models.ProfessionType, Profession>()
         {
             // Guardian
             {
                 Gw2Sharp.Models.ProfessionType.Guardian,
-                new Profession() {
+                new Profession()
+                {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156634),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156633),
                     Id = 1,
                     APIId = "Guardian",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Wächter" },
-                        {Locale.English, "Guardian" },
-                        {Locale.Spanish, "Guardián" },
-                        {Locale.French, "Gardien" },
+                        { Locale.German, "Wächter" },
+                        { Locale.English, "Guardian" },
+                        { Locale.Spanish, "Guardián" },
+                        { Locale.French, "Gardien" },
                     },
-                    Color = new Color(0,180,255),
+                    Color = new Color(0, 180, 255),
                     WeightClass = ArmorWeight.Heavy,
                 }
             },
@@ -406,19 +263,20 @@
             // Warrior
             {
                 Gw2Sharp.Models.ProfessionType.Warrior,
-                new Profession() {
+                new Profession()
+                {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156643),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156642),
                     Id = 2,
                     APIId = "Warrior",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Krieger" },
-                        {Locale.English, "Warrior" },
-                        {Locale.Spanish, "Guerrero" },
-                        {Locale.French, "Guerrier" },
+                        { Locale.German, "Krieger" },
+                        { Locale.English, "Warrior" },
+                        { Locale.Spanish, "Guerrero" },
+                        { Locale.French, "Guerrier" },
                     },
-                    Color = new Color(247,157,0),
+                    Color = new Color(247, 157, 0),
                     WeightClass = ArmorWeight.Heavy,
                 }
             },
@@ -426,17 +284,18 @@
             // Engineer
             {
                 Gw2Sharp.Models.ProfessionType.Engineer,
-                new Profession() {
+                new Profession()
+                {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156632),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156631),
                     Id = 3,
                     APIId = "Engineer",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Ingenieur" },
-                        {Locale.English, "Engineer" },
-                        {Locale.Spanish, "Ingeniero" },
-                        {Locale.French, "Ingénieur" },
+                        { Locale.German, "Ingenieur" },
+                        { Locale.English, "Engineer" },
+                        { Locale.Spanish, "Ingeniero" },
+                        { Locale.French, "Ingénieur" },
                     },
                     Color = new Color(255, 222, 0),
                     WeightClass = ArmorWeight.Medium,
@@ -446,17 +305,18 @@
             // Ranger
             {
                 Gw2Sharp.Models.ProfessionType.Ranger,
-                new Profession() {
+                new Profession()
+                {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156640),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156639),
                     Id = 4,
                     APIId = "Ranger",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Waldläufer" },
-                        {Locale.English, "Ranger" },
-                        {Locale.Spanish, "Guardabosques" },
-                        {Locale.French, "Rôdeur" },
+                        { Locale.German, "Waldläufer" },
+                        { Locale.English, "Ranger" },
+                        { Locale.Spanish, "Guardabosques" },
+                        { Locale.French, "Rôdeur" },
                     },
                     Color = new Color(234, 255, 0),
                     WeightClass = ArmorWeight.Medium,
@@ -466,19 +326,20 @@
             // Thief
             {
                 Gw2Sharp.Models.ProfessionType.Thief,
-                new Profession() {
+                new Profession()
+                {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156641),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(103581),
                     Id = 5,
                     APIId = "Thief",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Dieb" },
-                        {Locale.English, "Thief" },
-                        {Locale.Spanish, "Ladrón" },
-                        {Locale.French, "Voleur" },
+                        { Locale.German, "Dieb" },
+                        { Locale.English, "Thief" },
+                        { Locale.Spanish, "Ladrón" },
+                        { Locale.French, "Voleur" },
                     },
-                    Color = new Color(255,83,0),
+                    Color = new Color(255, 83, 0),
                     WeightClass = ArmorWeight.Medium,
                 }
             },
@@ -486,19 +347,20 @@
             // Elementalist
             {
                 Gw2Sharp.Models.ProfessionType.Elementalist,
-                new Profession() {
+                new Profession()
+                {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156630),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156629),
                     Id = 6,
                     APIId = "Elementalist",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Elementarmagier" },
-                        {Locale.English, "Elementalist" },
-                        {Locale.Spanish, "Elementalista" },
-                        {Locale.French, "Élémentaliste" },
+                        { Locale.German, "Elementarmagier" },
+                        { Locale.English, "Elementalist" },
+                        { Locale.Spanish, "Elementalista" },
+                        { Locale.French, "Élémentaliste" },
                     },
-                    Color = new Color(247,0,116),
+                    Color = new Color(247, 0, 116),
                     WeightClass = ArmorWeight.Light,
                 }
             },
@@ -506,19 +368,20 @@
             // Mesmer
             {
                 Gw2Sharp.Models.ProfessionType.Mesmer,
-                new Profession() {
+                new Profession()
+                {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156636),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156635),
                     Id = 7,
                     APIId = "Mesmer",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Mesmer" },
-                        {Locale.English, "Mesmer" },
-                        {Locale.Spanish, "Hipnotizador" },
-                        {Locale.French, "Envoûteur" },
+                        { Locale.German, "Mesmer" },
+                        { Locale.English, "Mesmer" },
+                        { Locale.Spanish, "Hipnotizador" },
+                        { Locale.French, "Envoûteur" },
                     },
-                    Color = new Color(255,0,240),
+                    Color = new Color(255, 0, 240),
                     WeightClass = ArmorWeight.Light,
                 }
             },
@@ -526,17 +389,18 @@
             // Necromancer
             {
                 Gw2Sharp.Models.ProfessionType.Necromancer,
-                new Profession() {
+                new Profession()
+                {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156638),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156637),
                     Id = 8,
                     APIId = "Necromancer",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Nekromant" },
-                        {Locale.English, "Necromancer" },
-                        {Locale.Spanish, "Nigromante" },
-                        {Locale.French, "Nécromant" },
+                        { Locale.German, "Nekromant" },
+                        { Locale.English, "Necromancer" },
+                        { Locale.Spanish, "Nigromante" },
+                        { Locale.French, "Nécromant" },
                     },
                     Color = new Color(192, 255, 0),
                     WeightClass = ArmorWeight.Light,
@@ -546,488 +410,542 @@
             // Revenant
             {
                 Gw2Sharp.Models.ProfessionType.Revenant,
-                new Profession() {
+                new Profession()
+                {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(961390),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(965717),
                     Id = 9,
                     APIId = "Revenant",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Widergänger" },
-                        {Locale.English, "Revenant" },
-                        {Locale.Spanish, "Retornado" },
-                        {Locale.French, "Revenant" },
+                        { Locale.German, "Widergänger" },
+                        { Locale.English, "Revenant" },
+                        { Locale.Spanish, "Retornado" },
+                        { Locale.French, "Revenant" },
                     },
-                    Color = new Color(255,0,0),
+                    Color = new Color(255, 0, 0),
                     WeightClass = ArmorWeight.Heavy,
                 }
             },
         };
 
-        public Dictionary<SpecializationType, Specialization> Specializations = new Dictionary<SpecializationType, Specialization>()
+        public Dictionary<SpecializationType, Specialization> Specializations { get; set; } = new Dictionary<SpecializationType, Specialization>()
         {
             // Druid
             {
                 SpecializationType.Druid,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128574),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128575),
                     Id = 5,
                     Profession = Gw2Sharp.Models.ProfessionType.Ranger,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Druide" },
-                        {Locale.English, "Druid" },
-                        {Locale.Spanish, "Guardián" },
-                        {Locale.French, "Gardien" },
+                        { Locale.German, "Druide" },
+                        { Locale.English, "Druid" },
+                        { Locale.Spanish, "Guardián" },
+                        { Locale.French, "Gardien" },
                     },
                 }
             },
+
             // Daredevil
             {
                 SpecializationType.Daredevil,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128570),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128571),
                     Id = 7,
                     Profession = Gw2Sharp.Models.ProfessionType.Thief,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Draufgänger" },
-                        {Locale.English, "Daredevil" },
-                        {Locale.Spanish, "Temerario" },
-                        {Locale.French, "Fracasseur" },
+                        { Locale.German, "Draufgänger" },
+                        { Locale.English, "Daredevil" },
+                        { Locale.Spanish, "Temerario" },
+                        { Locale.French, "Fracasseur" },
                     },
                 }
             },
+
             // Berserker
             {
                 SpecializationType.Berserker,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128566),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128567),
                     Id = 18,
                     Profession = Gw2Sharp.Models.ProfessionType.Warrior,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Berserker" },
-                        {Locale.English, "Berserker" },
-                        {Locale.Spanish, "Berserker" },
-                        {Locale.French, "Berserker" },
+                        { Locale.German, "Berserker" },
+                        { Locale.English, "Berserker" },
+                        { Locale.Spanish, "Berserker" },
+                        { Locale.French, "Berserker" },
                     },
                 }
             },
+
             // Dragonhunter
             {
                 SpecializationType.Dragonhunter,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128572),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128573),
                     Id = 27,
                     Profession = Gw2Sharp.Models.ProfessionType.Guardian,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Drachenjäger" },
-                        {Locale.English, "Dragonhunter" },
-                        {Locale.Spanish, "Cazadragones" },
-                        {Locale.French, "Draconnier" },
+                        { Locale.German, "Drachenjäger" },
+                        { Locale.English, "Dragonhunter" },
+                        { Locale.Spanish, "Cazadragones" },
+                        { Locale.French, "Draconnier" },
                     },
                 }
             },
+
             // Reaper
             {
                 SpecializationType.Reaper,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128578),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128579),
                     Id = 34,
                     Profession = Gw2Sharp.Models.ProfessionType.Necromancer,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Schnitter" },
-                        {Locale.English, "Reaper" },
-                        {Locale.Spanish, "Segador" },
-                        {Locale.French, "Faucheur" },
+                        { Locale.German, "Schnitter" },
+                        { Locale.English, "Reaper" },
+                        { Locale.Spanish, "Segador" },
+                        { Locale.French, "Faucheur" },
                     },
                 }
             },
+
             // Chronomancer
             {
                 SpecializationType.Chronomancer,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128568),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128569),
                     Id = 40,
                     Profession = Gw2Sharp.Models.ProfessionType.Mesmer,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Chronomant" },
-                        {Locale.English, "Chronomancer" },
-                        {Locale.Spanish, "Cronomante" },
-                        {Locale.French, "Chronomancien" },
+                        { Locale.German, "Chronomant" },
+                        { Locale.English, "Chronomancer" },
+                        { Locale.Spanish, "Cronomante" },
+                        { Locale.French, "Chronomancien" },
                     },
                 }
             },
+
             // Scrapper
             {
                 SpecializationType.Scrapper,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128580),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128581),
                     Id = 43,
                     Profession = Gw2Sharp.Models.ProfessionType.Engineer,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Schrotter" },
-                        {Locale.English, "Scrapper" },
-                        {Locale.Spanish, "Chatarrero" },
-                        {Locale.French, "Mécatronicien" },
+                        { Locale.German, "Schrotter" },
+                        { Locale.English, "Scrapper" },
+                        { Locale.Spanish, "Chatarrero" },
+                        { Locale.French, "Mécatronicien" },
                     },
                 }
             },
+
             // Tempest
             {
                 SpecializationType.Tempest,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128582),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128583),
                     Id = 48,
                     Profession = Gw2Sharp.Models.ProfessionType.Elementalist,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Sturmbote" },
-                        {Locale.English, "Tempest" },
-                        {Locale.Spanish, "Tempestad" },
-                        {Locale.French, "Cataclyste" },
+                        { Locale.German, "Sturmbote" },
+                        { Locale.English, "Tempest" },
+                        { Locale.Spanish, "Tempestad" },
+                        { Locale.French, "Cataclyste" },
                     },
                 }
             },
+
             // Herald
             {
                 SpecializationType.Herald,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128576),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1128577),
                     Id = 52,
                     Profession = Gw2Sharp.Models.ProfessionType.Revenant,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Herold" },
-                        {Locale.English, "Herald" },
-                        {Locale.Spanish, "Heraldo" },
-                        {Locale.French, "Héraut" },
+                        { Locale.German, "Herold" },
+                        { Locale.English, "Herald" },
+                        { Locale.Spanish, "Heraldo" },
+                        { Locale.French, "Héraut" },
                     },
                 }
             },
+
             // Soulbeast
             {
                 SpecializationType.Soulbeast,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770214),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770215),
                     Id = 55,
                     Profession = Gw2Sharp.Models.ProfessionType.Ranger,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Seelenwandler" },
-                        {Locale.English, "Soulbeast" },
-                        {Locale.Spanish, "Bestialma" },
-                        {Locale.French, "Animorphe" },
+                        { Locale.German, "Seelenwandler" },
+                        { Locale.English, "Soulbeast" },
+                        { Locale.Spanish, "Bestialma" },
+                        { Locale.French, "Animorphe" },
                     },
                 }
             },
+
             // Weaver
             {
                 SpecializationType.Weaver,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1670505),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1670506),
                     Id = 56,
                     Profession = Gw2Sharp.Models.ProfessionType.Elementalist,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Weber" },
-                        {Locale.English, "Weaver" },
-                        {Locale.Spanish, "Tejedor" },
-                        {Locale.French, "Tissesort" },
+                        { Locale.German, "Weber" },
+                        { Locale.English, "Weaver" },
+                        { Locale.Spanish, "Tejedor" },
+                        { Locale.French, "Tissesort" },
                     },
                 }
             },
+
             // Holosmith
             {
                 SpecializationType.Holosmith,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770224),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770225),
                     Id = 57,
                     Profession = Gw2Sharp.Models.ProfessionType.Engineer,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Holoschmied" },
-                        {Locale.English, "Holosmith" },
-                        {Locale.Spanish, "Holoartesano" },
-                        {Locale.French, "Holographiste" },
+                        { Locale.German, "Holoschmied" },
+                        { Locale.English, "Holosmith" },
+                        { Locale.Spanish, "Holoartesano" },
+                        { Locale.French, "Holographiste" },
                     },
                 }
             },
+
             // Deadeye
             {
                 SpecializationType.Deadeye,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770212),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770213),
                     Id = 58,
                     Profession = Gw2Sharp.Models.ProfessionType.Thief,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Scharfschütze" },
-                        {Locale.English, "Deadeye" },
-                        {Locale.Spanish, "Certero" },
-                        {Locale.French, "Sniper" },
+                        { Locale.German, "Scharfschütze" },
+                        { Locale.English, "Deadeye" },
+                        { Locale.Spanish, "Certero" },
+                        { Locale.French, "Sniper" },
                     },
                 }
             },
+
             // Mirage
             {
                 SpecializationType.Mirage,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770216),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770217),
                     Id = 59,
                     Profession = Gw2Sharp.Models.ProfessionType.Mesmer,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Illusionist" },
-                        {Locale.English, "Mirage" },
-                        {Locale.Spanish, "Quimérico" },
-                        {Locale.French, "Mirage" },
+                        { Locale.German, "Illusionist" },
+                        { Locale.English, "Mirage" },
+                        { Locale.Spanish, "Quimérico" },
+                        { Locale.French, "Mirage" },
                     },
                 }
             },
+
             // Scourge
             {
                 SpecializationType.Scourge,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770220),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770221),
                     Id = 60,
                     Profession = Gw2Sharp.Models.ProfessionType.Necromancer,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Pestbringer" },
-                        {Locale.English, "Scourge" },
-                        {Locale.Spanish, "Azotador" },
-                        {Locale.French, "Fléau" },
+                        { Locale.German, "Pestbringer" },
+                        { Locale.English, "Scourge" },
+                        { Locale.Spanish, "Azotador" },
+                        { Locale.French, "Fléau" },
                     },
                 }
             },
+
             // Spellbreaker
             {
                 SpecializationType.Spellbreaker,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770222),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770223),
                     Id = 61,
                     Profession = Gw2Sharp.Models.ProfessionType.Warrior,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Bannbrecher" },
-                        {Locale.English, "Spellbreaker" },
-                        {Locale.Spanish, "Rompehechizos" },
-                        {Locale.French, "Brisesort" },
+                        { Locale.German, "Bannbrecher" },
+                        { Locale.English, "Spellbreaker" },
+                        { Locale.Spanish, "Rompehechizos" },
+                        { Locale.French, "Brisesort" },
                     },
                 }
             },
+
             // Firebrand
             {
                 SpecializationType.Firebrand,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770210),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770211),
                     Id = 62,
                     Profession = Gw2Sharp.Models.ProfessionType.Guardian,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Aufwiegler" },
-                        {Locale.English, "Firebrand" },
-                        {Locale.Spanish, "Abrasador" },
-                        {Locale.French, "Incendiaire" },
+                        { Locale.German, "Aufwiegler" },
+                        { Locale.English, "Firebrand" },
+                        { Locale.Spanish, "Abrasador" },
+                        { Locale.French, "Incendiaire" },
                     },
                 }
             },
+
             // Renegade
             {
                 SpecializationType.Renegade,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770218),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1770219),
                     Id = 63,
                     Profession = Gw2Sharp.Models.ProfessionType.Revenant,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Abtrünniger" },
-                        {Locale.English, "Renegade" },
-                        {Locale.Spanish, "Renegado" },
-                        {Locale.French, "Renégat" },
+                        { Locale.German, "Abtrünniger" },
+                        { Locale.English, "Renegade" },
+                        { Locale.Spanish, "Renegado" },
+                        { Locale.French, "Renégat" },
                     },
                 }
             },
+
             // Harbinger
             {
                 SpecializationType.Harbinger,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(2479359),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(2479361),
                     Id = 64,
                     Profession = Gw2Sharp.Models.ProfessionType.Necromancer,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Vorbote" },
-                        {Locale.English, "Harbinger" },
-                        {Locale.Spanish, "Augurador" },
-                        {Locale.French, "Augure" },
+                        { Locale.German, "Vorbote" },
+                        { Locale.English, "Harbinger" },
+                        { Locale.Spanish, "Augurador" },
+                        { Locale.French, "Augure" },
                     },
                 }
             },
+
             // Willbender
             {
                 SpecializationType.Willbender,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(2479351),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(2479353),
                     Id = 65,
                     Profession = Gw2Sharp.Models.ProfessionType.Guardian,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Willensverdreher" },
-                        {Locale.English, "Willbender" },
-                        {Locale.Spanish, "Subyugador" },
-                        {Locale.French, "Subjugueur" },
+                        { Locale.German, "Willensverdreher" },
+                        { Locale.English, "Willbender" },
+                        { Locale.Spanish, "Subyugador" },
+                        { Locale.French, "Subjugueur" },
                     },
                 }
             },
+
             // Virtuoso
             {
                 SpecializationType.Virtuoso,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(2479355),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(2479357),
                     Id = 66,
                     Profession = Gw2Sharp.Models.ProfessionType.Mesmer,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Virtuose" },
-                        {Locale.English, "Virtuoso" },
-                        {Locale.Spanish, "Virtuoso" },
-                        {Locale.French, "Virtuose" },
+                        { Locale.German, "Virtuose" },
+                        { Locale.English, "Virtuoso" },
+                        { Locale.Spanish, "Virtuoso" },
+                        { Locale.French, "Virtuose" },
                     },
                 }
             },
+
             // Catalyst
             {
                 SpecializationType.Catalyst,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(2491555),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(2491557),
                     Id = 67,
                     Profession = Gw2Sharp.Models.ProfessionType.Elementalist,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Katalysierer" },
-                        {Locale.English, "Catalyst" },
-                        {Locale.Spanish, "Catalizador" },
-                        {Locale.French, "Catalyseur" },
+                        { Locale.German, "Katalysierer" },
+                        { Locale.English, "Catalyst" },
+                        { Locale.Spanish, "Catalizador" },
+                        { Locale.French, "Catalyseur" },
                     },
                 }
             },
+
             // Bladesworn
             {
                 SpecializationType.Bladesworn,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(2491563),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(2491565),
                     Id = 68,
                     Profession = Gw2Sharp.Models.ProfessionType.Warrior,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Klingengeschworener" },
-                        {Locale.English, "Bladesworn" },
-                        {Locale.Spanish, "Jurafilos" },
-                        {Locale.French, "Jurelame" },
+                        { Locale.German, "Klingengeschworener" },
+                        { Locale.English, "Bladesworn" },
+                        { Locale.Spanish, "Jurafilos" },
+                        { Locale.French, "Jurelame" },
                     },
                 }
             },
+
             // Vindicator
             {
                 SpecializationType.Vindicator,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(2491559),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(2491561),
                     Id = 69,
                     Profession = Gw2Sharp.Models.ProfessionType.Revenant,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Rechtssuchender" },
-                        {Locale.English, "Vindicator" },
-                        {Locale.Spanish, "Justiciero" },
-                        {Locale.French, "Justicier" },
+                        { Locale.German, "Rechtssuchender" },
+                        { Locale.English, "Vindicator" },
+                        { Locale.Spanish, "Justiciero" },
+                        { Locale.French, "Justicier" },
                     },
                 }
             },
+
             // Mechanist
             {
                 SpecializationType.Mechanist,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(2503656),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(2503658),
                     Id = 70,
                     Profession = Gw2Sharp.Models.ProfessionType.Engineer,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Mech-Lenker" },
-                        {Locale.English, "Mechanist" },
-                        {Locale.Spanish, "Mechanista" },
-                        {Locale.French, "Méchamancien" },
+                        { Locale.German, "Mech-Lenker" },
+                        { Locale.English, "Mechanist" },
+                        { Locale.Spanish, "Mechanista" },
+                        { Locale.French, "Méchamancien" },
                     },
                 }
             },
+
             // Specter
             {
                 SpecializationType.Specter,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(2503664),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(2503666),
                     Id = 71,
                     Profession = Gw2Sharp.Models.ProfessionType.Thief,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Phantom" },
-                        {Locale.English, "Specter" },
-                        {Locale.Spanish, "Espectro" },
-                        {Locale.French, "Spectre" },
+                        { Locale.German, "Phantom" },
+                        { Locale.English, "Specter" },
+                        { Locale.Spanish, "Espectro" },
+                        { Locale.French, "Spectre" },
                     },
                 }
             },
+
             // Untamed
             {
                 SpecializationType.Untamed,
-                new Specialization() {
+                new Specialization()
+                {
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(2503660),
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(2503662),
                     Id = 72,
                     Profession = Gw2Sharp.Models.ProfessionType.Ranger,
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Ungezähmter" },
-                        {Locale.English, "Untamed" },
-                        {Locale.Spanish, "Indómito" },
-                        {Locale.French, "Indomptable" },
+                        { Locale.German, "Ungezähmter" },
+                        { Locale.English, "Untamed" },
+                        { Locale.Spanish, "Indómito" },
+                        { Locale.French, "Indomptable" },
                     },
                 }
             },
         };
 
-        public Dictionary<Gw2Sharp.Models.RaceType, Race> Races = new Dictionary<Gw2Sharp.Models.RaceType, Race>()
+        public Dictionary<Gw2Sharp.Models.RaceType, Race> Races { get; set; } = new Dictionary<Gw2Sharp.Models.RaceType, Race>()
         {
             // Asura
             {
@@ -1037,15 +955,16 @@
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "asura" + ".png"),
                     Id = 0,
                     APIId = "Asura",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Asura" },
-                        {Locale.English, "Asura" },
-                        {Locale.Spanish, "Asura" },
-                        {Locale.French, "Asura" },
+                        { Locale.German, "Asura" },
+                        { Locale.English, "Asura" },
+                        { Locale.Spanish, "Asura" },
+                        { Locale.French, "Asura" },
                     },
                 }
             },
+
             // Charr
             {
                 Gw2Sharp.Models.RaceType.Charr,
@@ -1054,15 +973,16 @@
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "charr" + ".png"),
                     Id = 1,
                     APIId = "Charr",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Charr" },
-                        {Locale.English, "Charr" },
-                        {Locale.Spanish, "Charr" },
-                        {Locale.French, "Charr" },
+                        { Locale.German, "Charr" },
+                        { Locale.English, "Charr" },
+                        { Locale.Spanish, "Charr" },
+                        { Locale.French, "Charr" },
                     },
                 }
             },
+
             // Human
             {
                 Gw2Sharp.Models.RaceType.Human,
@@ -1071,15 +991,16 @@
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "human" + ".png"),
                     Id = 2,
                     APIId = "Human",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Mensch" },
-                        {Locale.English, "Human" },
-                        {Locale.Spanish, "Humano" },
-                        {Locale.French, "Humain" },
+                        { Locale.German, "Mensch" },
+                        { Locale.English, "Human" },
+                        { Locale.Spanish, "Humano" },
+                        { Locale.French, "Humain" },
                     },
                 }
             },
+
             // Norn
             {
                 Gw2Sharp.Models.RaceType.Norn,
@@ -1088,15 +1009,16 @@
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "norn" + ".png"),
                     Id = 3,
                     APIId = "Norn",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Norn" },
-                        {Locale.English, "Norn" },
-                        {Locale.Spanish, "Norn" },
-                        {Locale.French, "Norn" },
+                        { Locale.German, "Norn" },
+                        { Locale.English, "Norn" },
+                        { Locale.Spanish, "Norn" },
+                        { Locale.French, "Norn" },
                     },
                 }
             },
+
             // Sylvari
             {
                 Gw2Sharp.Models.RaceType.Sylvari,
@@ -1105,15 +1027,173 @@
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "sylvari" + ".png"),
                     Id = 4,
                     APIId = "Sylvari",
-                    _Names = new Dictionary<Locale, string>()
+                    Names = new Dictionary<Locale, string>()
                     {
-                        {Locale.German, "Sylvari" },
-                        {Locale.English, "Sylvari" },
-                        {Locale.Spanish, "Sylvari" },
-                        {Locale.French, "Sylvari" },
+                        { Locale.German, "Sylvari" },
+                        { Locale.English, "Sylvari" },
+                        { Locale.Spanish, "Sylvari" },
+                        { Locale.French, "Sylvari" },
                     },
                 }
             },
         };
+
+        public Map GetMapById(int id)
+        {
+            if (this.Maps.Length > id && this.Maps[id] != null)
+            {
+                return this.Maps[id];
+            }
+
+            return new Map() { Name = "Unkown Map", Id = 0 };
+        }
+
+        public class CrafingProfession
+        {
+            public AsyncTexture2D Icon { get; set; }
+
+            public int Id { get; set; }
+
+            public string APIId { get; set; }
+
+            public int MaxRating { get; set; }
+
+            public Dictionary<Locale, string> Names { get; set; } = new Dictionary<Locale, string>();
+
+            public string Name
+            {
+                get
+                {
+                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
+                    string name;
+
+                    return this.Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                }
+            }
+        }
+
+        public class Profession
+        {
+            private AsyncTexture2D icon;
+
+            private AsyncTexture2D iconBig;
+
+            public Profession()
+            {
+            }
+
+            public Color Color { get; set; }
+
+            public ArmorWeight WeightClass { get; set; }
+
+            public int Id { get; set; }
+
+            public string APIId { get; set; }
+
+            public AsyncTexture2D Icon
+            {
+                get => this.icon;
+                set
+                {
+                    this.icon = value;
+                    if (this.icon != null)
+                    {
+                        this.icon.TextureSwapped += this.Icon_TextureSwapped;
+                    }
+                }
+            }
+
+            public AsyncTexture2D IconBig
+            {
+                get => this.iconBig;
+                set
+                {
+                    this.iconBig = value;
+                    if (this.iconBig != null)
+                    {
+                        this.iconBig.TextureSwapped += this.IconBig_TextureSwapped;
+                    }
+                }
+            }
+
+            public Dictionary<Locale, string> Names { get; set; } = new Dictionary<Locale, string>();
+
+            public string Name
+            {
+                get
+                {
+                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
+                    string name;
+
+                    return this.Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                }
+            }
+
+            private void IconBig_TextureSwapped(object sender, ValueChangedEventArgs<Texture2D> e)
+            {
+                if (e.NewValue != null)
+                {
+                    this.IconBig.TextureSwapped -= this.IconBig_TextureSwapped;
+                    this.IconBig.SwapTexture(this.IconBig.Texture.GetRegion(new Rectangle(5, 5, this.IconBig.Width - 10, this.IconBig.Height - 10)));
+                }
+            }
+
+            private void Icon_TextureSwapped(object sender, ValueChangedEventArgs<Texture2D> e)
+            {
+                if (e.NewValue != null)
+                {
+                    this.Icon.TextureSwapped -= this.Icon_TextureSwapped;
+                    this.Icon.SwapTexture(this.Icon.Texture.GetRegion(new Rectangle(5, 5, this.Icon.Width - 10, this.Icon.Height - 10)));
+                }
+            }
+        }
+
+        public class Specialization
+        {
+            public int Id { get; set; }
+
+            public int APIId { get; set; }
+
+            public Gw2Sharp.Models.ProfessionType Profession { get; set; }
+
+            public AsyncTexture2D Icon { get; set; }
+
+            public AsyncTexture2D IconBig { get; set; }
+
+            public Dictionary<Locale, string> Names { get; set; } = new Dictionary<Locale, string>();
+
+            public string Name
+            {
+                get
+                {
+                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
+                    string name;
+
+                    return this.Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                }
+            }
+        }
+
+        public class Race
+        {
+            public int Id { get; set; }
+
+            public string APIId { get; set; }
+
+            public Dictionary<Locale, string> Names { get; set; } = new Dictionary<Locale, string>();
+
+            public string Name
+            {
+                get
+                {
+                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
+                    string name;
+
+                    return this.Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                }
+            }
+
+            public AsyncTexture2D Icon { get; set; }
+        }
     }
 }

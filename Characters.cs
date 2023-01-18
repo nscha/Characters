@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel.Composition;
-    using System.Diagnostics;
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Threading.Tasks;
@@ -33,7 +32,7 @@
 
         public static readonly Logger Logger = Logger.GetLogger<Characters>();
 
-        private Ticks ticks = new ();
+        private readonly Ticks ticks = new ();
 
         private CornerIcon cornerIcon;
         private bool dataLoaded;
@@ -450,7 +449,7 @@
             this.clientRes = GameService.Graphics.Resolution;
 
             GameService.GameIntegration.Gw2Instance.IsInGameChanged += this.ForceUpdate;
-            OverlayService.Overlay.UserLocale.SettingChanged += this.UserLocale_SettingChanged;
+            GameService.Overlay.UserLocale.SettingChanged += this.UserLocale_SettingChanged;
 
             this.Tags.CollectionChanged += this.Tags_CollectionChanged;
             this.OnResolutionChanged(null, null, false);
@@ -473,7 +472,7 @@
             }
 
             this.DataLoaded_Event -= this.Characters_DataLoaded_Event;
-            OverlayService.Overlay.UserLocale.SettingChanged -= this.UserLocale_SettingChanged;
+            GameService.Overlay.UserLocale.SettingChanged -= this.UserLocale_SettingChanged;
 
             var player = GameService.Gw2Mumble.PlayerCharacter;
             player.SpecializationChanged -= this.ForceUpdate;

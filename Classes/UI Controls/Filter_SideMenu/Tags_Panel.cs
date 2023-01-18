@@ -11,7 +11,7 @@
 
     internal class Tags_Panel : FlowTab
     {
-        private readonly FlowPanel _tagPanel;
+        private readonly FlowPanel tagPanel;
         public List<Tag> Tags = new List<Tag>();
 
         public Tags_Panel()
@@ -29,7 +29,7 @@
             this.ControlPadding = new Vector2(5, 3);
             this.Location = new Point(0, 25);
 
-            this._tagPanel = new FlowPanel()
+            this.tagPanel = new FlowPanel()
             {
                 Parent = this,
                 WidthSizingMode = SizingMode.Fill,
@@ -41,7 +41,7 @@
             {
                 var tag = new Tag()
                 {
-                    Parent = this._tagPanel,
+                    Parent = this.tagPanel,
                     Text = t,
                     Active = false,
                     ShowDelete = false,
@@ -49,6 +49,7 @@
                 tag.Click += this.Tag_Click;
                 this.Tags.Add(tag);
             }
+
             this.Invalidate();
 
             Characters.ModuleInstance.Tags.CollectionChanged += this.Tags_CollectionChanged;
@@ -63,13 +64,13 @@
         {
             foreach (string t in Characters.ModuleInstance.Tags)
             {
-                var exists = this._tagPanel.Children.Cast<Tag>().ToList().Find(e => e.Text == t) != null;
+                var exists = this.tagPanel.Children.Cast<Tag>().ToList().Find(e => e.Text == t) != null;
 
                 if (!exists)
                 {
                     var tag = new Tag()
                     {
-                        Parent = this._tagPanel,
+                        Parent = this.tagPanel,
                         Text = t,
                         Active = false,
                         ShowDelete = false,

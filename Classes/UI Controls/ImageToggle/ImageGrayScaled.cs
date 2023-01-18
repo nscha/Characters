@@ -11,27 +11,27 @@
     {
         public bool UseGrayScale = true;
 
-        private Texture2D _grayScaleTexture;
-        private AsyncTexture2D _texture;
+        private Texture2D grayScaleTexture;
+        private AsyncTexture2D texture;
 
         public AsyncTexture2D Texture
         {
-            get => this._texture;
+            get => this.texture;
             set
             {
-                this._texture = value;
-                this._texture.TextureSwapped += this.Texture_TextureSwapped;
+                this.texture = value;
+                this.texture.TextureSwapped += this.Texture_TextureSwapped;
                 if (value != null)
                 {
-                    this._grayScaleTexture = this.ToGrayScaledPalettable(value.Texture);
+                    this.grayScaleTexture = this.ToGrayScaledPalettable(value.Texture);
                 }
             }
         }
 
         private void Texture_TextureSwapped(object sender, ValueChangedEventArgs<Texture2D> e)
         {
-            this._grayScaleTexture = this.ToGrayScaledPalettable(this._texture);
-            this._texture.TextureSwapped -= this.Texture_TextureSwapped;
+            this.grayScaleTexture = this.ToGrayScaledPalettable(this.texture);
+            this.texture.TextureSwapped -= this.Texture_TextureSwapped;
         }
 
         public static Color[] palColorArray = new Color[]
@@ -67,7 +67,7 @@
             Color[] destColors = new Color[original.Width * original.Height];
             Texture2D newTexture;
 
-            using (var device = GraphicsService.Graphics.LendGraphicsDeviceContext())
+            using (var device = GameService.Graphics.LendGraphicsDeviceContext())
             {
                 newTexture = new Texture2D(device.GraphicsDevice, original.Width, original.Height);
             }
@@ -88,25 +88,26 @@
                     destColors[index] = new Color(grayScale, grayScale, grayScale, originalColor.A);
                 }
             }
+
             newTexture.SetData<Color>(destColors);
             return newTexture;
         }
 
-        private Rectangle _textureRectangle = Rectangle.Empty;
+        private Rectangle textureRectangle = Rectangle.Empty;
         public Rectangle SizeRectangle;
 
         public Rectangle TextureRectangle
         {
-            get => this._textureRectangle;
-            set => this._textureRectangle = value;
+            get => this.textureRectangle;
+            set => this.textureRectangle = value;
         }
 
-        private bool _active = false;
+        private bool active = false;
 
         public bool Active
         {
-            get => this._active;
-            set => this._active = value;
+            get => this.active;
+            set => this.active = value;
         }
 
         public Color ColorHovered = new Color(255, 255, 255, 255);
@@ -126,14 +127,14 @@
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (this._texture != null)
+            if (this.texture != null)
             {
                 spriteBatch.DrawOnCtrl(
                     this,
-                    this.UseGrayScale && !this._active && !this.MouseOver ? this._grayScaleTexture : this._texture,
+                    this.UseGrayScale && !this.active && !this.MouseOver ? this.grayScaleTexture : this.texture,
                     this.SizeRectangle != Rectangle.Empty ? this.SizeRectangle : bounds,
-                    this._textureRectangle == Rectangle.Empty ? this._texture.Bounds : this._textureRectangle,
-                    this.MouseOver ? this.ColorHovered : this._active ? this.ColorActive : this.ColorInActive * (this.UseGrayScale ? 0.5f : this.Alpha),
+                    this.textureRectangle == Rectangle.Empty ? this.texture.Bounds : this.textureRectangle,
+                    this.MouseOver ? this.ColorHovered : this.active ? this.ColorActive : this.ColorInActive * (this.UseGrayScale ? 0.5f : this.Alpha),
                     0f,
                     default);
             }

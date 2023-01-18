@@ -17,10 +17,10 @@
 
         public List<Tag> Tags
         {
-            get => this._tagsPanel.Tags;
+            get => this.tagsPanel.Tags;
         }
 
-        private readonly Tags_Panel _tagsPanel;
+        private readonly Tags_Panel tagsPanel;
 
         public Filter_SideMenu()
         {
@@ -37,8 +37,8 @@
             this.filters = new Filters_Panel();
             this.AddTab(this.filters);
 
-            this._tagsPanel = new Tags_Panel() { Visible = false };
-            this.AddTab(this._tagsPanel);
+            this.tagsPanel = new Tags_Panel() { Visible = false };
+            this.AddTab(this.tagsPanel);
         }
 
         protected override void OnShown(EventArgs e)

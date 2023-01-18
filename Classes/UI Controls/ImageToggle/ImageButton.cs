@@ -10,22 +10,21 @@
 
     public class ImageButton : Control
     {
-
-        private AsyncTexture2D _texture;
+        private AsyncTexture2D texture;
 
         public AsyncTexture2D Texture
         {
-            get => this._texture;
+            get => this.texture;
             set
             {
-                this._texture = value;
+                this.texture = value;
             }
         }
 
         public AsyncTexture2D HoveredTexture;
         public AsyncTexture2D ClickedTexture;
 
-        private bool _clicked;
+        private bool clicked;
 
         public static Color[] palColorArray = new Color[]
             {
@@ -52,13 +51,13 @@
                     new Color(255, 191, 255),
             };
 
-        private Rectangle _textureRectangle = Rectangle.Empty;
+        private Rectangle textureRectangle = Rectangle.Empty;
         public Rectangle SizeRectangle;
 
         public Rectangle TextureRectangle
         {
-            get => this._textureRectangle;
-            set => this._textureRectangle = value;
+            get => this.textureRectangle;
+            set => this.textureRectangle = value;
         }
 
         public Color ColorHovered = new Color(255, 255, 255, 255);
@@ -78,17 +77,17 @@
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (this._texture != null)
+            if (this.texture != null)
             {
-                var texture = this._clicked && this.ClickedTexture != null ? this.ClickedTexture : this.MouseOver && this.HoveredTexture != null ? this.HoveredTexture : this.Texture;
-                this._clicked = this._clicked && this.MouseOver;
+                var texture = this.clicked && this.ClickedTexture != null ? this.ClickedTexture : this.MouseOver && this.HoveredTexture != null ? this.HoveredTexture : this.Texture;
+                this.clicked = this.clicked && this.MouseOver;
 
                 spriteBatch.DrawOnCtrl(
                     this,
                     texture,
                     this.SizeRectangle != Rectangle.Empty ? this.SizeRectangle : bounds,
-                    this._textureRectangle == Rectangle.Empty ? texture.Bounds : this._textureRectangle,
-                    this.MouseOver ? this.ColorHovered : this.MouseOver && this._clicked ? this.ColorClicked : this.ColorDefault,
+                    this.textureRectangle == Rectangle.Empty ? texture.Bounds : this.textureRectangle,
+                    this.MouseOver ? this.ColorHovered : this.MouseOver && this.clicked ? this.ColorClicked : this.ColorDefault,
                     0f,
                     default);
             }
@@ -97,13 +96,13 @@
         protected override void OnLeftMouseButtonPressed(MouseEventArgs e)
         {
             base.OnLeftMouseButtonPressed(e);
-            this._clicked = true;
+            this.clicked = true;
         }
 
         protected override void OnLeftMouseButtonReleased(MouseEventArgs e)
         {
             base.OnLeftMouseButtonReleased(e);
-            this._clicked = false;
+            this.clicked = false;
         }
     }
 }

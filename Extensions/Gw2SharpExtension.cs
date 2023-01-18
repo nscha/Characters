@@ -6,32 +6,28 @@
     {
         public static CrafingProfession GetData(this int key)
         {
-            CrafingProfession value;
-            Characters.ModuleInstance.Data.CrafingProfessions.TryGetValue(key, out value);
+            Characters.ModuleInstance.Data.CrafingProfessions.TryGetValue(key, out CrafingProfession value);
 
             return value;
         }
 
         public static Profession GetData(this Gw2Sharp.Models.ProfessionType key)
         {
-            Profession value;
-            Characters.ModuleInstance.Data.Professions.TryGetValue(key, out value);
+            Characters.ModuleInstance.Data.Professions.TryGetValue(key, out Profession value);
 
             return value;
         }
 
         public static Specialization GetData(this SpecializationType key)
         {
-            Specialization value;
-            Characters.ModuleInstance.Data.Specializations.TryGetValue(key, out value);
+            Characters.ModuleInstance.Data.Specializations.TryGetValue(key, out Specialization value);
 
             return value;
         }
 
         public static Race GetData(this Gw2Sharp.Models.RaceType key)
         {
-            Race value;
-            Characters.ModuleInstance.Data.Races.TryGetValue(key, out value);
+            Characters.ModuleInstance.Data.Races.TryGetValue(key, out Race value);
 
             return value;
         }

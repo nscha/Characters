@@ -14,15 +14,15 @@
 
     public class TabbedPanel : Panel
     {
-        private PanelTab _activeTab;
+        private PanelTab activeTab;
 
         public PanelTab ActiveTab
         {
-            get => this._activeTab;
+            get => this.activeTab;
             set => this.SwitchTab(value);
         }
 
-        protected FlowPanel _tabsButtonPanel = new FlowPanel()
+        protected FlowPanel tabsButtonPanel = new FlowPanel()
         {
             FlowDirection = ControlFlowDirection.SingleLeftToRight,
             WidthSizingMode = SizingMode.Fill,
@@ -36,19 +36,20 @@
         public Rectangle TextureRectangle = Rectangle.Empty;
         public Point TextureOffset = Point.Zero;
 
-        private readonly List<PanelTab> _tabs = new List<PanelTab>();
+        private readonly List<PanelTab> tabs = new List<PanelTab>();
 
         public List<PanelTab> Tabs
         {
-            get => this._tabs;
+            get => this.tabs;
         }
 
         public TabbedPanel()
         {
-            this._tabsButtonPanel.Parent = this;
-            this._tabsButtonPanel.Resized += this.OnTabButtonPanelResized;
+            this.tabsButtonPanel.Parent = this;
+            this.tabsButtonPanel.Resized += this.OnTabButtonPanelResized;
 
             this.HeightSizingMode = SizingMode.AutoSize;
+
             // Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
             this.Parent = GameService.Graphics.SpriteScreen;
             this.ZIndex = 999;
@@ -69,9 +70,9 @@
         {
             tab.Parent = this;
             tab.Disposed += this.OnTabDisposed;
-            tab.TabButton.Parent = this._tabsButtonPanel;
+            tab.TabButton.Parent = this.tabsButtonPanel;
             tab.TabButton.Click += (sender, model) => this.TabButton_Click(sender, model, tab);
-            this._tabs.Add(tab);
+            this.tabs.Add(tab);
             this.TabAdded?.Invoke(this, EventArgs.Empty);
             this.ActiveTab ??= tab;
             this.RecalculateLayout();
@@ -94,16 +95,16 @@
             tab.Parent = null;
             tab.TabButton.Parent = null;
 
-            this._tabs.Remove(tab);
+            this.tabs.Remove(tab);
             this.TabRemoved?.Invoke(this, EventArgs.Empty);
             this.RecalculateLayout();
         }
 
         public override void RecalculateLayout()
         {
-            var button_amount = Math.Max(1, this._tabsButtonPanel.Children.Count);
-            var width = (this._tabsButtonPanel.Width - ((button_amount - 1) * (int)this._tabsButtonPanel.ControlPadding.X)) / button_amount;
-            foreach (Control c in this._tabsButtonPanel.Children)
+            var button_amount = Math.Max(1, this.tabsButtonPanel.Children.Count);
+            var width = (this.tabsButtonPanel.Width - ((button_amount - 1) * (int)this.tabsButtonPanel.ControlPadding.X)) / button_amount;
+            foreach (Control c in this.tabsButtonPanel.Children)
             {
                 c.Width = width;
             }
@@ -123,12 +124,13 @@
                     t.Active = false;
                 }
             }
+
             if (tab != null)
             {
                 tab.Active = true;
             }
 
-            this._activeTab = tab;
+            this.activeTab = tab;
         }
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
@@ -179,7 +181,7 @@
         {
             base.DisposeControl();
 
-            this._tabs.DisposeAll();
+            this.tabs.DisposeAll();
         }
     }
 }

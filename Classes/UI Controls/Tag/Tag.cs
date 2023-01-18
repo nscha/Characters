@@ -16,61 +16,61 @@
     {
         public BitmapFont Font
         {
-            get { return this._text.Font; }
-            set { this._text.Font = value; }
+            get { return this.text.Font; }
+            set { this.text.Font = value; }
         }
 
-        private Color _disabledColor = new Color(156, 156, 156);
+        private Color disabledColor = new Color(156, 156, 156);
         public bool Active = true;
         public bool CanInteract = true;
-        private Texture2D _disabledBackground;
-        private AsyncTexture2D _background;
+        private Texture2D disabledBackground;
+        private AsyncTexture2D background;
 
         public AsyncTexture2D Background
         {
-            get => this._background;
+            get => this.background;
             set
             {
-                this._background = value;
+                this.background = value;
                 if (value != null)
                 {
                     this.CreateDisabledBackground(null, null);
-                    this._background.TextureSwapped += this.CreateDisabledBackground;
+                    this.background.TextureSwapped += this.CreateDisabledBackground;
                 }
             }
         }
 
         private void CreateDisabledBackground(object sender, ValueChangedEventArgs<Texture2D> e)
         {
-            this._disabledBackground = this._background.Texture.ToGrayScaledPalettable();
-            this._background.TextureSwapped -= this.CreateDisabledBackground;
+            this.disabledBackground = this.background.Texture.ToGrayScaledPalettable();
+            this.background.TextureSwapped -= this.CreateDisabledBackground;
         }
 
-        private readonly Label _text;
-        private readonly ImageButton _delete;
-        private readonly ImageButton _dummy;
+        private readonly Label text;
+        private readonly ImageButton delete;
+        private readonly ImageButton dummy;
 
         public bool ShowDelete
         {
-            get => this._delete.Visible;
+            get => this.delete.Visible;
             set
             {
-                if (this._delete != null)
+                if (this.delete != null)
                 {
-                    this._delete.Visible = value;
-                    this._dummy.Visible = !value;
-                };
+                    this.delete.Visible = value;
+                    this.dummy.Visible = !value;
+                }
             }
         }
 
         public string Text
         {
-            get => this._text != null ? this._text.Text : null;
+            get => this.text != null ? this.text.Text : null;
             set
             {
-                if (this._text != null)
+                if (this.text != null)
                 {
-                    this._text.Text = value;
+                    this.text.Text = value;
                 }
             }
         }
@@ -87,7 +87,7 @@
             this.AutoSizePadding = new Point(5, 3);
             this.Height = 26;
 
-            this._delete = new ImageButton()
+            this.delete = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156012),
@@ -96,9 +96,9 @@
                 Size = new Point(20, 20),
                 BasicTooltipText = "Remove Tag",
             };
-            this._delete.Click += this.Delete_Click;
+            this.delete.Click += this.Delete_Click;
 
-            this._dummy = new ImageButton()
+            this.dummy = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156025),
@@ -107,7 +107,7 @@
                 Visible = false,
             };
 
-            this._text = new Label()
+            this.text = new Label()
             {
                 Parent = this,
                 AutoSizeWidth = true,
@@ -123,11 +123,11 @@
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (this._background != null)
+            if (this.background != null)
             {
-                var texture = this.Active ? this._background : this._disabledBackground != null ? this._disabledBackground : this._background;
+                var texture = this.Active ? this.background : this.disabledBackground != null ? this.disabledBackground : this.background;
 
-                spriteBatch.DrawOnCtrl(this, texture, bounds, bounds, this.Active ? Color.White * 0.98f : this._disabledColor * 0.8f);
+                spriteBatch.DrawOnCtrl(this, texture, bounds, bounds, this.Active ? Color.White * 0.98f : this.disabledColor * 0.8f);
             }
 
             var color = Color.Black;

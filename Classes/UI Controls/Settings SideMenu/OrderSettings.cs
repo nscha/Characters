@@ -25,6 +25,7 @@
                 Width = 190,
             };
             this.orderDropdown.Items.Add("Sort By Name");
+
             // OrderDropdown.Items.Add("Sort By Tag");
             this.orderDropdown.Items.Add("Sort By Profession");
             this.orderDropdown.Items.Add("Sort By Last Login");

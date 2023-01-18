@@ -50,7 +50,8 @@
                 case SortType.Custom:
                     return "Custom";
             }
-            return "";
+
+            return string.Empty;
         }
 
         public static SortOrder GetSortOrder(this string s)

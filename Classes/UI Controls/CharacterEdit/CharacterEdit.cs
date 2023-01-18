@@ -20,17 +20,17 @@
         private double opacityTick = 0;
         private DateTime lastMouseOver = DateTime.Now;
 
-        private Character_Model _character;
+        private Character_Model character;
 
         public Character_Model Character
         {
-            get => this._character;
+            get => this.character;
             set
             {
-                this._character = value;
+                this.character = value;
                 if (value != null)
                 {
-                    this._character.Updated += this.ApplyCharacter;
+                    this.character.Updated += this.ApplyCharacter;
                     this.ApplyCharacter(null, null);
                 }
             }
@@ -39,29 +39,29 @@
         public Rectangle TextureRectangle;
         public Point TextureOffset;
         public AsyncTexture2D Background;
-        private readonly AsyncTexture2D _iconFrame = GameService.Content.DatAssetCache.GetTextureFromAssetId(1414041);
+        private readonly AsyncTexture2D iconFrame = GameService.Content.DatAssetCache.GetTextureFromAssetId(1414041);
         public Color BackgroundTint = Color.Honeydew * 0.95f;
 
-        private readonly Checkbox _show;
-        private readonly ImageButton _image;
-        private readonly ImageButton _delete;
-        private readonly Label _name;
-        private readonly ImageSelector _imagePanel;
-        private readonly FlowPanel _tagPanel;
-        private readonly TextBox _tagBox;
-        private readonly ImageButton _addTag;
-        private readonly StandardButton _captureImages;
-        private readonly StandardButton _openFolder;
+        private readonly Checkbox show;
+        private readonly ImageButton image;
+        private readonly ImageButton delete;
+        private readonly Label name;
+        private readonly ImageSelector imagePanel;
+        private readonly FlowPanel tagPanel;
+        private readonly TextBox tagBox;
+        private readonly ImageButton addTag;
+        private readonly StandardButton captureImages;
+        private readonly StandardButton openFolder;
 
-        private readonly int _width = 350;
-        private readonly int _expandedWidth = 725;
-        private readonly bool _initialized;
+        private readonly int width = 350;
+        private readonly int expandedWidth = 725;
+        private readonly bool initialized;
 
-        private readonly List<Tag> _tags = new List<Tag>();
+        private readonly List<Tag> tags = new List<Tag>();
 
         public CharacterEdit()
         {
-            this.Width = this._width;
+            this.Width = this.width;
             new Dummy()
             {
                 Width = 350,
@@ -75,7 +75,7 @@
 
             var tM = Characters.ModuleInstance.TextureManager;
 
-            this._image = new ImageButton()
+            this.image = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(358353),
@@ -83,9 +83,9 @@
                 Location = new Point(5 + 2, 5 + 2),
                 Size = new Point(64, 64),
             };
-            this._image.Click += this.Image_Click;
+            this.image.Click += this.Image_Click;
 
-            this._delete = new ImageButton()
+            this.delete = new ImageButton()
             {
                 Parent = this,
                 Texture = tM.GetControlTexture(Controls.Delete_Button),
@@ -94,106 +94,106 @@
                 Size = new Point(24, 24),
                 BasicTooltipText = "Delete Character",
             };
-            this._delete.Click += this.Delete_Click;
+            this.delete.Click += this.Delete_Click;
 
-            this._name = new Label()
+            this.name = new Label()
             {
                 Text = "Character Name",
                 Parent = this,
                 TextColor = new Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255),
                 Font = GameService.Content.DefaultFont16,
                 AutoSizeWidth = true,
-                Location = new Point(this._image.Right + 5 + 2, 5),
+                Location = new Point(this.image.Right + 5 + 2, 5),
             };
 
-            this._show = new Checkbox()
+            this.show = new Checkbox()
             {
                 Parent = this,
-                Location = new Point(this._image.Right + 5 + 2, this._name.Bottom + 5 + 2),
+                Location = new Point(this.image.Right + 5 + 2, this.name.Bottom + 5 + 2),
                 Size = new Point(100, 21),
                 Text = "Show in List",
             };
-            this._show.Click += this.Show_Click;
+            this.show.Click += this.Show_Click;
 
-            this._captureImages = new StandardButton()
+            this.captureImages = new StandardButton()
             {
                 Parent = this,
-                Location = new Point(this._image.Right + 4, this._image.Bottom - 28),
+                Location = new Point(this.image.Right + 4, this.image.Bottom - 28),
                 Size = new Point(130, 30),
                 Text = "Capture Images",
                 Icon = tM.GetIcon(Icons.Camera),
                 ResizeIcon = true,
             };
-            this._captureImages.Click += this.CaptureImages_Click;
+            this.captureImages.Click += this.CaptureImages_Click;
 
-            this._openFolder = new StandardButton()
+            this.openFolder = new StandardButton()
             {
                 Parent = this,
-                Location = new Point(this._captureImages.Right + 4, this._image.Bottom - 28),
+                Location = new Point(this.captureImages.Right + 4, this.image.Bottom - 28),
                 Size = new Point(125, 30),
                 Text = "Open Folder",
                 Icon = tM.GetIcon(Icons.Folder),
                 ResizeIcon = true,
             };
-            this._openFolder.Click += this.OpenFolder_Click; ;
+            this.openFolder.Click += this.OpenFolder_Click;
 
-            this._addTag = new ImageButton()
+            this.addTag = new ImageButton()
             {
                 Parent = this,
                 Texture = tM.GetControlTexture(Controls.Plus_Button),
                 HoveredTexture = tM.GetControlTexture(Controls.Plus_Button_Hovered),
-                Location = new Point(this.Right - 24 - 5, this._image.Bottom + 5 + 2),
+                Location = new Point(this.Right - 24 - 5, this.image.Bottom + 5 + 2),
                 Size = new Point(24, 24),
                 BasicTooltipText = "add Tag",
             };
-            this._addTag.Click += this.AddTag_Click;
+            this.addTag.Click += this.AddTag_Click;
 
-            this._tagBox = new TextBox()
+            this.tagBox = new TextBox()
             {
                 Parent = this,
-                Location = new Point(5, this._image.Bottom + 5 + 2),
+                Location = new Point(5, this.image.Bottom + 5 + 2),
                 Size = new Point(this.Width - 10 - 24 - 2, 24),
                 PlaceholderText = "PvE, WvW, Main, ERP ...",
             };
-            this._tagBox.EnterPressed += this.AddTag_Click;
-            this._tagBox.TextChanged += this.SetInteracted; ;
+            this.tagBox.EnterPressed += this.AddTag_Click;
+            this.tagBox.TextChanged += this.SetInteracted;
 
-            this._tagPanel = new FlowPanel()
+            this.tagPanel = new FlowPanel()
             {
                 Parent = this,
-                Location = new Point(5, this._tagBox.Bottom + 5),
+                Location = new Point(5, this.tagBox.Bottom + 5),
                 WidthSizingMode = SizingMode.Fill,
                 HeightSizingMode = SizingMode.AutoSize,
                 ControlPadding = new Vector2(3, 2),
             };
 
-            this._imagePanel = new ImageSelector()
+            this.imagePanel = new ImageSelector()
             {
                 Parent = this,
-                Location = new Point(5, this._image.Bottom + 5),
+                Location = new Point(5, this.image.Bottom + 5),
                 ControlPadding = new Vector2(3, 2),
                 Visible = false,
-                Width = this._expandedWidth - 10,
+                Width = this.expandedWidth - 10,
             };
-            this._imagePanel.Shown += this.LoadImages;
+            this.imagePanel.Shown += this.LoadImages;
 
             new Dummy()
             {
-                Parent = this._imagePanel,
+                Parent = this.imagePanel,
                 Size = new Point(0, 64),
             };
 
             foreach (string t in Characters.ModuleInstance.Tags)
             {
-                this._tags.Add(this.AddTag(t, true));
+                this.tags.Add(this.AddTag(t, true));
             }
 
-            this._initialized = true;
+            this.initialized = true;
         }
 
         private void Show_Click(object sender, MouseEventArgs e)
         {
-            this._character.Show = this._show.Checked;
+            this.character.Show = this.show.Checked;
         }
 
         private void SetInteracted(object sender, EventArgs e)
@@ -226,11 +226,11 @@
             var images = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories);
 
             var mHeight = Characters.ModuleInstance.MainWindow.ContentRegion.Height - 65;
-            this._imagePanel.Height = Math.Min(((int)Math.Ceiling(images.Count() / 7.0) * (96 + (int)this._imagePanel.ControlPadding.Y)) + (int)this._imagePanel.OuterControlPadding.Y, mHeight) + 5;
+            this.imagePanel.Height = Math.Min(((int)Math.Ceiling(images.Count() / 7.0) * (96 + (int)this.imagePanel.ControlPadding.Y)) + (int)this.imagePanel.OuterControlPadding.Y, mHeight) + 5;
 
             GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
             {
-                this._imagePanel.ClearChildren();
+                this.imagePanel.ClearChildren();
 
                 AsyncTexture2D noImgTexture = null;
 
@@ -246,14 +246,14 @@
                     var noImg = new Image()
                     {
                         Size = new Point(96, 96),
-                        Parent = this._imagePanel,
+                        Parent = this.imagePanel,
                         Texture = noImgTexture,
                     };
 
                     noImg.Click += delegate
                     {
-                        this._character.IconPath = null;
-                        this._character.Icon = null;
+                        this.character.IconPath = null;
+                        this.character.Icon = null;
                         this.ApplyCharacter(null, null);
                     };
                 }
@@ -265,13 +265,13 @@
                     var img = new Image()
                     {
                         Size = new Point(96, 96),
-                        Parent = this._imagePanel,
+                        Parent = this.imagePanel,
                         Texture = texture,
                     };
                     img.Click += delegate
                     {
-                        this._character.IconPath = p.Replace(Characters.ModuleInstance.BasePath, "");
-                        this._character.Icon = texture;
+                        this.character.IconPath = p.Replace(Characters.ModuleInstance.BasePath, "");
+                        this.character.Icon = texture;
                         this.ApplyCharacter(null, null);
                     };
                 }
@@ -285,18 +285,18 @@
 
         private void Image_Click(object sender, MouseEventArgs e)
         {
-            this.Width = this.Width == this._width ? this._expandedWidth : this._width;
+            this.Width = this.Width == this.width ? this.expandedWidth : this.width;
         }
 
         private void AddTag_Click(object sender, EventArgs e)
         {
-            if (this._tagBox.Text != null && this._tagBox.Text.Length > 0 && !Characters.ModuleInstance.Tags.Contains(this._tagBox.Text))
+            if (this.tagBox.Text != null && this.tagBox.Text.Length > 0 && !Characters.ModuleInstance.Tags.Contains(this.tagBox.Text))
             {
-                Characters.ModuleInstance.Tags.Add(this._tagBox.Text);
-                this.Character.Tags.Add(this._tagBox.Text);
-                this._tags.Add(this.AddTag(this._tagBox.Text, true));
+                Characters.ModuleInstance.Tags.Add(this.tagBox.Text);
+                this.Character.Tags.Add(this.tagBox.Text);
+                this.tags.Add(this.AddTag(this.tagBox.Text, true));
 
-                this._tagBox.Text = null;
+                this.tagBox.Text = null;
             }
         }
 
@@ -305,7 +305,7 @@
             var tag = new Tag()
             {
                 Text = txt,
-                Parent = this._tagPanel,
+                Parent = this.tagPanel,
                 Active = active,
             };
 
@@ -321,18 +321,18 @@
 
             if (tag.Active)
             {
-                this._character.Tags.Remove(tag.Text);
+                this.character.Tags.Remove(tag.Text);
             }
             else
             {
-                this._character.Tags.Add(tag.Text);
+                this.character.Tags.Add(tag.Text);
             }
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            this.Width = this._width;
+            this.Width = this.width;
 
             this.SetInteracted(null, null);
         }
@@ -347,7 +347,7 @@
         private void Tag_Deleted(object sender, EventArgs e)
         {
             var tag = (Tag)sender;
-            this._tags.Remove(tag);
+            this.tags.Remove(tag);
             Characters.ModuleInstance.Tags.Remove(tag.Text);
 
             tag.Deleted -= this.Tag_Deleted;
@@ -355,16 +355,16 @@
 
         private void ApplyCharacter(object sender, EventArgs e)
         {
-            foreach (Tag t in this._tags)
+            foreach (Tag t in this.tags)
             {
-                t.Active = this._character.Tags.Contains(t.Text);
+                t.Active = this.character.Tags.Contains(t.Text);
             }
 
-            this._name.Text = this._character.Name;
-            this._image.Texture = this._character.Icon;
-            this._show.Checked = this._character.Show;
+            this.name.Text = this.character.Name;
+            this.image.Texture = this.character.Icon;
+            this.show.Checked = this.character.Show;
 
-            if (this._imagePanel.Visible)
+            if (this.imagePanel.Visible)
             {
                 var noImgTexture = Characters.ModuleInstance.Data.Professions[this.Character.Profession].IconBig;
 
@@ -373,7 +373,7 @@
                     noImgTexture = Characters.ModuleInstance.Data.Specializations[this.Character.Specialization].IconBig;
                 }
 
-                var noImg = (Image)this._imagePanel.Children[0];
+                var noImg = (Image)this.imagePanel.Children[0];
                 noImg.Texture = noImgTexture;
             }
         }
@@ -382,17 +382,17 @@
         {
             base.OnResized(e);
 
-            if (this._initialized)
+            if (this.initialized)
             {
-                this._delete.Location = new Point(e.CurrentSize.X - 24 - 5, 5);
+                this.delete.Location = new Point(e.CurrentSize.X - 24 - 5, 5);
 
-                this._show.Visible = this.Width == this._width;
-                this._tagBox.Visible = this.Width == this._width;
-                this._tagPanel.Visible = this.Width == this._width;
-                this._addTag.Visible = this.Width == this._width;
-                this._imagePanel.Visible = this.Width == this._expandedWidth;
-                this._captureImages.Visible = this.Width == this._expandedWidth;
-                this._openFolder.Visible = this.Width == this._expandedWidth;
+                this.show.Visible = this.Width == this.width;
+                this.tagBox.Visible = this.Width == this.width;
+                this.tagPanel.Visible = this.Width == this.width;
+                this.addTag.Visible = this.Width == this.width;
+                this.imagePanel.Visible = this.Width == this.expandedWidth;
+                this.captureImages.Visible = this.Width == this.expandedWidth;
+                this.openFolder.Visible = this.Width == this.expandedWidth;
             }
         }
 
@@ -418,7 +418,7 @@
 
             var color = Color.Black;
 
-            var b = this._image.LocalBounds.Add(new Rectangle(-2, -2, 4, 4));
+            var b = this.image.LocalBounds.Add(new Rectangle(-2, -2, 4, 4));
 
             spriteBatch.DrawOnCtrl(
                 this,

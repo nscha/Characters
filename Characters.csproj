@@ -182,10 +182,14 @@
     <Compile Include="Classes\Characters\Character_Model.cs" />
     <Compile Include="Classes\Characters\GW2API\GW2API_Handler.cs" />
     <Compile Include="Classes\Characters\JsonCharacter_Model.cs" />
+    <Compile Include="Classes\Characters\JsonMap.cs" />
+    <Compile Include="Classes\Characters\Names.cs" />
     <Compile Include="Classes\Data.cs" />
     <Compile Include="Classes\Characters\Map.cs" />
-    <Compile Include="Classes\ExtensionMethods.cs" />
-    <Compile Include="Classes\Gw2SharpExtension.cs" />
+    <Compile Include="Extensions\ContainerExtensions.cs" />
+    <Compile Include="Extensions\DisposableExtensions.cs" />
+    <Compile Include="Extensions\ControlExtensions.cs" />
+    <Compile Include="Extensions\Gw2SharpExtension.cs" />
     <Compile Include="Classes\OCR\OCR.cs" />
     <Compile Include="Classes\SortTypeExtension.cs" />
     <Compile Include="Classes\TagList.cs" />
@@ -225,6 +229,9 @@
     <Compile Include="Classes\UI Controls\Tabbed_Panel\PanelTab.cs" />
     <Compile Include="Classes\UI Controls\Tag\Tag.cs" />
     <Compile Include="Classes\WindowsUtil\WindowsUtil.cs" />
+    <Compile Include="Extensions\ListExtension.cs" />
+    <Compile Include="Extensions\PointExtensions.cs" />
+    <Compile Include="Extensions\Texture2DExtension.cs" />
     <Compile Include="Strings\common.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

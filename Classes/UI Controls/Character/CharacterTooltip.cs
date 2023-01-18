@@ -8,6 +8,7 @@ using MonoGame.Extended.BitmapFonts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -145,7 +146,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
 
                 if (Character.Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), Character.Specialization))
                 {
-                    texture = Characters.ModuleInstance.Data.Specializations[Character.Specialization].TempIcon;
+                    texture = Characters.ModuleInstance.Data.Specializations[Character.Specialization].IconBig;
                 }
 
                 if (texture != null)
@@ -277,21 +278,21 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
         private void ApplyCharacter(object sender, EventArgs e)
         {
             Name_Label.Text = Character.Name;
-            Name_Label.TextColor = new Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255);
+            Name_Label.TextColor = new Microsoft.Xna.Framework.Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255);
 
             Level_Label.Text = "Level " + Character.Level.ToString();
             Level_Label.TextureRectangle = new Rectangle(2, 2, 28, 28);
             Level_Label.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(157085);
 
-            if (Character.Specialization == SpecializationType.None)
+            if (Enum.IsDefined(typeof(SpecializationType), Character.Specialization) && Character.Specialization != SpecializationType.None)
             {
-                Profession_Label.Text = Characters.ModuleInstance.Data.Professions[Character.Profession].Name;
-                Profession_Label.Icon = Characters.ModuleInstance.Data.Professions[Character.Profession].IconBig;
-            }
-            else if (Characters.ModuleInstance.Data.Specializations.ContainsKey(Character.Specialization))
-            {
+                Profession_Label.Icon = Characters.ModuleInstance.Data.Specializations[Character.Specialization].IconBig;
                 Profession_Label.Text = Characters.ModuleInstance.Data.Specializations[Character.Specialization].Name;
-                Profession_Label.Icon = Characters.ModuleInstance.Data.Specializations[Character.Specialization].TempIcon;
+            }
+            else
+            {
+                Profession_Label.Icon = Characters.ModuleInstance.Data.Professions[Character.Profession].IconBig;
+                Profession_Label.Text = Characters.ModuleInstance.Data.Professions[Character.Profession].Name;
             }
 
             if (Profession_Label.Icon != null) Profession_Label.TextureRectangle = Profession_Label.Icon.Width == 32 ? new Rectangle(2, 2, 28, 28) : new Rectangle(4, 4, 56, 56);

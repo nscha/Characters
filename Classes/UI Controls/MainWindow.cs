@@ -1,26 +1,13 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Content;
 using Blish_HUD.Controls;
-using Blish_HUD.Modules;
-using Blish_HUD.Modules.Managers;
-using Blish_HUD.Settings;
-using Gw2Sharp.WebApi.V2.Models;
-using Kenedia.Modules.Characters.Classes;
 using Kenedia.Modules.Characters.Classes.UI_Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -82,6 +69,8 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
         private bool _updateLayout;
         double _tick = 0;
         double _filterTick = 0;
+
+        private AsyncTexture2D WindowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
 
         public MainWindow(Texture2D background, Rectangle windowRegion, Rectangle contentRegion) : base(background, windowRegion, contentRegion)
         {
@@ -752,11 +741,11 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
         public override void PaintAfterChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
             base.PaintAfterChildren(spriteBatch, bounds);
-            var texture = Characters.ModuleInstance.TextureManager.getEmblem(_Emblems.Characters);
+
             spriteBatch.DrawOnCtrl(this,
-                                    texture,
+                                    WindowEmblem,
                                     new Rectangle(-43, -58, 128, 128),
-                                    texture.Bounds,
+                                    WindowEmblem.Bounds,
                                     Color.White,
                                     0f,
                                     default);
@@ -764,7 +753,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
             if (bounds.Width >= 190)
             {
                 spriteBatch.DrawStringOnCtrl(this,
-                                        "Characters", //$"{Characters.ModuleInstance.Name}",
+                                        $"{Characters.ModuleInstance.Name}",
                                         bounds.Width >= 245 ? GameService.Content.DefaultFont32 : GameService.Content.DefaultFont18,
                                         new Rectangle(65, 5, bounds.Width - (128 - 43 + 15), 30),
                                         ContentService.Colors.ColonialWhite, //new Color(247, 231, 182, 97),
@@ -773,8 +762,6 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                                         VerticalAlignment.Middle
                                         );
             }
-
-            //Emblem = TextureManager.getEmblem(_Emblems.Characters),
         }
 
         protected override void OnHidden(EventArgs e)

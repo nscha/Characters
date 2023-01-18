@@ -1,12 +1,7 @@
-﻿using Blish_HUD;
-using Blish_HUD.Controls;
-using Blish_HUD.Modules.Managers;
+﻿using Blish_HUD.Controls;
 using Gw2Sharp.Models;
 using Gw2Sharp.WebApi.V2.Models;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 

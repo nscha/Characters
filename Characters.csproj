@@ -149,6 +149,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="ref\data\crafting_professions.json" />
+    <None Include="ref\data\gw2.traineddata" />
+    <None Include="ref\data\maps.json" />
+    <None Include="ref\data\professions.json" />
+    <None Include="ref\data\races.json" />
+    <None Include="ref\data\specialization.json" />
     <None Include="tessdata\configs\config.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -464,12 +470,38 @@
       <LastGenOutput>common.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="ref\data\" />
-    <Folder Include="ref\textures\backgrounds\" />
-    <Folder Include="ref\textures\controls\" />
-    <Folder Include="ref\textures\emblems\" />
-    <Folder Include="ref\textures\icons\" />
+    <Content Include="ref\data\tesseract.dll" />
+    <Content Include="ref\textures\backgrounds\0.png" />
+    <Content Include="ref\textures\backgrounds\1.png" />
+    <Content Include="ref\textures\controls\0.png" />
+    <Content Include="ref\textures\controls\1.png" />
+    <Content Include="ref\textures\controls\10.png" />
+    <Content Include="ref\textures\controls\11.png" />
+    <Content Include="ref\textures\controls\12.png" />
+    <Content Include="ref\textures\controls\13.png" />
+    <Content Include="ref\textures\controls\14.png" />
+    <Content Include="ref\textures\controls\2.png" />
+    <Content Include="ref\textures\controls\3.png" />
+    <Content Include="ref\textures\controls\4.png" />
+    <Content Include="ref\textures\controls\5.png" />
+    <Content Include="ref\textures\controls\6.png" />
+    <Content Include="ref\textures\controls\7.png" />
+    <Content Include="ref\textures\controls\8.png" />
+    <Content Include="ref\textures\controls\9.png" />
+    <Content Include="ref\textures\icons\0.png" />
+    <Content Include="ref\textures\icons\1.png" />
+    <Content Include="ref\textures\icons\2.png" />
+    <Content Include="ref\textures\icons\3.png" />
+    <Content Include="ref\textures\icons\4.png" />
+    <Content Include="ref\textures\icons\5.png" />
+    <Content Include="ref\textures\icons\6.png" />
+    <Content Include="ref\textures\races\asura.png" />
+    <Content Include="ref\textures\races\charr.png" />
+    <Content Include="ref\textures\races\human.png" />
+    <Content Include="ref\textures\races\norn.png" />
+    <Content Include="ref\textures\races\sylvari.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

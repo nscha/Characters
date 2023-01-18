@@ -1,5 +1,4 @@
 ﻿using Blish_HUD;
-using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Controls.Extern;
 using Blish_HUD.Modules;
@@ -9,24 +8,18 @@ using Gw2Sharp.WebApi.V2.Models;
 using Kenedia.Modules.Characters.Classes;
 using Kenedia.Modules.Characters.Classes.Classes.UI_Controls;
 using Kenedia.Modules.Characters.Classes.MainWindow;
-using Kenedia.Modules.Characters.Classes.UI_Controls;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
-using Patagames.Ocr;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Kenedia.Modules.Characters.Classes.WindowsUtil.WindowsUtil;
-using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -525,16 +518,13 @@ namespace Kenedia.Modules.Characters
 
                 MainWindow = new MainWindow(
                     //GameService.Content.DatAssetCache.GetTextureFromAssetId(155985).Texture,
-                    TextureManager.getBackground(_Backgrounds.MainWindow),
+                    bg,
                     new Rectangle(25, 25, bg.Width + 10, bg.Height),
                     new Rectangle(35, 14, bg.Width - 10, bg.Height - 10)
                     )
                 {
                     Parent = GameService.Graphics.SpriteScreen,
-                    //Title = $"{Name}",
                     Title = "❤",
-                    //Emblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015),
-                    //Emblem = TextureManager.getEmblem(_Emblems.Characters),
                     Subtitle = "❤",
                     SavesPosition = true,
                     Id = $"CharactersWindow",

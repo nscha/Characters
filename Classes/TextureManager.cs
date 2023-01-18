@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 
 namespace Kenedia.Modules.Characters
 {
@@ -33,16 +33,9 @@ namespace Kenedia.Modules.Characters
         FolderGray,
         Camera,
     }
-    public enum _Emblems
-    {
-        QuestionMark,
-        Characters,
-        Cogs,
-    }
     public enum _Backgrounds
     {
         MainWindow,
-        Tooltip,
     }
 
     public class TextureManager : IDisposable
@@ -59,7 +52,6 @@ namespace Kenedia.Modules.Characters
 
         public List<Texture2D> _Backgrounds = new List<Texture2D>();
         public List<Texture2D> _Icons = new List<Texture2D>();
-        public List<Texture2D> _Emblems = new List<Texture2D>();
         public List<Texture2D> _Controls = new List<Texture2D>();
 
         private bool disposed = false;
@@ -71,7 +63,6 @@ namespace Kenedia.Modules.Characters
 
                 _Backgrounds?.DisposeAll();
                 _Icons?.DisposeAll();
-                _Emblems?.DisposeAll();
                 _Controls?.DisposeAll();
             }
         }
@@ -112,17 +103,6 @@ namespace Kenedia.Modules.Characters
                     if (texture != null) _Controls.Insert((int)num, texture);
                 }
             }
-
-            values = Enum.GetValues(typeof(_Emblems));
-            if (values.Length > 0)
-            {
-                _Emblems = new List<Texture2D>(new Texture2D[values.Cast<int>().Max() + 1]);
-                foreach (_Emblems num in values)
-                {
-                    var texture = ContentsManager.GetTexture(@"textures\emblems\" + (int)num + ".png");
-                    if (texture != null) _Emblems.Insert((int)num, texture);
-                }
-            }
         }
 
         public Texture2D getBackground(_Backgrounds background)
@@ -138,13 +118,6 @@ namespace Kenedia.Modules.Characters
             var index = (int)icon;
 
             if (index < _Icons.Count && _Icons[index] != null) return _Icons[index];
-            return _Icons[0];
-        }
-
-        public Texture2D getEmblem(_Emblems emblem)
-        {
-            var index = (int)emblem;
-            if (index < _Emblems.Count && _Emblems[index] != null) return _Emblems[index];
             return _Icons[0];
         }
 

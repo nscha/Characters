@@ -1,25 +1,8 @@
 ﻿using Blish_HUD;
-using Blish_HUD.Content;
 using Blish_HUD.Controls;
-using Blish_HUD.Input;
-using Blish_HUD.Modules;
-using Blish_HUD.Modules.Managers;
-using Blish_HUD.Settings;
-using Kenedia.Modules.Characters.Classes;
-using Kenedia.Modules.Characters.Classes.UI_Controls;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -127,7 +110,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
                 specToggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
-                    Texture = specialization.Value.TempIcon,
+                    Texture = specialization.Value.IconBig,
                     FilterObject = specialization.Key,
                     FilterCategory = FilterCategory.Specialization,
                     Profession = specialization.Value.Profession,

@@ -2,26 +2,14 @@
 using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
-using Blish_HUD.Modules;
-using Blish_HUD.Modules.Managers;
-using Blish_HUD.Settings;
-using Gw2Sharp.WebApi.V2.Models;
-using Kenedia.Modules.Characters.Classes;
 using Kenedia.Modules.Characters.Classes.UI_Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.BitmapFonts;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -247,15 +235,15 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
             Level_Label.TextureRectangle = new Rectangle(2, 2, 28, 28);
             Level_Label.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(157085);
 
-            if (Character.Specialization == SpecializationType.None)
+            if (Enum.IsDefined(typeof(SpecializationType), Character.Specialization) && Character.Specialization != SpecializationType.None)
             {
-                Profession_Label.Text = Characters.ModuleInstance.Data.Professions[Character.Profession].Name;
-                Profession_Label.Icon = Characters.ModuleInstance.Data.Professions[Character.Profession].IconBig;
-            }
-            else if (Characters.ModuleInstance.Data.Specializations.ContainsKey(Character.Specialization))
-            {
+                Profession_Label.Icon = Characters.ModuleInstance.Data.Specializations[Character.Specialization].IconBig;
                 Profession_Label.Text = Characters.ModuleInstance.Data.Specializations[Character.Specialization].Name;
-                Profession_Label.Icon = Characters.ModuleInstance.Data.Specializations[Character.Specialization].TempIcon;
+            }
+            else
+            {
+                Profession_Label.Icon = Characters.ModuleInstance.Data.Professions[Character.Profession].IconBig;
+                Profession_Label.Text = Characters.ModuleInstance.Data.Professions[Character.Profession].Name;
             }
 
             if(Profession_Label.Icon != null) Profession_Label.TextureRectangle = Profession_Label.Icon.Width == 32 ? new Rectangle(2, 2, 28, 28) : new Rectangle(4, 4, 56, 56);
@@ -401,7 +389,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
 
                         if (Character.Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), Character.Specialization))
                         {
-                            texture = Characters.ModuleInstance.Data.Specializations[Character.Specialization].TempIcon;
+                            texture = Characters.ModuleInstance.Data.Specializations[Character.Specialization].IconBig;
                         }
 
                         if (texture != null)

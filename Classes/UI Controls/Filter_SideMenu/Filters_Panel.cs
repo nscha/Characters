@@ -1,36 +1,37 @@
-﻿using Blish_HUD;
-using Blish_HUD.Controls;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
-    class Filters_Panel : FlowTab
+    using System.Collections.Generic;
+    using System.Linq;
+    using Blish_HUD;
+    using Blish_HUD.Controls;
+    using Microsoft.Xna.Framework;
+    using Point = Microsoft.Xna.Framework.Point;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
+    internal class Filters_Panel : FlowTab
     {
-        List<ImageColorToggle> _toggles = new List<ImageColorToggle>();
+        private readonly List<ImageColorToggle> _toggles = new List<ImageColorToggle>();
 
         public void ResetToggles()
         {
-            foreach(ImageColorToggle t in _toggles)
+            foreach (ImageColorToggle t in this._toggles)
             {
                 t.Active = false;
             }
         }
+
         public Filters_Panel()
         {
-            Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(440021);
-            Name = "Filter Toggles";
-            FlowDirection = ControlFlowDirection.TopToBottom;
-            WidthSizingMode = SizingMode.Fill;
-            AutoSizePadding = new Point(5, 5);
-            HeightSizingMode = SizingMode.Standard;
-            Height = 250;
-            OuterControlPadding = new Vector2(5, 5);
-            ControlPadding = new Vector2(5, 3);
-            Location = new Point(0, 25);
+            this.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(440021);
+            this.Name = "Filter Toggles";
+            this.FlowDirection = ControlFlowDirection.TopToBottom;
+            this.WidthSizingMode = SizingMode.Fill;
+            this.AutoSizePadding = new Point(5, 5);
+            this.HeightSizingMode = SizingMode.Standard;
+            this.Height = 250;
+            this.OuterControlPadding = new Vector2(5, 5);
+            this.ControlPadding = new Vector2(5, 3);
+            this.Location = new Point(0, 25);
 
             var toggleDir = new Dictionary<Gw2Sharp.Models.ProfessionType, List<ImageColorToggle>>() {
                 {
@@ -72,12 +73,12 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
             };
 
             var profs = Characters.ModuleInstance.Data.Professions.ToDictionary(entry => entry.Key, entry => entry.Value);
-            profs = profs.OrderBy(e => e.Value.WeightClass).ThenBy(e => e.Value.API_Id).ToDictionary(e => e.Key, e => e.Value);
+            profs = profs.OrderBy(e => e.Value.WeightClass).ThenBy(e => e.Value.APIId).ToDictionary(e => e.Key, e => e.Value);
 
-            //Profession All Specs
+            // Profession All Specs
             foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> profession in profs)
             {
-                _toggles.Add(new ImageColorToggle()
+                this._toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = profession.Value.IconBig,
@@ -94,7 +95,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
 
             foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> profession in profs)
             {
-                _toggles.Add(new ImageColorToggle()
+                this._toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = profession.Value.IconBig,
@@ -123,12 +124,15 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
             {
                 foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> p in profs)
                 {
-                    var t = specToggles.Find(e => p.Key == e.Profession && !_toggles.Contains(e));
-                    if(t != null) _toggles.Add(t);
+                    var t = specToggles.Find(e => p.Key == e.Profession && !this._toggles.Contains(e));
+                    if (t != null)
+                    {
+                        this._toggles.Add(t);
+                    }
                 }
             }
 
-            //Crafting Professions
+            // Crafting Professions
             foreach (KeyValuePair<int, Data.CrafingProfession> crafting in Characters.ModuleInstance.Data.CrafingProfessions)
             {
                 if (crafting.Key > 0)
@@ -144,11 +148,11 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
                     };
                     img.TextureRectangle = crafting.Key > 0 ? new Rectangle(8, 7, 17, 19) : new Rectangle(4, 4, 24, 24);
                     img.SizeRectangle = new Rectangle(4, 4, 20, 20);
-                    _toggles.Add(img);
+                    this._toggles.Add(img);
                 }
             }
 
-            _toggles.Add(new ImageColorToggle()
+            this._toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(605021),
@@ -159,7 +163,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
                 BasicTooltipText = "Show Hidden Characters",
             });
 
-            _toggles.Add(new ImageColorToggle()
+            this._toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(593864),
@@ -172,7 +176,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
 
             foreach (KeyValuePair<Gw2Sharp.Models.RaceType, Data.Race> race in Characters.ModuleInstance.Data.Races)
             {
-                _toggles.Add(new ImageColorToggle()
+                this._toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = race.Value.Icon,
@@ -183,12 +187,12 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
                 });
             }
 
-            foreach (ImageColorToggle t in _toggles)
+            foreach (ImageColorToggle t in this._toggles)
             {
                 t.Parent = this;
             }
 
-            RecalculateLayout();            
+            this.RecalculateLayout();
         }
     }
 }

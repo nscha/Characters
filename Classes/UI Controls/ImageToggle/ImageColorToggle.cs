@@ -1,8 +1,8 @@
-﻿using Blish_HUD.Input;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
-    class ImageColorToggle : ImageGrayScaled
+    using Blish_HUD.Input;
+
+    internal class ImageColorToggle : ImageGrayScaled
     {
         public object FilterObject;
         public FilterCategory FilterCategory;
@@ -12,12 +12,18 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         {
             base.OnClick(e);
 
-            Active = !Active;
+            this.Active = !this.Active;
 
-            if (FilterObject != null)
+            if (this.FilterObject != null)
             {
-                if (Active) Characters.ModuleInstance.MainWindow.CategoryFilters[FilterCategory].Add(FilterObject);
-                else Characters.ModuleInstance.MainWindow.CategoryFilters[FilterCategory].Remove(FilterObject);
+                if (this.Active)
+                {
+                    Characters.ModuleInstance.MainWindow.CategoryFilters[this.FilterCategory].Add(this.FilterObject);
+                }
+                else
+                {
+                    Characters.ModuleInstance.MainWindow.CategoryFilters[this.FilterCategory].Remove(this.FilterObject);
+                }
 
                 Characters.ModuleInstance.MainWindow.FilterCharacters(null, null);
             }

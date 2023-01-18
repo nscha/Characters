@@ -1,23 +1,23 @@
-﻿using Blish_HUD;
-using Blish_HUD.Content;
-using Blish_HUD.Controls;
-using Blish_HUD.Input;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.BitmapFonts;
-using System;
-using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
+    using System;
+    using Blish_HUD;
+    using Blish_HUD.Content;
+    using Blish_HUD.Controls;
+    using Blish_HUD.Input;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using MonoGame.Extended.BitmapFonts;
+    using Color = Microsoft.Xna.Framework.Color;
+    using Point = Microsoft.Xna.Framework.Point;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
     public class Tag : FlowPanel
     {
         public BitmapFont Font
         {
-            get { return _text.Font; }
-            set { _text.Font = value; }
+            get { return this._text.Font; }
+            set { this._text.Font = value; }
         }
 
         private Color _disabledColor = new Color(156, 156, 156);
@@ -25,63 +25,69 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         public bool CanInteract = true;
         private Texture2D _disabledBackground;
         private AsyncTexture2D _background;
+
         public AsyncTexture2D Background
         {
-            get => _background;
+            get => this._background;
             set
             {
-                _background = value;
-                if(value != null)
+                this._background = value;
+                if (value != null)
                 {
-                    CreateDisabledBackground(null, null);
-                    _background.TextureSwapped += CreateDisabledBackground;
+                    this.CreateDisabledBackground(null, null);
+                    this._background.TextureSwapped += this.CreateDisabledBackground;
                 }
             }
         }
 
         private void CreateDisabledBackground(object sender, ValueChangedEventArgs<Texture2D> e)
         {
-            _disabledBackground = _background.Texture.ToGrayScaledPalettable();
-            _background.TextureSwapped -= CreateDisabledBackground;
+            this._disabledBackground = this._background.Texture.ToGrayScaledPalettable();
+            this._background.TextureSwapped -= this.CreateDisabledBackground;
         }
 
-        private Label _text;
-        private ImageButton _delete;
-        private ImageButton _dummy;
+        private readonly Label _text;
+        private readonly ImageButton _delete;
+        private readonly ImageButton _dummy;
+
         public bool ShowDelete
         {
-            get => _delete.Visible;
+            get => this._delete.Visible;
             set
             {
-                if (_delete != null) 
+                if (this._delete != null)
                 {
-                    _delete.Visible = value;
-                    _dummy.Visible = !value;
+                    this._delete.Visible = value;
+                    this._dummy.Visible = !value;
                 };
             }
         }
 
         public string Text
         {
-            get => _text != null ? _text.Text : null;
+            get => this._text != null ? this._text.Text : null;
             set
             {
-                if (_text != null) _text.Text = value;
+                if (this._text != null)
+                {
+                    this._text.Text = value;
+                }
             }
         }
+
         public event EventHandler Deleted;
 
         public Tag()
         {
-            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(1620622);
-            WidthSizingMode = SizingMode.AutoSize;
-            FlowDirection = ControlFlowDirection.SingleLeftToRight;
-            OuterControlPadding = new Vector2(3, 3);
-            ControlPadding = new Vector2(2, 0);
-            AutoSizePadding = new Point(5, 3);
-            Height = 26;
+            this.Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(1620622);
+            this.WidthSizingMode = SizingMode.AutoSize;
+            this.FlowDirection = ControlFlowDirection.SingleLeftToRight;
+            this.OuterControlPadding = new Vector2(3, 3);
+            this.ControlPadding = new Vector2(2, 0);
+            this.AutoSizePadding = new Point(5, 3);
+            this.Height = 26;
 
-            _delete = new ImageButton()
+            this._delete = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156012),
@@ -90,9 +96,9 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
                 Size = new Point(20, 20),
                 BasicTooltipText = "Remove Tag",
             };
-            _delete.Click += _delete_Click;
+            this._delete.Click += this.Delete_Click;
 
-            _dummy = new ImageButton()
+            this._dummy = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156025),
@@ -101,55 +107,55 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
                 Visible = false,
             };
 
-            _text = new Label()
+            this._text = new Label()
             {
                 Parent = this,
                 AutoSizeWidth = true,
-                Height = Height - (int) OuterControlPadding.Y,
+                Height = this.Height - (int)this.OuterControlPadding.Y,
             };
         }
 
-        private void _delete_Click(object sender, MouseEventArgs e)
+        private void Delete_Click(object sender, MouseEventArgs e)
         {
             this.Deleted?.Invoke(this, EventArgs.Empty);
-            Dispose();
+            this.Dispose();
         }
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (_background != null)
+            if (this._background != null)
             {
-                var texture = Active ? _background : _disabledBackground != null ? _disabledBackground : _background;
+                var texture = this.Active ? this._background : this._disabledBackground != null ? this._disabledBackground : this._background;
 
-                spriteBatch.DrawOnCtrl(this, texture, bounds, bounds, Active ? Color.White * 0.98f : _disabledColor * 0.8f);
+                spriteBatch.DrawOnCtrl(this, texture, bounds, bounds, this.Active ? Color.White * 0.98f : this._disabledColor * 0.8f);
             }
 
             var color = Color.Black;
 
-            //Top
+            // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
 
-            //Bottom
+            // Bottom
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 2, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 1, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
 
-            //Left
+            // Left
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
 
-            //Right
+            // Right
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 2, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
         }
 
         protected override void OnClick(MouseEventArgs e)
         {
-            if (CanInteract)
+            if (this.CanInteract)
             {
-                base.OnClick(e); 
-                Active = !Active;
-            }                
+                base.OnClick(e);
+                this.Active = !this.Active;
+            }
         }
     }
 }

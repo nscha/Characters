@@ -1,12 +1,12 @@
-﻿using Blish_HUD;
-using Blish_HUD.Content;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
-
-namespace Kenedia.Modules.Characters.Classes
+﻿namespace Kenedia.Modules.Characters.Classes
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Runtime.CompilerServices;
+    using Blish_HUD;
+    using Blish_HUD.Content;
+
     public enum SpecializationType
     {
         None = 0,
@@ -52,156 +52,178 @@ namespace Kenedia.Modules.Characters.Classes
     {
         public void Initialize()
         {
-            Tags.CollectionChanged += Tags_CollectionChanged;
-            Initialized = true;
+            this.Tags.CollectionChanged += this.Tags_CollectionChanged;
+            this.Initialized = true;
         }
 
         public Character_Model()
         {
-
         }
 
         private void Tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            Characters.Logger.Debug(nameof(Tags_CollectionChanged));
-            OnUpdated();
+            Characters.Logger.Debug(nameof(this.Tags_CollectionChanged));
+            this.OnUpdated();
         }
 
         public string _name;
+
         public string Name
         {
-            get => _name;
-            set => SetProperty(ref _name, value);
+            get => this._name;
+            set => this.SetProperty(ref this._name, value);
         }
+
         public int _level;
+
         public int Level
         {
-            get => _level;
-            set => SetProperty(ref _level, value);
+            get => this._level;
+            set => this.SetProperty(ref this._level, value);
         }
+
         public int _map = 0;
+
         public int Map
         {
-            get => _map;
-            set => SetProperty(ref _map, value);
+            get => this._map;
+            set => this.SetProperty(ref this._map, value);
         }
 
         public List<CharacterCrafting> Crafting = new List<CharacterCrafting>();
         public Gw2Sharp.Models.RaceType _race;
+
         public Gw2Sharp.Models.RaceType Race
         {
-            get => _race;
-            set => SetProperty(ref _race, value);
+            get => this._race;
+            set => this.SetProperty(ref this._race, value);
         }
+
         public Gw2Sharp.Models.ProfessionType _profession;
+
         public Gw2Sharp.Models.ProfessionType Profession
         {
-            get => _profession;
-            set => SetProperty(ref _profession, value);
+            get => this._profession;
+            set => this.SetProperty(ref this._profession, value);
         }
+
         public SpecializationType _specialization;
+
         public SpecializationType Specialization
         {
-            get => _specialization;
-            set => SetProperty(ref _specialization, value);
+            get => this._specialization;
+            set => this.SetProperty(ref this._specialization, value);
         }
 
         public DateTimeOffset _created;
+
         public DateTimeOffset Created
         {
-            get => _created;
-            set => SetProperty(ref _created, value);
+            get => this._created;
+            set => this.SetProperty(ref this._created, value);
         }
+
         public DateTime _lastModified;
+
         public DateTime LastModified
         {
-            get => _lastModified;
-            set => SetProperty(ref _lastModified, value);
+            get => this._lastModified;
+            set => this.SetProperty(ref this._lastModified, value);
         }
+
         public int OrderIndex = 0;
         public int OrderOffset = 0;
         public DateTime _lastLogin;
+
         public DateTime LastLogin
         {
-            get => _lastLogin.AddMilliseconds(-OrderOffset);
-            set => SetProperty(ref _lastLogin, value);
+            get => this._lastLogin.AddMilliseconds(-this.OrderOffset);
+            set => this.SetProperty(ref this._lastLogin, value);
         }
 
         public string _iconPath;
+
         public string IconPath
         {
-            get => _iconPath;
+            get => this._iconPath;
             set
             {
-                _iconPath = value;
-                _Icon = null;
-                OnUpdated();
+                this._iconPath = value;
+                this._Icon = null;
+                this.OnUpdated();
             }
         }
 
         private AsyncTexture2D _Icon;
+
         public AsyncTexture2D Icon
         {
             set
             {
-                _Icon = value;
+                this._Icon = value;
                 this.Updated?.Invoke(this, null);
             }
+
             get
             {
-                if (_Icon == null && IconPath != null && IconPath.Length > 1)
+                if (this._Icon == null && this.IconPath != null && this.IconPath.Length > 1)
                 {
                     GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
                     {
-                        _Icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                        this._Icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + this.IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                     });
                 }
-                else if (IconPath == null || _Icon == null)
+                else if (this.IconPath == null || this._Icon == null)
                 {
 
-                    if (Enum.IsDefined(typeof(SpecializationType), Specialization) && Specialization != SpecializationType.None)
+                    if (Enum.IsDefined(typeof(SpecializationType), this.Specialization) && this.Specialization != SpecializationType.None)
                     {
-                        return Characters.ModuleInstance.Data.Specializations[Specialization].IconBig;
+                        return Characters.ModuleInstance.Data.Specializations[this.Specialization].IconBig;
                     }
                     else
                     {
-                        return Characters.ModuleInstance.Data.Professions[Profession].IconBig;
+                        return Characters.ModuleInstance.Data.Professions[this.Profession].IconBig;
                     }
                 }
 
-                return _Icon;
+                return this._Icon;
             }
         }
 
         private bool _show = true;
+
         public bool Show
         {
-            get => _show;
-            set => SetProperty(ref _show, value);
-
+            get => this._show;
+            set => this.SetProperty(ref this._show, value);
         }
+
         public TagList Tags = new TagList();
 
         public int _position;
+
         public int Position
         {
-            get => _position;
+            get => this._position;
             set
             {
-                _position = value;
-                Save();
+                this._position = value;
+                this.Save();
             }
         }
+
         public int _index;
+
         public int Index
         {
-            get => _index;
+            get => this._index;
             set
             {
-                _index = value;
-                Save();
+                this._index = value;
+                this.Save();
             }
         }
+
         public int Age
         {
             get
@@ -210,14 +232,18 @@ namespace Kenedia.Modules.Characters.Classes
                 var today = DateTimeOffset.UtcNow;
 
                 // Calculate the age.
-                var age = today.Year - Created.Year;
+                var age = today.Year - this.Created.Year;
 
                 // Go back to the year in which the person was born in case of a leap year
-                if (Created.Date > today.AddYears(-age)) age--;
+                if (this.Created.Date > today.AddYears(-age))
+                {
+                    age--;
+                }
 
                 return age;
             }
         }
+
         public bool HasBirthdayPresent
         {
             get
@@ -225,11 +251,14 @@ namespace Kenedia.Modules.Characters.Classes
                 DateTime nextBirthday = DateTime.MinValue;
                 for (int i = 1; i < 100; i++)
                 {
-                    DateTime birthDay = Created.AddYears(i).DateTime;
+                    DateTime birthDay = this.Created.AddYears(i).DateTime;
 
                     if (birthDay <= DateTime.UtcNow)
                     {
-                        if (birthDay > LastLogin) return true;
+                        if (birthDay > this.LastLogin)
+                        {
+                            return true;
+                        }
                     }
                     else
                     {
@@ -246,25 +275,27 @@ namespace Kenedia.Modules.Characters.Classes
         private void OnUpdated()
         {
             this.Updated?.Invoke(this, EventArgs.Empty);
-            Save();
+            this.Save();
         }
 
-        protected bool SetProperty<T>(ref T property, T newValue, [CallerMemberName] string caller = "" )
+        protected bool SetProperty<T>(ref T property, T newValue, [CallerMemberName] string caller = "")
         {
-            if (Equals(property, newValue)) return false;
-
+            if (Equals(property, newValue))
+            {
+                return false;
+            }
 
             property = newValue;
-            if(Initialized && (caller != nameof(LastLogin) && caller != nameof(LastModified) && caller != nameof(LastLogin)))
+            if (this.Initialized && caller != nameof(this.LastLogin) && caller != nameof(this.LastModified) && caller != nameof(this.LastLogin))
             {
-                OnUpdated();
+                this.OnUpdated();
             }
             return true;
         }
 
         public bool Initialized;
 
-        void Save()
+        private void Save()
         {
             Characters.ModuleInstance.SaveCharacters = true;
         }
@@ -274,8 +305,8 @@ namespace Kenedia.Modules.Characters.Classes
         public void Delete()
         {
             this.Deleted?.Invoke(null, null);
-            Characters.ModuleInstance.Character_Models.Remove(this);
-            Save();
+            Characters.ModuleInstance.CharacterModels.Remove(this);
+            this.Save();
         }
     }
 }

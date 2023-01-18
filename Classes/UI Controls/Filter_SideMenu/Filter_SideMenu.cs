@@ -1,64 +1,69 @@
-﻿using Blish_HUD;
-using Blish_HUD.Controls;
-using Blish_HUD.Input;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using Blish_HUD;
+    using Blish_HUD.Controls;
+    using Blish_HUD.Input;
+    using Microsoft.Xna.Framework;
+    using Color = Microsoft.Xna.Framework.Color;
+    using Point = Microsoft.Xna.Framework.Point;
+
     public class Filter_SideMenu : TabbedPanel
     {
-        double OpacityTick = 0;
-        DateTime LastMouseOver = DateTime.Now;
+        private double opacityTick = 0;
+        private DateTime lastMouseOver = DateTime.Now;
+        private readonly Filters_Panel filters;
 
-        Filters_Panel Filters;
-        public List<Tag> Tags {
-            get => _tagsPanel.Tags;
+        public List<Tag> Tags
+        {
+            get => this._tagsPanel.Tags;
         }
-        Tags_Panel _tagsPanel;
+
+        private readonly Tags_Panel _tagsPanel;
 
         public Filter_SideMenu()
         {
-            Size = new Point(200, 100);
-            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003); //155985
-            ColorBackground = Color.Black * 0.75f;
-            BackgroundTint = new Color(200,200,200,255);
+            this.Size = new Point(200, 100);
+            this.Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003); // 155985
+            this.ColorBackground = Color.Black * 0.75f;
+            this.BackgroundTint = new Color(200, 200, 200, 255);
 
-            Parent = GameService.Graphics.SpriteScreen;
-            ZIndex = 999;
-            Visible = false;
-            HeightSizingMode = SizingMode.AutoSize;
+            this.Parent = GameService.Graphics.SpriteScreen;
+            this.ZIndex = 999;
+            this.Visible = false;
+            this.HeightSizingMode = SizingMode.AutoSize;
 
-            Filters = new Filters_Panel();
-            AddTab(Filters);
+            this.filters = new Filters_Panel();
+            this.AddTab(this.filters);
 
-            _tagsPanel = new Tags_Panel() { Visible = false };
-            AddTab(_tagsPanel);
+            this._tagsPanel = new Tags_Panel() { Visible = false };
+            this.AddTab(this._tagsPanel);
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            LastMouseOver = DateTime.Now;
-            Opacity = 1f;
-            Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            this.lastMouseOver = DateTime.Now;
+            this.Opacity = 1f;
+            this.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
         }
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - OpacityTick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - this.opacityTick > 50)
             {
-                OpacityTick = gameTime.TotalGameTime.TotalMilliseconds;
+                this.opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (!MouseOver && DateTime.Now.Subtract(LastMouseOver).TotalMilliseconds >= 2500 && !Characters.ModuleInstance.MainWindow.FilterBox.Focused)
+                if (!this.MouseOver && DateTime.Now.Subtract(this.lastMouseOver).TotalMilliseconds >= 2500 && !Characters.ModuleInstance.MainWindow.FilterBox.Focused)
                 {
-                    Opacity = Opacity - (float)0.05;
-                    if (Opacity <= (float)0) Hide();
+                    this.Opacity = this.Opacity - (float)0.05;
+                    if (this.Opacity <= (float)0)
+                    {
+                        this.Hide();
+                    }
                 }
             }
         }
@@ -67,19 +72,19 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         {
             base.OnResized(e);
 
-            var newSize = new Point(Width / 2, 25);
+            var newSize = new Point(this.Width / 2, 25);
         }
 
         protected override void OnMouseMoved(MouseEventArgs e)
         {
             base.OnMouseMoved(e);
-            LastMouseOver = DateTime.Now;
-            Opacity = 1f;
+            this.lastMouseOver = DateTime.Now;
+            this.Opacity = 1f;
         }
 
         public void ResetToggles()
         {
-            Filters.ResetToggles();
+            this.filters.ResetToggles();
         }
     }
 }

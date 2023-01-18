@@ -1,24 +1,25 @@
-﻿using Blish_HUD;
-using Blish_HUD.Content;
-using Blish_HUD.Controls;
-using Blish_HUD.Input;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using Blish_HUD;
+    using Blish_HUD.Content;
+    using Blish_HUD.Controls;
+    using Blish_HUD.Input;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Color = Microsoft.Xna.Framework.Color;
+    using Point = Microsoft.Xna.Framework.Point;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
     public class TabbedPanel : Panel
     {
         private PanelTab _activeTab;
+
         public PanelTab ActiveTab
         {
-            get => _activeTab;
-            set => SwitchTab(value);
+            get => this._activeTab;
+            set => this.SwitchTab(value);
         }
 
         protected FlowPanel _tabsButtonPanel = new FlowPanel()
@@ -35,71 +36,74 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         public Rectangle TextureRectangle = Rectangle.Empty;
         public Point TextureOffset = Point.Zero;
 
-        private List<PanelTab> _tabs = new List<PanelTab>();
+        private readonly List<PanelTab> _tabs = new List<PanelTab>();
+
         public List<PanelTab> Tabs
         {
-            get => _tabs;
+            get => this._tabs;
         }
 
         public TabbedPanel()
         {
-            _tabsButtonPanel.Parent = this;
-            _tabsButtonPanel.Resized += OnTabButtonPanelResized;
+            this._tabsButtonPanel.Parent = this;
+            this._tabsButtonPanel.Resized += this.OnTabButtonPanelResized;
 
-            HeightSizingMode = SizingMode.AutoSize;
-            //Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
-            Parent = GameService.Graphics.SpriteScreen;
-            ZIndex = 999;
-            Visible = true;
-            BackgroundTint = Color.Honeydew * 0.95f;
+            this.HeightSizingMode = SizingMode.AutoSize;
+            // Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
+            this.Parent = GameService.Graphics.SpriteScreen;
+            this.ZIndex = 999;
+            this.Visible = true;
+            this.BackgroundTint = Color.Honeydew * 0.95f;
         }
 
         private void OnTabButtonPanelResized(object sender, ResizedEventArgs e)
         {
-            RecalculateLayout();
+            this.RecalculateLayout();
         }
 
-        event EventHandler TabAdded;
-        event EventHandler TabRemoved;
+        private event EventHandler TabAdded;
+
+        private event EventHandler TabRemoved;
+
         public void AddTab(PanelTab tab)
         {
             tab.Parent = this;
-            tab.Disposed += OnTabDisposed;
-            tab.TabButton.Parent = _tabsButtonPanel;
-            tab.TabButton.Click += (sender, model) => TabButton_Click(sender, model, tab);
-            _tabs.Add(tab);
+            tab.Disposed += this.OnTabDisposed;
+            tab.TabButton.Parent = this._tabsButtonPanel;
+            tab.TabButton.Click += (sender, model) => this.TabButton_Click(sender, model, tab);
+            this._tabs.Add(tab);
             this.TabAdded?.Invoke(this, EventArgs.Empty);
-            ActiveTab ??= tab;
-            RecalculateLayout();
+            this.ActiveTab ??= tab;
+            this.RecalculateLayout();
         }
 
         private void TabButton_Click(object sender, MouseEventArgs e, PanelTab t)
         {
-            SwitchTab(t);
+            this.SwitchTab(t);
         }
 
         private void OnTabDisposed(object sender, EventArgs e)
         {
-            RemoveTab((PanelTab)sender);
+            this.RemoveTab((PanelTab)sender);
         }
 
         public void RemoveTab(PanelTab tab)
         {
-            tab.Disposed -= OnTabDisposed;
-            tab.TabButton.Click -= (sender, model) => TabButton_Click(sender, model, tab);
+            tab.Disposed -= this.OnTabDisposed;
+            tab.TabButton.Click -= (sender, model) => this.TabButton_Click(sender, model, tab);
             tab.Parent = null;
             tab.TabButton.Parent = null;
 
-            _tabs.Remove(tab);
+            this._tabs.Remove(tab);
             this.TabRemoved?.Invoke(this, EventArgs.Empty);
-            RecalculateLayout();
+            this.RecalculateLayout();
         }
 
         public override void RecalculateLayout()
         {
-            var button_amount = Math.Max(1, _tabsButtonPanel.Children.Count);
-            var width = (_tabsButtonPanel.Width - ((button_amount -1) * (int)_tabsButtonPanel.ControlPadding.X)) / button_amount;
-            foreach (Control c in _tabsButtonPanel.Children)
+            var button_amount = Math.Max(1, this._tabsButtonPanel.Children.Count);
+            var width = (this._tabsButtonPanel.Width - ((button_amount - 1) * (int)this._tabsButtonPanel.ControlPadding.X)) / button_amount;
+            foreach (Control c in this._tabsButtonPanel.Children)
             {
                 c.Width = width;
             }
@@ -112,51 +116,61 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
 
         protected void SwitchTab(PanelTab tab = null)
         {
-            foreach(PanelTab t in Tabs)
+            foreach (PanelTab t in this.Tabs)
             {
-                if(t != tab) t.Active = false;
+                if (t != tab)
+                {
+                    t.Active = false;
+                }
             }
-            if(tab != null) tab.Active = true;
+            if (tab != null)
+            {
+                tab.Active = true;
+            }
 
-            _activeTab = tab;
+            this._activeTab = tab;
         }
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
 
-            //if(ColorBackground != null) spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, _tabsButtonPanel.Bottom, bounds.Width, bounds.Height - _tabsButtonPanel.Bottom), Rectangle.Empty, ColorBackground);
-            if(ColorBackground != null) spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, bounds.Height), Rectangle.Empty, ColorBackground);
-
-            if (Background != null)
+            // if(ColorBackground != null) spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, _tabsButtonPanel.Bottom, bounds.Width, bounds.Height - _tabsButtonPanel.Bottom), Rectangle.Empty, ColorBackground);
+            if (this.ColorBackground != null)
             {
-                var textRect = TextureRectangle != Rectangle.Empty ? TextureRectangle : new Rectangle(Point.Zero, _size);
+                spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, bounds.Height), Rectangle.Empty, this.ColorBackground);
+            }
 
-                spriteBatch.DrawOnCtrl(this,
-                        Background,
-                        bounds,
-                        new Rectangle(TextureOffset.X + TextureRectangle.X, TextureOffset.Y + TextureRectangle.Y, textRect.Width, textRect.Height),
-                        BackgroundTint,
-                        0f,
-                        default);
+            if (this.Background != null)
+            {
+                var textRect = this.TextureRectangle != Rectangle.Empty ? this.TextureRectangle : new Rectangle(Point.Zero, this._size);
+
+                spriteBatch.DrawOnCtrl(
+                    this,
+                    this.Background,
+                    bounds,
+                    new Rectangle(this.TextureOffset.X + this.TextureRectangle.X, this.TextureOffset.Y + this.TextureRectangle.Y, textRect.Width, textRect.Height),
+                    this.BackgroundTint,
+                    0f,
+                    default);
             }
 
 
             var color = Color.Black;
 
-            //Top
+            // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
 
-            //Bottom
+            // Bottom
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 2, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 1, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
 
-            //Left
+            // Left
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
 
-            //Right
+            // Right
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 2, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
         }
@@ -165,7 +179,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         {
             base.DisposeControl();
 
-            _tabs.DisposeAll();
+            this._tabs.DisposeAll();
         }
     }
 }

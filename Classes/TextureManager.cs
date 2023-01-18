@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Kenedia.Modules.Characters
+﻿namespace Kenedia.Modules.Characters
 {
-    public enum _Controls
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.Xna.Framework.Graphics;
+
+    public enum Controls
     {
         Separator,
         Plus_Button,
@@ -23,7 +23,8 @@ namespace Kenedia.Modules.Characters
         Delete_Button,
         Delete_Button_Hovered,
     }
-    public enum _Icons
+
+    public enum Icons
     {
         Bug,
         ModuleIcon,
@@ -33,7 +34,8 @@ namespace Kenedia.Modules.Characters
         FolderGray,
         Camera,
     }
-    public enum _Backgrounds
+
+    public enum Backgrounds
     {
         MainWindow,
     }
@@ -42,12 +44,12 @@ namespace Kenedia.Modules.Characters
     {
         public List<string> TextureFiles = new List<string>()
             {
-                "155985.png", //Background
-                "156015.png", //Emblem
-                "156678.png", //Icon Normal
-                "156679.png", //Icon Hovered
-                "155052.png", //Cog
-                "157110.png", //Cog Hovered
+                "155985.png", // Background
+                "156015.png", // Emblem
+                "156678.png", // Icon Normal
+                "156679.png", // Icon Hovered
+                "155052.png", // Cog
+                "157110.png", // Cog Hovered
             };
 
         public List<Texture2D> _Backgrounds = new List<Texture2D>();
@@ -55,77 +57,99 @@ namespace Kenedia.Modules.Characters
         public List<Texture2D> _Controls = new List<Texture2D>();
 
         private bool disposed = false;
+
         public void Dispose()
         {
-            if (!disposed)
+            if (!this.disposed)
             {
-                disposed = true;
+                this.disposed = true;
 
-                _Backgrounds?.DisposeAll();
-                _Icons?.DisposeAll();
-                _Controls?.DisposeAll();
+                this._Backgrounds?.DisposeAll();
+                this._Icons?.DisposeAll();
+                this._Controls?.DisposeAll();
             }
         }
 
         public TextureManager()
         {
-            var ContentsManager = Characters.ModuleInstance.ContentsManager;
+            var contentsManager = Characters.ModuleInstance.ContentsManager;
 
-            var values = Enum.GetValues(typeof(_Backgrounds));
+            var values = Enum.GetValues(typeof(Backgrounds));
             if (values.Length > 0)
             {
-                _Backgrounds = new List<Texture2D>(new Texture2D[values.Cast<int>().Max() + 1]);
-                foreach (_Backgrounds num in values)
+                this._Backgrounds = new List<Texture2D>(new Texture2D[values.Cast<int>().Max() + 1]);
+                foreach (Backgrounds num in values)
                 {
-                    var texture = ContentsManager.GetTexture(@"textures\backgrounds\" + (int)num + ".png");
-                    if (texture != null) _Backgrounds.Insert((int)num, texture);
+                    var texture = contentsManager.GetTexture(@"textures\backgrounds\" + (int)num + ".png");
+                    if (texture != null)
+                    {
+                        this._Backgrounds.Insert((int)num, texture);
+                    }
                 }
             }
 
-            values = Enum.GetValues(typeof(_Icons));
+            values = Enum.GetValues(typeof(Icons));
             if (values.Length > 0)
             {
-                _Icons = new List<Texture2D>(new Texture2D[values.Cast<int>().Max() + 1]);
-                foreach (_Icons num in values)
+                this._Icons = new List<Texture2D>(new Texture2D[values.Cast<int>().Max() + 1]);
+                foreach (Icons num in values)
                 {
-                    var texture = ContentsManager.GetTexture(@"textures\icons\" + (int)num + ".png");
-                    if (texture != null) _Icons.Insert((int)num, texture);
+                    var texture = contentsManager.GetTexture(@"textures\icons\" + (int)num + ".png");
+                    if (texture != null)
+                    {
+                        this._Icons.Insert((int)num, texture);
+                    }
                 }
             }
 
-            values = Enum.GetValues(typeof(_Controls));
+            values = Enum.GetValues(typeof(Controls));
             if (values.Length > 0)
             {
-                _Controls = new List<Texture2D>(new Texture2D[values.Cast<int>().Max() + 1]);
-                foreach (_Controls num in values)
+                this._Controls = new List<Texture2D>(new Texture2D[values.Cast<int>().Max() + 1]);
+                foreach (Controls num in values)
                 {
-                    var texture = ContentsManager.GetTexture(@"textures\controls\" + (int)num + ".png");
-                    if (texture != null) _Controls.Insert((int)num, texture);
+                    var texture = contentsManager.GetTexture(@"textures\controls\" + (int)num + ".png");
+                    if (texture != null)
+                    {
+                        this._Controls.Insert((int)num, texture);
+                    }
                 }
             }
         }
 
-        public Texture2D getBackground(_Backgrounds background)
+        public Texture2D GetBackground(Backgrounds background)
         {
             var index = (int)background;
 
-            if (index < _Backgrounds.Count && _Backgrounds[index] != null) return _Backgrounds[index];
-            return _Icons[0];
+            if (index < this._Backgrounds.Count && this._Backgrounds[index] != null)
+            {
+                return this._Backgrounds[index];
+            }
+
+            return this._Icons[0];
         }
 
-        public Texture2D getIcon(_Icons icon)
+        public Texture2D GetIcon(Icons icon)
         {
             var index = (int)icon;
 
-            if (index < _Icons.Count && _Icons[index] != null) return _Icons[index];
-            return _Icons[0];
+            if (index < this._Icons.Count && this._Icons[index] != null)
+            {
+                return this._Icons[index];
+            }
+
+            return this._Icons[0];
         }
 
-        public Texture2D getControlTexture(_Controls control)
+        public Texture2D GetControlTexture(Controls control)
         {
             var index = (int)control;
-            if (index < _Controls.Count && _Controls[index] != null) return _Controls[index];
-            return _Icons[0];
+            if (index < this._Controls.Count && this._Controls[index] != null)
+            {
+                return this._Controls[index];
+            }
+
+            return this._Icons[0];
         }
     }
 }

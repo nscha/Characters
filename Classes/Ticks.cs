@@ -3,7 +3,7 @@
     public class Ticks
     {
         public double Global;
-        public double API_Update;
+        public double APIUpdate;
         public double Save;
         public double Tags;
         public double OCR;

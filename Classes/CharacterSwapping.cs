@@ -1,12 +1,12 @@
-﻿using Blish_HUD;
-using Blish_HUD.Controls.Extern;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Linq;
-
-namespace Kenedia.Modules.Characters.Classes
+﻿namespace Kenedia.Modules.Characters.Classes
 {
+    using System;
+    using System.Linq;
+    using Blish_HUD;
+    using Blish_HUD.Controls.Extern;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
+
     public enum SwappingState
     {
         None,
@@ -27,24 +27,27 @@ namespace Kenedia.Modules.Characters.Classes
 
     public class CharacterSwapping
     {
-        double Tick;
+        private double tick;
         public SwappingState State = SwappingState.None;
         public SwappingState SubState = SwappingState.None;
         public Character_Model Character;
+
         public event EventHandler Succeeded;
+
         public event EventHandler Failed;
-        
+
         public CharacterSwapping(Character_Model character_Model)
         {
-            Character = character_Model;
-        }
-        public void Reset()
-        {
-            State = SwappingState.None;
-            Tick = 0;
+            this.Character = character_Model;
         }
 
-        bool LoggingOut()
+        public void Reset()
+        {
+            this.State = SwappingState.None;
+            this.tick = 0;
+        }
+
+        private bool LoggingOut()
         {
             if (GameService.GameIntegration.Gw2Instance.IsInGame)
             {
@@ -61,7 +64,7 @@ namespace Kenedia.Modules.Characters.Classes
 
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(primary, false);
 
-                //Trigger other Modules such as GatherTools
+                // Trigger other Modules such as GatherTools
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(primary, true);
 
                 foreach (ModifierKeys mod in Enum.GetValues(typeof(ModifierKeys)))
@@ -78,9 +81,9 @@ namespace Kenedia.Modules.Characters.Classes
             return !GameService.GameIntegration.Gw2Instance.IsInGame;
         }
 
-        bool MoveToFirstCharacter()
+        private bool MoveToFirstCharacter()
         {
-            for (int i = 0; i < Characters.ModuleInstance.Character_Models.Count; i++)
+            for (int i = 0; i < Characters.ModuleInstance.CharacterModels.Count; i++)
             {
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
             }
@@ -88,82 +91,96 @@ namespace Kenedia.Modules.Characters.Classes
             return true;
         }
 
-        bool MoveToCharacter()
+        private bool MoveToCharacter()
         {
-            var order = Characters.ModuleInstance.Character_Models.OrderByDescending(e => e.LastLogin);
+            var order = Characters.ModuleInstance.CharacterModels.OrderByDescending(e => e.LastLogin);
             foreach (Character_Model c in order)
             {
-                if (c == Character) break;
+                if (c == this.Character)
+                {
+                    break;
+                }
+
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
             }
 
             return true;
         }
 
-        bool ConfirmName()
+        private bool ConfirmName()
         {
-            var ocr_result = Characters.ModuleInstance.Settings._UseOCR.Value ? Characters.ModuleInstance.OCR.Read() : "No OCR";
+            var ocr_result = Characters.ModuleInstance.Settings.UseOCR.Value ? Characters.ModuleInstance.OCR.Read() : "No OCR";
 
-            if(Characters.ModuleInstance.Settings._UseOCR.Value) Characters.Logger.Debug($"OCR Result: {ocr_result}.");
+            if (Characters.ModuleInstance.Settings.UseOCR.Value)
+            {
+                Characters.Logger.Debug($"OCR Result: {ocr_result}.");
+            }
 
-            return !Characters.ModuleInstance.Settings._UseOCR.Value || Character.Name.ToLower() == ocr_result.ToLower();
+            return !Characters.ModuleInstance.Settings.UseOCR.Value || this.Character.Name.ToLower() == ocr_result.ToLower();
         }
 
-        bool Login()
+        private bool Login()
         {
-            if (Characters.ModuleInstance.Settings.EnterOnSwap.Value) Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
-            return true; 
+            if (Characters.ModuleInstance.Settings.EnterOnSwap.Value)
+            {
+                Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
+            }
+
+            return true;
         }
 
-        bool IsLoaded()
+        private bool IsLoaded()
         {
             return GameService.GameIntegration.Gw2Instance.IsInGame;
         }
 
         public void Run(GameTime gameTime)
         {
-            Tick += gameTime.ElapsedGameTime.TotalMilliseconds;
-            //Characters.Logger.Debug(State.ToString());
+            this.tick += gameTime.ElapsedGameTime.TotalMilliseconds;
+            // Characters.Logger.Debug(State.ToString());
 
-            if (Tick < 0) return;
+            if (this.tick < 0)
+            {
+                return;
+            }
 
-            switch (State)
+            switch (this.State)
             {
                 case SwappingState.None:
-                    if (LoggingOut())
+                    if (this.LoggingOut())
                     {
-                        State = SwappingState.LoggedOut;
-                        Tick = -Characters.ModuleInstance.Settings.SwapDelay.Value;
+                        this.State = SwappingState.LoggedOut;
+                        this.tick = -Characters.ModuleInstance.Settings.SwapDelay.Value;
                     }
                     else
                     {
-                        Tick = -1000;
+                        this.tick = -1000;
                     }
                     break;
 
                 case SwappingState.LoggedOut:
-                    if (MoveToFirstCharacter())
+                    if (this.MoveToFirstCharacter())
                     {
-                        State = SwappingState.MovedToStart;
+                        this.State = SwappingState.MovedToStart;
                     }
                     break;
 
                 case SwappingState.MovedToStart:
-                    if (MoveToCharacter())
+                    if (this.MoveToCharacter())
                     {
-                        State = SwappingState.MovedToCharacter;
-                        Tick = -750;
+                        this.State = SwappingState.MovedToCharacter;
+                        this.tick = -750;
                     }
                     break;
 
                 case SwappingState.MovedToCharacter:
-                    if (ConfirmName())
+                    if (this.ConfirmName())
                     {
-                        State = SwappingState.CharacterFound;
+                        this.State = SwappingState.CharacterFound;
                     }
                     else
                     {
-                        State = SwappingState.CharacterLost;
+                        this.State = SwappingState.CharacterLost;
                     }
                     break;
 
@@ -171,49 +188,49 @@ namespace Kenedia.Modules.Characters.Classes
                     break;
 
                 case SwappingState.CharacterFound:
-                    if (Login())
+                    if (this.Login())
                     {
-                        State = SwappingState.LoggingIn;
-                        Tick = -1000;
+                        this.State = SwappingState.LoggingIn;
+                        this.tick = -1000;
                     }
                     break;
 
                 case SwappingState.CharacterLost:
-                    switch (SubState)
+                    switch (this.SubState)
                     {
                         case SwappingState.None:
                             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
-                            SubState = SwappingState.MovedLeft;
-                            Tick = -750;
+                            this.SubState = SwappingState.MovedLeft;
+                            this.tick = -750;
                             break;
 
                         case SwappingState.MovedLeft:
-                            if (ConfirmName())
+                            if (this.ConfirmName())
                             {
-                                State = SwappingState.CharacterFound;
+                                this.State = SwappingState.CharacterFound;
                             }
                             else
                             {
-                                SubState = SwappingState.CheckedLeft;
+                                this.SubState = SwappingState.CheckedLeft;
                             }
                             break;
 
                         case SwappingState.CheckedLeft:
                             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
                             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-                            Tick = -750;
-                            SubState = SwappingState.MovedRight;
+                            this.tick = -750;
+                            this.SubState = SwappingState.MovedRight;
                             break;
 
                         case SwappingState.MovedRight:
-                            if (ConfirmName())
+                            if (this.ConfirmName())
                             {
-                                State = SwappingState.CharacterFound;
+                                this.State = SwappingState.CharacterFound;
                             }
                             else
                             {
-                                SubState = SwappingState.CheckedRight;
-                                State = SwappingState.CharacterFullyLost;
+                                this.SubState = SwappingState.CheckedRight;
+                                this.State = SwappingState.CharacterFullyLost;
                             }
                             break;
                     }
@@ -224,13 +241,13 @@ namespace Kenedia.Modules.Characters.Classes
                     this.Failed?.Invoke(null, null);
                     break;
                 case SwappingState.LoggingIn:
-                    if (IsLoaded())
+                    if (this.IsLoaded())
                     {
-                        State = SwappingState.Done;
+                        this.State = SwappingState.Done;
                     }
                     break;
                 case SwappingState.Done:
-                    Character.LastLogin = DateTime.UtcNow;
+                    this.Character.LastLogin = DateTime.UtcNow;
                     this.Succeeded?.Invoke(null, null);
                     break;
             }

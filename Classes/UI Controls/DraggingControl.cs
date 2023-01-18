@@ -1,42 +1,45 @@
-﻿using Blish_HUD;
-using Blish_HUD.Controls;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes.MainWindow
+﻿namespace Kenedia.Modules.Characters.Classes.MainWindow
 {
+    using Blish_HUD;
+    using Blish_HUD.Controls;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Color = Microsoft.Xna.Framework.Color;
+    using Point = Microsoft.Xna.Framework.Point;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
     public class DraggingControl : Control
     {
         private CharacterControl _CharacterControl;
+
         public CharacterControl CharacterControl
         {
-            get => _CharacterControl;
+            get => this._CharacterControl;
             set
             {
-                _CharacterControl = value;
-                Visible = value != null;
-                if (Visible)
+                this._CharacterControl = value;
+                this.Visible = value != null;
+                if (this.Visible)
                 {
-                    Size = value.Size;
-                    BackgroundColor = new Color(0,0,0,175);
+                    this.Size = value.Size;
+                    this.BackgroundColor = new Color(0, 0, 0, 175);
                 }
             }
         }
+
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (Visible)
+            if (this.Visible)
             {
-                spriteBatch.DrawStringOnCtrl(this,
-                                    CharacterControl.Character.Name,
-                                    CharacterControl.NameFont,
-                                    bounds,
-                                    new Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255),
-                                    false,
-                                    HorizontalAlignment.Center,
-                                    VerticalAlignment.Middle);
+                spriteBatch.DrawStringOnCtrl(
+                    this,
+                    this.CharacterControl.Character.Name,
+                    this.CharacterControl.NameFont,
+                    bounds,
+                    new Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255),
+                    false,
+                    HorizontalAlignment.Center,
+                    VerticalAlignment.Middle);
             }
         }
 
@@ -44,10 +47,10 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
         {
             base.DoUpdate(gameTime);
 
-            if (CharacterControl != null)
+            if (this.CharacterControl != null)
             {
                 var m = Input.Mouse;
-                Location = new Point(m.Position.X - 15, m.Position.Y - 15);
+                this.Location = new Point(m.Position.X - 15, m.Position.Y - 15);
             }
         }
     }

@@ -1,59 +1,58 @@
-﻿using Blish_HUD.Controls;
-using Microsoft.Xna.Framework;
-using Point = Microsoft.Xna.Framework.Point;
-
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
+    using Blish_HUD.Controls;
+    using Microsoft.Xna.Framework;
+    using Point = Microsoft.Xna.Framework.Point;
+
     public class OrderSettings : FlowTab
     {
-        Dropdown OrderDropdown;
-        Dropdown FlowDropdown;
+        private readonly Dropdown orderDropdown;
+        private readonly Dropdown flowDropdown;
 
         public OrderSettings()
         {
-            FlowDirection = ControlFlowDirection.SingleTopToBottom;
-            WidthSizingMode = SizingMode.Fill;
-            AutoSizePadding = new Point(5, 5);
-            HeightSizingMode = SizingMode.AutoSize;
-            OuterControlPadding = new Vector2(5, 5);
-            ControlPadding = new Vector2(5, 5);
-            Location = new Point(0, 25);
+            this.FlowDirection = ControlFlowDirection.SingleTopToBottom;
+            this.WidthSizingMode = SizingMode.Fill;
+            this.AutoSizePadding = new Point(5, 5);
+            this.HeightSizingMode = SizingMode.AutoSize;
+            this.OuterControlPadding = new Vector2(5, 5);
+            this.ControlPadding = new Vector2(5, 5);
+            this.Location = new Point(0, 25);
 
-            OrderDropdown = new Dropdown()
+            this.orderDropdown = new Dropdown()
             {
                 Parent = this,
                 Width = 190,
             };
-            OrderDropdown.Items.Add("Sort By Name");
-            //OrderDropdown.Items.Add("Sort By Tag");
-            OrderDropdown.Items.Add("Sort By Profession");
-            OrderDropdown.Items.Add("Sort By Last Login");
-            OrderDropdown.Items.Add("Sort By Map");
-            OrderDropdown.Items.Add("Custom");
-            OrderDropdown.SelectedItem = Characters.ModuleInstance.Settings.Sort_Type.Value.GetSortType();
-            OrderDropdown.ValueChanged += OrderDropdown_ValueChanged;
+            this.orderDropdown.Items.Add("Sort By Name");
+            // OrderDropdown.Items.Add("Sort By Tag");
+            this.orderDropdown.Items.Add("Sort By Profession");
+            this.orderDropdown.Items.Add("Sort By Last Login");
+            this.orderDropdown.Items.Add("Sort By Map");
+            this.orderDropdown.Items.Add("Custom");
+            this.orderDropdown.SelectedItem = Characters.ModuleInstance.Settings.SortType.Value.GetSortType();
+            this.orderDropdown.ValueChanged += this.OrderDropdown_ValueChanged;
 
-            FlowDropdown = new Dropdown()
+            this.flowDropdown = new Dropdown()
             {
                 Parent = this,
                 Width = 190,
             };
-            FlowDropdown.Items.Add("Sort Ascending");
-            FlowDropdown.Items.Add("Sort Descending");
-            FlowDropdown.SelectedItem = Characters.ModuleInstance.Settings.Sort_Order.Value.GetSortOrder();
-            FlowDropdown.ValueChanged += FlowDropdown_ValueChanged;
+            this.flowDropdown.Items.Add("Sort Ascending");
+            this.flowDropdown.Items.Add("Sort Descending");
+            this.flowDropdown.SelectedItem = Characters.ModuleInstance.Settings.SortOrder.Value.GetSortOrder();
+            this.flowDropdown.ValueChanged += this.FlowDropdown_ValueChanged;
         }
 
         private void FlowDropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            Characters.ModuleInstance.Settings.Sort_Order.Value = e.CurrentValue.GetSortOrder();
+            Characters.ModuleInstance.Settings.SortOrder.Value = e.CurrentValue.GetSortOrder();
             Characters.ModuleInstance.MainWindow?.SortCharacters();
         }
 
         private void OrderDropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            Characters.ModuleInstance.Settings.Sort_Type.Value = e.CurrentValue.GetSortType();
+            Characters.ModuleInstance.Settings.SortType.Value = e.CurrentValue.GetSortType();
             Characters.ModuleInstance.MainWindow?.SortCharacters();
         }
     }

@@ -1,18 +1,18 @@
-﻿using Blish_HUD.Controls;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
+    using System.Collections.Generic;
+    using Blish_HUD.Controls;
+    using Microsoft.Xna.Framework.Graphics;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
     public static class FilterTag_ListExtension
     {
         public static List<FilterTag> CreateFilterTagList(this List<string> strings)
         {
             var list = new List<FilterTag>();
-            foreach(string s in strings)
+            foreach (string s in strings)
             {
-                list.Add(new FilterTag() 
+                list.Add(new FilterTag()
                 {
                     Tag = s,
                 });
@@ -37,7 +37,6 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
     {
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-
         }
     }
 }

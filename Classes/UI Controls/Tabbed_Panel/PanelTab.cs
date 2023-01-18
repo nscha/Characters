@@ -1,76 +1,92 @@
-﻿using Blish_HUD.Content;
-using Blish_HUD.Controls;
-using System;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
+    using System;
+    using Blish_HUD.Content;
+    using Blish_HUD.Controls;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
     public class PanelTab : Panel
     {
         private TabButton _tabButton;
+
         public TabButton TabButton
         {
-            get => _tabButton;
-            private set => _tabButton = value;
+            get => this._tabButton;
+            private set => this._tabButton = value;
         }
 
-        event EventHandler IconChanged;
+        private event EventHandler IconChanged;
+
         private AsyncTexture2D _icon;
+
         public AsyncTexture2D Icon
         {
-            get => _icon;
+            get => this._icon;
             set
             {
-                _icon = value;
-                _tabButton.Icon = Icon;
+                this._icon = value;
+                this._tabButton.Icon = this.Icon;
                 this.IconChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        event EventHandler TextureRectangleChanged;
+        private event EventHandler TextureRectangleChanged;
+
         private Rectangle _textureRectangle = Rectangle.Empty;
+
         public Rectangle TextureRectangle
         {
-            get => _textureRectangle;
+            get => this._textureRectangle;
             set
             {
-                _textureRectangle = value;
-                _tabButton.TextureRectangle = value;
+                this._textureRectangle = value;
+                this._tabButton.TextureRectangle = value;
                 this.TextureRectangleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
         private string _name;
+
         public string Name
         {
-            get => _name;
+            get => this._name;
             set
             {
-                _name = value;
-                _tabButton.BasicTooltipText = value;
+                this._name = value;
+                this._tabButton.BasicTooltipText = value;
             }
         }
 
-        event EventHandler Activated;
-        event EventHandler Deactivated;
+        private event EventHandler Activated;
+
+        private event EventHandler Deactivated;
+
         private bool _active;
+
         public bool Active
         {
-            get => _active;
+            get => this._active;
             set
             {
-                _active = value;
-                TabButton.Active = value;
+                this._active = value;
+                this.TabButton.Active = value;
 
-                if (value) OnActivated();
-                else OnDeactivated();
+                if (value)
+                {
+                    this.OnActivated();
+                }
+                else
+                {
+                    this.OnDeactivated();
+                }
             }
         }
 
         public PanelTab()
         {
-            _tabButton = new TabButton()
+            this._tabButton = new TabButton()
             {
-                BasicTooltipText = Name,
+                BasicTooltipText = this.Name,
             };
         }
 
@@ -90,8 +106,8 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         {
             base.DisposeControl();
 
-            _tabButton?.Dispose();
-            _icon = null;
+            this._tabButton?.Dispose();
+            this._icon = null;
         }
     }
 }

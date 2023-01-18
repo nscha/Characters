@@ -1,52 +1,52 @@
-﻿using Blish_HUD;
-using Blish_HUD.Controls;
-using Blish_HUD.Input;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
+    using System;
+    using Blish_HUD;
+    using Blish_HUD.Controls;
+    using Blish_HUD.Input;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Color = Microsoft.Xna.Framework.Color;
+    using Point = Microsoft.Xna.Framework.Point;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
     public class SettingsSideMenu : TabbedPanel
     {
-        double OpacityTick = 0;
-        DateTime LastMouseOver = DateTime.Now;
+        private double opacityTick = 0;
+        private DateTime lastMouseOver = DateTime.Now;
 
         public SettingsSideMenu()
         {
-            Size = new Point(200, 100);
-            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
+            this.Size = new Point(200, 100);
+            this.Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
 
-            Parent = GameService.Graphics.SpriteScreen;
-            ZIndex = 999;
-            Visible = false;
-            HeightSizingMode = SizingMode.AutoSize;
+            this.Parent = GameService.Graphics.SpriteScreen;
+            this.ZIndex = 999;
+            this.Visible = false;
+            this.HeightSizingMode = SizingMode.AutoSize;
 
-            AddTab(new OrderSettings()
+            this.AddTab(new OrderSettings()
             {
                 Name = "Order Settings",
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156909),
                 Active = true,
             });
 
-            AddTab(new FilterSettings()
+            this.AddTab(new FilterSettings()
             {
                 Name = "Filter Settings",
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(784371),
                 Active = false,
             });
 
-            AddTab(new DisplaySettings()
+            this.AddTab(new DisplaySettings()
             {
                 Name = "Display Settings",
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(528726),
                 Active = false,
             });
 
-            AddTab(new SettingsAndShortcuts()
+            this.AddTab(new SettingsAndShortcuts()
             {
                 Name = "General Settings & Windows",
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(440021),
@@ -57,23 +57,26 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            LastMouseOver = DateTime.Now;
-            Opacity = 1f;
-            Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            this.lastMouseOver = DateTime.Now;
+            this.Opacity = 1f;
+            this.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
         }
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - OpacityTick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - this.opacityTick > 50)
             {
-                OpacityTick = gameTime.TotalGameTime.TotalMilliseconds;
+                this.opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (!MouseOver && DateTime.Now.Subtract(LastMouseOver).TotalMilliseconds >= 2500)
+                if (!this.MouseOver && DateTime.Now.Subtract(this.lastMouseOver).TotalMilliseconds >= 2500)
                 {
-                    Opacity = Opacity - (float)0.05;
-                    if (Opacity <= (float)0) Hide();
+                    this.Opacity = this.Opacity - (float)0.05;
+                    if (this.Opacity <= (float)0)
+                    {
+                        this.Hide();
+                    }
                 }
             }
         }
@@ -81,39 +84,36 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         protected override void OnMouseMoved(MouseEventArgs e)
         {
             base.OnMouseMoved(e);
-            LastMouseOver = DateTime.Now;
-            Opacity = 1f;
+            this.lastMouseOver = DateTime.Now;
+            this.Opacity = 1f;
         }
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
-            
+
             var color = Color.Black;
 
-            //Top
+            // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
 
-            //Bottom
+            // Bottom
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 2, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 1, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
 
-            //Left
+            // Left
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
 
-            //Right
+            // Right
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 2, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
-
         }
 
         protected override void DisposeControl()
         {
             base.DisposeControl();
-
-
         }
     }
 }

@@ -1,153 +1,18 @@
-﻿using Blish_HUD;
-using Blish_HUD.Settings;
-using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
-using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes
+﻿namespace Kenedia.Modules.Characters.Classes
 {
-    public static class SortTypeExtension
-    {
-        public static SortType GetSortType(this string s)
-        {
-            switch (s)
-            {
-                case "Sort By Name":
-                    return SortType.SortByName;
-
-                case "Sort By Tag":
-                    return SortType.SortByTag;
-
-                case "Sort By Profession":
-                    return SortType.SortByProfession;
-
-                case "Sort By Last Login":
-                    return SortType.SortByLastLogin;
-
-                case "Sort By Map":
-                    return SortType.SortByMap;
-
-                case "Custom":
-                    return SortType.Custom;
-            }
-
-            return SortType.Custom;
-        }
-
-        public static string GetSortType(this SortType st)
-        {
-            switch (st)
-            {
-                case SortType.SortByName:
-                    return "Sort By Name";
-
-                case SortType.SortByTag:
-                    return "Sort By Tag";
-
-                case SortType.SortByProfession:
-                    return "Sort By Profession";
-
-                case SortType.SortByLastLogin:
-                    return "Sort By Login";
-
-                case SortType.SortByMap:
-                    return "Sort By Map";
-
-                case SortType.Custom:
-                    return "Custom";
-            }
-            return "";
-        }
-
-        public static SortOrder GetSortOrder(this string s)
-        {
-            switch (s)
-            {
-                case "Sort Ascending":
-                    return SortOrder.Ascending;
-
-                case "Sort Descending":
-                    return SortOrder.Descending;
-            }
-
-            return SortOrder.Ascending;
-        }
-
-        public static string GetSortOrder(this SortOrder so)
-        {
-            switch (so)
-            {
-                case SortOrder.Ascending:
-                    return "Ascending";
-
-                case SortOrder.Descending:
-                    return "Descending";
-            }
-
-            return "Ascending";
-        }
-
-        public static FilterBehavior GetFilterBehavior(this string s)
-        {
-            switch (s)
-            {
-                case "Include Filters":
-                    return FilterBehavior.Include;
-
-                case "Exclude Filters":
-                    return FilterBehavior.Exclude;
-            }
-
-            return FilterBehavior.Include;
-        }
-        public static string GetFilterBehavior(this FilterBehavior fb)
-        {
-            switch (fb)
-            {
-                case FilterBehavior.Include:
-                    return "Include Filters";
-
-                case FilterBehavior.Exclude:
-                    return "Exclude Filters";
-            }
-
-            return "IncludeFilters";
-        }
-
-        public static MatchingBehavior GetMatchingBehavior(this string s)
-        {
-            switch (s)
-            {
-                case "Match Any Filter":
-                    return MatchingBehavior.MatchAny;
-
-                case "Match All Filter":
-                    return MatchingBehavior.MatchAll;
-            }
-
-            return MatchingBehavior.MatchAny;
-        }
-        public static string GetMatchingBehavior(this MatchingBehavior fb)
-        {
-            switch (fb)
-            {
-                case MatchingBehavior.MatchAny:
-                    return "Match Any Filter";
-
-                case MatchingBehavior.MatchAll:
-                    return "Match All Filter";
-            }
-
-            return "Match Any Filter";
-        }
-    }
+    using System.Collections.Generic;
+    using Blish_HUD;
+    using Blish_HUD.Settings;
+    using Microsoft.Xna.Framework.Input;
+    using Point = Microsoft.Xna.Framework.Point;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
     public enum SortOrder
     {
         Ascending,
         Descending,
     }
+
     public enum SortType
     {
         SortByName,
@@ -157,16 +22,19 @@ namespace Kenedia.Modules.Characters.Classes
         SortByMap,
         Custom,
     }
+
     public enum FilterBehavior
     {
         Include,
-        Exclude
+        Exclude,
     }
+
     public enum MatchingBehavior
     {
         MatchAny,
         MatchAll,
     }
+
     public enum CharacterPanelLayout
     {
         OnlyIcons,
@@ -184,155 +52,191 @@ namespace Kenedia.Modules.Characters.Classes
 
     public class SettingsModel
     {
-        public bool ShowCornerIcon;
-        public SettingEntry<bool> _ShowCornerIcon;
-        public Point WindowSize => _WindowSize.Value;
-        public SettingEntry<Point> _WindowSize;
-        public SettingEntry<bool> _AutoSortCharacters;
-        public SettingEntry<bool> _UseOCR;
-        public SettingEntry<bool> _WindowedMode;
-        public Rectangle OCRRegion
+        public SettingsModel(SettingCollection settings)
+        {
+            this.LogoutKey = settings.DefineSetting(
+                nameof(this.LogoutKey),
+                new Blish_HUD.Input.KeyBinding(Keys.F12),
+                () => Strings.common.Logout,
+                () => Strings.common.LogoutDescription);
+
+            this.ShortcutKey = settings.DefineSetting(
+                nameof(this.ShortcutKey),
+                new Blish_HUD.Input.KeyBinding(ModifierKeys.Shift, Keys.C),
+                () => Strings.common.ShortcutToggle_DisplayName,
+                () => Strings.common.ShortcutToggle_Description);
+
+            this.ShowCornerIcon = settings.DefineSetting(
+                nameof(this.ShowCornerIcon),
+                true,
+                () => Strings.common.ShowCorner_Name,
+                () => string.Format(Strings.common.ShowCorner_Tooltip, Characters.ModuleInstance.Name));
+
+            this.EnterOnSwap = settings.DefineSetting(
+                nameof(this.EnterOnSwap),
+                true,
+                () => Strings.common.EnterOnSwap_DisplayName,
+                () => Strings.common.EnterOnSwap_Description);
+
+            this.DoubleClickToEnter = settings.DefineSetting(
+                nameof(this.DoubleClickToEnter),
+                false,
+                () => Strings.common.DoubleClickToEnter_DisplayName,
+                () => Strings.common.DoubleClickToEnter_Description);
+
+            this.EnterToLogin = settings.DefineSetting(
+                nameof(this.EnterToLogin),
+                false,
+                () => Strings.common.EnterToLogin_DisplayName,
+                () => Strings.common.EnterToLogin_Description);
+
+            this.SwapDelay = settings.DefineSetting(
+                nameof(this.SwapDelay),
+                500,
+                () => string.Format(Strings.common.SwapDelay_DisplayName, this.SwapDelay.Value),
+                () => Strings.common.SwapDelay_Description);
+            this.SwapDelay.SetRange(0, 5000);
+
+            this.FilterDelay = settings.DefineSetting(
+                nameof(this.FilterDelay),
+                0,
+                () => string.Format(Strings.common.FilterDelay_DisplayName, this.FilterDelay.Value),
+                () => Strings.common.FilterDelay_Description);
+
+            this.FilterDelay.SetRange(0, 500);
+
+            var internalSettings = settings.AddSubCollection("Internal", false, false);
+            this.WindowSize = internalSettings.DefineSetting(nameof(this.CurrentWindowSize), new Point(385, 920));
+
+            var res = GameService.Graphics.Resolution;
+            this.WindowedMode = internalSettings.DefineSetting(nameof(this.WindowedMode), false);
+            this.UseOCR = internalSettings.DefineSetting(nameof(this.UseOCR), false);
+            this.AutoSortCharacters = internalSettings.DefineSetting(nameof(this.AutoSortCharacters), false);
+            this.OCRRegion = internalSettings.DefineSetting(nameof(this.ActiveOCRRegion), new Rectangle((res.X - 200) / 2, res.Y - 250, 200, 200));
+            this.OCRRegions = internalSettings.DefineSetting(nameof(this.OCRRegions), new Dictionary<string, Rectangle>());
+            this.OCRCustomOffset = internalSettings.DefineSetting(nameof(this.OCRCustomOffset), new Rectangle(3, 3, 5, 5));
+            this.OCRNoPixelColumns = internalSettings.DefineSetting(nameof(this.OCRNoPixelColumns), 20);
+
+            this.PanelSize = internalSettings.DefineSetting(nameof(this.PanelSize), PanelSizes.Normal);
+            this.PanelLayout = internalSettings.DefineSetting(nameof(this.PanelLayout), CharacterPanelLayout.IconAndText);
+
+            this.ShowName = internalSettings.DefineSetting(nameof(this.ShowName), true);
+            this.ShowLevel = internalSettings.DefineSetting(nameof(this.ShowLevel), true);
+            this.ShowRace = internalSettings.DefineSetting(nameof(this.ShowRace), false);
+            this.ShowProfession = internalSettings.DefineSetting(nameof(this.ShowProfession), false);
+            this.ShowLastLogin = internalSettings.DefineSetting(nameof(this.ShowLastLogin), true);
+            this.ShowMap = internalSettings.DefineSetting(nameof(this.ShowMap), true);
+            this.ShowCrafting = internalSettings.DefineSetting(nameof(this.ShowCrafting), false);
+            this.ShowOnlyMaxCrafting = internalSettings.DefineSetting(nameof(this.ShowOnlyMaxCrafting), true);
+            this.ShowDetailedTooltip = internalSettings.DefineSetting(nameof(this.ShowDetailedTooltip), true);
+            this.ShowTags = internalSettings.DefineSetting(nameof(this.ShowTags), true);
+
+            this.FilterMatching = internalSettings.DefineSetting(nameof(this.FilterMatching), MatchingBehavior.MatchAny);
+            this.FilterDirection = internalSettings.DefineSetting(nameof(this.FilterDirection), FilterBehavior.Include);
+            this.CheckName = internalSettings.DefineSetting(nameof(this.CheckName), true);
+            this.CheckLevel = internalSettings.DefineSetting(nameof(this.CheckLevel), true);
+            this.CheckRace = internalSettings.DefineSetting(nameof(this.CheckRace), true);
+            this.CheckProfession = internalSettings.DefineSetting(nameof(this.CheckProfession), true);
+            this.CheckMap = internalSettings.DefineSetting(nameof(this.CheckMap), true);
+            this.CheckCrafting = internalSettings.DefineSetting(nameof(this.CheckCrafting), true);
+            this.CheckOnlyMaxCrafting = internalSettings.DefineSetting(nameof(this.CheckOnlyMaxCrafting), true);
+            this.CheckTags = internalSettings.DefineSetting(nameof(this.CheckTags), true);
+
+            this.SortType = internalSettings.DefineSetting(nameof(this.SortType), Modules.Characters.Classes.SortType.SortByLastLogin);
+            this.SortOrder = internalSettings.DefineSetting(nameof(this.SortOrder), Modules.Characters.Classes.SortOrder.Ascending);
+        }
+
+        public SettingEntry<bool> ShowCornerIcon { get; set; }
+
+        public Point CurrentWindowSize => this.WindowSize.Value;
+
+        public SettingEntry<Point> WindowSize { get; set; }
+
+        public SettingEntry<bool> AutoSortCharacters { get; set; }
+
+        public SettingEntry<bool> UseOCR { get; set; }
+
+        public SettingEntry<bool> WindowedMode { get; set; }
+
+        public Rectangle ActiveOCRRegion
         {
             get
             {
                 var key = GameService.Graphics.Resolution.ToString();
-                var regions = _OCRRegions.Value;
+                var regions = this.OCRRegions.Value;
 
                 return regions.ContainsKey(key) ? regions[key] : new Rectangle(0, 0, 200, 50);
             }
         }
-        public SettingEntry<Rectangle> _OCRRegion;
-        public SettingEntry<Dictionary<string, Rectangle>> _OCRRegions;
-        public SettingEntry<Rectangle> _OCRCustomOffset;
-        public SettingEntry<int> _OCRNoPixelColumns;
 
-        public SettingEntry<PanelSizes> PanelSize;
-        public SettingEntry<CharacterPanelLayout> PanelLayout;
-        public SettingEntry<bool> Show_DetailedTooltip;
-        public SettingEntry<bool> Show_Name;
-        public SettingEntry<bool> Show_Level;
-        public SettingEntry<bool> Show_Race;
-        public SettingEntry<bool> Show_Profession;
-        public SettingEntry<bool> Show_LastLogin;
-        public SettingEntry<bool> Show_Map;
-        public SettingEntry<bool> Show_Crafting;
-        public SettingEntry<bool> Show_OnlyMaxCrafting;
-        public SettingEntry<bool> Show_Tags;
+        public SettingEntry<Rectangle> OCRRegion { get; set; }
 
-        public SettingEntry<MatchingBehavior> FilterMatching;
-        public SettingEntry<FilterBehavior> FilterDirection;
-        public SettingEntry<bool> Check_Name;
-        public SettingEntry<bool> Check_Level;
-        public SettingEntry<bool> Check_Race;
-        public SettingEntry<bool> Check_Profession;
-        public SettingEntry<bool> Check_Map;
-        public SettingEntry<bool> Check_Crafting;
-        public SettingEntry<bool> Check_OnlyMaxCrafting;
-        public SettingEntry<bool> Check_Tags;
+        public SettingEntry<Dictionary<string, Rectangle>> OCRRegions { get; set; }
 
-        public SettingEntry<SortType> Sort_Type;
-        public SettingEntry<SortOrder> Sort_Order;
+        public SettingEntry<Rectangle> OCRCustomOffset { get; set; }
 
-        public SettingEntry<Blish_HUD.Input.KeyBinding> LogoutKey;
-        public SettingEntry<Blish_HUD.Input.KeyBinding> ShortcutKey;
-        //public SettingEntry<Blish_HUD.Input.KeyBinding> SwapModifier;
+        public SettingEntry<int> OCRNoPixelColumns { get; set; }
 
-        public SettingEntry<bool> EnterOnSwap;
-        public SettingEntry<bool> DoubleClickToEnter;
-        public SettingEntry<bool> EnterToLogin;
+        public SettingEntry<PanelSizes> PanelSize { get; set; }
 
-        public SettingEntry<int> SwapDelay;
-        public SettingEntry<int> FilterDelay;
+        public SettingEntry<CharacterPanelLayout> PanelLayout { get; set; }
 
-        public SettingsModel(SettingCollection settings)
-        {
-            LogoutKey = settings.DefineSetting(nameof(LogoutKey),
-                                                     new Blish_HUD.Input.KeyBinding(Keys.F12),
-                                                     () => Strings.common.Logout,
-                                                     () => Strings.common.LogoutDescription);
+        public SettingEntry<bool> ShowDetailedTooltip { get; set; }
 
-            ShortcutKey = settings.DefineSetting(nameof(ShortcutKey),
-                                                     new Blish_HUD.Input.KeyBinding(ModifierKeys.Shift, Keys.C),
-                                                     () => Strings.common.ShortcutToggle_DisplayName,
-                                                     () => Strings.common.ShortcutToggle_Description);
+        public SettingEntry<bool> ShowName { get; set; }
 
-            //SwapModifier = settings.DefineSetting(nameof(SwapModifier),
-            //                                         new Blish_HUD.Input.KeyBinding(Keys.None),
-            //                                         () => Strings.common.SwapModifier_DisplayName,
-            //                                         () => Strings.common.SwapModifier_Description);
+        public SettingEntry<bool> ShowLevel { get; set; }
 
-            _ShowCornerIcon = settings.DefineSetting(nameof(_ShowCornerIcon),
-                                                          true,
-                                                          () => Strings.common.ShowCorner_Name,
-                                                          () => string.Format(Strings.common.ShowCorner_Tooltip, Characters.ModuleInstance.Name));
+        public SettingEntry<bool> ShowRace { get; set; }
 
-            EnterOnSwap = settings.DefineSetting(nameof(EnterOnSwap),
-                                                              true,
-                                                              () => Strings.common.EnterOnSwap_DisplayName,
-                                                              () => Strings.common.EnterOnSwap_Description);
+        public SettingEntry<bool> ShowProfession { get; set; }
 
-            DoubleClickToEnter = settings.DefineSetting(nameof(DoubleClickToEnter),
-                                                              false,
-                                                              () => Strings.common.DoubleClickToEnter_DisplayName,
-                                                              () => Strings.common.DoubleClickToEnter_Description);
+        public SettingEntry<bool> ShowLastLogin { get; set; }
 
-            EnterToLogin = settings.DefineSetting(nameof(EnterToLogin),
-                                                              false,
-                                                              () => Strings.common.EnterToLogin_DisplayName,
-                                                              () => Strings.common.EnterToLogin_Description);
+        public SettingEntry<bool> ShowMap { get; set; }
 
-            SwapDelay = settings.DefineSetting(nameof(SwapDelay),
-                                                              500,
-                                                              () => string.Format(Strings.common.SwapDelay_DisplayName, SwapDelay.Value),
-                                                              () => Strings.common.SwapDelay_Description);
-            SwapDelay.SetRange(0, 5000);
+        public SettingEntry<bool> ShowCrafting { get; set; }
 
-            FilterDelay = settings.DefineSetting(nameof(FilterDelay),
-                                                              0,
-                                                              () => string.Format(Strings.common.FilterDelay_DisplayName, FilterDelay.Value),
-                                                              () => Strings.common.FilterDelay_Description);
+        public SettingEntry<bool> ShowOnlyMaxCrafting { get; set; }
 
-            FilterDelay.SetRange(0, 500);
+        public SettingEntry<bool> ShowTags { get; set; }
 
-            var internalSettings = settings.AddSubCollection("Internal", false, false);
-            _WindowSize = internalSettings.DefineSetting(nameof(WindowSize), new Point(385, 920));
+        public SettingEntry<MatchingBehavior> FilterMatching { get; set; }
 
-            var res = GameService.Graphics.Resolution;
-            _WindowedMode = internalSettings.DefineSetting(nameof(_WindowedMode), false);
-            _UseOCR = internalSettings.DefineSetting(nameof(_UseOCR), false);
-            _AutoSortCharacters = internalSettings.DefineSetting(nameof(_AutoSortCharacters), false);
-            _OCRRegion = internalSettings.DefineSetting(nameof(OCRRegion), new Rectangle((res.X - 200) / 2, (res.Y - 250), 200, 200));
-            _OCRRegions = internalSettings.DefineSetting(nameof(_OCRRegions), new Dictionary<string, Rectangle>());
-            _OCRCustomOffset = internalSettings.DefineSetting(nameof(_OCRCustomOffset), new Rectangle(3, 3, 5, 5));
-            _OCRNoPixelColumns = internalSettings.DefineSetting(nameof(_OCRNoPixelColumns), 20);
+        public SettingEntry<FilterBehavior> FilterDirection { get; set; }
 
-            PanelSize = internalSettings.DefineSetting(nameof(PanelSize), PanelSizes.Normal);
-            PanelLayout = internalSettings.DefineSetting(nameof(PanelLayout), CharacterPanelLayout.IconAndText);
+        public SettingEntry<bool> CheckName { get; set; }
 
-            Show_Name = internalSettings.DefineSetting(nameof(Show_Name), true);
-            Show_Level = internalSettings.DefineSetting(nameof(Show_Level), true);
-            Show_Race = internalSettings.DefineSetting(nameof(Show_Race), false);
-            Show_Profession = internalSettings.DefineSetting(nameof(Show_Profession), false);
-            Show_LastLogin = internalSettings.DefineSetting(nameof(Show_LastLogin), true);
-            Show_Map = internalSettings.DefineSetting(nameof(Show_Map), true);
-            Show_Crafting = internalSettings.DefineSetting(nameof(Show_Crafting), false);
-            Show_OnlyMaxCrafting = internalSettings.DefineSetting(nameof(Show_OnlyMaxCrafting), true);
-            Show_DetailedTooltip = internalSettings.DefineSetting(nameof(Show_DetailedTooltip), true);
-            Show_Tags = internalSettings.DefineSetting(nameof(Show_Tags), true);
+        public SettingEntry<bool> CheckLevel { get; set; }
 
-            FilterMatching = internalSettings.DefineSetting(nameof(FilterMatching), MatchingBehavior.MatchAny);
-            FilterDirection = internalSettings.DefineSetting(nameof(FilterDirection), FilterBehavior.Include);
-            Check_Name = internalSettings.DefineSetting(nameof(Check_Name), true);
-            Check_Level = internalSettings.DefineSetting(nameof(Check_Level), true);
-            Check_Race = internalSettings.DefineSetting(nameof(Check_Race), true);
-            Check_Profession = internalSettings.DefineSetting(nameof(Check_Profession), true);
-            Check_Map = internalSettings.DefineSetting(nameof(Check_Map), true);
-            Check_Crafting = internalSettings.DefineSetting(nameof(Check_Crafting), true);
-            Check_OnlyMaxCrafting = internalSettings.DefineSetting(nameof(Check_OnlyMaxCrafting), true);
-            Check_Tags = internalSettings.DefineSetting(nameof(Check_Tags), true);
+        public SettingEntry<bool> CheckRace { get; set; }
 
-            Sort_Type = internalSettings.DefineSetting(nameof(Sort_Type), SortType.SortByLastLogin);
-            Sort_Order = internalSettings.DefineSetting(nameof(Sort_Order), SortOrder.Ascending);
-        }
+        public SettingEntry<bool> CheckProfession { get; set; }
+
+        public SettingEntry<bool> CheckMap { get; set; }
+
+        public SettingEntry<bool> CheckCrafting { get; set; }
+
+        public SettingEntry<bool> CheckOnlyMaxCrafting { get; set; }
+
+        public SettingEntry<bool> CheckTags { get; set; }
+
+        public SettingEntry<SortType> SortType { get; set; }
+
+        public SettingEntry<SortOrder> SortOrder { get; set; }
+
+        public SettingEntry<Blish_HUD.Input.KeyBinding> LogoutKey { get; set; }
+
+        public SettingEntry<Blish_HUD.Input.KeyBinding> ShortcutKey { get; set; }
+
+        public SettingEntry<bool> EnterOnSwap { get; set; }
+
+        public SettingEntry<bool> DoubleClickToEnter { get; set; }
+
+        public SettingEntry<bool> EnterToLogin { get; set; }
+
+        public SettingEntry<int> SwapDelay { get; set; }
+
+        public SettingEntry<int> FilterDelay { get; set; }
     }
 }

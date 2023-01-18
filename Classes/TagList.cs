@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Kenedia.Modules.Characters.Classes
+﻿namespace Kenedia.Modules.Characters.Classes
 {
+    using System.Collections.ObjectModel;
+
     public class TagList : ObservableCollection<string>
     {
     }

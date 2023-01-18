@@ -1,7 +1,7 @@
-﻿using static Kenedia.Modules.Characters.Classes.Data;
-
-namespace Kenedia.Modules.Characters.Classes
+﻿namespace Kenedia.Modules.Characters.Classes
 {
+    using static Kenedia.Modules.Characters.Classes.Data;
+
     public static class Gw2SharpExtension
     {
         public static CrafingProfession GetData(this int key)

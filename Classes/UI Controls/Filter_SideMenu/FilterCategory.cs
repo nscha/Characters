@@ -1,6 +1,6 @@
 ﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
-    enum FilterCategory
+    internal enum FilterCategory
     {
         Race,
         Crafting,

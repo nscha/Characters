@@ -1,37 +1,37 @@
-﻿using Blish_HUD.Controls;
-using Microsoft.Xna.Framework;
-using System;
-using System.Text.RegularExpressions;
-using Point = Microsoft.Xna.Framework.Point;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
+    using System;
+    using System.Text.RegularExpressions;
+    using Blish_HUD.Controls;
+    using Microsoft.Xna.Framework;
+    using Point = Microsoft.Xna.Framework.Point;
+
     public class DisplaySettings : FlowTab
     {
-        Dropdown LayoutDropdown;
-        Dropdown PanelSizeDropdown;
-        Checkbox Name_Checkbox;
-        Checkbox Level_Checkbox;
-        Checkbox Race_Checkbox;
-        Checkbox Profession_Checkbox;
-        Checkbox LastLogin_Checkbox;
-        Checkbox Map_Checkbox;
-        Checkbox Crafting_Checkbox;
-        Checkbox MaxCrafting_Checkbox;
-        Checkbox DetailedTooltip_Checkbox;
-        Checkbox Tags_Checkbox;
+        private readonly Dropdown layoutDropdown;
+        private readonly Dropdown panelSizeDropdown;
+        private readonly Checkbox nameCheckbox;
+        private readonly Checkbox levelCheckbox;
+        private readonly Checkbox raceCheckbox;
+        private readonly Checkbox professionCheckbox;
+        private readonly Checkbox lastLoginCheckbox;
+        private readonly Checkbox mapCheckbox;
+        private readonly Checkbox craftingCheckbox;
+        private readonly Checkbox maxCraftingCheckbox;
+        private readonly Checkbox detailedTooltipCheckbox;
+        private readonly Checkbox tagsCheckbox;
 
         public DisplaySettings()
         {
-            FlowDirection = ControlFlowDirection.SingleTopToBottom;
-            WidthSizingMode = SizingMode.Fill;
-            AutoSizePadding = new Point(5, 5);
-            HeightSizingMode = SizingMode.AutoSize;
-            OuterControlPadding = new Vector2(5, 5);
-            ControlPadding = new Vector2(5, 5);
-            Location = new Point(0, 25);
+            this.FlowDirection = ControlFlowDirection.SingleTopToBottom;
+            this.WidthSizingMode = SizingMode.Fill;
+            this.AutoSizePadding = new Point(5, 5);
+            this.HeightSizingMode = SizingMode.AutoSize;
+            this.OuterControlPadding = new Vector2(5, 5);
+            this.ControlPadding = new Vector2(5, 5);
+            this.Location = new Point(0, 25);
 
-            PanelSizeDropdown = new Dropdown()
+            this.panelSizeDropdown = new Dropdown()
             {
                 Parent = this,
                 Width = 190,
@@ -41,12 +41,15 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
             {
                 string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
                 var entry = String.Join(" ", split);
-                PanelSizeDropdown.Items.Add(entry);
-                if (s == Characters.ModuleInstance.Settings.PanelSize.Value.ToString()) PanelSizeDropdown.SelectedItem = entry;
+                this.panelSizeDropdown.Items.Add(entry);
+                if (s == Characters.ModuleInstance.Settings.PanelSize.Value.ToString())
+                {
+                    this.panelSizeDropdown.SelectedItem = entry;
+                }
             }
-            PanelSizeDropdown.ValueChanged += PanelSizeDropdown_ValueChanged;
+            this.panelSizeDropdown.ValueChanged += this.PanelSizeDropdown_ValueChanged;
 
-            LayoutDropdown = new Dropdown()
+            this.layoutDropdown = new Dropdown()
             {
                 Parent = this,
                 Width = 190,
@@ -55,134 +58,137 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
             {
                 string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
                 var entry = String.Join(" ", split);
-                LayoutDropdown.Items.Add(entry);
+                this.layoutDropdown.Items.Add(entry);
 
-                if (s == Characters.ModuleInstance.Settings.PanelLayout.Value.ToString()) LayoutDropdown.SelectedItem = entry;
+                if (s == Characters.ModuleInstance.Settings.PanelLayout.Value.ToString())
+                {
+                    this.layoutDropdown.SelectedItem = entry;
+                }
             }
-            LayoutDropdown.ValueChanged += LayoutDropdown_ValueChanged;
+            this.layoutDropdown.ValueChanged += this.LayoutDropdown_ValueChanged;
 
-            Name_Checkbox = new Checkbox()
+            this.nameCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_Name.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowName.Value,
                 Text = "Show Name",
             };
-            Name_Checkbox.CheckedChanged += CheckedChanged;
+            this.nameCheckbox.CheckedChanged += this.CheckedChanged;
 
-            Level_Checkbox = new Checkbox()
+            this.levelCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_Level.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowLevel.Value,
                 Text = "Show Level",
             };
-            Level_Checkbox.CheckedChanged += CheckedChanged;
+            this.levelCheckbox.CheckedChanged += this.CheckedChanged;
 
-            Race_Checkbox = new Checkbox()
+            this.raceCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_Race.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowRace.Value,
                 Text = "Show Race",
             };
-            Race_Checkbox.CheckedChanged += CheckedChanged;
+            this.raceCheckbox.CheckedChanged += this.CheckedChanged;
 
-            Profession_Checkbox = new Checkbox()
+            this.professionCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_Profession.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowProfession.Value,
                 Text = "Show Profession",
             };
-            Profession_Checkbox.CheckedChanged += CheckedChanged;
+            this.professionCheckbox.CheckedChanged += this.CheckedChanged;
 
-            LastLogin_Checkbox = new Checkbox()
+            this.lastLoginCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_LastLogin.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowLastLogin.Value,
                 Text = "Show Last Login",
             };
-            LastLogin_Checkbox.CheckedChanged += CheckedChanged;
+            this.lastLoginCheckbox.CheckedChanged += this.CheckedChanged;
 
-            Map_Checkbox = new Checkbox()
+            this.mapCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_Map.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowMap.Value,
                 Text = "Show Map",
             };
-            Map_Checkbox.CheckedChanged += CheckedChanged;
+            this.mapCheckbox.CheckedChanged += this.CheckedChanged;
 
-            Crafting_Checkbox = new Checkbox()
+            this.craftingCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_Crafting.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowCrafting.Value,
                 Text = "Show Crafting",
             };
-            Crafting_Checkbox.CheckedChanged += CheckedChanged;
+            this.craftingCheckbox.CheckedChanged += this.CheckedChanged;
 
-            MaxCrafting_Checkbox = new Checkbox()
+            this.maxCraftingCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_OnlyMaxCrafting.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowOnlyMaxCrafting.Value,
                 Text = "Show Only Max Crafting",
             };
-            MaxCrafting_Checkbox.CheckedChanged += CheckedChanged;
+            this.maxCraftingCheckbox.CheckedChanged += this.CheckedChanged;
 
-            Tags_Checkbox = new Checkbox()
+            this.tagsCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_Tags.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowTags.Value,
                 Text = "Show Tags",
             };
-            Tags_Checkbox.CheckedChanged += CheckedChanged;
+            this.tagsCheckbox.CheckedChanged += this.CheckedChanged;
 
-            DetailedTooltip_Checkbox = new Checkbox()
+            this.detailedTooltipCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.Show_DetailedTooltip.Value,
+                Checked = Characters.ModuleInstance.Settings.ShowDetailedTooltip.Value,
                 Text = "Show Detailed Tooltip",
             };
-            DetailedTooltip_Checkbox.CheckedChanged += CheckedChanged;
+            this.detailedTooltipCheckbox.CheckedChanged += this.CheckedChanged;
         }
 
         private void CheckedChanged(object sender, CheckChangedEvent e)
         {
-            if (sender == Name_Checkbox)
+            if (sender == this.nameCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_Name.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowName.Value = e.Checked;
             }
-            else if (sender == Level_Checkbox)
+            else if (sender == this.levelCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_Level.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowLevel.Value = e.Checked;
             }
-            else if (sender == Race_Checkbox)
+            else if (sender == this.raceCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_Race.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowRace.Value = e.Checked;
             }
-            else if (sender == Profession_Checkbox)
+            else if (sender == this.professionCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_Profession.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowProfession.Value = e.Checked;
             }
-            else if (sender == LastLogin_Checkbox)
+            else if (sender == this.lastLoginCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_LastLogin.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowLastLogin.Value = e.Checked;
             }
-            else if (sender == Map_Checkbox)
+            else if (sender == this.mapCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_Map.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowMap.Value = e.Checked;
             }
-            else if (sender == Crafting_Checkbox)
+            else if (sender == this.craftingCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_Crafting.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowCrafting.Value = e.Checked;
             }
-            else if (sender == MaxCrafting_Checkbox)
+            else if (sender == this.maxCraftingCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_OnlyMaxCrafting.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowOnlyMaxCrafting.Value = e.Checked;
             }
-            else if (sender == DetailedTooltip_Checkbox)
+            else if (sender == this.detailedTooltipCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_DetailedTooltip.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowDetailedTooltip.Value = e.Checked;
             }
-            else if (sender == Tags_Checkbox)
+            else if (sender == this.tagsCheckbox)
             {
-                Characters.ModuleInstance.Settings.Show_Tags.Value = e.Checked;
+                Characters.ModuleInstance.Settings.ShowTags.Value = e.Checked;
             }
 
             Characters.ModuleInstance.MainWindow?.UpdateLayout();
@@ -190,7 +196,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
 
         private void LayoutDropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            var layout = Regex.Replace(LayoutDropdown.SelectedItem, @"\s+", "");
+            var layout = Regex.Replace(this.layoutDropdown.SelectedItem, @"\s+", "");
             CharacterPanelLayout result;
 
             if (Enum.TryParse(layout, out result))
@@ -202,7 +208,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
 
         private void PanelSizeDropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            var layout = Regex.Replace(PanelSizeDropdown.SelectedItem, @"\s+", "");
+            var layout = Regex.Replace(this.panelSizeDropdown.SelectedItem, @"\s+", "");
             PanelSizes result;
 
             if (Enum.TryParse(layout, out result))
@@ -216,8 +222,8 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         {
             base.DisposeControl();
 
-            PanelSizeDropdown?.Dispose();
-            LayoutDropdown?.Dispose();
+            this.panelSizeDropdown?.Dispose();
+            this.layoutDropdown?.Dispose();
         }
     }
 }

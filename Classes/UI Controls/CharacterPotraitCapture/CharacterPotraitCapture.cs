@@ -1,22 +1,21 @@
-﻿using Blish_HUD;
-using Blish_HUD.Content;
-using Blish_HUD.Controls;
-using Blish_HUD.Input;
-using Kenedia.Modules.Characters.Classes.UI_Controls;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using static Kenedia.Modules.Characters.Classes.WindowsUtil.WindowsUtil;
-using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using Blish_HUD;
+    using Blish_HUD.Content;
+    using Blish_HUD.Controls;
+    using Blish_HUD.Input;
+    using Kenedia.Modules.Characters.Classes.UI_Controls;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using static Kenedia.Modules.Characters.Classes.WindowsUtil.WindowsUtil;
+    using Color = Microsoft.Xna.Framework.Color;
+    using Point = Microsoft.Xna.Framework.Point;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
     public class BasicFrameContainer : Container
     {
@@ -28,32 +27,33 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
 
-            if (Background != null)
+            if (this.Background != null)
             {
-                spriteBatch.DrawOnCtrl(this,
-                        Background,
-                        bounds,
-                        TextureRectangle != Rectangle.Empty ? TextureRectangle : Background.Bounds,
-                        Color.Black * 0.9f,
-                        0f,
-                        default);
+                spriteBatch.DrawOnCtrl(
+                    this,
+                    this.Background,
+                    bounds,
+                    this.TextureRectangle != Rectangle.Empty ? this.TextureRectangle : this.Background.Bounds,
+                    Color.Black * 0.9f,
+                    0f,
+                    default);
             }
 
-            var color = FrameColor;
+            var color = this.FrameColor;
 
-            //Top
+            // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
 
-            //Bottom
+            // Bottom
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 2, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Bottom - 1, bounds.Width, 1), Rectangle.Empty, color * 0.6f);
 
-            //Left
+            // Left
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
 
-            //Right
+            // Right
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 2, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
         }
@@ -61,27 +61,23 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
 
     public class CharacterPotraitCapture : Container
     {
-        DateTime _capturePotraits;
-        int _characterPotraitSize = 130;
-        int _gap = 13;
+        private DateTime _capturePotraits;
+        private int _characterPotraitSize = 130;
+        private int _gap = 13;
+        private readonly Checkbox _windowedCheckbox;
+        private readonly ImageButton _captureButton;
+        private readonly ImageButton _addButton;
+        private readonly ImageButton _removeButton;
+        private readonly Label _disclaimer;
+        private readonly BasicFrameContainer _disclaimerBackground;
 
-        Checkbox _windowedCheckbox;
-        ImageButton _captureButton;
-        ImageButton _addButton;
-        ImageButton _removeButton;
-
-        Label _disclaimer;
-        BasicFrameContainer _disclaimerBackground;
-
-        bool _dragging;
-        Point _draggingStart;
-        ImageButton _dragButton;
-
-        TextBox _sizeBox;
-        TextBox _gapBox;
-
-        FlowPanel _portraitsPanel;
-        List<BasicFrameContainer> _characterPotraits = new List<BasicFrameContainer>();
+        private bool _dragging;
+        private Point _draggingStart;
+        private readonly ImageButton _dragButton;
+        private readonly TextBox _sizeBox;
+        private readonly TextBox _gapBox;
+        private readonly FlowPanel _portraitsPanel;
+        private readonly List<BasicFrameContainer> _characterPotraits = new List<BasicFrameContainer>();
 
         /// <summary>
         /// 358353 Potrait
@@ -93,58 +89,58 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
         public CharacterPotraitCapture()
         {
             var res = GameService.Graphics.Resolution;
-            Size = new Point(100, 100);
-            WidthSizingMode = SizingMode.AutoSize;
-            HeightSizingMode = SizingMode.AutoSize;
+            this.Size = new Point(100, 100);
+            this.WidthSizingMode = SizingMode.AutoSize;
+            this.HeightSizingMode = SizingMode.AutoSize;
 
-            Location = new Point((res.X - Size.X) / 2, (res.Y - 125 - Size.Y));
+            this.Location = new Point((res.X - this.Size.X) / 2, res.Y - 125 - this.Size.Y);
             var tM = Characters.ModuleInstance.TextureManager;
-            _addButton = new ImageButton()
+            this._addButton = new ImageButton()
             {
                 Parent = this,
-                Texture = tM.getControlTexture(_Controls.Plus_Button),
-                HoveredTexture = tM.getControlTexture(_Controls.Plus_Button_Hovered),
+                Texture = tM.GetControlTexture(Controls.Plus_Button),
+                HoveredTexture = tM.GetControlTexture(Controls.Plus_Button_Hovered),
                 Size = new Point(32, 32),
                 Location = new Point((32 + 5) * 1, 0),
                 BasicTooltipText = "Add Potrait Frame",
             };
-            _addButton.Click += _addButton_Click;
+            this._addButton.Click += this.AddButton_Click;
 
-            _removeButton = new ImageButton()
+            this._removeButton = new ImageButton()
             {
                 Parent = this,
-                Texture = tM.getControlTexture(_Controls.Minus_Button),
-                HoveredTexture = tM.getControlTexture(_Controls.Minus_Button_Hovered),
+                Texture = tM.GetControlTexture(Controls.Minus_Button),
+                HoveredTexture = tM.GetControlTexture(Controls.Minus_Button_Hovered),
                 Size = new Point(32, 32),
                 Location = new Point((32 + 5) * 2, 0),
                 BasicTooltipText = "Remove Potrait Frame",
             };
-            _removeButton.Click += _removeButton_Click;
+            this._removeButton.Click += this.RemoveButton_Click;
 
-            _dragButton = new ImageButton()
+            this._dragButton = new ImageButton()
             {
                 Parent = this,
-                Texture = tM.getControlTexture(_Controls.Drag_Button),
-                HoveredTexture = tM.getControlTexture(_Controls.Drag_Button_Hovered),
+                Texture = tM.GetControlTexture(Controls.Drag_Button),
+                HoveredTexture = tM.GetControlTexture(Controls.Drag_Button_Hovered),
                 Size = new Point(32, 32),
                 Location = new Point((32 + 5) * 0, 0),
                 BasicTooltipText = "Drag over your character Potraits",
             };
-            _dragButton.LeftMouseButtonPressed += _dragButton_LeftMouseButtonPressed;
-            _dragButton.LeftMouseButtonReleased += _dragButton_LeftMouseButtonReleased;
+            this._dragButton.LeftMouseButtonPressed += this.DragButton_LeftMouseButtonPressed;
+            this._dragButton.LeftMouseButtonReleased += this.DragButton_LeftMouseButtonReleased;
 
-            _captureButton = new ImageButton()
+            this._captureButton = new ImageButton()
             {
                 Parent = this,
-                Texture = tM.getControlTexture(_Controls.Potrait_Button),
-                HoveredTexture = tM.getControlTexture(_Controls.Potrait_Button_Hovered),
+                Texture = tM.GetControlTexture(Controls.Potrait_Button),
+                HoveredTexture = tM.GetControlTexture(Controls.Potrait_Button_Hovered),
                 Size = new Point(32, 32),
                 Location = new Point((32 + 5) * 3, 0),
                 BasicTooltipText = "Capture Potraits",
             };
-            _captureButton.Click += _captureButton_Click;
+            this._captureButton.Click += this.CaptureButton_Click;
 
-            _disclaimerBackground = new BasicFrameContainer()
+            this._disclaimerBackground = new BasicFrameContainer()
             {
                 Parent = this,
                 Location = new Point((32 + 5) * 4, 0),
@@ -152,25 +148,25 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
                 Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003),
                 TextureRectangle = new Rectangle(50, 50, 500, 500),
                 WidthSizingMode = SizingMode.AutoSize,
-                AutoSizePadding= new Point(15, 0),
+                AutoSizePadding = new Point(15, 0),
                 Height = 32,
             };
 
-            _windowedCheckbox = new Checkbox()
+            this._windowedCheckbox = new Checkbox()
             {
-                Parent = _disclaimerBackground,
+                Parent = this._disclaimerBackground,
                 Text = "Game is in Windowed Mode",
-                Checked = Characters.ModuleInstance.Settings._WindowedMode.Value,
+                Checked = Characters.ModuleInstance.Settings.WindowedMode.Value,
                 Location = new Point(5, 0),
                 Height = 32,
             };
-            _windowedCheckbox.CheckedChanged += _windowedCheckbox_CheckedChanged;
-            Characters.ModuleInstance.Settings._WindowedMode.SettingChanged += (s, e) => { _windowedCheckbox.Checked = Characters.ModuleInstance.Settings._WindowedMode.Value; };
+            this._windowedCheckbox.CheckedChanged += this.WindowedCheckbox_CheckedChanged;
+            Characters.ModuleInstance.Settings.WindowedMode.SettingChanged += (s, e) => { this._windowedCheckbox.Checked = Characters.ModuleInstance.Settings.WindowedMode.Value; };
 
-            _disclaimer = new Label()
+            this._disclaimer = new Label()
             {
-                Parent = _disclaimerBackground,
-                Location = new Point(_windowedCheckbox.Right + 5, 0),
+                Parent = this._disclaimerBackground,
+                Location = new Point(this._windowedCheckbox.Right + 5, 0),
                 TextColor = ContentService.Colors.ColonialWhite,
                 AutoSizeWidth = true,
                 Height = 32,
@@ -178,29 +174,29 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
                 Text = "Best results with Interface set to 'Larger'!",
                 Padding = new Thickness(0f, 0f),
             };
-            _disclaimer.Resized += _disclaimer_Resized;
-            //_disclaimerBackground.Size = (_disclaimer.Size).Add(new Point(_windowedCheckbox.Width + 15, 0));
+            this._disclaimer.Resized += this.Disclaimer_Resized;
+            // _disclaimerBackground.Size = (_disclaimer.Size).Add(new Point(_windowedCheckbox.Width + 15, 0));
 
-            _sizeBox = new TextBox()
+            this._sizeBox = new TextBox()
             {
                 Parent = this,
                 Location = new Point(0, 35),
                 Size = new Point(50, 25),
-                Text = _characterPotraitSize.ToString(),
+                Text = this._characterPotraitSize.ToString(),
                 BasicTooltipText = "Potrait Size",
             };
-            _sizeBox.TextChanged += _sizeBox_TextChanged;
-            _gapBox = new TextBox()
+            this._sizeBox.TextChanged += this.SizeBox_TextChanged;
+            this._gapBox = new TextBox()
             {
                 Parent = this,
                 Location = new Point(0, 65),
                 Size = new Point(50, 25),
-                Text = _gap.ToString(),
+                Text = this._gap.ToString(),
                 BasicTooltipText = "Potrait Gap",
             };
-            _gapBox.TextChanged += _gapBox_TextChanged;
+            this._gapBox.TextChanged += this.GapBox_TextChanged;
 
-            _portraitsPanel = new FlowPanel()
+            this._portraitsPanel = new FlowPanel()
             {
                 Parent = this,
                 Location = new Point(55, 35),
@@ -208,125 +204,129 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
                 FlowDirection = ControlFlowDirection.SingleLeftToRight,
                 WidthSizingMode = SizingMode.AutoSize,
                 HeightSizingMode = SizingMode.AutoSize,
-                ControlPadding = new Vector2(_gap, 0),
+                ControlPadding = new Vector2(this._gap, 0),
             };
 
-            AddPotrait();
-            AddPotrait();
+            this.AddPotrait();
+            this.AddPotrait();
         }
 
-        private void _windowedCheckbox_CheckedChanged(object sender, CheckChangedEvent e)
+        private void WindowedCheckbox_CheckedChanged(object sender, CheckChangedEvent e)
         {
-            Characters.ModuleInstance.Settings._WindowedMode.Value = _windowedCheckbox.Checked;
+            Characters.ModuleInstance.Settings.WindowedMode.Value = this._windowedCheckbox.Checked;
         }
 
-        private void _disclaimer_Resized(object sender, ResizedEventArgs e)
+        private void Disclaimer_Resized(object sender, ResizedEventArgs e)
         {
-            _disclaimerBackground.Size = _disclaimer.Size.Add(new Point(10, 0));
+            this._disclaimerBackground.Size = this._disclaimer.Size.Add(new Point(10, 0));
         }
 
-        private void _captureButton_Click(object sender, MouseEventArgs e)
+        private void CaptureButton_Click(object sender, MouseEventArgs e)
         {
-            _capturePotraits = DateTime.Now;
+            this._capturePotraits = DateTime.Now;
 
-            foreach (Control c in _portraitsPanel.Children)
+            foreach (Control c in this._portraitsPanel.Children)
             {
                 c.Hide();
             }
         }
 
-        private void _sizeBox_TextChanged(object sender, EventArgs e)
+        private void SizeBox_TextChanged(object sender, EventArgs e)
         {
             int s;
-            if (Int32.TryParse(_sizeBox.Text, out s))
+            if (Int32.TryParse(this._sizeBox.Text, out s))
             {
-                _characterPotraitSize = s;
+                this._characterPotraitSize = s;
                 var p = new Point(s, s);
-                foreach (Control c in _portraitsPanel.Children)
+                foreach (Control c in this._portraitsPanel.Children)
                 {
                     c.Size = p;
                 }
             }
         }
-        private void _gapBox_TextChanged(object sender, EventArgs e)
+
+        private void GapBox_TextChanged(object sender, EventArgs e)
         {
             int s;
-            if (Int32.TryParse(_gapBox.Text, out s))
+            if (Int32.TryParse(this._gapBox.Text, out s))
             {
-                _gap = s;
-                _portraitsPanel.ControlPadding = new Vector2(s, 0);
+                this._gap = s;
+                this._portraitsPanel.ControlPadding = new Vector2(s, 0);
             }
         }
 
-        private void _removeButton_Click(object sender, MouseEventArgs e)
+        private void RemoveButton_Click(object sender, MouseEventArgs e)
         {
-            if (_portraitsPanel.Children.Count > 1) _portraitsPanel.Children.RemoveAt(_portraitsPanel.Children.Count - 1);
+            if (this._portraitsPanel.Children.Count > 1)
+            {
+                this._portraitsPanel.Children.RemoveAt(this._portraitsPanel.Children.Count - 1);
+            }
         }
 
-        private void _addButton_Click(object sender, MouseEventArgs e)
+        private void AddButton_Click(object sender, MouseEventArgs e)
         {
-            AddPotrait();
+            this.AddPotrait();
         }
+
         private void AddPotrait()
         {
             new BasicFrameContainer()
             {
-                Parent = _portraitsPanel,
-                Size = new Point(_characterPotraitSize, _characterPotraitSize),
+                Parent = this._portraitsPanel,
+                Size = new Point(this._characterPotraitSize, this._characterPotraitSize),
             };
         }
-        private void _dragButton_LeftMouseButtonReleased(object sender, MouseEventArgs e)
+
+        private void DragButton_LeftMouseButtonReleased(object sender, MouseEventArgs e)
         {
-            _dragging = false;
+            this._dragging = false;
         }
 
-        private void _dragButton_LeftMouseButtonPressed(object sender, MouseEventArgs e)
+        private void DragButton_LeftMouseButtonPressed(object sender, MouseEventArgs e)
         {
-            _dragging = true;
-            _draggingStart = _dragging ? RelativeMousePosition : Point.Zero;
+            this._dragging = true;
+            this._draggingStart = this._dragging ? this.RelativeMousePosition : Point.Zero;
         }
 
         protected override void OnResized(ResizedEventArgs e)
         {
             base.OnResized(e);
-
         }
 
         protected override void OnClick(MouseEventArgs e)
         {
             base.OnClick(e);
-
         }
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            _dragging = _dragging && MouseOver;
+            this._dragging = this._dragging && this.MouseOver;
 
-            if (_dragging)
+            if (this._dragging)
             {
-                Location = Input.Mouse.Position.Add(new Point(-_draggingStart.X, -_draggingStart.Y));
+                this.Location = Input.Mouse.Position.Add(new Point(-this._draggingStart.X, -this._draggingStart.Y));
             }
 
-            if (_capturePotraits > DateTime.MinValue && DateTime.Now.Subtract(_capturePotraits).TotalMilliseconds >= 5)
+            if (this._capturePotraits > DateTime.MinValue && DateTime.Now.Subtract(this._capturePotraits).TotalMilliseconds >= 5)
             {
-                foreach (Control c in _portraitsPanel.Children)
+                foreach (Control c in this._portraitsPanel.Children)
                 {
-                    CapturePotrait(c.AbsoluteBounds);
+                    this.CapturePotrait(c.AbsoluteBounds);
                 }
 
-                foreach (Control c in _portraitsPanel.Children)
+                foreach (Control c in this._portraitsPanel.Children)
                 {
                     c.Show();
                 }
 
-                _capturePotraits = DateTime.MinValue;
+                this._capturePotraits = DateTime.MinValue;
                 Characters.ModuleInstance.MainWindow.CharacterEdit.LoadImages(null, null);
             }
         }
 
-        void CapturePotrait(Rectangle bounds)
+        private void CapturePotrait(Rectangle bounds)
         {
 
             var path = Characters.ModuleInstance.AccountImagesPath;
@@ -341,22 +341,22 @@ namespace Kenedia.Modules.Characters.Classes.Classes.UI_Controls
             GetWindowRect(hWnd, ref wndBounds);
             GetClientRect(hWnd, out clientRectangle);
 
-            var fullscreen = !Characters.ModuleInstance.Settings._WindowedMode.Value;
+            var fullscreen = !Characters.ModuleInstance.Settings.WindowedMode.Value;
 
-            var TitleBarHeight = fullscreen ? 0 : wndBounds.Bottom - wndBounds.Top - (clientRectangle.Bottom - clientRectangle.Top) - 6;
-            var SideBarWidth = fullscreen ? 0 : wndBounds.Right - wndBounds.Left - (clientRectangle.Right - clientRectangle.Left) - 7;
+            var titleBarHeight = fullscreen ? 0 : wndBounds.Bottom - wndBounds.Top - (clientRectangle.Bottom - clientRectangle.Top) - 6;
+            var sideBarWidth = fullscreen ? 0 : wndBounds.Right - wndBounds.Left - (clientRectangle.Right - clientRectangle.Left) - 7;
 
             var cPos = bounds;
             double factor = GameService.Graphics.UIScaleMultiplier;
 
-            using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap((int)((_characterPotraitSize - 2) * factor), (int)((_characterPotraitSize - 2) * factor)))
+            using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap((int)((this._characterPotraitSize - 2) * factor), (int)((this._characterPotraitSize - 2) * factor)))
             {
                 using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
                 {
                     var x = (int)(bounds.X * factor);
                     var y = (int)(bounds.Y * factor);
 
-                    g.CopyFromScreen(new System.Drawing.Point(wndBounds.Left  + x + SideBarWidth, clientRectangle.Top + y + TitleBarHeight), System.Drawing.Point.Empty, new System.Drawing.Size(_characterPotraitSize - 2, _characterPotraitSize));
+                    g.CopyFromScreen(new System.Drawing.Point(wndBounds.Left + x + sideBarWidth, clientRectangle.Top + y + titleBarHeight), System.Drawing.Point.Empty, new System.Drawing.Size(this._characterPotraitSize - 2, this._characterPotraitSize));
                 }
 
                 bitmap.Save(path + "Image " + (images.Count + 1) + ".png", System.Drawing.Imaging.ImageFormat.Png);

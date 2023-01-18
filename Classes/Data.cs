@@ -1,16 +1,16 @@
-﻿using Blish_HUD;
-using Blish_HUD.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Color = Microsoft.Xna.Framework.Color;
-using Locale = Gw2Sharp.WebApi.Locale;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes
+﻿namespace Kenedia.Modules.Characters.Classes
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Blish_HUD;
+    using Blish_HUD.Content;
+    using Microsoft.Xna.Framework.Graphics;
+    using Newtonsoft.Json;
+    using Color = Microsoft.Xna.Framework.Color;
+    using Locale = Gw2Sharp.WebApi.Locale;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
     public enum ArmorWeight
     {
         Heavy,
@@ -24,9 +24,10 @@ namespace Kenedia.Modules.Characters.Classes
         {
             public AsyncTexture2D Icon;
             public int Id;
-            public string API_Id;
+            public string APIId;
             public int MaxRating;
             public Dictionary<Locale, string> _Names = new Dictionary<Locale, string>();
+
             public string Name
             {
                 get
@@ -34,7 +35,7 @@ namespace Kenedia.Modules.Characters.Classes
                     var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
                     string name;
 
-                    return _Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return this._Names.TryGetValue(locale, out name) ? name : "No Name Set.";
                 }
             }
         }
@@ -44,28 +45,39 @@ namespace Kenedia.Modules.Characters.Classes
             public Color Color;
             public ArmorWeight WeightClass;
             public int Id;
-            public string API_Id;
+            public string APIId;
             private AsyncTexture2D _Icon;
+
             public AsyncTexture2D Icon
             {
-                get => _Icon;
+                get => this._Icon;
                 set
                 {
-                    _Icon = value;
-                    if(_Icon != null) _Icon.TextureSwapped += Icon_TextureSwapped;
+                    this._Icon = value;
+                    if (this._Icon != null)
+                    {
+                        this._Icon.TextureSwapped += this.Icon_TextureSwapped;
+                    }
                 }
             }
+
             private AsyncTexture2D _IconBig;
+
             public AsyncTexture2D IconBig
             {
-                get => _IconBig;
+                get => this._IconBig;
                 set
                 {
-                    _IconBig = value;
-                    if (_IconBig != null) _IconBig.TextureSwapped += IconBig_TextureSwapped;
+                    this._IconBig = value;
+                    if (this._IconBig != null)
+                    {
+                        this._IconBig.TextureSwapped += this.IconBig_TextureSwapped;
+                    }
                 }
             }
+
             public Dictionary<Locale, string> _Names = new Dictionary<Locale, string>();
+
             public string Name
             {
                 get
@@ -73,29 +85,29 @@ namespace Kenedia.Modules.Characters.Classes
                     var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
                     string name;
 
-                    return _Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return this._Names.TryGetValue(locale, out name) ? name : "No Name Set.";
                 }
             }
+
             public Profession()
             {
-
             }
 
             private void IconBig_TextureSwapped(object sender, ValueChangedEventArgs<Texture2D> e)
             {
                 if (e.NewValue != null)
                 {
-                    _IconBig.TextureSwapped -= IconBig_TextureSwapped;
-                    _IconBig.SwapTexture(_IconBig.Texture.GetRegion(new Rectangle(5, 5, _IconBig.Width - 10, _IconBig.Height - 10)));
+                    this._IconBig.TextureSwapped -= this.IconBig_TextureSwapped;
+                    this._IconBig.SwapTexture(this._IconBig.Texture.GetRegion(new Rectangle(5, 5, this._IconBig.Width - 10, this._IconBig.Height - 10)));
                 }
             }
 
             private void Icon_TextureSwapped(object sender, ValueChangedEventArgs<Texture2D> e)
             {
-                if (e.NewValue != null )
+                if (e.NewValue != null)
                 {
-                    _Icon.TextureSwapped -= Icon_TextureSwapped;
-                    _Icon.SwapTexture(_Icon.Texture.GetRegion(new Rectangle(5, 5, _Icon.Width - 10, _Icon.Height - 10)));                    
+                    this._Icon.TextureSwapped -= this.Icon_TextureSwapped;
+                    this._Icon.SwapTexture(this._Icon.Texture.GetRegion(new Rectangle(5, 5, this._Icon.Width - 10, this._Icon.Height - 10)));
                 }
             }
         }
@@ -103,11 +115,12 @@ namespace Kenedia.Modules.Characters.Classes
         public class Specialization
         {
             public int Id;
-            public int API_Id;
+            public int APIId;
             public Gw2Sharp.Models.ProfessionType Profession;
             public AsyncTexture2D Icon;
             public AsyncTexture2D IconBig;
             public Dictionary<Locale, string> _Names = new Dictionary<Locale, string>();
+
             public string Name
             {
                 get
@@ -115,7 +128,7 @@ namespace Kenedia.Modules.Characters.Classes
                     var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
                     string name;
 
-                    return _Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return this._Names.TryGetValue(locale, out name) ? name : "No Name Set.";
                 }
             }
         }
@@ -123,8 +136,9 @@ namespace Kenedia.Modules.Characters.Classes
         public class Race
         {
             public int Id;
-            public string API_Id;
+            public string APIId;
             public Dictionary<Locale, string> _Names = new Dictionary<Locale, string>();
+
             public string Name
             {
                 get
@@ -132,9 +146,10 @@ namespace Kenedia.Modules.Characters.Classes
                     var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
                     string name;
 
-                    return _Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return this._Names.TryGetValue(locale, out name) ? name : "No Name Set.";
                 }
             }
+
             public AsyncTexture2D Icon;
         }
 
@@ -149,22 +164,25 @@ namespace Kenedia.Modules.Characters.Classes
 
             if (jsonString != null && jsonString != "")
             {
-                List<_jsonMap> localData = JsonConvert.DeserializeObject<List<_jsonMap>>(jsonString);
-                _jsonMap biggest = localData.Aggregate((i1, i2) => i1.Id > i2.Id ? i1 : i2);
+                List<JsonMap> localData = JsonConvert.DeserializeObject<List<JsonMap>>(jsonString);
+                JsonMap biggest = localData.Aggregate((i1, i2) => i1.Id > i2.Id ? i1 : i2);
                 maps = new Map[biggest.Id + 1];
 
-                foreach (_jsonMap entry in localData)
+                foreach (JsonMap entry in localData)
                 {
-                    maps[entry.Id] = new Map() { _Names = entry._Names, API_Id = entry.Id, Id = entry.Id };
+                    maps[entry.Id] = new Map() { _Names = entry._Names, APIId = entry.Id, Id = entry.Id };
                 }
             }
 
-            Maps = maps;
+            this.Maps = maps;
         }
 
         public Map GetMapById(int id)
         {
-            if (Maps.Length > id && Maps[id] != null) return Maps[id];
+            if (this.Maps.Length > id && this.Maps[id] != null)
+            {
+                return this.Maps[id];
+            }
 
             return new Map() { Name = "Unkown Map", Id = 0 };
         }
@@ -172,14 +190,14 @@ namespace Kenedia.Modules.Characters.Classes
 
         public Dictionary<int, CrafingProfession> CrafingProfessions = new Dictionary<int, CrafingProfession>()
         {
-            //Unkown
+            // Unkown
             {
                 0,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(154983),
                     Id = 0,
-                    API_Id = "Unkown",
+                    APIId = "Unkown",
                     MaxRating = 0,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -191,14 +209,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Artificier
+            // Artificier
             {
                 1,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(102463),
                     Id = 1,
-                    API_Id = "Artificer",
+                    APIId = "Artificer",
                     MaxRating = 500,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -210,14 +228,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Armorsmith
+            // Armorsmith
             {
                 2,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(102461),
                     Id = 2,
-                    API_Id = "Armorsmith",
+                    APIId = "Armorsmith",
                     MaxRating = 500,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -229,14 +247,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Chef
+            // Chef
             {
                 3,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(102465),
                     Id = 3,
-                    API_Id = "Chef",
+                    APIId = "Chef",
                     MaxRating = 500,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -248,14 +266,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Jeweler
+            // Jeweler
             {
                 4,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(102458),
                     Id = 4,
-                    API_Id = "Jeweler",
+                    APIId = "Jeweler",
                     MaxRating = 400,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -267,14 +285,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Huntsman
+            // Huntsman
             {
                 5,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(102462),
                     Id = 5,
-                    API_Id = "Huntsman",
+                    APIId = "Huntsman",
                     MaxRating = 500,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -286,14 +304,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Leatherworker
+            // Leatherworker
             {
                 6,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(102464),
                     Id = 6,
-                    API_Id = "Leatherworker",
+                    APIId = "Leatherworker",
                     MaxRating = 500,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -305,14 +323,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Scribe
+            // Scribe
             {
                 7,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(1293677),
                     Id = 7,
-                    API_Id = "Scribe",
+                    APIId = "Scribe",
                     MaxRating = 400,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -324,14 +342,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Tailor
+            // Tailor
             {
                 8,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(102459),
                     Id = 8,
-                    API_Id = "Tailor",
+                    APIId = "Tailor",
                     MaxRating = 500,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -343,14 +361,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Weaponsmith
+            // Weaponsmith
             {
                 9,
                 new CrafingProfession()
                 {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(102460),
                     Id = 9,
-                    API_Id = "Weaponsmith",
+                    APIId = "Weaponsmith",
                     MaxRating = 500,
                     _Names = new Dictionary<Locale, string>()
                     {
@@ -365,14 +383,14 @@ namespace Kenedia.Modules.Characters.Classes
 
         public Dictionary<Gw2Sharp.Models.ProfessionType, Profession> Professions = new Dictionary<Gw2Sharp.Models.ProfessionType, Profession>()
         {
-            //Guardian
+            // Guardian
             {
                 Gw2Sharp.Models.ProfessionType.Guardian,
                 new Profession() {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156634),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156633),
                     Id = 1,
-                    API_Id = "Guardian",
+                    APIId = "Guardian",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Wächter" },
@@ -385,14 +403,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Warrior
+            // Warrior
             {
                 Gw2Sharp.Models.ProfessionType.Warrior,
                 new Profession() {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156643),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156642),
                     Id = 2,
-                    API_Id = "Warrior",
+                    APIId = "Warrior",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Krieger" },
@@ -405,14 +423,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Engineer
+            // Engineer
             {
                 Gw2Sharp.Models.ProfessionType.Engineer,
                 new Profession() {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156632),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156631),
                     Id = 3,
-                    API_Id = "Engineer",
+                    APIId = "Engineer",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Ingenieur" },
@@ -425,14 +443,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Ranger
+            // Ranger
             {
                 Gw2Sharp.Models.ProfessionType.Ranger,
                 new Profession() {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156640),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156639),
                     Id = 4,
-                    API_Id = "Ranger",
+                    APIId = "Ranger",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Waldläufer" },
@@ -445,14 +463,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Thief
+            // Thief
             {
                 Gw2Sharp.Models.ProfessionType.Thief,
                 new Profession() {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156641),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(103581),
                     Id = 5,
-                    API_Id = "Thief",
+                    APIId = "Thief",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Dieb" },
@@ -465,14 +483,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Elementalist
+            // Elementalist
             {
                 Gw2Sharp.Models.ProfessionType.Elementalist,
                 new Profession() {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156630),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156629),
                     Id = 6,
-                    API_Id = "Elementalist",
+                    APIId = "Elementalist",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Elementarmagier" },
@@ -485,14 +503,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Mesmer
+            // Mesmer
             {
                 Gw2Sharp.Models.ProfessionType.Mesmer,
                 new Profession() {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156636),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156635),
                     Id = 7,
-                    API_Id = "Mesmer",
+                    APIId = "Mesmer",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Mesmer" },
@@ -505,14 +523,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Necromancer
+            // Necromancer
             {
                 Gw2Sharp.Models.ProfessionType.Necromancer,
                 new Profession() {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156638),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(156637),
                     Id = 8,
-                    API_Id = "Necromancer",
+                    APIId = "Necromancer",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Nekromant" },
@@ -525,14 +543,14 @@ namespace Kenedia.Modules.Characters.Classes
                 }
             },
 
-            //Revenant
+            // Revenant
             {
                 Gw2Sharp.Models.ProfessionType.Revenant,
                 new Profession() {
                     Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(961390),
                     IconBig = GameService.Content.DatAssetCache.GetTextureFromAssetId(965717),
                     Id = 9,
-                    API_Id = "Revenant",
+                    APIId = "Revenant",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Widergänger" },
@@ -548,7 +566,7 @@ namespace Kenedia.Modules.Characters.Classes
 
         public Dictionary<SpecializationType, Specialization> Specializations = new Dictionary<SpecializationType, Specialization>()
         {
-            //Druid
+            // Druid
             {
                 SpecializationType.Druid,
                 new Specialization() {
@@ -565,7 +583,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Daredevil
+            // Daredevil
             {
                 SpecializationType.Daredevil,
                 new Specialization() {
@@ -582,7 +600,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Berserker
+            // Berserker
             {
                 SpecializationType.Berserker,
                 new Specialization() {
@@ -599,7 +617,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Dragonhunter
+            // Dragonhunter
             {
                 SpecializationType.Dragonhunter,
                 new Specialization() {
@@ -616,7 +634,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Reaper
+            // Reaper
             {
                 SpecializationType.Reaper,
                 new Specialization() {
@@ -633,7 +651,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Chronomancer
+            // Chronomancer
             {
                 SpecializationType.Chronomancer,
                 new Specialization() {
@@ -650,7 +668,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Scrapper
+            // Scrapper
             {
                 SpecializationType.Scrapper,
                 new Specialization() {
@@ -667,7 +685,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Tempest
+            // Tempest
             {
                 SpecializationType.Tempest,
                 new Specialization() {
@@ -684,7 +702,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Herald
+            // Herald
             {
                 SpecializationType.Herald,
                 new Specialization() {
@@ -701,7 +719,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Soulbeast
+            // Soulbeast
             {
                 SpecializationType.Soulbeast,
                 new Specialization() {
@@ -718,7 +736,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Weaver
+            // Weaver
             {
                 SpecializationType.Weaver,
                 new Specialization() {
@@ -735,7 +753,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Holosmith
+            // Holosmith
             {
                 SpecializationType.Holosmith,
                 new Specialization() {
@@ -752,7 +770,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Deadeye
+            // Deadeye
             {
                 SpecializationType.Deadeye,
                 new Specialization() {
@@ -769,7 +787,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Mirage
+            // Mirage
             {
                 SpecializationType.Mirage,
                 new Specialization() {
@@ -786,7 +804,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Scourge
+            // Scourge
             {
                 SpecializationType.Scourge,
                 new Specialization() {
@@ -803,7 +821,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Spellbreaker
+            // Spellbreaker
             {
                 SpecializationType.Spellbreaker,
                 new Specialization() {
@@ -820,7 +838,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Firebrand
+            // Firebrand
             {
                 SpecializationType.Firebrand,
                 new Specialization() {
@@ -837,7 +855,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Renegade
+            // Renegade
             {
                 SpecializationType.Renegade,
                 new Specialization() {
@@ -854,7 +872,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Harbinger
+            // Harbinger
             {
                 SpecializationType.Harbinger,
                 new Specialization() {
@@ -871,7 +889,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Willbender
+            // Willbender
             {
                 SpecializationType.Willbender,
                 new Specialization() {
@@ -888,7 +906,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Virtuoso
+            // Virtuoso
             {
                 SpecializationType.Virtuoso,
                 new Specialization() {
@@ -905,7 +923,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Catalyst
+            // Catalyst
             {
                 SpecializationType.Catalyst,
                 new Specialization() {
@@ -922,7 +940,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Bladesworn
+            // Bladesworn
             {
                 SpecializationType.Bladesworn,
                 new Specialization() {
@@ -939,7 +957,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Vindicator
+            // Vindicator
             {
                 SpecializationType.Vindicator,
                 new Specialization() {
@@ -956,7 +974,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Mechanist
+            // Mechanist
             {
                 SpecializationType.Mechanist,
                 new Specialization() {
@@ -973,7 +991,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Specter
+            // Specter
             {
                 SpecializationType.Specter,
                 new Specialization() {
@@ -990,7 +1008,7 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Untamed
+            // Untamed
             {
                 SpecializationType.Untamed,
                 new Specialization() {
@@ -1011,14 +1029,14 @@ namespace Kenedia.Modules.Characters.Classes
 
         public Dictionary<Gw2Sharp.Models.RaceType, Race> Races = new Dictionary<Gw2Sharp.Models.RaceType, Race>()
         {
-            //Asura
+            // Asura
             {
                 Gw2Sharp.Models.RaceType.Asura,
                 new Race()
                 {
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "asura" + ".png"),
                     Id = 0,
-                    API_Id = "Asura",
+                    APIId = "Asura",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Asura" },
@@ -1028,14 +1046,14 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Charr
+            // Charr
             {
                 Gw2Sharp.Models.RaceType.Charr,
                 new Race()
                 {
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "charr" + ".png"),
                     Id = 1,
-                    API_Id = "Charr",
+                    APIId = "Charr",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Charr" },
@@ -1045,14 +1063,14 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Human
+            // Human
             {
                 Gw2Sharp.Models.RaceType.Human,
                 new Race()
                 {
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "human" + ".png"),
                     Id = 2,
-                    API_Id = "Human",
+                    APIId = "Human",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Mensch" },
@@ -1062,14 +1080,14 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Norn
+            // Norn
             {
                 Gw2Sharp.Models.RaceType.Norn,
                 new Race()
                 {
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "norn" + ".png"),
                     Id = 3,
-                    API_Id = "Norn",
+                    APIId = "Norn",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Norn" },
@@ -1079,14 +1097,14 @@ namespace Kenedia.Modules.Characters.Classes
                     },
                 }
             },
-            //Sylvari
+            // Sylvari
             {
                 Gw2Sharp.Models.RaceType.Sylvari,
                 new Race()
                 {
                     Icon = Characters.ModuleInstance.ContentsManager.GetTexture(@"textures\races\" + "sylvari" + ".png"),
                     Id = 4,
-                    API_Id = "Sylvari",
+                    APIId = "Sylvari",
                     _Names = new Dictionary<Locale, string>()
                     {
                         {Locale.German, "Sylvari" },

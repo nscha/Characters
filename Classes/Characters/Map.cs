@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
-
-namespace Kenedia.Modules.Characters.Classes
+﻿namespace Kenedia.Modules.Characters.Classes
 {
-    public class _Names
+    using System.Collections.Generic;
+
+    public class Names
     {
-        public string de { get; set; }
-        public string en { get; set; }
-        public string es { get; set; }
-        public string fr { get; set; }
+        public string De { get; set; }
+
+        public string En { get; set; }
+
+        public string Es { get; set; }
+
+        public string Fr { get; set; }
     }
 
-    public class Map : _jsonMap
+    public class Map : JsonMap
     {
         public string Name
         {
@@ -20,47 +23,48 @@ namespace Kenedia.Modules.Characters.Classes
                 switch (Blish_HUD.SettingsService.Overlay.UserLocale.Value)
                 {
                     case Gw2Sharp.WebApi.Locale.German:
-                        return _Names.de;
+                        return this._Names.De;
 
                     case Gw2Sharp.WebApi.Locale.French:
-                        return _Names.fr;
+                        return this._Names.Fr;
 
                     case Gw2Sharp.WebApi.Locale.Spanish:
-                        return _Names.es;
+                        return this._Names.Es;
 
                     default:
-                        return _Names.en;
+                        return this._Names.En;
                 }
             }
+
             set
             {
                 switch (Blish_HUD.SettingsService.Overlay.UserLocale.Value)
                 {
                     case Gw2Sharp.WebApi.Locale.German:
-                        _Names.de = value;
+                        this._Names.De = value;
                         break;
 
                     case Gw2Sharp.WebApi.Locale.French:
-                        _Names.fr = value;
+                        this._Names.Fr = value;
                         break;
 
                     case Gw2Sharp.WebApi.Locale.Spanish:
-                        _Names.es = value;
+                        this._Names.Es = value;
                         break;
 
                     default:
-                        _Names.en = value;
+                        this._Names.En = value;
                         break;
                 }
             }
         }
     }
 
-    public class _jsonMap
+    public class JsonMap
     {
-        public _Names _Names = new _Names();
+        public Names _Names = new Names();
         public int Id;
-        public int API_Id;
+        public int APIId;
         public IReadOnlyList<int> Floors;
         public int DefaultFloor;
         public int ContinentId;

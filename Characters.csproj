@@ -58,6 +58,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="App.config" />
     <None Include="Content\bin\Windows\Content\atlas\ui-atlas.xnb" />
     <None Include="Content\bin\Windows\Content\atlas\ui.xnb" />
@@ -186,6 +187,7 @@
     <Compile Include="Classes\ExtensionMethods.cs" />
     <Compile Include="Classes\Gw2SharpExtension.cs" />
     <Compile Include="Classes\OCR\OCR.cs" />
+    <Compile Include="Classes\SortTypeExtension.cs" />
     <Compile Include="Classes\TagList.cs" />
     <Compile Include="Classes\UI Controls\BasicTooltip.cs" />
     <Compile Include="Classes\UI Controls\CharacterEdit\CharacterEdit.cs" />
@@ -470,7 +472,10 @@
       <LastGenOutput>common.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="ref\data\tesseract.dll" />
     <Content Include="ref\textures\backgrounds\0.png" />

@@ -1,38 +1,39 @@
-﻿using Blish_HUD;
-using Blish_HUD.Content;
-using Blish_HUD.Controls;
-using Blish_HUD.Input;
-using Microsoft.Xna.Framework;
-using System.Diagnostics;
-using Point = Microsoft.Xna.Framework.Point;
-
-namespace Kenedia.Modules.Characters.Classes.UI_Controls
+﻿namespace Kenedia.Modules.Characters.Classes.UI_Controls
 {
+    using System.Diagnostics;
+    using Blish_HUD;
+    using Blish_HUD.Content;
+    using Blish_HUD.Controls;
+    using Blish_HUD.Input;
+    using Microsoft.Xna.Framework;
+    using Point = Microsoft.Xna.Framework.Point;
+
     public class SettingsAndShortcuts : FlowTab
     {
-        FlowPanel _checkboxPanel;
-        FlowPanel _buttonPanel;
-        FlowPanel _contentPanel;
-        StandardButton _potraitCaptureButton;
-        StandardButton _potraitFolderButton;
-        StandardButton _fixCharacterOrder;
-        StandardButton _refreshAPI;
-        Checkbox _ocrCheckbox;
-        Checkbox _autoFix;
-        Checkbox _windowMode;
-        StandardButton _ocrContainerButton;
+        private readonly FlowPanel _checkboxPanel;
+        private readonly FlowPanel _buttonPanel;
+        private readonly FlowPanel _contentPanel;
+        private readonly StandardButton _potraitCaptureButton;
+        private readonly StandardButton _potraitFolderButton;
+        private readonly StandardButton _fixCharacterOrder;
+        private readonly StandardButton _refreshAPI;
+        private readonly Checkbox _ocrCheckbox;
+        private readonly Checkbox _autoFix;
+        private readonly Checkbox _windowMode;
+        private readonly StandardButton _ocrContainerButton;
+
         public SettingsAndShortcuts()
         {
-            FlowDirection = ControlFlowDirection.TopToBottom;
-            WidthSizingMode = SizingMode.Fill;
-            AutoSizePadding = new Point(5, 5);
-            HeightSizingMode = SizingMode.AutoSize;
-            OuterControlPadding = new Vector2(5, 5);
-            ControlPadding = new Vector2(5, 3);
-            Location = new Point(0, 25);
+            this.FlowDirection = ControlFlowDirection.TopToBottom;
+            this.WidthSizingMode = SizingMode.Fill;
+            this.AutoSizePadding = new Point(5, 5);
+            this.HeightSizingMode = SizingMode.AutoSize;
+            this.OuterControlPadding = new Vector2(5, 5);
+            this.ControlPadding = new Vector2(5, 3);
+            this.Location = new Point(0, 25);
 
             var tM = Characters.ModuleInstance.TextureManager;
-            _contentPanel = new FlowPanel()
+            this._contentPanel = new FlowPanel()
             {
                 FlowDirection = ControlFlowDirection.SingleTopToBottom,
                 Parent = this,
@@ -41,120 +42,119 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
                 HeightSizingMode = SizingMode.AutoSize,
             };
 
-            _checkboxPanel = new FlowPanel()
+            this._checkboxPanel = new FlowPanel()
             {
                 FlowDirection = ControlFlowDirection.SingleTopToBottom,
-                Parent = _contentPanel,
+                Parent = this._contentPanel,
                 WidthSizingMode = SizingMode.Fill,
                 HeightSizingMode = SizingMode.AutoSize,
                 OuterControlPadding = new Vector2(3, 3),
-                ControlPadding = new Vector2(2,4),
+                ControlPadding = new Vector2(2, 4),
                 AutoSizePadding = new Point(0, 4),
             };
 
-            _buttonPanel = new FlowPanel()
+            this._buttonPanel = new FlowPanel()
             {
                 FlowDirection = ControlFlowDirection.SingleTopToBottom,
-                Parent = _contentPanel,
+                Parent = this._contentPanel,
                 WidthSizingMode = SizingMode.Fill,
                 HeightSizingMode = SizingMode.AutoSize,
-                ControlPadding = new Vector2(2,2),
+                ControlPadding = new Vector2(2, 2),
             };
 
-            _windowMode = new Checkbox()
+            this._windowMode = new Checkbox()
             {
-                Parent = _checkboxPanel,
+                Parent = this._checkboxPanel,
                 Text = "Windowed Mode",
                 BasicTooltipText = "Is the game set to Window Mode?",
-                Checked = Characters.ModuleInstance.Settings._WindowedMode.Value,
+                Checked = Characters.ModuleInstance.Settings.WindowedMode.Value,
                 Width = 200,
             };
-            _windowMode.Click += _windowMode_Click;
-            Characters.ModuleInstance.Settings._WindowedMode.SettingChanged += (s, e) => { _windowMode.Checked = Characters.ModuleInstance.Settings._WindowedMode.Value; };
+            this._windowMode.Click += this.WindowMode_Click;
+            Characters.ModuleInstance.Settings.WindowedMode.SettingChanged += (s, e) => { this._windowMode.Checked = Characters.ModuleInstance.Settings.WindowedMode.Value; };
 
-            _autoFix = new Checkbox()
+            this._autoFix = new Checkbox()
             {
-                Parent = _checkboxPanel,
+                Parent = this._checkboxPanel,
                 Text = "Auto Fix",
                 BasicTooltipText = "When failing to swap to a character automatically go through the characters to fix their order.",
-                Checked = Characters.ModuleInstance.Settings._AutoSortCharacters.Value,
+                Checked = Characters.ModuleInstance.Settings.AutoSortCharacters.Value,
                 Width = 200,
             };
-            _autoFix.Click += _autoFix_Click;
+            this._autoFix.Click += this.AutoFix_Click;
 
-            _ocrCheckbox = new Checkbox()
+            this._ocrCheckbox = new Checkbox()
             {
-                Parent = _checkboxPanel,
+                Parent = this._checkboxPanel,
                 Text = "Use OCR",
                 BasicTooltipText = "Use 'Optical Character Recognition' (OCR) to confirm the character name.",
-                Checked = Characters.ModuleInstance.Settings._UseOCR.Value,
+                Checked = Characters.ModuleInstance.Settings.UseOCR.Value,
                 Width = 200,
             };
-            _ocrCheckbox.Click += _ocrCheckbox_Click;
+            this._ocrCheckbox.Click += this.OcrCheckbox_Click;
 
-            _ocrContainerButton = new StandardButton()
+            this._ocrContainerButton = new StandardButton()
             {
-                Parent = _buttonPanel,
+                Parent = this._buttonPanel,
                 Text = "Edit OCR Region",
                 ResizeIcon = true,
-                Icon = tM.getIcon(_Icons.Camera),
+                Icon = tM.GetIcon(Icons.Camera),
             };
-            _ocrContainerButton.Click += _ocrContainerButton_Click;
+            this._ocrContainerButton.Click += this.OcrContainerButton_Click;
 
-            _potraitCaptureButton = new StandardButton()
+            this._potraitCaptureButton = new StandardButton()
             {
-                Parent = _buttonPanel,
+                Parent = this._buttonPanel,
                 Text = "Toggle Potrait Capture",
                 ResizeIcon = true,
                 Icon = AsyncTexture2D.FromAssetId(358353),
             };
-            _potraitCaptureButton.Click += _potraitCaptureButton_Click;
+            this._potraitCaptureButton.Click += this.PotraitCaptureButton_Click;
 
-            _potraitFolderButton = new StandardButton()
+            this._potraitFolderButton = new StandardButton()
             {
-                Parent = _buttonPanel,
+                Parent = this._buttonPanel,
                 Text = "Open Potrait Folder",
                 ResizeIcon = true,
-                Icon = tM.getIcon(_Icons.Folder),
+                Icon = tM.GetIcon(Icons.Folder),
             };
-            _potraitFolderButton.Click += _potraitFolderButton_Click;
+            this._potraitFolderButton.Click += this.PotraitFolderButton_Click;
 
-            _fixCharacterOrder = new StandardButton()
+            this._fixCharacterOrder = new StandardButton()
             {
-                Parent = _buttonPanel,
+                Parent = this._buttonPanel,
                 Text = "Fix Characters",
                 ResizeIcon = true,
                 Icon = AsyncTexture2D.FromAssetId(156760),
             };
-            _fixCharacterOrder.Click += _fixCharacterOrder_Click;
+            this._fixCharacterOrder.Click += this.FixCharacterOrder_Click;
 
-            _refreshAPI = new StandardButton()
+            this._refreshAPI = new StandardButton()
             {
-                Parent = _buttonPanel,
+                Parent = this._buttonPanel,
                 Text = "Refresh API",
                 ResizeIcon = true,
                 Icon = AsyncTexture2D.FromAssetId(156749),
             };
-            _refreshAPI.Click += _refreshAPI_Click;
-
+            this._refreshAPI.Click += this.RefreshAPI_Click;
         }
 
-        private void _refreshAPI_Click(object sender, MouseEventArgs e)
+        private void RefreshAPI_Click(object sender, MouseEventArgs e)
         {
-            Characters.ModuleInstance.GW2API_Handler.CheckAPI();
+            Characters.ModuleInstance.GW2APIHandler.CheckAPI();
         }
 
-        private void _windowMode_Click(object sender, MouseEventArgs e)
+        private void WindowMode_Click(object sender, MouseEventArgs e)
         {
-            Characters.ModuleInstance.Settings._WindowedMode.Value = _windowMode.Checked;
+            Characters.ModuleInstance.Settings.WindowedMode.Value = this._windowMode.Checked;
         }
 
-        private void _autoFix_Click(object sender, MouseEventArgs e)
+        private void AutoFix_Click(object sender, MouseEventArgs e)
         {
-            Characters.ModuleInstance.Settings._AutoSortCharacters.Value = _autoFix.Checked;
+            Characters.ModuleInstance.Settings.AutoSortCharacters.Value = this._autoFix.Checked;
         }
 
-        private void _fixCharacterOrder_Click(object sender, MouseEventArgs e)
+        private void FixCharacterOrder_Click(object sender, MouseEventArgs e)
         {
             if (!GameService.GameIntegration.Gw2Instance.IsInGame)
             {
@@ -162,17 +162,17 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
             }
         }
 
-        private void _ocrCheckbox_Click(object sender, MouseEventArgs e)
+        private void OcrCheckbox_Click(object sender, MouseEventArgs e)
         {
-            Characters.ModuleInstance.Settings._UseOCR.Value = _ocrCheckbox.Checked;
+            Characters.ModuleInstance.Settings.UseOCR.Value = this._ocrCheckbox.Checked;
         }
 
-        private void _ocrContainerButton_Click(object sender, MouseEventArgs e)
+        private void OcrContainerButton_Click(object sender, MouseEventArgs e)
         {
             Characters.ModuleInstance.OCR?.ToggleContainer();
         }
 
-        private void _potraitFolderButton_Click(object sender, MouseEventArgs e)
+        private void PotraitFolderButton_Click(object sender, MouseEventArgs e)
         {
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
@@ -183,7 +183,7 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
             Process.Start(startInfo);
         }
 
-        private void _potraitCaptureButton_Click(object sender, MouseEventArgs e)
+        private void PotraitCaptureButton_Click(object sender, MouseEventArgs e)
         {
             Characters.ModuleInstance.PotraitCapture.ToggleVisibility();
         }
@@ -192,15 +192,45 @@ namespace Kenedia.Modules.Characters.Classes.UI_Controls
         {
             base.OnResized(e);
 
-            if (_windowMode != null) _windowMode.Width = _contentPanel.Width - 5;
-            if (_autoFix != null) _autoFix.Width = _contentPanel.Width - 5;
-            if (_ocrCheckbox != null) _ocrCheckbox.Width = _contentPanel.Width - 5;
+            if (this._windowMode != null)
+            {
+                this._windowMode.Width = this._contentPanel.Width - 5;
+            }
 
-            if (_potraitCaptureButton != null) _potraitCaptureButton.Width = _contentPanel.Width - 5;
-            if (_potraitFolderButton != null) _potraitFolderButton.Width = _contentPanel.Width - 5;
-            if (_ocrContainerButton != null) _ocrContainerButton.Width = _contentPanel.Width - 5;
-            if (_fixCharacterOrder != null) _fixCharacterOrder.Width = _contentPanel.Width - 5;
-            if (_refreshAPI != null) _refreshAPI.Width = _contentPanel.Width - 5;
+            if (this._autoFix != null)
+            {
+                this._autoFix.Width = this._contentPanel.Width - 5;
+            }
+
+            if (this._ocrCheckbox != null)
+            {
+                this._ocrCheckbox.Width = this._contentPanel.Width - 5;
+            }
+
+            if (this._potraitCaptureButton != null)
+            {
+                this._potraitCaptureButton.Width = this._contentPanel.Width - 5;
+            }
+
+            if (this._potraitFolderButton != null)
+            {
+                this._potraitFolderButton.Width = this._contentPanel.Width - 5;
+            }
+
+            if (this._ocrContainerButton != null)
+            {
+                this._ocrContainerButton.Width = this._contentPanel.Width - 5;
+            }
+
+            if (this._fixCharacterOrder != null)
+            {
+                this._fixCharacterOrder.Width = this._contentPanel.Width - 5;
+            }
+
+            if (this._refreshAPI != null)
+            {
+                this._refreshAPI.Width = this._contentPanel.Width - 5;
+            }
         }
     }
 }

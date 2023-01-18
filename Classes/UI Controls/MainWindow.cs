@@ -1,19 +1,19 @@
-﻿using Blish_HUD;
-using Blish_HUD.Content;
-using Blish_HUD.Controls;
-using Kenedia.Modules.Characters.Classes.UI_Controls;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
-namespace Kenedia.Modules.Characters.Classes.MainWindow
+﻿namespace Kenedia.Modules.Characters.Classes.MainWindow
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using Blish_HUD;
+    using Blish_HUD.Content;
+    using Blish_HUD.Controls;
+    using Kenedia.Modules.Characters.Classes.UI_Controls;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Color = Microsoft.Xna.Framework.Color;
+    using Point = Microsoft.Xna.Framework.Point;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
     public class MainWindow : StandardWindow
     {
         public List<CharacterControl> CharacterControls = new List<CharacterControl>();
@@ -57,24 +57,26 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                 new List<object>()
             },
         };
+
         public Image DisplaySettingsButton;
         public ImageButton ClearButton;
         public TextBox FilterBox;
         public FlowPanel DropdownPanel;
         public SettingsSideMenu SettingsSideMenu;
-        public Filter_SideMenu Filter_SideMenu;
+        public Filter_SideMenu FilterSideMenu;
         public CharacterEdit CharacterEdit;
 
         private bool _filterCharacters;
         private bool _updateLayout;
-        double _tick = 0;
-        double _filterTick = 0;
+        private double _tick = 0;
+        private double _filterTick = 0;
 
-        private AsyncTexture2D WindowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
+        private readonly AsyncTexture2D windowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
 
-        public MainWindow(Texture2D background, Rectangle windowRegion, Rectangle contentRegion) : base(background, windowRegion, contentRegion)
+        public MainWindow(Texture2D background, Rectangle windowRegion, Rectangle contentRegion)
+            : base(background, windowRegion, contentRegion)
         {
-            ContentPanel = new FlowPanel()
+            this.ContentPanel = new FlowPanel()
             {
                 Parent = this,
                 Location = new Point(0, 38),
@@ -82,11 +84,11 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                 ControlPadding = new Vector2(2, 4),
                 CanScroll = true,
             };
-            //ContentPanel.BackgroundColor = Color.Magenta;
+            // ContentPanel.BackgroundColor = Color.Magenta;
 
-            DraggingControl.LeftMouseButtonReleased += DraggingControl_LeftMouseButtonReleased;
+            this.DraggingControl.LeftMouseButtonReleased += this.DraggingControl_LeftMouseButtonReleased;
 
-            DropdownPanel = new FlowPanel()
+            this.DropdownPanel = new FlowPanel()
             {
                 Parent = this,
                 Location = new Point(0, 2),
@@ -95,18 +97,18 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                 ControlPadding = new Vector2(6, 0),
             };
 
-            DisplaySettingsButton = new Image()
+            this.DisplaySettingsButton = new Image()
             {
-                Parent = DropdownPanel,
+                Parent = this.DropdownPanel,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052),
                 Size = new Point(25, 25),
                 BasicTooltipText = "Show Display Settings",
             };
-            DisplaySettingsButton.MouseEntered += DisplaySettingsButton_MouseEntered;
-            DisplaySettingsButton.MouseLeft += DisplaySettingsButton_MouseLeft;
-            DisplaySettingsButton.Click += DisplaySettingsButton_Click;
+            this.DisplaySettingsButton.MouseEntered += this.DisplaySettingsButton_MouseEntered;
+            this.DisplaySettingsButton.MouseLeft += this.DisplaySettingsButton_MouseLeft;
+            this.DisplaySettingsButton.Click += this.DisplaySettingsButton_Click;
 
-            ClearButton = new ImageButton()
+            this.ClearButton = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175783),
@@ -116,50 +118,50 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                 BasicTooltipText = "Clear Filters",
                 Visible = false,
             };
-            ClearButton.Click += ClearButton_Click;
-            //156869
+            this.ClearButton.Click += this.ClearButton_Click;
+            // 156869
 
-            FilterBox = new TextBox()
+            this.FilterBox = new TextBox()
             {
-                Parent = DropdownPanel,
+                Parent = this.DropdownPanel,
                 PlaceholderText = "Search ...",
-                Width = DropdownPanel.Width - DisplaySettingsButton.Width - 5,
+                Width = this.DropdownPanel.Width - this.DisplaySettingsButton.Width - 5,
             };
-            FilterBox.TextChanged += FilterCharacters;
-            FilterBox.Click += FilterBox_Click;
-            FilterBox.EnterPressed += FilterBox_EnterPressed;
+            this.FilterBox.TextChanged += this.FilterCharacters;
+            this.FilterBox.Click += this.FilterBox_Click;
+            this.FilterBox.EnterPressed += this.FilterBox_EnterPressed;
 
-            SettingsSideMenu = new SettingsSideMenu()
+            this.SettingsSideMenu = new SettingsSideMenu()
             {
                 TextureOffset = new Point(25, 25),
                 Visible = false,
             };
 
-            Filter_SideMenu = new Filter_SideMenu()
+            this.FilterSideMenu = new Filter_SideMenu()
             {
                 TextureOffset = new Point(25, 25),
                 Visible = false,
             };
 
-            CharacterEdit = new CharacterEdit()
+            this.CharacterEdit = new CharacterEdit()
             {
                 TextureOffset = new Point(25, 25),
                 Visible = false,
             };
-            CharacterEdit.Shown += CharacterEdit_Shown;
+            this.CharacterEdit.Shown += this.CharacterEdit_Shown;
 
-            ClearButton.Location = new Point(FilterBox.LocalBounds.Right - 25, FilterBox.LocalBounds.Top + 5);
-            Characters.ModuleInstance.LanguageChanged += ModuleInstance_LanguageChanged;
+            this.ClearButton.Location = new Point(this.FilterBox.LocalBounds.Right - 25, this.FilterBox.LocalBounds.Top + 5);
+            Characters.ModuleInstance.LanguageChanged += this.ModuleInstance_LanguageChanged;
         }
 
         private void FilterBox_EnterPressed(object sender, EventArgs e)
         {
-            if(Characters.ModuleInstance.Settings.EnterToLogin.Value)
+            if (Characters.ModuleInstance.Settings.EnterToLogin.Value)
             {
-                PerformFiltering();
-                var c = (CharacterControl) ContentPanel.Children.Where(e => e.Visible).FirstOrDefault();
+                this.PerformFiltering();
+                var c = (CharacterControl)this.ContentPanel.Children.Where(e => e.Visible).FirstOrDefault();
 
-                if(c != null)
+                if (c != null)
                 {
                     Debug.WriteLine(c.Character.Name);
                     Characters.ModuleInstance.SwapTo(c.Character);
@@ -169,57 +171,61 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
 
         private void CharacterEdit_Shown(object sender, EventArgs e)
         {
-            Filter_SideMenu?.Hide();
-            SettingsSideMenu?.Hide();
+            this.FilterSideMenu?.Hide();
+            this.SettingsSideMenu?.Hide();
 
-            if (CharacterEdit != null && CharacterEdit.Visible) CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
+            {
+                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
         }
 
         private void ModuleInstance_LanguageChanged(object sender, EventArgs e)
         {
-            _tick = _tick + 10;
-            _updateLayout = true;
+            this._tick = this._tick + 10;
+            this._updateLayout = true;
         }
 
         private void ClearButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            ResetFilters();
+            this.ResetFilters();
         }
+
         private void ResetFilters()
         {
-            CategoryFilters[FilterCategory.Race].Clear();
-            CategoryFilters[FilterCategory.Crafting].Clear();
-            CategoryFilters[FilterCategory.Profession].Clear();
-            CategoryFilters[FilterCategory.ProfessionSpecialization].Clear();
-            CategoryFilters[FilterCategory.Specialization].Clear();
-            CategoryFilters[FilterCategory.Hidden].Clear();
-            CategoryFilters[FilterCategory.Birthday].Clear();
+            this.CategoryFilters[FilterCategory.Race].Clear();
+            this.CategoryFilters[FilterCategory.Crafting].Clear();
+            this.CategoryFilters[FilterCategory.Profession].Clear();
+            this.CategoryFilters[FilterCategory.ProfessionSpecialization].Clear();
+            this.CategoryFilters[FilterCategory.Specialization].Clear();
+            this.CategoryFilters[FilterCategory.Hidden].Clear();
+            this.CategoryFilters[FilterCategory.Birthday].Clear();
 
-            Filter_SideMenu.ResetToggles();
-            FilterBox.Text = null;
-            _filterCharacters = true;
-            Filter_SideMenu.Tags.ForEach(t => t.Active = false);
+            this.FilterSideMenu.ResetToggles();
+            this.FilterBox.Text = null;
+            this._filterCharacters = true;
+            this.FilterSideMenu.Tags.ForEach(t => t.Active = false);
         }
 
         private void FilterBox_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            SettingsSideMenu.Hide();
-            Filter_SideMenu.Show();
-            CharacterEdit.Hide();
+            this.SettingsSideMenu.Hide();
+            this.FilterSideMenu.Show();
+            this.CharacterEdit.Hide();
         }
 
         private void DisplaySettingsButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            Filter_SideMenu.Hide();
-            SettingsSideMenu.Show();
-            SettingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            SettingsSideMenu.Opacity = 1f;
-            CharacterEdit.Hide();
+            this.FilterSideMenu.Hide();
+            this.SettingsSideMenu.Show();
+            this.SettingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            this.SettingsSideMenu.Opacity = 1f;
+            this.CharacterEdit.Hide();
         }
 
         public void FilterCharacters(object sender = null, EventArgs e = null)
         {
-            _filterCharacters = true;
+            this._filterCharacters = true;
         }
 
         public void PerformFiltering()
@@ -227,31 +233,31 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
             var any = Characters.ModuleInstance.Settings.FilterMatching.Value == MatchingBehavior.MatchAny;
             var all = Characters.ModuleInstance.Settings.FilterMatching.Value == MatchingBehavior.MatchAll;
 
-            var textStrings = FilterBox.Text.Trim().ToLower().Split(' ').ToList();
-            var matchAny = FilterBox.Text.Trim().Length == 0;
+            var textStrings = this.FilterBox.Text.Trim().ToLower().Split(' ').ToList();
+            var matchAny = this.FilterBox.Text.Trim().Length == 0;
             var s = Characters.ModuleInstance.Settings;
             var data = Characters.ModuleInstance.Data;
 
-            var activeTags = Filter_SideMenu.Tags.Where(e => e.Active);
+            var activeTags = this.FilterSideMenu.Tags.Where(e => e.Active);
 
             var anyTag = activeTags.Count() == 0;
-            var raceAny = CategoryFilters[FilterCategory.Race].Count == 0;
-            var craftAny = CategoryFilters[FilterCategory.Crafting].Count == 0;
-            var profAny = CategoryFilters[FilterCategory.Profession].Count == 0;
-            var specProfAny = CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 0;
-            var specAny = CategoryFilters[FilterCategory.Specialization].Count == 0;
-            var birthAny = CategoryFilters[FilterCategory.Birthday].Count == 0;
+            var raceAny = this.CategoryFilters[FilterCategory.Race].Count == 0;
+            var craftAny = this.CategoryFilters[FilterCategory.Crafting].Count == 0;
+            var profAny = this.CategoryFilters[FilterCategory.Profession].Count == 0;
+            var specProfAny = this.CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 0;
+            var specAny = this.CategoryFilters[FilterCategory.Specialization].Count == 0;
+            var birthAny = this.CategoryFilters[FilterCategory.Birthday].Count == 0;
             var anyCategory = raceAny && craftAny && profAny && specProfAny && specAny && birthAny;
-            var includeHidden = CategoryFilters[FilterCategory.Hidden].Count == 1;
+            var includeHidden = this.CategoryFilters[FilterCategory.Hidden].Count == 1;
 
-            foreach (CharacterControl c in ContentPanel.Children)
+            foreach (CharacterControl c in this.ContentPanel.Children)
             {
-                var crafting_Any = (c.Character.Crafting.Select(e => e.Id).Any(e => CategoryFilters[FilterCategory.Crafting].Contains(e) && (!s.Check_OnlyMaxCrafting.Value || c.Character.Crafting.Find(a => a.Id == e).Rating == data.CrafingProfessions[e].MaxRating)));
-                var crafting_All = CategoryFilters[FilterCategory.Crafting].Select(e => (int) e).All(e => c.Character.Crafting.Find(a => a.Id == e && (!s.Check_OnlyMaxCrafting.Value || a.Rating == data.CrafingProfessions[e].MaxRating)) != null);
+                var crafting_Any = c.Character.Crafting.Select(e => e.Id).Any(e => this.CategoryFilters[FilterCategory.Crafting].Contains(e) && (!s.CheckOnlyMaxCrafting.Value || c.Character.Crafting.Find(a => a.Id == e).Rating == data.CrafingProfessions[e].MaxRating));
+                var crafting_All = this.CategoryFilters[FilterCategory.Crafting].Select(e => (int)e).All(e => c.Character.Crafting.Find(a => a.Id == e && (!s.CheckOnlyMaxCrafting.Value || a.Rating == data.CrafingProfessions[e].MaxRating)) != null);
 
                 if (matchAny && anyCategory && anyTag)
                 {
-                    c.Visible = (c.Character.Show || includeHidden);
+                    c.Visible = c.Character.Show || includeHidden;
                     continue;
                 }
 
@@ -259,7 +265,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                 {
                     new FilterTag()
                     {
-                        Result = raceAny || CategoryFilters[FilterCategory.Race].Contains(c.Character.Race)
+                        Result = raceAny || this.CategoryFilters[FilterCategory.Race].Contains(c.Character.Race),
                     },
                     new FilterTag()
                     {
@@ -267,7 +273,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                     },
                     new FilterTag()
                     {
-                        Result = profAny|| (any || CategoryFilters[FilterCategory.Profession].Count == 1) && CategoryFilters[FilterCategory.Profession].Contains(c.Character.Profession)
+                        Result = profAny|| (any || this.CategoryFilters[FilterCategory.Profession].Count == 1) && this.CategoryFilters[FilterCategory.Profession].Contains(c.Character.Profession),
                     },
                     new FilterTag()
                     {
@@ -275,11 +281,11 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                     },
                     new FilterTag()
                     {
-                        Result = specProfAny && specAny || (any ||CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 1 ) && (c.Character.Specialization == SpecializationType.None && CategoryFilters[FilterCategory.ProfessionSpecialization].Contains(c.Character.Profession)) || CategoryFilters[FilterCategory.Specialization].Contains(c.Character.Specialization)
+                        Result = specProfAny && specAny || (any ||this.CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 1) && c.Character.Specialization == SpecializationType.None && this.CategoryFilters[FilterCategory.ProfessionSpecialization].Contains(c.Character.Profession) || this.CategoryFilters[FilterCategory.Specialization].Contains(c.Character.Specialization),
                     },
                 };
 
-                List<FilterTag> filterTags = Filter_SideMenu.Tags.Where(e => e.Active).Select(e => e.Text).ToList().CreateFilterTagList();
+                List<FilterTag> filterTags = this.FilterSideMenu.Tags.Where(e => e.Active).Select(e => e.Text).ToList().CreateFilterTagList();
                 List<FilterTag> filterStrings = textStrings.CreateFilterTagList();
 
                 if (!anyTag)
@@ -289,7 +295,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
 
                 if (!matchAny)
                 {
-                    if (s.Check_Name.Value)
+                    if (s.CheckName.Value)
                     {
                         var value = c.Character.Name.ToString();
 
@@ -304,10 +310,10 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                             }
                         }
 
-                        //visible = tag != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
+                        // visible = tag != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
                     }
 
-                    if (s.Check_Level.Value)
+                    if (s.CheckLevel.Value)
                     {
                         var value = c.Character.Level.ToString();
 
@@ -322,10 +328,10 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                             }
                         }
 
-                        //visible = tag != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
+                        // visible = tag != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
                     }
 
-                    if (s.Check_Race.Value)
+                    if (s.CheckRace.Value)
                     {
                         var value = c.Character.Race.GetData();
 
@@ -340,14 +346,14 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                             }
                         }
 
-                        //visible = filterStrings.Find(ex =>
-                        //{
+                        // visible = filterStrings.Find(ex =>
+                        // {
                         //    var value = c.Character.Race.GetData();
                         //    return value != null && value.Name.ToLower().Contains(ex);
-                        //}) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
+                        // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
                     }
 
-                    if (s.Check_Profession.Value)
+                    if (s.CheckProfession.Value)
                     {
                         var value = c.Character.Profession.GetData();
 
@@ -375,20 +381,20 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                             }
                         }
 
-                        //visible = filterStrings.Find(ex =>
-                        //{
+                        // visible = filterStrings.Find(ex =>
+                        // {
                         //    var value = c.Character.Profession.GetData();
                         //    return value != null && value.Name.ToLower().Contains(ex);
-                        //}) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
+                        // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
 
-                        //visible = filterStrings.Find(ex =>
-                        //{
+                        // visible = filterStrings.Find(ex =>
+                        // {
                         //    var value = c.Character.Specialization.GetData();
                         //    return value != null && value.Name.ToLower().Contains(ex);
-                        //}) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
+                        // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
                     }
 
-                    if (s.Check_Map.Value)
+                    if (s.CheckMap.Value)
                     {
                         var value = Characters.ModuleInstance.Data.GetMapById(c.Character.Map);
 
@@ -403,14 +409,14 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                             }
                         }
 
-                        //visible = filterStrings.Find(ex =>
-                        //{
+                        // visible = filterStrings.Find(ex =>
+                        // {
                         //    var value = Characters.ModuleInstance.Data.GetMapById(c.Character.Map);
                         //    return value != null && value.Name.ToLower().Contains(ex);
-                        //}) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
+                        // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
                     }
 
-                    if (s.Check_Crafting.Value)
+                    if (s.CheckCrafting.Value)
                     {
                         foreach (CharacterCrafting crafting in c.Character.Crafting)
                         {
@@ -420,21 +426,21 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                             {
                                 foreach (FilterTag ex in filterStrings)
                                 {
-                                    if (value.Name.ToLower().Contains(ex) && (!s.Check_OnlyMaxCrafting.Value || value.MaxRating == crafting.Rating))
+                                    if (value.Name.ToLower().Contains(ex) && (!s.CheckOnlyMaxCrafting.Value || value.MaxRating == crafting.Rating))
                                     {
                                         ex.Result = true;
                                     }
                                 }
                             }
 
-                            //visible = value != null && (!s.Check_OnlyMaxCrafting.Value || crafting.Rating == value.MaxRating) && filterStrings.Find(ex =>
-                            //{
+                            // visible = value != null && (!s.Check_OnlyMaxCrafting.Value || crafting.Rating == value.MaxRating) && filterStrings.Find(ex =>
+                            // {
                             //    return value != null && value.Name.ToLower().Contains(ex);
-                            //}) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
+                            // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
                         }
                     }
 
-                    if (s.Check_Tags.Value)
+                    if (s.CheckTags.Value)
                     {
                         var tags = c.Character.Tags.ToList().ConvertAll(d => d.ToLower()); ;
 
@@ -449,7 +455,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                             }
                         }
 
-                        //visible = tag != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
+                        // visible = tag != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
                     }
                 }
 
@@ -459,34 +465,34 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
 
                 c.Visible = (c.Character.Show || includeHidden) && (s.FilterDirection.Value == FilterBehavior.Include ? matched && catMatched && tagMatched : !matched && !catMatched && !tagMatched);
             }
-            ClearButton.Visible = !anyCategory || !matchAny || !anyTag;
-            SortCharacters();
-            ContentPanel.Invalidate();
+            this.ClearButton.Visible = !anyCategory || !matchAny || !anyTag;
+            this.SortCharacters();
+            this.ContentPanel.Invalidate();
         }
 
         private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            DisplaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052);
+            this.DisplaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052);
         }
 
         private void DisplaySettingsButton_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            DisplaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157110);
+            this.DisplaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157110);
         }
 
 
         public void UpdateLayout()
         {
-            _updateLayout = false;
-            var PanelLayout = Characters.ModuleInstance.Settings.PanelLayout.Value;
-            var PanelSize = Characters.ModuleInstance.Settings.PanelSize.Value;
+            this._updateLayout = false;
+            var panelLayout = Characters.ModuleInstance.Settings.PanelLayout.Value;
+            var panelSize = Characters.ModuleInstance.Settings.PanelSize.Value;
 
             var size = Point.Zero;
             var nameFont = GameService.Content.DefaultFont14;
             var font = GameService.Content.DefaultFont12;
-            var testString = Characters.ModuleInstance.Character_Models.Aggregate("", (max, cur) => max.Length > cur.Name.Length ? max : cur.Name);
+            var testString = Characters.ModuleInstance.CharacterModels.Aggregate("", (max, cur) => max.Length > cur.Name.Length ? max : cur.Name);
 
-            switch (PanelSize)
+            switch (panelSize)
             {
                 case PanelSizes.Small:
                     {
@@ -517,12 +523,12 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                         break;
                     }
             }
-            switch (PanelLayout)
+            switch (panelLayout)
             {
                 case CharacterPanelLayout.OnlyIcons:
                     {
                         var newSize = new Point(Math.Min(size.X, size.Y), Math.Min(size.X, size.Y));
-                        foreach (CharacterControl c in ContentPanel.Children)
+                        foreach (CharacterControl c in this.ContentPanel.Children)
                         {
                             c.Size = newSize;
                             c.Font = font;
@@ -535,7 +541,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                 case CharacterPanelLayout.OnlyText:
                     {
                         var newSize = size;
-                        foreach (CharacterControl c in ContentPanel.Children)
+                        foreach (CharacterControl c in this.ContentPanel.Children)
                         {
                             c.Size = newSize;
                             c.Font = font;
@@ -547,7 +553,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                 case CharacterPanelLayout.IconAndText:
                     {
                         var newSize = size;
-                        foreach (CharacterControl c in ContentPanel.Children)
+                        foreach (CharacterControl c in this.ContentPanel.Children)
                         {
                             c.Size = newSize;
                             c.Font = font;
@@ -558,22 +564,22 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                     }
             }
 
-            var maxWidth = ContentPanel.Children.Count > 0 ? ContentPanel.Children.Cast<CharacterControl>().Max(t => t.TotalWidth) : Width;
+            var maxWidth = this.ContentPanel.Children.Count > 0 ? this.ContentPanel.Children.Cast<CharacterControl>().Max(t => t.TotalWidth) : this.Width;
 
-            foreach (CharacterControl c in ContentPanel.Children) { c.Width = maxWidth; }
+            foreach (CharacterControl c in this.ContentPanel.Children) { c.Width = maxWidth; }
         }
 
         private void DraggingControl_LeftMouseButtonReleased(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
 
-            SetNewIndex(DraggingControl.CharacterControl);
-            DraggingControl.CharacterControl = null;
+            this.SetNewIndex(this.DraggingControl.CharacterControl);
+            this.DraggingControl.CharacterControl = null;
         }
 
         public void SortCharacters()
         {
-            var order = Characters.ModuleInstance.Settings.Sort_Order.Value;
-            var sort = Characters.ModuleInstance.Settings.Sort_Type.Value;
+            var order = Characters.ModuleInstance.Settings.SortOrder.Value;
+            var sort = Characters.ModuleInstance.Settings.SortType.Value;
 
             switch (sort)
             {
@@ -582,11 +588,11 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                         switch (order)
                         {
                             case SortOrder.Ascending:
-                                ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Name.CompareTo(b.Character.Name));
+                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Name.CompareTo(b.Character.Name));
                                 break;
 
                             case SortOrder.Descending:
-                                ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Name.CompareTo(a.Character.Name));
+                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Name.CompareTo(a.Character.Name));
                                 break;
                         }
                         break;
@@ -596,11 +602,11 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                         switch (order)
                         {
                             case SortOrder.Ascending:
-                                ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.LastLogin.CompareTo(a.Character.LastLogin));
+                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.LastLogin.CompareTo(a.Character.LastLogin));
                                 break;
 
                             case SortOrder.Descending:
-                                ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.LastLogin.CompareTo(b.Character.LastLogin));
+                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.LastLogin.CompareTo(b.Character.LastLogin));
                                 break;
                         }
                         break;
@@ -610,11 +616,11 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                         switch (order)
                         {
                             case SortOrder.Ascending:
-                                ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Map.CompareTo(b.Character.Map));
+                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Map.CompareTo(b.Character.Map));
                                 break;
 
                             case SortOrder.Descending:
-                                ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Map.CompareTo(a.Character.Map));
+                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Map.CompareTo(a.Character.Map));
                                 break;
                         }
                         break;
@@ -624,11 +630,11 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                         switch (order)
                         {
                             case SortOrder.Ascending:
-                                ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Profession.CompareTo(b.Character.Profession));
+                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Profession.CompareTo(b.Character.Profession));
                                 break;
 
                             case SortOrder.Descending:
-                                ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Profession.CompareTo(a.Character.Profession));
+                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Profession.CompareTo(a.Character.Profession));
                                 break;
                         }
                         break;
@@ -639,10 +645,10 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
                     }
                 case SortType.Custom:
                     {
-                        ContentPanel.SortChildren<CharacterControl>((a, b) => a.Index.CompareTo(b.Index));
+                        this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Index.CompareTo(b.Index));
 
                         var i = 0;
-                        foreach (CharacterControl c in ContentPanel.Children)
+                        foreach (CharacterControl c in this.ContentPanel.Children)
                         {
                             c.Index = i;
                             i++;
@@ -654,24 +660,24 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
 
         public void SetNewIndex(CharacterControl characterControl)
         {
-            characterControl.Index = Characters.ModuleInstance.MainWindow.getHoveredIndex(characterControl);
+            characterControl.Index = Characters.ModuleInstance.MainWindow.GetHoveredIndex(characterControl);
 
             Characters.ModuleInstance.MainWindow.SortCharacters();
         }
 
-        public double getHoveredIndex(CharacterControl characterControl)
+        public double GetHoveredIndex(CharacterControl characterControl)
         {
             var m = Input.Mouse;
             CharacterControl lastControl = characterControl;
 
             var i = 0;
-            foreach (CharacterControl c in ContentPanel.Children)
+            foreach (CharacterControl c in this.ContentPanel.Children)
             {
                 c.Index = i;
                 i++;
             }
 
-            foreach (CharacterControl c in ContentPanel.Children)
+            foreach (CharacterControl c in this.ContentPanel.Children)
             {
                 if (c.AbsoluteBounds.Contains(m.Position))
                 {
@@ -683,7 +689,7 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
 
             if (lastControl.AbsoluteBounds.Bottom < m.Position.Y || lastControl.AbsoluteBounds.Top < m.Position.Y && lastControl.AbsoluteBounds.Right < m.Position.X)
             {
-                return CharacterControls.Count + 1;
+                return this.CharacterControls.Count + 1;
             }
 
             return characterControl.Index;
@@ -693,74 +699,100 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
         {
             base.OnResized(e);
 
-            if (ContentPanel != null) ContentPanel.Size = new Point(ContentRegion.Size.X, ContentRegion.Size.Y - 35);
-
-            if (DropdownPanel != null)
+            if (this.ContentPanel != null)
             {
-                DropdownPanel.Size = new Point(ContentRegion.Size.X, 31);
-                FilterBox.Width = DropdownPanel.Width - DisplaySettingsButton.Width - 5;
-                ClearButton.Location = new Point(FilterBox.LocalBounds.Right - 23, FilterBox.LocalBounds.Top + 6);
+                this.ContentPanel.Size = new Point(this.ContentRegion.Size.X, this.ContentRegion.Size.Y - 35);
+            }
+
+            if (this.DropdownPanel != null)
+            {
+                this.DropdownPanel.Size = new Point(this.ContentRegion.Size.X, 31);
+                this.FilterBox.Width = this.DropdownPanel.Width - this.DisplaySettingsButton.Width - 5;
+                this.ClearButton.Location = new Point(this.FilterBox.LocalBounds.Right - 23, this.FilterBox.LocalBounds.Top + 6);
             }
 
             if (e.CurrentSize.Y < 135)
             {
-                Size = new Point(Size.X, 135);
+                this.Size = new Point(this.Size.X, 135);
             }
 
-            if (SettingsSideMenu != null && SettingsSideMenu.Visible) SettingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            if (Filter_SideMenu != null && Filter_SideMenu.Visible) Filter_SideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            if (CharacterEdit != null && CharacterEdit.Visible) CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            if (this.SettingsSideMenu != null && this.SettingsSideMenu.Visible)
+            {
+                this.SettingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+
+            if (this.FilterSideMenu != null && this.FilterSideMenu.Visible)
+            {
+                this.FilterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+
+            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
+            {
+                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
         }
 
         protected override void OnMoved(MovedEventArgs e)
         {
             base.OnMoved(e);
 
-            if (SettingsSideMenu != null && SettingsSideMenu.Visible) SettingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            if (Filter_SideMenu != null && Filter_SideMenu.Visible) Filter_SideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            if (CharacterEdit != null && CharacterEdit.Visible) CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            if (this.SettingsSideMenu != null && this.SettingsSideMenu.Visible)
+            {
+                this.SettingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+
+            if (this.FilterSideMenu != null && this.FilterSideMenu.Visible)
+            {
+                this.FilterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
+
+            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
+            {
+                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            }
         }
 
         protected override void DisposeControl()
         {
             base.DisposeControl();
 
-            CharacterControls?.DisposeAll();
+            this.CharacterControls?.DisposeAll();
 
-            ContentPanel?.Dispose();
-            DraggingControl?.Dispose();
-            SettingsSideMenu?.Dispose();
-            Filter_SideMenu?.Dispose();
-            CharacterEdit?.Dispose();
+            this.ContentPanel?.Dispose();
+            this.DraggingControl?.Dispose();
+            this.SettingsSideMenu?.Dispose();
+            this.FilterSideMenu?.Dispose();
+            this.CharacterEdit?.Dispose();
 
-            DropdownPanel?.Dispose();
-            DisplaySettingsButton?.Dispose();
-            FilterBox?.Dispose();
+            this.DropdownPanel?.Dispose();
+            this.DisplaySettingsButton?.Dispose();
+            this.FilterBox?.Dispose();
         }
 
         public override void PaintAfterChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
             base.PaintAfterChildren(spriteBatch, bounds);
 
-            spriteBatch.DrawOnCtrl(this,
-                                    WindowEmblem,
-                                    new Rectangle(-43, -58, 128, 128),
-                                    WindowEmblem.Bounds,
-                                    Color.White,
-                                    0f,
-                                    default);
+            spriteBatch.DrawOnCtrl(
+                this,
+                this.windowEmblem,
+                new Rectangle(-43, -58, 128, 128),
+                this.windowEmblem.Bounds,
+                Color.White,
+                0f,
+                default);
 
             if (bounds.Width >= 190)
             {
-                spriteBatch.DrawStringOnCtrl(this,
-                                        $"{Characters.ModuleInstance.Name}",
-                                        bounds.Width >= 245 ? GameService.Content.DefaultFont32 : GameService.Content.DefaultFont18,
-                                        new Rectangle(65, 5, bounds.Width - (128 - 43 + 15), 30),
-                                        ContentService.Colors.ColonialWhite, //new Color(247, 231, 182, 97),
-                                        false,
-                                        HorizontalAlignment.Left,
-                                        VerticalAlignment.Middle
-                                        );
+                spriteBatch.DrawStringOnCtrl(
+                    this,
+                    $"{Characters.ModuleInstance.Name}",
+                    bounds.Width >= 245 ? GameService.Content.DefaultFont32 : GameService.Content.DefaultFont18,
+                    new Rectangle(65, 5, bounds.Width - (128 - 43 + 15), 30),
+                    ContentService.Colors.ColonialWhite, // new Color(247, 231, 182, 97),
+                    false,
+                    HorizontalAlignment.Left,
+                    VerticalAlignment.Middle);
             }
         }
 
@@ -768,27 +800,30 @@ namespace Kenedia.Modules.Characters.Classes.MainWindow
         {
             base.OnHidden(e);
 
-            Filter_SideMenu?.Hide();
-            SettingsSideMenu?.Hide();
-            CharacterEdit?.Hide();
+            this.FilterSideMenu?.Hide();
+            this.SettingsSideMenu?.Hide();
+            this.CharacterEdit?.Hide();
         }
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            if (_filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - _filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
+            if (this._filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - this._filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
             {
-                _filterTick = gameTime.TotalGameTime.TotalMilliseconds;
-                PerformFiltering();
-                _filterCharacters = false;
+                this._filterTick = gameTime.TotalGameTime.TotalMilliseconds;
+                this.PerformFiltering();
+                this._filterCharacters = false;
             }
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - _tick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - this._tick > 50)
             {
-                _tick = gameTime.TotalGameTime.TotalMilliseconds;
+                this._tick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (_updateLayout) UpdateLayout();
+                if (this._updateLayout)
+                {
+                    this.UpdateLayout();
+                }
             }
         }
     }

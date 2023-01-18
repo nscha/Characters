@@ -1,26 +1,31 @@
-﻿using Blish_HUD.Controls;
-using Gw2Sharp.Models;
-using Gw2Sharp.WebApi.V2.Models;
-using System;
-using System.IO;
-using System.Linq;
-
-namespace Kenedia.Modules.Characters.Classes
+﻿namespace Kenedia.Modules.Characters.Classes
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using Blish_HUD.Controls;
+    using Gw2Sharp.Models;
+    using Gw2Sharp.WebApi.V2.Models;
+
     public class GW2API_Handler
     {
-        Account __account;
-        Account _account
+        private Account __account;
+
+        private Account Account
         {
-            get => __account;
+            get => this.__account;
             set
             {
-                if (value != null && (__account == null || __account.Name != value.Name)) UpdateFolderPaths(value.Name);
-                __account = value;
+                if (value != null && (this.__account == null || this.__account.Name != value.Name))
+                {
+                    this.UpdateFolderPaths(value.Name);
+                }
+
+                this.__account = value;
             }
         }
 
-        void UpdateFolderPaths(string accountName)
+        private void UpdateFolderPaths(string accountName)
         {
             var mIns = Characters.ModuleInstance;
             var b = mIns.BasePath;
@@ -30,14 +35,22 @@ namespace Kenedia.Modules.Characters.Classes
             mIns.AccountInfoPath = b + @"\" + accountName + @"\account.json";
             mIns.AccountImagesPath = b + @"\" + accountName + @"\images\";
 
-            if (!Directory.Exists(mIns.AccountPath)) Directory.CreateDirectory(mIns.AccountPath);
-            if (!Directory.Exists(mIns.AccountImagesPath)) Directory.CreateDirectory(mIns.AccountImagesPath);
+            if (!Directory.Exists(mIns.AccountPath))
+            {
+                Directory.CreateDirectory(mIns.AccountPath);
+            }
 
-            if (Characters.ModuleInstance.Character_Models.Count == 0)
+            if (!Directory.Exists(mIns.AccountImagesPath))
+            {
+                Directory.CreateDirectory(mIns.AccountImagesPath);
+            }
+
+            if (Characters.ModuleInstance.CharacterModels.Count == 0)
             {
                 Characters.ModuleInstance.LoadCharacterList();
             }
         }
+
         public async void CheckAPI()
         {
             Characters.ModuleInstance.APISpinner?.Show();
@@ -49,10 +62,10 @@ namespace Kenedia.Modules.Characters.Classes
                 if (gw2ApiManager.HasPermissions(new[] { TokenPermission.Account, TokenPermission.Characters }))
                 {
                     var account = await gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
-                    _account = account;
+                    this.Account = account;
 
                     var characters = await gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
-                    var character_Models = Characters.ModuleInstance.Character_Models;
+                    var character_Models = Characters.ModuleInstance.CharacterModels;
                     var pos = 0;
 
                     // Cleanup
@@ -71,13 +84,13 @@ namespace Kenedia.Modules.Characters.Classes
                         Character_Model character_Model = character_Models.Find(e => e.Name == c.Name);
                         if (character_Model == null || character_Model.Created != c.Created)
                         {
-                            if(character_Model != null && character_Model.Created != c.Created)
+                            if (character_Model != null && character_Model.Created != c.Created)
                             {
-                                //Delete the old model!                                
+                                // Delete the old model!                                
                                 character_Model.Delete();
                             }
 
-                            //Create New Entry
+                            // Create New Entry
                             var cModel = new Character_Model()
                             {
                                 Name = c.Name,
@@ -106,11 +119,10 @@ namespace Kenedia.Modules.Characters.Classes
                         }
                         else
                         {
-                            //Update Character
+                            // Update Character
                             character_Model.Position = pos;
                             character_Model.LastModified = c.LastModified.UtcDateTime;
                             character_Model.LastLogin = c.LastModified.UtcDateTime > character_Model.LastLogin ? c.LastModified.UtcDateTime : character_Model.LastLogin;
-
                         }
 
                         pos++;

@@ -1,32 +1,17 @@
-﻿using Patagames.Ocr;
-using Blish_HUD;
-using Blish_HUD.Content;
+﻿using Blish_HUD;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
-using Blish_HUD.Modules;
-using Blish_HUD.Modules.Managers;
-using Blish_HUD.Settings;
-using Kenedia.Modules.Characters.Classes;
+using Kenedia.Modules.Characters.Classes.Classes.UI_Controls;
 using Kenedia.Modules.Characters.Classes.UI_Controls;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
+using Patagames.Ocr;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using static Kenedia.Modules.Characters.Classes.WindowsUtil.WindowsUtil;
-using System.Diagnostics;
-using Kenedia.Modules.Characters.Classes.Classes.UI_Controls;
-using System.Globalization;
 
 namespace Kenedia.Modules.Characters.Classes
 {
@@ -186,8 +171,17 @@ namespace Kenedia.Modules.Characters.Classes
             new Panel()
             {
                 Parent = flowPanel,
-                BackgroundColor = new Color(ignoredColor.R, ignoredColor.G, ignoredColor.B, ignoredColor.A),
+                BackgroundColor = new Color(spacingColor.R, spacingColor.G, spacingColor.B, spacingColor.A),
                 Size = new Point(25, 25),
+            };
+            new Label()
+            {
+                Parent = flowPanel,
+                Text = "Empty Column",
+                Height = 25,
+                AutoSizeWidth = true,
+                TextColor = ContentService.Colors.ColonialWhite,
+                BasicTooltipText = "Pixel Column which does not contain any 'white'ish' pixels",
             };
 
             new Panel()
@@ -195,6 +189,15 @@ namespace Kenedia.Modules.Characters.Classes
                 Parent = flowPanel,
                 BackgroundColor = new Color(ignoredColor.R, ignoredColor.G, ignoredColor.B, ignoredColor.A),
                 Size = new Point(25, 25),
+            };
+            new Label()
+            {
+                Parent = flowPanel,
+                Text = "Ignored Part",
+                Height = 25,
+                AutoSizeWidth = true,
+                TextColor = ContentService.Colors.ColonialWhite,
+                BasicTooltipText = "Ignored part of the image due to the empty column threshold"
             };
 
 
@@ -366,7 +369,6 @@ namespace Kenedia.Modules.Characters.Classes
                     var black = System.Drawing.Color.FromArgb(255, 0, 0, 0);
                     var white = System.Drawing.Color.FromArgb(255, 255, 255, 255);
 
-                    Debug.WriteLine($"CustomThreshold: {CustomThreshold}");
                     var emptyPixelRow = 0;
                     for (int i = 0; i < bitmap.Width; i++)
                     {
@@ -380,22 +382,22 @@ namespace Kenedia.Modules.Characters.Classes
                             if (oc.R >= threshold && oc.G >= threshold && oc.B >= threshold && emptyPixelRow < CustomThreshold)
                             {
                                 bitmap.SetPixel(i, j, black);
-                                spacingVisibleBitmap.SetPixel(i, j, black);
+                                if (show) spacingVisibleBitmap.SetPixel(i, j, black);
                                 containsPixel = true;
                             }
                             else if (emptyPixelRow >= CustomThreshold)
                             {
-                                spacingVisibleBitmap.SetPixel(i, j, ignoredColor);
+                                if(show) spacingVisibleBitmap.SetPixel(i, j, ignoredColor);
                                 bitmap.SetPixel(i, j, white);
                             }
                             else
                             {
-                                spacingVisibleBitmap.SetPixel(i, j, white);
+                                if (show) spacingVisibleBitmap.SetPixel(i, j, white);
                                 bitmap.SetPixel(i, j, white);
                             }
                         }
 
-                        if (emptyPixelRow < CustomThreshold)
+                        if (emptyPixelRow < CustomThreshold && show)
                         {
                             if (!containsPixel)
                             {
@@ -430,7 +432,6 @@ namespace Kenedia.Modules.Characters.Classes
 
                 foreach (string word in plainText.Split(' '))
                 {
-                    Debug.WriteLine(word);
                     var wordText = word.Trim();
 
                     if (wordText.StartsWith("l"))

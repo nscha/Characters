@@ -12,9 +12,9 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class CraftingControl : Control
     {
-        private readonly AsyncTexture2D craftingIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156711);
+        private readonly AsyncTexture2D _craftingIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156711);
 
-        private BitmapFont font = GameService.Content.DefaultFont14;
+        private BitmapFont _font = GameService.Content.DefaultFont14;
 
         public CraftingControl()
         {
@@ -24,10 +24,10 @@ namespace Kenedia.Modules.Characters.Controls
 
         public BitmapFont Font
         {
-            get => font;
+            get => _font;
             set
             {
-                font = value;
+                _font = value;
                 if (value != null)
                 {
                     Width = Height + 4 + (int)value.MeasureString(Strings.common.NoCraftingProfession).Width;
@@ -40,7 +40,7 @@ namespace Kenedia.Modules.Characters.Controls
             string toolTipText = null;
             spriteBatch.DrawOnCtrl(
                 this,
-                craftingIcon,
+                _craftingIcon,
                 new Rectangle(4, 2, bounds.Height - 4, bounds.Height - 4),
                 new Rectangle(6, 6, 20, 20),
                 Color.White,

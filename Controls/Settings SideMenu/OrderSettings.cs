@@ -10,8 +10,8 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class OrderSettings : FlowTab
     {
-        private readonly Dropdown orderDropdown;
-        private readonly Dropdown flowDropdown;
+        private readonly Dropdown _orderDropdown;
+        private readonly Dropdown _flowDropdown;
 
         public OrderSettings(int width = 190)
         {
@@ -23,7 +23,7 @@ namespace Kenedia.Modules.Characters.Controls
             ControlPadding = new Vector2(5, 5);
             Location = new Point(0, 25);
 
-            orderDropdown = new Dropdown()
+            _orderDropdown = new Dropdown()
             {
                 Parent = this,
                 Width = width,
@@ -33,7 +33,7 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
                 string entry = string.Join(" ", split);
-                orderDropdown.Items.Add(entry);
+                _orderDropdown.Items.Add(entry);
             }
 
             // this.orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Name));
@@ -42,10 +42,10 @@ namespace Kenedia.Modules.Characters.Controls
             // this.orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.LastLogin));
             // this.orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Map));
             // this.orderDropdown.Items.Add(Strings.common.Custom);
-            orderDropdown.SelectedItem = Characters.ModuleInstance.Settings.SortType.Value.GetSortType();
-            orderDropdown.ValueChanged += OrderDropdown_ValueChanged;
+            _orderDropdown.SelectedItem = Characters.ModuleInstance.Settings.SortType.Value.GetSortType();
+            _orderDropdown.ValueChanged += OrderDropdown_ValueChanged;
 
-            flowDropdown = new Dropdown()
+            _flowDropdown = new Dropdown()
             {
                 Parent = this,
                 Width = width,
@@ -55,13 +55,13 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
                 string entry = string.Join(" ", split);
-                flowDropdown.Items.Add(entry);
+                _flowDropdown.Items.Add(entry);
             }
 
             // this.flowDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Ascending));
             // this.flowDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Descending));
-            flowDropdown.SelectedItem = Characters.ModuleInstance.Settings.SortOrder.Value.GetSortOrder();
-            flowDropdown.ValueChanged += FlowDropdown_ValueChanged;
+            _flowDropdown.SelectedItem = Characters.ModuleInstance.Settings.SortOrder.Value.GetSortOrder();
+            _flowDropdown.ValueChanged += FlowDropdown_ValueChanged;
         }
 
         private void FlowDropdown_ValueChanged(object sender, ValueChangedEventArgs e)

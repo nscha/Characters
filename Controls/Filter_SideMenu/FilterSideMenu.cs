@@ -11,11 +11,11 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class FilterSideMenu : TabbedPanel
     {
-        private readonly FiltersPanel filters;
-        private readonly TagsPanel tagsPanel;
+        private readonly FiltersPanel _filters;
+        private readonly TagsPanel _tagsPanel;
 
-        private double opacityTick = 0;
-        private DateTime lastMouseOver = DateTime.Now;
+        private double _opacityTick = 0;
+        private DateTime _lastMouseOver = DateTime.Now;
 
         public FilterSideMenu()
         {
@@ -29,31 +29,31 @@ namespace Kenedia.Modules.Characters.Controls
             Visible = false;
             HeightSizingMode = SizingMode.AutoSize;
 
-            filters = new FiltersPanel();
-            AddTab(filters);
+            _filters = new FiltersPanel();
+            AddTab(_filters);
 
-            tagsPanel = new TagsPanel() { Visible = false };
-            AddTab(tagsPanel);
+            _tagsPanel = new TagsPanel() { Visible = false };
+            AddTab(_tagsPanel);
         }
 
-        public List<Tag> Tags
+        public List<Tag> Tags => _tagsPanel.Tags;
+
+        public void ResetToggles()
         {
-            get => tagsPanel.Tags;
+            _filters.ResetToggles();
         }
-
-        public void ResetToggles() => filters.ResetToggles();
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - opacityTick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - _opacityTick > 50)
             {
-                opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
+                _opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (!MouseOver && DateTime.Now.Subtract(lastMouseOver).TotalMilliseconds >= 2500 && !Characters.ModuleInstance.MainWindow.FilterBox.Focused)
+                if (!MouseOver && DateTime.Now.Subtract(_lastMouseOver).TotalMilliseconds >= 2500 && !Characters.ModuleInstance.MainWindow.FilterBox.Focused)
                 {
-                    Opacity = Opacity - 0.05F;
+                    Opacity -= 0.05F;
                     if (Opacity <= 0F)
                     {
                         Hide();
@@ -65,7 +65,7 @@ namespace Kenedia.Modules.Characters.Controls
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            lastMouseOver = DateTime.Now;
+            _lastMouseOver = DateTime.Now;
             Opacity = 1f;
             Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
         }
@@ -73,14 +73,12 @@ namespace Kenedia.Modules.Characters.Controls
         protected override void OnResized(ResizedEventArgs e)
         {
             base.OnResized(e);
-
-            Point newSize = new(Width / 2, 25);
         }
 
         protected override void OnMouseMoved(MouseEventArgs e)
         {
             base.OnMouseMoved(e);
-            lastMouseOver = DateTime.Now;
+            _lastMouseOver = DateTime.Now;
             Opacity = 1f;
         }
     }

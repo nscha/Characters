@@ -15,13 +15,13 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class Tag : FlowPanel
     {
-        private readonly Label text;
-        private readonly ImageButton delete;
-        private readonly ImageButton dummy;
+        private readonly Label _text;
+        private readonly ImageButton _delete;
+        private readonly ImageButton _dummy;
 
-        private Color disabledColor = new(156, 156, 156);
-        private Texture2D disabledBackground;
-        private AsyncTexture2D background;
+        private Color _disabledColor = new(156, 156, 156);
+        private Texture2D _disabledBackground;
+        private AsyncTexture2D _background;
 
         public Tag()
         {
@@ -33,7 +33,7 @@ namespace Kenedia.Modules.Characters.Controls
             AutoSizePadding = new Point(5, 3);
             Height = 26;
 
-            delete = new ImageButton()
+            _delete = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156012),
@@ -42,9 +42,9 @@ namespace Kenedia.Modules.Characters.Controls
                 Size = new Point(20, 20),
                 BasicTooltipText = string.Format(Strings.common.DeleteItem, Strings.common.Tag),
             };
-            delete.Click += Delete_Click;
+            _delete.Click += Delete_Click;
 
-            dummy = new ImageButton()
+            _dummy = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156025),
@@ -53,7 +53,7 @@ namespace Kenedia.Modules.Characters.Controls
                 Visible = false,
             };
 
-            text = new Label()
+            _text = new Label()
             {
                 Parent = this,
                 AutoSizeWidth = true,
@@ -65,8 +65,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         public BitmapFont Font
         {
-            get { return text.Font; }
-            set { text.Font = value; }
+            get => _text.Font;
+            set => _text.Font = value;
         }
 
         public bool Active { get; set; } = true;
@@ -75,50 +75,50 @@ namespace Kenedia.Modules.Characters.Controls
 
         public AsyncTexture2D Background
         {
-            get => background;
+            get => _background;
             set
             {
-                background = value;
+                _background = value;
                 if (value != null)
                 {
                     CreateDisabledBackground(null, null);
-                    background.TextureSwapped += CreateDisabledBackground;
+                    _background.TextureSwapped += CreateDisabledBackground;
                 }
             }
         }
 
         public bool ShowDelete
         {
-            get => delete.Visible;
+            get => _delete.Visible;
             set
             {
-                if (delete != null)
+                if (_delete != null)
                 {
-                    delete.Visible = value;
-                    dummy.Visible = !value;
+                    _delete.Visible = value;
+                    _dummy.Visible = !value;
                 }
             }
         }
 
         public string Text
         {
-            get => text?.Text;
+            get => _text?.Text;
             set
             {
-                if (text != null)
+                if (_text != null)
                 {
-                    text.Text = value;
+                    _text.Text = value;
                 }
             }
         }
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (background != null)
+            if (_background != null)
             {
-                AsyncTexture2D texture = Active ? background : disabledBackground != null ? disabledBackground : background;
+                AsyncTexture2D texture = Active ? _background : _disabledBackground != null ? _disabledBackground : _background;
 
-                spriteBatch.DrawOnCtrl(this, texture, bounds, bounds, Active ? Color.White * 0.98f : disabledColor * 0.8f);
+                spriteBatch.DrawOnCtrl(this, texture, bounds, bounds, Active ? Color.White * 0.98f : _disabledColor * 0.8f);
             }
 
             Color color = Color.Black;
@@ -157,8 +157,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void CreateDisabledBackground(object sender, ValueChangedEventArgs<Texture2D> e)
         {
-            disabledBackground = background.Texture.ToGrayScaledPalettable();
-            background.TextureSwapped -= CreateDisabledBackground;
+            _disabledBackground = _background.Texture.ToGrayScaledPalettable();
+            _background.TextureSwapped -= CreateDisabledBackground;
         }
     }
 }

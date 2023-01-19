@@ -10,22 +10,22 @@ namespace Kenedia.Modules.Characters.Models
 {
     public class Character_Model
     {
-        private string name;
-        private int level;
-        private int map = 0;
-        private Gw2Sharp.Models.RaceType race;
-        private Gw2Sharp.Models.ProfessionType profession;
-        private SpecializationType specialization;
-        private DateTimeOffset created;
-        private DateTime lastModified;
-        private DateTime lastLogin;
-        private string iconPath;
-        private AsyncTexture2D icon;
-        private bool show = true;
-        private int position;
-        private int index;
-        private bool initialized;
-        private bool pathChecked;
+        private string _name;
+        private int _level;
+        private int _map = 0;
+        private Gw2Sharp.Models.RaceType _race;
+        private Gw2Sharp.Models.ProfessionType _profession;
+        private SpecializationType _specialization;
+        private DateTimeOffset _created;
+        private DateTime _lastModified;
+        private DateTime _lastLogin;
+        private string _iconPath;
+        private AsyncTexture2D _icon;
+        private bool _show = true;
+        private int _position;
+        private int _index;
+        private bool _initialized;
+        private bool _pathChecked;
 
         public Character_Model()
         {
@@ -37,52 +37,52 @@ namespace Kenedia.Modules.Characters.Models
 
         public string Name
         {
-            get => name;
-            set => SetProperty(ref name, value);
+            get => _name;
+            set => SetProperty(ref _name, value);
         }
 
         public int Level
         {
-            get => level;
-            set => SetProperty(ref level, value);
+            get => _level;
+            set => SetProperty(ref _level, value);
         }
 
         public int Map
         {
-            get => map;
-            set => SetProperty(ref map, value);
+            get => _map;
+            set => SetProperty(ref _map, value);
         }
 
         public List<CharacterCrafting> Crafting { get; set; } = new List<CharacterCrafting>();
 
         public Gw2Sharp.Models.RaceType Race
         {
-            get => race;
-            set => SetProperty(ref race, value);
+            get => _race;
+            set => SetProperty(ref _race, value);
         }
 
         public Gw2Sharp.Models.ProfessionType Profession
         {
-            get => profession;
-            set => SetProperty(ref profession, value);
+            get => _profession;
+            set => SetProperty(ref _profession, value);
         }
 
         public SpecializationType Specialization
         {
-            get => specialization;
-            set => SetProperty(ref specialization, value);
+            get => _specialization;
+            set => SetProperty(ref _specialization, value);
         }
 
         public DateTimeOffset Created
         {
-            get => created;
-            set => SetProperty(ref created, value);
+            get => _created;
+            set => SetProperty(ref _created, value);
         }
 
         public DateTime LastModified
         {
-            get => lastModified;
-            set => SetProperty(ref lastModified, value);
+            get => _lastModified;
+            set => SetProperty(ref _lastModified, value);
         }
 
         public int OrderIndex { get; set; } = 0;
@@ -91,124 +91,86 @@ namespace Kenedia.Modules.Characters.Models
 
         public DateTime LastLogin
         {
-            get => lastLogin.AddMilliseconds(-OrderOffset);
-            set => SetProperty(ref lastLogin, value);
+            get => _lastLogin.AddMilliseconds(-OrderOffset);
+            set => SetProperty(ref _lastLogin, value);
         }
 
         public string IconPath
         {
-            get => iconPath;
+            get => _iconPath;
             set
             {
-                iconPath = value;
-                icon = null;
-                pathChecked = false;
+                _iconPath = value;
+                _icon = null;
+                _pathChecked = false;
                 OnUpdated();
             }
         }
 
-        public string ProfessionName
-        {
-            get => Characters.ModuleInstance.Data.Professions[Profession].Name;
-        }
+        public string ProfessionName => Characters.ModuleInstance.Data.Professions[Profession].Name;
 
-        public string SpecializationName
-        {
-            get
-            {
-                if (Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), Specialization))
-                {
-                    return Characters.ModuleInstance.Data.Specializations[Specialization].Name;
-                }
+        public string SpecializationName => Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), Specialization)
+                    ? Characters.ModuleInstance.Data.Specializations[Specialization].Name
+                    : ProfessionName;
 
-                return ProfessionName;
-            }
-        }
+        public AsyncTexture2D ProfessionIcon => Characters.ModuleInstance.Data.Professions[Profession].IconBig;
 
-        public AsyncTexture2D ProfessionIcon
-        {
-            get => Characters.ModuleInstance.Data.Professions[Profession].IconBig;
-        }
-
-        public AsyncTexture2D SpecializationIcon
-        {
-            get
-            {
-                if (Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), Specialization))
-                {
-                    return Characters.ModuleInstance.Data.Specializations[Specialization].IconBig;
-                }
-
-                return ProfessionIcon;
-            }
-        }
+        public AsyncTexture2D SpecializationIcon => Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), Specialization)
+                    ? Characters.ModuleInstance.Data.Specializations[Specialization].IconBig
+                    : ProfessionIcon;
 
         public AsyncTexture2D Icon
         {
             get
             {
-                if (!pathChecked)
+                if (!_pathChecked)
                 {
                     string path = Characters.ModuleInstance.BasePath + (IconPath ?? string.Empty);
 
                     if (IconPath != null && File.Exists(path))
                     {
-                        GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
-                        {
-                            icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-                        });
+                        GameService.Graphics.QueueMainThreadRender((graphicsDevice) => _icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)));
                     }
 
-                    pathChecked = true;
+                    _pathChecked = true;
                 }
 
-                if (icon == null)
-                {
-                    return SpecializationIcon;
-                }
-
-                return icon;
+                return _icon ?? SpecializationIcon;
             }
 
             set
             {
-                icon = value;
+                _icon = value;
                 Updated?.Invoke(this, null);
             }
         }
 
-        public bool HasDefaultIcon
-        {
-            get
-            {
-                return Icon == SpecializationIcon;
-            }
-        }
+        public bool HasDefaultIcon => Icon == SpecializationIcon;
 
         public bool Show
         {
-            get => show;
-            set => SetProperty(ref show, value);
+            get => _show;
+            set => SetProperty(ref _show, value);
         }
 
         public TagList Tags { get; set; } = new TagList();
 
         public int Position
         {
-            get => position;
+            get => _position;
             set
             {
-                position = value;
+                _position = value;
                 Save();
             }
         }
 
         public int Index
         {
-            get => index;
+            get => _index;
             set
             {
-                index = value;
+                _index = value;
                 Save();
             }
         }
@@ -237,7 +199,6 @@ namespace Kenedia.Modules.Characters.Models
         {
             get
             {
-                DateTime nextBirthday = DateTime.MinValue;
                 for (int i = 1; i < 100; i++)
                 {
                     DateTime birthDay = Created.AddYears(i).DateTime;
@@ -269,7 +230,7 @@ namespace Kenedia.Modules.Characters.Models
         public void Initialize()
         {
             Tags.CollectionChanged += Tags_CollectionChanged;
-            initialized = true;
+            _initialized = true;
         }
 
         protected bool SetProperty<T>(ref T property, T newValue, [CallerMemberName] string caller = "")
@@ -280,7 +241,7 @@ namespace Kenedia.Modules.Characters.Models
             }
 
             property = newValue;
-            if (initialized && caller != nameof(LastLogin) && caller != nameof(LastModified) && caller != nameof(LastLogin))
+            if (_initialized && caller != nameof(LastLogin) && caller != nameof(LastModified) && caller != nameof(LastLogin))
             {
                 OnUpdated();
             }
@@ -300,6 +261,9 @@ namespace Kenedia.Modules.Characters.Models
             Save();
         }
 
-        private void Save() => Characters.ModuleInstance.SaveCharacters = true;
+        private void Save()
+        {
+            Characters.ModuleInstance.SaveCharacters = true;
+        }
     }
 }

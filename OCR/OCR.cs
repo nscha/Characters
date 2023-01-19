@@ -17,33 +17,33 @@ namespace Kenedia.Modules.Characters
 {
     public class OCR : IDisposable
     {
-        private readonly BasicFrameContainer contentContainer;
-        private readonly System.Drawing.Color spacingColor = System.Drawing.Color.FromArgb(255, 200, 200, 200);
-        private readonly System.Drawing.Color ignoredColor = System.Drawing.Color.FromArgb(255, 100, 100, 100);
-        private readonly TextBox leftBox;
-        private readonly TextBox topBox;
-        private readonly TextBox rightBox;
-        private readonly TextBox bottomBox;
-        private readonly TextBox columnBox;
-        private readonly Checkbox windowedCheckBox;
-        private readonly Label instructions;
-        private readonly Label result;
-        private readonly Image oCRResultImage;
-        private readonly Image oCRResultImageBlackWhite;
-        private readonly SizeablePanel container;
-        private readonly OcrApi ocrApi;
-        private bool disposed = false;
+        private readonly BasicFrameContainer _contentContainer;
+        private readonly System.Drawing.Color _spacingColor = System.Drawing.Color.FromArgb(255, 200, 200, 200);
+        private readonly System.Drawing.Color _ignoredColor = System.Drawing.Color.FromArgb(255, 100, 100, 100);
+        private readonly TextBox _leftBox;
+        private readonly TextBox _topBox;
+        private readonly TextBox _rightBox;
+        private readonly TextBox _bottomBox;
+        private readonly TextBox _columnBox;
+        private readonly Checkbox _windowedCheckBox;
+        private readonly Label _instructions;
+        private readonly Label _result;
+        private readonly Image _ocrResultImage;
+        private readonly Image _ocrResultImageBlackWhite;
+        private readonly SizeablePanel _container;
+        private readonly OcrApi _ocrApi;
+        private bool _disposed = false;
 
         public OCR()
         {
             OcrApi.PathToEngine = BasePath + @"\tesseract.dll";
 
-            ocrApi = OcrApi.Create();
-            ocrApi.Init(BasePath + @"\", "gw2");
+            _ocrApi = OcrApi.Create();
+            _ocrApi.Init(BasePath + @"\", "gw2");
 
             Services.TextureManager tM = Characters.ModuleInstance.TextureManager;
 
-            contentContainer = new BasicFrameContainer()
+            _contentContainer = new BasicFrameContainer()
             {
                 Parent = GameService.Graphics.SpriteScreen,
                 FrameColor = Color.Black, // new Color(32, 32 , 32),
@@ -57,7 +57,7 @@ namespace Kenedia.Modules.Characters
 
             FlowPanel contentFlowPanel = new()
             {
-                Parent = contentContainer,
+                Parent = _contentContainer,
                 WidthSizingMode = SizingMode.AutoSize,
                 HeightSizingMode = SizingMode.AutoSize,
                 AutoSizePadding = new Point(5, 5),
@@ -65,7 +65,7 @@ namespace Kenedia.Modules.Characters
                 FlowDirection = ControlFlowDirection.SingleTopToBottom,
             };
 
-            instructions = new Label()
+            _instructions = new Label()
             {
                 Text = Strings.common.OCR_Instructions,
                 Parent = contentFlowPanel,
@@ -95,43 +95,43 @@ namespace Kenedia.Modules.Characters
                 BasicTooltipText = Strings.common.Offset_Tooltip,
             };
 
-            leftBox = new()
+            _leftBox = new()
             {
                 Parent = offsetPanel,
                 Size = new Point(50, 25),
                 Text = CustomOffset.Left.ToString(),
                 BasicTooltipText = Strings.common.LeftOffset,
             };
-            leftBox.TextChanged += OffsetChanged;
+            _leftBox.TextChanged += OffsetChanged;
 
-            topBox = new()
+            _topBox = new()
             {
                 Parent = offsetPanel,
                 Size = new Point(50, 25),
                 Text = CustomOffset.Top.ToString(),
                 BasicTooltipText = Strings.common.TopOffset,
             };
-            topBox.TextChanged += OffsetChanged;
+            _topBox.TextChanged += OffsetChanged;
 
-            rightBox = new()
+            _rightBox = new()
             {
                 Parent = offsetPanel,
                 Size = new Point(50, 25),
                 Text = CustomOffset.Right.ToString(),
                 BasicTooltipText = Strings.common.RightOffset,
             };
-            rightBox.TextChanged += OffsetChanged;
+            _rightBox.TextChanged += OffsetChanged;
 
-            bottomBox = new()
+            _bottomBox = new()
             {
                 Parent = offsetPanel,
                 Size = new Point(50, 25),
                 Text = CustomOffset.Bottom.ToString(),
                 BasicTooltipText = Strings.common.BottomOffset,
             };
-            bottomBox.TextChanged += OffsetChanged;
+            _bottomBox.TextChanged += OffsetChanged;
 
-            windowedCheckBox = new()
+            _windowedCheckBox = new()
             {
                 Parent = offsetPanel,
                 Text = Strings.common.WindowedMode,
@@ -140,10 +140,10 @@ namespace Kenedia.Modules.Characters
                 Height = 25,
                 Width = 200,
             };
-            windowedCheckBox.Click += WindowedCheckBox_Click;
-            Characters.ModuleInstance.Settings.WindowedMode.SettingChanged += (s, e) => { windowedCheckBox.Checked = Characters.ModuleInstance.Settings.WindowedMode.Value; };
+            _windowedCheckBox.Click += WindowedCheckBox_Click;
+            Characters.ModuleInstance.Settings.WindowedMode.SettingChanged += (s, e) => _windowedCheckBox.Checked = Characters.ModuleInstance.Settings.WindowedMode.Value;
 
-            result = new Label()
+            _result = new Label()
             {
                 Parent = contentFlowPanel,
                 AutoSizeHeight = false,
@@ -153,12 +153,12 @@ namespace Kenedia.Modules.Characters
                 Font = GameService.Content.DefaultFont32,
             };
 
-            oCRResultImage = new Image()
+            _ocrResultImage = new Image()
             {
                 Parent = contentFlowPanel,
             };
 
-            oCRResultImageBlackWhite = new Image()
+            _ocrResultImageBlackWhite = new Image()
             {
                 Parent = contentFlowPanel,
             };
@@ -183,19 +183,19 @@ namespace Kenedia.Modules.Characters
                 TextColor = ContentService.Colors.ColonialWhite,
                 BasicTooltipText = Strings.common.EmptyColumns_Tooltip,
             };
-            columnBox = new TextBox()
+            _columnBox = new TextBox()
             {
                 Parent = thresholdPanel,
                 Size = new Point(50, 25),
                 Text = CustomThreshold.ToString(),
                 BasicTooltipText = Strings.common.EmptyColumnsThreshold_Tooltip,
             };
-            columnBox.TextChanged += ColumnThresholdChanged;
+            _columnBox.TextChanged += ColumnThresholdChanged;
 
             _ = new Panel()
             {
                 Parent = thresholdPanel,
-                BackgroundColor = new Color(spacingColor.R, spacingColor.G, spacingColor.B, spacingColor.A),
+                BackgroundColor = new Color(_spacingColor.R, _spacingColor.G, _spacingColor.B, _spacingColor.A),
                 Size = new Point(25, 25),
             };
             _ = new Label()
@@ -210,7 +210,7 @@ namespace Kenedia.Modules.Characters
             _ = new Panel()
             {
                 Parent = thresholdPanel,
-                BackgroundColor = new Color(ignoredColor.R, ignoredColor.G, ignoredColor.B, ignoredColor.A),
+                BackgroundColor = new Color(_ignoredColor.R, _ignoredColor.G, _ignoredColor.B, _ignoredColor.A),
                 Size = new Point(25, 25),
             };
             _ = new Label()
@@ -223,7 +223,7 @@ namespace Kenedia.Modules.Characters
                 BasicTooltipText = Strings.common.IgnoredPart_Tooltip,
             };
 
-            container = new SizeablePanel()
+            _container = new SizeablePanel()
             {
                 Parent = GameService.Graphics.SpriteScreen,
                 ZIndex = 999,
@@ -233,13 +233,13 @@ namespace Kenedia.Modules.Characters
                 TintOnHover = false,
                 ShowResizeOnlyOnMouseOver = true,
             };
-            container.Resized += Container_Changed;
-            container.Moved += Container_Changed;
-            container.LeftMouseButtonReleased += Container_LeftMouseButtonReleased;
-            container.MouseLeft += Container_LeftMouseButtonReleased;
+            _container.Resized += Container_Changed;
+            _container.Moved += Container_Changed;
+            _container.LeftMouseButtonReleased += Container_LeftMouseButtonReleased;
+            _container.MouseLeft += Container_LeftMouseButtonReleased;
 
             int height = Characters.ModuleInstance.Settings.ActiveOCRRegion.Size.Y;
-            contentContainer.Location = new Point(container.Left, container.Top - (height * 3) - 115);
+            _contentContainer.Location = new Point(_container.Left, _container.Top - (height * 3) - 115);
         }
 
         private Rectangle CustomOffset
@@ -254,17 +254,14 @@ namespace Kenedia.Modules.Characters
             set => Characters.ModuleInstance.Settings.OCRNoPixelColumns.Value = value;
         }
 
-        private string BasePath
-        {
-            get => Characters.ModuleInstance.BasePath;
-        }
+        private string BasePath => Characters.ModuleInstance.BasePath;
 
         public void ToggleContainer()
         {
-            contentContainer?.ToggleVisibility();
-            container?.ToggleVisibility();
+            _contentContainer?.ToggleVisibility();
+            _container?.ToggleVisibility();
 
-            if (container.Visible)
+            if (_container.Visible)
             {
                 _ = Read(true);
             }
@@ -272,25 +269,24 @@ namespace Kenedia.Modules.Characters
 
         public void Dispose()
         {
-            if (!disposed)
+            if (!_disposed)
             {
-                disposed = true;
-                container?.Dispose();
-                instructions?.Dispose();
-                oCRResultImage?.Dispose();
-                oCRResultImageBlackWhite?.Dispose();
-                result?.Dispose();
-                contentContainer?.Dispose();
+                _disposed = true;
+                _container?.Dispose();
+                _instructions?.Dispose();
+                _ocrResultImage?.Dispose();
+                _ocrResultImageBlackWhite?.Dispose();
+                _result?.Dispose();
+                _contentContainer?.Dispose();
             }
         }
 
 #nullable enable
         public string? Read(bool show = false)
         {
-            string? plainText = null;
             string? finalText = null;
 
-            if (container.Visible && !show)
+            if (_container.Visible && !show)
             {
                 ToggleContainer();
                 return null;
@@ -302,7 +298,7 @@ namespace Kenedia.Modules.Characters
             int sideBarWidth = !windowed ? 0 : Characters.ModuleInstance.SideBarWidth;
 
             double factor = GameService.Graphics.UIScaleMultiplier;
-            Point size = new(Math.Min((int)((container.Width + 5) * factor), 499), Math.Min((int)((container.Height + 5) * factor), 499));
+            Point size = new(Math.Min((int)((_container.Width + 5) * factor), 499), Math.Min((int)((_container.Height + 5) * factor), 499));
 
             using (System.Drawing.Bitmap bitmap = new(size.X, size.Y))
             {
@@ -313,20 +309,18 @@ namespace Kenedia.Modules.Characters
                     int left = (int)(wndBounds.Left + sideBarWidth);
                     int top = (int)(wndBounds.Top + titleBarHeight);
 
-                    int x = (int)Math.Ceiling((container.Left - 10 + CustomOffset.Left) * factor);
-                    int y = (int)Math.Ceiling((container.Top - 10 + CustomOffset.Top) * factor);
+                    int x = (int)Math.Ceiling((_container.Left - 10 + CustomOffset.Left) * factor);
+                    int y = (int)Math.Ceiling((_container.Top - 10 + CustomOffset.Top) * factor);
 
                     g.CopyFromScreen(new System.Drawing.Point(left + x, top + y), System.Drawing.Point.Empty, new System.Drawing.Size(size.X - CustomOffset.Right, size.Y - CustomOffset.Bottom));
 
                     if (show)
                     {
-                        using (MemoryStream s = new())
-                        {
-                            bitmap.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
+                        using MemoryStream s = new();
+                        bitmap.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
 
-                            oCRResultImage.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
-                            oCRResultImage.Texture = s.CreateTexture2D();
-                        }
+                        _ocrResultImage.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
+                        _ocrResultImage.Texture = s.CreateTexture2D();
                     }
 
                     System.Drawing.Color black = System.Drawing.Color.FromArgb(255, 0, 0, 0);
@@ -356,7 +350,7 @@ namespace Kenedia.Modules.Characters
                             {
                                 if (show)
                                 {
-                                    spacingVisibleBitmap.SetPixel(i, j, ignoredColor);
+                                    spacingVisibleBitmap.SetPixel(i, j, _ignoredColor);
                                 }
 
                                 bitmap.SetPixel(i, j, white);
@@ -378,7 +372,7 @@ namespace Kenedia.Modules.Characters
                             {
                                 for (int j = 0; j < bitmap.Height; j++)
                                 {
-                                    spacingVisibleBitmap.SetPixel(i, j, spacingColor);
+                                    spacingVisibleBitmap.SetPixel(i, j, _spacingColor);
                                 }
 
                                 emptyPixelRow++;
@@ -396,13 +390,13 @@ namespace Kenedia.Modules.Characters
 
                         if (show)
                         {
-                            oCRResultImageBlackWhite.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
-                            oCRResultImageBlackWhite.Texture = s.CreateTexture2D();
+                            _ocrResultImageBlackWhite.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
+                            _ocrResultImageBlackWhite.Texture = s.CreateTexture2D();
                         }
                     }
                 }
 
-                plainText = ocrApi.GetTextFromImage(bitmap);
+                string? plainText = _ocrApi.GetTextFromImage(bitmap);
 
                 foreach (string word in plainText.Split(' '))
                 {
@@ -418,7 +412,7 @@ namespace Kenedia.Modules.Characters
 
                 finalText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(finalText?.ToLower());
 
-                result.Text = finalText;
+                _result.Text = finalText;
             }
 
             return finalText;
@@ -427,7 +421,7 @@ namespace Kenedia.Modules.Characters
 
         private void ColumnThresholdChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(columnBox.Text, out int threshold))
+            if (int.TryParse(_columnBox.Text, out int threshold))
             {
                 CustomThreshold = threshold;
             }
@@ -435,7 +429,7 @@ namespace Kenedia.Modules.Characters
 
         private async void Container_LeftMouseButtonReleased(object sender, MouseEventArgs e)
         {
-            if (!container.MouseOver)
+            if (!_container.MouseOver)
             {
                 await DelayedRead();
             }
@@ -449,12 +443,10 @@ namespace Kenedia.Modules.Characters
 
         private void OffsetChanged(object sender, EventArgs e)
         {
-            int left = CustomOffset.Left, top = CustomOffset.Top, right = CustomOffset.Right, bottom = CustomOffset.Bottom;
-
-            _ = int.TryParse(leftBox.Text, out left);
-            _ = int.TryParse(topBox.Text, out top);
-            _ = int.TryParse(rightBox.Text, out right);
-            _ = int.TryParse(bottomBox.Text, out bottom);
+            int left = int.TryParse(_leftBox.Text, out int leftParse) ? leftParse : CustomOffset.Left;
+            int top = int.TryParse(_leftBox.Text, out int topParse) ? topParse : CustomOffset.Top;
+            int right = int.TryParse(_leftBox.Text, out int rightParse) ? rightParse : CustomOffset.Right;
+            int bottom = int.TryParse(_leftBox.Text, out int bottomParse) ? bottomParse : CustomOffset.Bottom;
 
             CustomOffset = new Rectangle(left, top, right, bottom);
             _ = Read(true);
@@ -469,16 +461,19 @@ namespace Kenedia.Modules.Characters
 
             if (!regions.ContainsKey(res))
             {
-                regions.Add(res, container.LocalBounds);
+                regions.Add(res, _container.LocalBounds);
             }
             else
             {
-                regions[res] = container.LocalBounds;
+                regions[res] = _container.LocalBounds;
             }
 
-            contentContainer.Location = new Point(container.Left, container.Top - contentContainer.Height - 5);
+            _contentContainer.Location = new Point(_container.Left, _container.Top - _contentContainer.Height - 5);
         }
 
-        private void WindowedCheckBox_Click(object sender, MouseEventArgs e) => Characters.ModuleInstance.Settings.WindowedMode.Value = windowedCheckBox.Checked;
+        private void WindowedCheckBox_Click(object sender, MouseEventArgs e)
+        {
+            Characters.ModuleInstance.Settings.WindowedMode.Value = _windowedCheckBox.Checked;
+        }
     }
 }

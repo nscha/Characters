@@ -4,16 +4,13 @@
     {
         public string Name
         {
-            get
+            get => Blish_HUD.GameService.Overlay.UserLocale.Value switch
             {
-                return Blish_HUD.GameService.Overlay.UserLocale.Value switch
-                {
-                    Gw2Sharp.WebApi.Locale.German => Names.De,
-                    Gw2Sharp.WebApi.Locale.French => Names.Fr,
-                    Gw2Sharp.WebApi.Locale.Spanish => Names.Es,
-                    _ => Names.En,
-                };
-            }
+                Gw2Sharp.WebApi.Locale.German => Names.De,
+                Gw2Sharp.WebApi.Locale.French => Names.Fr,
+                Gw2Sharp.WebApi.Locale.Spanish => Names.Es,
+                _ => Names.En,
+            };
 
             set
             {

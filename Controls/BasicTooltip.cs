@@ -13,9 +13,9 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class BasicTooltip : Control
     {
-        private BitmapFont font = GameService.Content.DefaultFont14;
+        private BitmapFont _font = GameService.Content.DefaultFont14;
 
-        private string text;
+        private string _text;
 
         public Rectangle TextureRectangle { get; set; } = new Rectangle(40, 25, 250, 250);
 
@@ -23,20 +23,20 @@ namespace Kenedia.Modules.Characters.Controls
 
         public BitmapFont Font
         {
-            get => font;
+            get => _font;
             set
             {
-                font = value;
+                _font = value;
                 UpdateLayout();
             }
         }
 
         public string Text
         {
-            get => text;
+            get => _text;
             set
             {
-                text = value;
+                _text = value;
                 if (value == null)
                 {
                     Hide();

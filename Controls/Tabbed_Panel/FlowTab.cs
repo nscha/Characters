@@ -9,26 +9,26 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class FlowTab : PanelTab
     {
-        private ControlFlowDirection flowDirection = ControlFlowDirection.LeftToRight;
-        private Vector2 outerControlPadding = Vector2.Zero;
-        private Vector2 controlPadding = Vector2.Zero;
+        private ControlFlowDirection _flowDirection = ControlFlowDirection.LeftToRight;
+        private Vector2 _outerControlPadding = Vector2.Zero;
+        private Vector2 _controlPadding = Vector2.Zero;
 
         public ControlFlowDirection FlowDirection
         {
-            get => flowDirection;
-            set => SetProperty(ref flowDirection, value, true);
+            get => _flowDirection;
+            set => SetProperty(ref _flowDirection, value, true);
         }
 
         public Vector2 ControlPadding
         {
-            get => controlPadding;
-            set => SetProperty(ref controlPadding, value, true);
+            get => _controlPadding;
+            set => SetProperty(ref _controlPadding, value, true);
         }
 
         public Vector2 OuterControlPadding
         {
-            get => outerControlPadding;
-            set => SetProperty(ref outerControlPadding, value, true);
+            get => _outerControlPadding;
+            set => SetProperty(ref _outerControlPadding, value, true);
         }
 
         public override void RecalculateLayout()
@@ -41,7 +41,7 @@ namespace Kenedia.Modules.Characters.Controls
         {
             IEnumerable<Control> filteredChildren = allChildren.Where(c => c.GetType() != typeof(Scrollbar) && c.Visible);
 
-            switch (flowDirection)
+            switch (_flowDirection)
             {
                 case ControlFlowDirection.LeftToRight:
                     ReflowChildLayoutLeftToRight(filteredChildren);
@@ -72,8 +72,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void ReflowChildLayoutLeftToRight(IEnumerable<Control> allChildren)
         {
-            float outerPadX = outerControlPadding.X;
-            float outerPadY = outerControlPadding.Y;
+            float outerPadX = _outerControlPadding.X;
+            float outerPadY = _outerControlPadding.Y;
 
             float nextBottom = outerPadY;
             float currentBottom = outerPadY;
@@ -84,13 +84,13 @@ namespace Kenedia.Modules.Characters.Controls
                 // Need to flow over to the next row
                 if (child.Width >= ContentRegion.Width - lastRight)
                 {
-                    currentBottom = nextBottom + controlPadding.Y;
+                    currentBottom = nextBottom + _controlPadding.Y;
                     lastRight = outerPadX;
                 }
 
                 child.Location = new Point((int)lastRight, (int)currentBottom);
 
-                lastRight = child.Right + controlPadding.X;
+                lastRight = child.Right + _controlPadding.X;
 
                 // Ensure rows don't overlap
                 nextBottom = Math.Max(nextBottom, child.Bottom);
@@ -99,8 +99,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void ReflowChildLayoutRightToLeft(IEnumerable<Control> allChildren)
         {
-            float outerPadX = outerControlPadding.X;
-            float outerPadY = outerControlPadding.Y;
+            float outerPadX = _outerControlPadding.X;
+            float outerPadY = _outerControlPadding.Y;
 
             float nextBottom = outerPadY;
             float currentBottom = outerPadY;
@@ -111,13 +111,13 @@ namespace Kenedia.Modules.Characters.Controls
                 // Need to flow over to the next row
                 if (outerPadX > lastLeft - child.Width)
                 {
-                    currentBottom = nextBottom + controlPadding.Y;
+                    currentBottom = nextBottom + _controlPadding.Y;
                     lastLeft = ContentRegion.Width - outerPadX;
                 }
 
                 child.Location = new Point((int)(lastLeft - child.Width), (int)currentBottom);
 
-                lastLeft = child.Left - controlPadding.X;
+                lastLeft = child.Left - _controlPadding.X;
 
                 // Ensure rows don't overlap
                 nextBottom = Math.Max(nextBottom, child.Bottom);
@@ -126,8 +126,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void ReflowChildLayoutTopToBottom(IEnumerable<Control> allChildren)
         {
-            float outerPadX = outerControlPadding.X;
-            float outerPadY = outerControlPadding.Y;
+            float outerPadX = _outerControlPadding.X;
+            float outerPadY = _outerControlPadding.Y;
 
             float nextRight = outerPadX;
             float currentRight = outerPadX;
@@ -138,13 +138,13 @@ namespace Kenedia.Modules.Characters.Controls
                 // Need to flow over to the next column
                 if (child.Height >= Height - lastBottom)
                 {
-                    currentRight = nextRight + controlPadding.X;
+                    currentRight = nextRight + _controlPadding.X;
                     lastBottom = outerPadY;
                 }
 
                 child.Location = new Point((int)currentRight, (int)lastBottom);
 
-                lastBottom = child.Bottom + controlPadding.Y;
+                lastBottom = child.Bottom + _controlPadding.Y;
 
                 // Ensure columns don't overlap
                 nextRight = Math.Max(nextRight, child.Right);
@@ -153,8 +153,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void ReflowChildLayoutBottomToTop(IEnumerable<Control> allChildren)
         {
-            float outerPadX = outerControlPadding.X;
-            float outerPadY = outerControlPadding.Y;
+            float outerPadX = _outerControlPadding.X;
+            float outerPadY = _outerControlPadding.Y;
 
             float nextRight = outerPadX;
             float currentRight = outerPadX;
@@ -165,13 +165,13 @@ namespace Kenedia.Modules.Characters.Controls
                 // Need to flow over to the next column
                 if (outerPadY > lastTop - child.Height)
                 {
-                    currentRight = nextRight + controlPadding.X;
+                    currentRight = nextRight + _controlPadding.X;
                     lastTop = Height - outerPadY;
                 }
 
                 child.Location = new Point((int)currentRight, (int)(lastTop - child.Height));
 
-                lastTop = child.Top - controlPadding.Y;
+                lastTop = child.Top - _controlPadding.Y;
 
                 // Ensure columns don't overlap
                 nextRight = Math.Max(nextRight, child.Right);
@@ -180,8 +180,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void ReflowChildLayoutSingleLeftToRight(IEnumerable<Control> allChildren)
         {
-            float outerPadX = outerControlPadding.X;
-            float outerPadY = outerControlPadding.Y;
+            float outerPadX = _outerControlPadding.X;
+            float outerPadY = _outerControlPadding.Y;
 
             float lastLeft = outerPadX;
 
@@ -189,14 +189,14 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 child.Location = new Point((int)lastLeft, (int)outerPadY);
 
-                lastLeft = child.Right + controlPadding.X;
+                lastLeft = child.Right + _controlPadding.X;
             }
         }
 
         private void ReflowChildLayoutSingleRightToLeft(IEnumerable<Control> allChildren)
         {
-            float outerPadX = outerControlPadding.X;
-            float outerPadY = outerControlPadding.Y;
+            float outerPadX = _outerControlPadding.X;
+            float outerPadY = _outerControlPadding.Y;
 
             float lastLeft = ContentRegion.Width - outerPadX;
 
@@ -204,14 +204,14 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 child.Location = new Point((int)(lastLeft - child.Width), (int)outerPadY);
 
-                lastLeft = child.Left - controlPadding.X;
+                lastLeft = child.Left - _controlPadding.X;
             }
         }
 
         private void ReflowChildLayoutSingleTopToBottom(IEnumerable<Control> allChildren)
         {
-            float outerPadX = outerControlPadding.X;
-            float outerPadY = outerControlPadding.Y;
+            float outerPadX = _outerControlPadding.X;
+            float outerPadY = _outerControlPadding.Y;
 
             float lastBottom = outerPadY;
 
@@ -219,14 +219,14 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 child.Location = new Point((int)outerPadX, (int)lastBottom);
 
-                lastBottom = child.Bottom + controlPadding.Y;
+                lastBottom = child.Bottom + _controlPadding.Y;
             }
         }
 
         private void ReflowChildLayoutSingleBottomToTop(IEnumerable<Control> allChildren)
         {
-            float outerPadX = outerControlPadding.X;
-            float outerPadY = outerControlPadding.Y;
+            float outerPadX = _outerControlPadding.X;
+            float outerPadY = _outerControlPadding.Y;
 
             float lastTop = Height - outerPadY;
 
@@ -234,7 +234,7 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 child.Location = new Point((int)outerPadX, (int)(lastTop - child.Height));
 
-                lastTop = child.Top - controlPadding.Y;
+                lastTop = child.Top - _controlPadding.Y;
             }
         }
     }

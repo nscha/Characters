@@ -19,31 +19,31 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class CharacterEdit : Container
     {
-        private readonly Checkbox show;
-        private readonly ImageButton image;
-        private readonly ImageButton delete;
-        private readonly Label name;
-        private readonly ImageSelector imagePanel;
-        private readonly FlowPanel tagPanel;
-        private readonly TextBox tagBox;
-        private readonly ImageButton addTag;
-        private readonly StandardButton captureImages;
-        private readonly StandardButton openFolder;
+        private readonly Checkbox _show;
+        private readonly ImageButton _image;
+        private readonly ImageButton _delete;
+        private readonly Label _name;
+        private readonly ImageSelector _imagePanel;
+        private readonly FlowPanel _tagPanel;
+        private readonly TextBox _tagBox;
+        private readonly ImageButton _addTag;
+        private readonly StandardButton _captureImages;
+        private readonly StandardButton _openFolder;
 
-        private readonly int width = 350;
-        private readonly int expandedWidth = 725;
-        private readonly bool initialized;
+        private readonly int _width = 350;
+        private readonly int _expandedWidth = 725;
+        private readonly bool _initialized;
 
-        private readonly List<Tag> tags = new();
+        private readonly List<Tag> _tags = new();
 
-        private double opacityTick = 0;
-        private DateTime lastMouseOver = DateTime.Now;
+        private double _opacityTick = 0;
+        private DateTime _lastMouseOver = DateTime.Now;
 
-        private Character_Model character;
+        private Character_Model _character;
 
         public CharacterEdit()
         {
-            Width = width;
+            Width = _width;
             _ = new Dummy()
             {
                 Width = 350,
@@ -57,7 +57,7 @@ namespace Kenedia.Modules.Characters.Controls
 
             Services.TextureManager tM = Characters.ModuleInstance.TextureManager;
 
-            image = new ImageButton()
+            _image = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(358353),
@@ -65,125 +65,125 @@ namespace Kenedia.Modules.Characters.Controls
                 Location = new Point(5 + 2, 5 + 2),
                 Size = new Point(64, 64),
             };
-            image.Click += Image_Click;
+            _image.Click += Image_Click;
 
-            delete = new ImageButton()
+            _delete = new ImageButton()
             {
                 Parent = this,
-                Texture = tM.GetControlTexture(Controls.Delete_Button),
-                HoveredTexture = tM.GetControlTexture(Controls.Delete_Button_Hovered),
+                Texture = tM.GetControlTexture(ControlTextures.Delete_Button),
+                HoveredTexture = tM.GetControlTexture(ControlTextures.Delete_Button_Hovered),
                 Location = new Point(Right - 24 - 5, 5),
                 Size = new Point(24, 24),
                 BasicTooltipText = string.Format(Strings.common.DeleteItem, Strings.common.Character),
             };
-            delete.Click += Delete_Click;
+            _delete.Click += Delete_Click;
 
-            name = new Label()
+            _name = new Label()
             {
                 Text = Strings.common.CharacterName,
                 Parent = this,
                 TextColor = new Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255),
                 Font = GameService.Content.DefaultFont16,
                 AutoSizeWidth = true,
-                Location = new Point(image.Right + 5 + 2, 5),
+                Location = new Point(_image.Right + 5 + 2, 5),
             };
 
-            show = new Checkbox()
+            _show = new Checkbox()
             {
                 Parent = this,
-                Location = new Point(image.Right + 5 + 2, name.Bottom + 5 + 2),
+                Location = new Point(_image.Right + 5 + 2, _name.Bottom + 5 + 2),
                 Size = new Point(100, 21),
                 Text = Strings.common.ShowInList,
             };
-            show.Click += Show_Click;
+            _show.Click += Show_Click;
 
-            captureImages = new StandardButton()
+            _captureImages = new StandardButton()
             {
                 Parent = this,
-                Location = new Point(image.Right + 4, image.Bottom - 28),
+                Location = new Point(_image.Right + 4, _image.Bottom - 28),
                 Size = new Point(130, 30),
                 Text = Strings.common.CaptureImages,
                 BasicTooltipText = Strings.common.TogglePortraitCapture_Tooltip,
                 Icon = tM.GetIcon(Icons.Camera),
                 ResizeIcon = true,
             };
-            captureImages.Click += CaptureImages_Click;
+            _captureImages.Click += CaptureImages_Click;
 
-            openFolder = new StandardButton()
+            _openFolder = new StandardButton()
             {
                 Parent = this,
-                Location = new Point(captureImages.Right + 4, image.Bottom - 28),
+                Location = new Point(_captureImages.Right + 4, _image.Bottom - 28),
                 Size = new Point(125, 30),
                 Text = string.Format(Strings.common.OpenItem, Strings.common.Folder),
                 BasicTooltipText = Strings.common.OpenPortraitFolder,
                 Icon = tM.GetIcon(Icons.Folder),
                 ResizeIcon = true,
             };
-            openFolder.Click += OpenFolder_Click;
+            _openFolder.Click += OpenFolder_Click;
 
-            addTag = new ImageButton()
+            _addTag = new ImageButton()
             {
                 Parent = this,
-                Texture = tM.GetControlTexture(Controls.Plus_Button),
-                HoveredTexture = tM.GetControlTexture(Controls.Plus_Button_Hovered),
-                Location = new Point(Right - 24 - 5, image.Bottom + 5 + 2),
+                Texture = tM.GetControlTexture(ControlTextures.Plus_Button),
+                HoveredTexture = tM.GetControlTexture(ControlTextures.Plus_Button_Hovered),
+                Location = new Point(Right - 24 - 5, _image.Bottom + 5 + 2),
                 Size = new Point(24, 24),
                 BasicTooltipText = string.Format(Strings.common.OpenItem, Strings.common.Tag),
             };
-            addTag.Click += AddTag_Click;
+            _addTag.Click += AddTag_Click;
 
-            tagBox = new TextBox()
+            _tagBox = new TextBox()
             {
                 Parent = this,
-                Location = new Point(5, image.Bottom + 5 + 2),
+                Location = new Point(5, _image.Bottom + 5 + 2),
                 Size = new Point(Width - 10 - 24 - 2, 24),
                 PlaceholderText = Strings.common.Tag_Placeholder,
             };
-            tagBox.EnterPressed += AddTag_Click;
-            tagBox.TextChanged += SetInteracted;
+            _tagBox.EnterPressed += AddTag_Click;
+            _tagBox.TextChanged += SetInteracted;
 
-            tagPanel = new FlowPanel()
+            _tagPanel = new FlowPanel()
             {
                 Parent = this,
-                Location = new Point(5, tagBox.Bottom + 5),
+                Location = new Point(5, _tagBox.Bottom + 5),
                 WidthSizingMode = SizingMode.Fill,
                 HeightSizingMode = SizingMode.AutoSize,
                 ControlPadding = new Vector2(3, 2),
             };
 
-            imagePanel = new ImageSelector()
+            _imagePanel = new ImageSelector()
             {
                 Parent = this,
-                Location = new Point(5, image.Bottom + 5),
+                Location = new Point(5, _image.Bottom + 5),
                 ControlPadding = new Vector2(3, 2),
                 Visible = false,
-                Width = expandedWidth - 10,
+                Width = _expandedWidth - 10,
             };
-            imagePanel.Shown += LoadImages;
+            _imagePanel.Shown += LoadImages;
 
             _ = new Dummy()
             {
-                Parent = imagePanel,
+                Parent = _imagePanel,
                 Size = new Point(0, 64),
             };
 
             foreach (string t in Characters.ModuleInstance.Tags)
             {
-                tags.Add(AddTag(t, true));
+                _tags.Add(AddTag(t, true));
             }
 
-            initialized = true;
+            _initialized = true;
         }
 
         public Character_Model Character
         {
-            get => character;
+            get => _character;
             set
             {
-                character = value;
+                _character = value;
                 if (value != null)
                 {
-                    character.Updated += ApplyCharacter;
+                    _character.Updated += ApplyCharacter;
                     ApplyCharacter(null, null);
                 }
             }
@@ -219,7 +219,7 @@ namespace Kenedia.Modules.Characters.Controls
 
             Color color = Color.Black;
 
-            Rectangle b = image.LocalBounds.Add(new Rectangle(-2, -2, 4, 4));
+            Rectangle b = _image.LocalBounds.Add(new Rectangle(-2, -2, 4, 4));
 
             spriteBatch.DrawOnCtrl(
                 this,
@@ -267,13 +267,13 @@ namespace Kenedia.Modules.Characters.Controls
         {
             base.UpdateContainer(gameTime);
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - opacityTick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - _opacityTick > 50)
             {
-                opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
+                _opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (!MouseOver && DateTime.Now.Subtract(lastMouseOver).TotalMilliseconds >= 5000 && !Characters.ModuleInstance.PotraitCapture.Visible)
+                if (!MouseOver && DateTime.Now.Subtract(_lastMouseOver).TotalMilliseconds >= 5000 && !Characters.ModuleInstance.PotraitCapture.Visible)
                 {
-                    Opacity = Opacity - 0.05F;
+                    Opacity -= 0.05F;
                     if (Opacity <= 0F)
                     {
                         Hide();
@@ -288,11 +288,11 @@ namespace Kenedia.Modules.Characters.Controls
             string[] images = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories);
 
             int mHeight = Characters.ModuleInstance.MainWindow.ContentRegion.Height - 65;
-            imagePanel.Height = Math.Min(((int)Math.Ceiling(images.Count() / 7.0) * (96 + (int)imagePanel.ControlPadding.Y)) + (int)imagePanel.OuterControlPadding.Y, mHeight) + 5;
+            _imagePanel.Height = Math.Min(((int)Math.Ceiling(images.Count() / 7.0) * (96 + (int)_imagePanel.ControlPadding.Y)) + (int)_imagePanel.OuterControlPadding.Y, mHeight) + 5;
 
             GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
             {
-                imagePanel.ClearChildren();
+                _imagePanel.ClearChildren();
 
                 AsyncTexture2D noImgTexture = null;
 
@@ -303,14 +303,14 @@ namespace Kenedia.Modules.Characters.Controls
                     Image noImg = new()
                     {
                         Size = new Point(96, 96),
-                        Parent = imagePanel,
+                        Parent = _imagePanel,
                         Texture = noImgTexture,
                     };
 
                     noImg.Click += (s, e) =>
                     {
-                        character.IconPath = null;
-                        character.Icon = null;
+                        _character.IconPath = null;
+                        _character.Icon = null;
                         ApplyCharacter(null, null);
                     };
                 }
@@ -322,13 +322,13 @@ namespace Kenedia.Modules.Characters.Controls
                     Image img = new()
                     {
                         Size = new Point(96, 96),
-                        Parent = imagePanel,
+                        Parent = _imagePanel,
                         Texture = texture,
                     };
                     img.Click += (s, e) =>
                     {
-                        character.IconPath = p.Replace(Characters.ModuleInstance.BasePath, string.Empty);
-                        character.Icon = texture;
+                        _character.IconPath = p.Replace(Characters.ModuleInstance.BasePath, string.Empty);
+                        _character.Icon = texture;
                         ApplyCharacter(null, null);
                     };
                 }
@@ -338,7 +338,7 @@ namespace Kenedia.Modules.Characters.Controls
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            Width = width;
+            Width = _width;
 
             SetInteracted(null, null);
         }
@@ -354,24 +354,24 @@ namespace Kenedia.Modules.Characters.Controls
         {
             base.OnResized(e);
 
-            if (initialized)
+            if (_initialized)
             {
-                delete.Location = new Point(e.CurrentSize.X - 24 - 5, 5);
+                _delete.Location = new Point(e.CurrentSize.X - 24 - 5, 5);
 
-                show.Visible = Width == width;
-                tagBox.Visible = Width == width;
-                tagPanel.Visible = Width == width;
-                addTag.Visible = Width == width;
-                imagePanel.Visible = Width == expandedWidth;
-                captureImages.Visible = Width == expandedWidth;
-                openFolder.Visible = Width == expandedWidth;
+                _show.Visible = Width == _width;
+                _tagBox.Visible = Width == _width;
+                _tagPanel.Visible = Width == _width;
+                _addTag.Visible = Width == _width;
+                _imagePanel.Visible = Width == _expandedWidth;
+                _captureImages.Visible = Width == _expandedWidth;
+                _openFolder.Visible = Width == _expandedWidth;
             }
         }
 
         private void Tag_Deleted(object sender, EventArgs e)
         {
             Tag tag = (Tag)sender;
-            _ = tags.Remove(tag);
+            _ = _tags.Remove(tag);
             _ = Characters.ModuleInstance.Tags.Remove(tag.Text);
 
             tag.Deleted -= Tag_Deleted;
@@ -379,29 +379,32 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void ApplyCharacter(object sender, EventArgs e)
         {
-            foreach (Tag t in tags)
+            foreach (Tag t in _tags)
             {
-                t.Active = character.Tags.Contains(t.Text);
+                t.Active = _character.Tags.Contains(t.Text);
             }
 
-            name.Text = character.Name;
-            image.Texture = character.Icon;
-            show.Checked = character.Show;
+            _name.Text = _character.Name;
+            _image.Texture = _character.Icon;
+            _show.Checked = _character.Show;
 
-            if (imagePanel.Visible)
+            if (_imagePanel.Visible)
             {
                 AsyncTexture2D noImgTexture = Character.SpecializationIcon;
 
-                Image noImg = (Image)imagePanel.Children[0];
+                Image noImg = (Image)_imagePanel.Children[0];
                 noImg.Texture = noImgTexture;
             }
         }
 
-        private void Show_Click(object sender, MouseEventArgs e) => character.Show = show.Checked;
+        private void Show_Click(object sender, MouseEventArgs e)
+        {
+            _character.Show = _show.Checked;
+        }
 
         private void SetInteracted(object sender, EventArgs e)
         {
-            lastMouseOver = DateTime.Now;
+            _lastMouseOver = DateTime.Now;
             Opacity = 1f;
         }
 
@@ -423,19 +426,25 @@ namespace Kenedia.Modules.Characters.Controls
             Hide();
         }
 
-        private void CaptureImages_Click(object sender, MouseEventArgs e) => Characters.ModuleInstance.PotraitCapture.Visible = !Characters.ModuleInstance.PotraitCapture.Visible;
+        private void CaptureImages_Click(object sender, MouseEventArgs e)
+        {
+            Characters.ModuleInstance.PotraitCapture.Visible = !Characters.ModuleInstance.PotraitCapture.Visible;
+        }
 
-        private void Image_Click(object sender, MouseEventArgs e) => Width = Width == width ? expandedWidth : width;
+        private void Image_Click(object sender, MouseEventArgs e)
+        {
+            Width = Width == _width ? _expandedWidth : _width;
+        }
 
         private void AddTag_Click(object sender, EventArgs e)
         {
-            if (tagBox.Text != null && tagBox.Text.Length > 0 && !Characters.ModuleInstance.Tags.Contains(tagBox.Text))
+            if (_tagBox.Text != null && _tagBox.Text.Length > 0 && !Characters.ModuleInstance.Tags.Contains(_tagBox.Text))
             {
-                Characters.ModuleInstance.Tags.Add(tagBox.Text);
-                Character.Tags.Add(tagBox.Text);
-                tags.Add(AddTag(tagBox.Text, true));
+                Characters.ModuleInstance.Tags.Add(_tagBox.Text);
+                Character.Tags.Add(_tagBox.Text);
+                _tags.Add(AddTag(_tagBox.Text, true));
 
-                tagBox.Text = null;
+                _tagBox.Text = null;
             }
         }
 
@@ -444,7 +453,7 @@ namespace Kenedia.Modules.Characters.Controls
             Tag tag = new()
             {
                 Text = txt,
-                Parent = tagPanel,
+                Parent = _tagPanel,
                 Active = active,
             };
 
@@ -460,11 +469,11 @@ namespace Kenedia.Modules.Characters.Controls
 
             if (tag.Active)
             {
-                _ = character.Tags.Remove(tag.Text);
+                _ = _character.Tags.Remove(tag.Text);
             }
             else
             {
-                character.Tags.Add(tag.Text);
+                _character.Tags.Add(tag.Text);
             }
         }
     }

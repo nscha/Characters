@@ -69,6 +69,9 @@ namespace Kenedia.Modules.Characters.Controls
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
         }
 
-        protected override void OnClick(MouseEventArgs e) => base.OnClick(e);// Active = true;
+        protected override void OnClick(MouseEventArgs e)
+        {
+            base.OnClick(e);// Active = true;
+        }
     }
 }

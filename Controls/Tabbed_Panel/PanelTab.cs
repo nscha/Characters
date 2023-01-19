@@ -7,15 +7,14 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class PanelTab : Panel
     {
-        private AsyncTexture2D icon;
-        private Rectangle textureRectangle = Rectangle.Empty;
-        private bool active;
-        private string name;
-        private TabButton tabButton;
+        private AsyncTexture2D _icon;
+        private Rectangle _textureRectangle = Rectangle.Empty;
+        private bool _active;
+        private string _name;
 
         public PanelTab()
         {
-            tabButton = new TabButton()
+            TabButton = new TabButton()
             {
                 BasicTooltipText = Name,
             };
@@ -29,50 +28,46 @@ namespace Kenedia.Modules.Characters.Controls
 
         private event EventHandler IconChanged;
 
-        public TabButton TabButton
-        {
-            get => tabButton;
-            private set => tabButton = value;
-        }
+        public TabButton TabButton { get; private set; }
 
         public AsyncTexture2D Icon
         {
-            get => icon;
+            get => _icon;
             set
             {
-                icon = value;
-                tabButton.Icon = Icon;
+                _icon = value;
+                TabButton.Icon = Icon;
                 IconChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         public Rectangle TextureRectangle
         {
-            get => textureRectangle;
+            get => _textureRectangle;
             set
             {
-                textureRectangle = value;
-                tabButton.TextureRectangle = value;
+                _textureRectangle = value;
+                TabButton.TextureRectangle = value;
                 TextureRectangleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         public string Name
         {
-            get => name;
+            get => _name;
             set
             {
-                name = value;
-                tabButton.BasicTooltipText = value;
+                _name = value;
+                TabButton.BasicTooltipText = value;
             }
         }
 
         public bool Active
         {
-            get => active;
+            get => _active;
             set
             {
-                active = value;
+                _active = value;
                 TabButton.Active = value;
 
                 if (value)
@@ -102,8 +97,8 @@ namespace Kenedia.Modules.Characters.Controls
         {
             base.DisposeControl();
 
-            tabButton?.Dispose();
-            icon = null;
+            TabButton?.Dispose();
+            _icon = null;
         }
     }
 }

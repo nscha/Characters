@@ -42,7 +42,7 @@ namespace Kenedia.Modules.Characters.Extensions
                     // create the grayscale version of the pixel
                     float maxval = .3f + .59f + .11f + .79f;
                     float grayScale = (originalColor.R / 255f * .3f) + (originalColor.G / 255f * .59f) + (originalColor.B / 255f * .11f) + (originalColor.A / 255f * .79f);
-                    grayScale = grayScale / maxval;
+                    grayScale /= maxval;
 
                     destColors[index] = new Color(grayScale, grayScale, grayScale, originalColor.A);
                 }

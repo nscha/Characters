@@ -1042,12 +1042,7 @@ namespace Kenedia.Modules.Characters.Services
 
         public Map GetMapById(int id)
         {
-            if (Maps.Length > id && Maps[id] != null)
-            {
-                return Maps[id];
-            }
-
-            return new Map() { Name = "Unkown Map", Id = 0 };
+            return Maps.Length > id && Maps[id] != null ? Maps[id] : new Map() { Name = "Unkown Map", Id = 0 };
         }
 
         public class CrafingProfession
@@ -1066,19 +1061,18 @@ namespace Kenedia.Modules.Characters.Services
             {
                 get
                 {
-                    Locale locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
-                    string name;
+                    Locale locale = GameService.Overlay.UserLocale.Value is not Locale.Korean and not Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
 
-                    return Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return Names.TryGetValue(locale, out string name) ? name : "No Name Set.";
                 }
             }
         }
 
         public class Profession
         {
-            private AsyncTexture2D icon;
+            private AsyncTexture2D _icon;
 
-            private AsyncTexture2D iconBig;
+            private AsyncTexture2D _iconBig;
 
             public Profession()
             {
@@ -1094,26 +1088,26 @@ namespace Kenedia.Modules.Characters.Services
 
             public AsyncTexture2D Icon
             {
-                get => icon;
+                get => _icon;
                 set
                 {
-                    icon = value;
-                    if (icon != null)
+                    _icon = value;
+                    if (_icon != null)
                     {
-                        icon.TextureSwapped += Icon_TextureSwapped;
+                        _icon.TextureSwapped += Icon_TextureSwapped;
                     }
                 }
             }
 
             public AsyncTexture2D IconBig
             {
-                get => iconBig;
+                get => _iconBig;
                 set
                 {
-                    iconBig = value;
-                    if (iconBig != null)
+                    _iconBig = value;
+                    if (_iconBig != null)
                     {
-                        iconBig.TextureSwapped += IconBig_TextureSwapped;
+                        _iconBig.TextureSwapped += IconBig_TextureSwapped;
                     }
                 }
             }
@@ -1124,10 +1118,9 @@ namespace Kenedia.Modules.Characters.Services
             {
                 get
                 {
-                    Locale locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
-                    string name;
+                    Locale locale = GameService.Overlay.UserLocale.Value is not Locale.Korean and not Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
 
-                    return Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return Names.TryGetValue(locale, out string name) ? name : "No Name Set.";
                 }
             }
 
@@ -1168,10 +1161,9 @@ namespace Kenedia.Modules.Characters.Services
             {
                 get
                 {
-                    Locale locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
-                    string name;
+                    Locale locale = GameService.Overlay.UserLocale.Value is not Locale.Korean and not Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
 
-                    return Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return Names.TryGetValue(locale, out string name) ? name : "No Name Set.";
                 }
             }
         }
@@ -1188,10 +1180,9 @@ namespace Kenedia.Modules.Characters.Services
             {
                 get
                 {
-                    Locale locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
-                    string name;
+                    Locale locale = GameService.Overlay.UserLocale.Value is not Locale.Korean and not Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
 
-                    return Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return Names.TryGetValue(locale, out string name) ? name : "No Name Set.";
                 }
             }
 

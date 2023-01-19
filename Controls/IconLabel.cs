@@ -11,18 +11,18 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class IconLabel : Control
     {
-        private AsyncTexture2D icon;
-        private BitmapFont font = GameService.Content.DefaultFont14;
-        private string text;
-        private Rectangle iconRectangle = Rectangle.Empty;
-        private Rectangle textRectangle = Rectangle.Empty;
+        private AsyncTexture2D _icon;
+        private BitmapFont _font = GameService.Content.DefaultFont14;
+        private string _text;
+        private Rectangle _iconRectangle = Rectangle.Empty;
+        private Rectangle _textRectangle = Rectangle.Empty;
 
         public string Text
         {
-            get => text;
+            get => _text;
             set
             {
-                text = value;
+                _text = value;
                 UpdateLayout();
             }
         }
@@ -31,10 +31,10 @@ namespace Kenedia.Modules.Characters.Controls
 
         public AsyncTexture2D Icon
         {
-            get => icon;
+            get => _icon;
             set
             {
-                icon = value;
+                _icon = value;
                 if (value != null)
                 {
                     UpdateLayout();
@@ -44,10 +44,10 @@ namespace Kenedia.Modules.Characters.Controls
 
         public BitmapFont Font
         {
-            get => font;
+            get => _font;
             set
             {
-                font = value;
+                _font = value;
                 if (value != null)
                 {
                     UpdateLayout();
@@ -69,7 +69,7 @@ namespace Kenedia.Modules.Characters.Controls
                 spriteBatch.DrawOnCtrl(
                     this,
                     texture,
-                    iconRectangle,
+                    _iconRectangle,
                     TextureRectangle == Rectangle.Empty ? texture.Bounds : TextureRectangle,
                     Color.White,
                     0f,
@@ -80,7 +80,7 @@ namespace Kenedia.Modules.Characters.Controls
                     this,
                     Text,
                     Font,
-                    textRectangle,
+                    _textRectangle,
                     TextColor,
                     false,
                     HorizontalAlignment.Left,
@@ -91,8 +91,8 @@ namespace Kenedia.Modules.Characters.Controls
         {
             Width = Math.Max((int)Font.MeasureString(Text).Width + 4 + (Icon == null ? 0 : Height + 5), Height);
 
-            iconRectangle = Icon == null ? Rectangle.Empty : new Rectangle(2, 2, LocalBounds.Height - 4, LocalBounds.Height - 4);
-            textRectangle = new Rectangle(iconRectangle.Right + (Icon == null ? 0 : 5), 2, LocalBounds.Width - (iconRectangle.Right + (Icon == null ? 0 : 5) + 2), LocalBounds.Height - 4);
+            _iconRectangle = Icon == null ? Rectangle.Empty : new Rectangle(2, 2, LocalBounds.Height - 4, LocalBounds.Height - 4);
+            _textRectangle = new Rectangle(_iconRectangle.Right + (Icon == null ? 0 : 5), 2, LocalBounds.Width - (_iconRectangle.Right + (Icon == null ? 0 : 5) + 2), LocalBounds.Height - 4);
         }
     }
 }

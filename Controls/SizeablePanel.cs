@@ -13,20 +13,20 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class SizeablePanel : Container
     {
-        private const int RESIZEHANDLESIZE = 16;
+        private const int s_resizeHandleSize = 16;
 
-        private readonly AsyncTexture2D resizeTexture = AsyncTexture2D.FromAssetId(156009);
-        private readonly AsyncTexture2D resizeTextureHovered = AsyncTexture2D.FromAssetId(156010);
+        private readonly AsyncTexture2D _resizeTexture = AsyncTexture2D.FromAssetId(156009);
+        private readonly AsyncTexture2D _resizeTextureHovered = AsyncTexture2D.FromAssetId(156010);
 
-        private bool dragging;
-        private bool resizing;
-        private bool mouseOverResizeHandle;
+        private bool _dragging;
+        private bool _resizing;
+        private bool _mouseOverResizeHandle;
 
-        private Point resizeStart;
-        private Point dragStart;
-        private Point draggingStart;
+        private Point _resizeStart;
+        private Point _dragStart;
+        private Point _draggingStart;
 
-        private Rectangle resizeHandleBounds = Rectangle.Empty;
+        private Rectangle _resizeHandleBounds = Rectangle.Empty;
 
         public SizeablePanel()
         {
@@ -40,30 +40,30 @@ namespace Kenedia.Modules.Characters.Controls
 
         public bool TintOnHover { get; set; }
 
-        private Rectangle ResizeCorner
-        {
-            get => new(LocalBounds.Right - 15, LocalBounds.Bottom - 15, 15, 15);
-        }
+        private Rectangle ResizeCorner => new(LocalBounds.Right - 15, LocalBounds.Bottom - 15, 15, 15);
 
-        public void ToggleVisibility() => Visible = !Visible;
+        public void ToggleVisibility()
+        {
+            Visible = !Visible;
+        }
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            dragging = dragging && MouseOver;
-            resizing = resizing && MouseOver;
-            mouseOverResizeHandle = mouseOverResizeHandle && MouseOver;
+            _dragging = _dragging && MouseOver;
+            _resizing = _resizing && MouseOver;
+            _mouseOverResizeHandle = _mouseOverResizeHandle && MouseOver;
 
-            if (dragging)
+            if (_dragging)
             {
-                Location = Input.Mouse.Position.Add(new Point(-draggingStart.X, -draggingStart.Y));
+                Location = Input.Mouse.Position.Add(new Point(-_draggingStart.X, -_draggingStart.Y));
             }
 
-            if (resizing)
+            if (_resizing)
             {
-                Point nOffset = Input.Mouse.Position - dragStart;
-                Point newSize = resizeStart + nOffset;
+                Point nOffset = Input.Mouse.Position - _dragStart;
+                Point newSize = _resizeStart + nOffset;
                 Size = new Point(MathHelper.Clamp(newSize.X, 50, MaxSize.X), MathHelper.Clamp(newSize.Y, 25, MaxSize.Y));
             }
         }
@@ -72,11 +72,11 @@ namespace Kenedia.Modules.Characters.Controls
         {
             base.RecalculateLayout();
 
-            resizeHandleBounds = new Rectangle(
-                Width - resizeTexture.Width,
-                Height - resizeTexture.Height,
-                resizeTexture.Width,
-                resizeTexture.Height);
+            _resizeHandleBounds = new Rectangle(
+                Width - _resizeTexture.Width,
+                Height - _resizeTexture.Height,
+                _resizeTexture.Width,
+                _resizeTexture.Height);
         }
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
@@ -95,13 +95,13 @@ namespace Kenedia.Modules.Characters.Controls
                     default);
             }
 
-            if (resizeTexture != null && (!ShowResizeOnlyOnMouseOver || MouseOver))
+            if (_resizeTexture != null && (!ShowResizeOnlyOnMouseOver || MouseOver))
             {
                 spriteBatch.DrawOnCtrl(
                     this,
-                    resizing || mouseOverResizeHandle ? resizeTextureHovered : resizeTexture,
-                    new Rectangle(bounds.Right - resizeTexture.Width - 1, bounds.Bottom - resizeTexture.Height - 1, resizeTexture.Width, resizeTexture.Height),
-                    resizeTexture.Bounds,
+                    _resizing || _mouseOverResizeHandle ? _resizeTextureHovered : _resizeTexture,
+                    new Rectangle(bounds.Right - _resizeTexture.Width - 1, bounds.Bottom - _resizeTexture.Height - 1, _resizeTexture.Width, _resizeTexture.Height),
+                    _resizeTexture.Bounds,
                     Color.White,
                     0f,
                     default);
@@ -130,40 +130,46 @@ namespace Kenedia.Modules.Characters.Controls
         protected override void OnLeftMouseButtonReleased(MouseEventArgs e)
         {
             base.OnLeftMouseButtonReleased(e);
-            dragging = false;
-            resizing = false;
+            _dragging = false;
+            _resizing = false;
         }
 
         protected override void OnLeftMouseButtonPressed(MouseEventArgs e)
         {
             base.OnLeftMouseButtonPressed(e);
 
-            resizing = ResizeCorner.Contains(e.MousePosition);
-            resizeStart = Size;
-            dragStart = Input.Mouse.Position;
+            _resizing = ResizeCorner.Contains(e.MousePosition);
+            _resizeStart = Size;
+            _dragStart = Input.Mouse.Position;
 
-            dragging = !resizing;
-            draggingStart = dragging ? RelativeMousePosition : Point.Zero;
+            _dragging = !_resizing;
+            _draggingStart = _dragging ? RelativeMousePosition : Point.Zero;
         }
 
-        protected virtual Point HandleWindowResize(Point newSize) => new Point(
+        protected virtual Point HandleWindowResize(Point newSize)
+        {
+            return new Point(
                 MathHelper.Clamp(newSize.X, ContentRegion.X, 1024),
                 MathHelper.Clamp(newSize.Y, ContentRegion.Y, 1024));
+        }
 
         protected override void OnMouseMoved(MouseEventArgs e)
         {
             ResetMouseRegionStates();
 
-            if (resizeHandleBounds.Contains(RelativeMousePosition)
-                  && RelativeMousePosition.X > resizeHandleBounds.Right - RESIZEHANDLESIZE
-                  && RelativeMousePosition.Y > resizeHandleBounds.Bottom - RESIZEHANDLESIZE)
+            if (_resizeHandleBounds.Contains(RelativeMousePosition)
+                  && RelativeMousePosition.X > _resizeHandleBounds.Right - s_resizeHandleSize
+                  && RelativeMousePosition.Y > _resizeHandleBounds.Bottom - s_resizeHandleSize)
             {
-                mouseOverResizeHandle = true;
+                _mouseOverResizeHandle = true;
             }
 
             base.OnMouseMoved(e);
         }
 
-        private void ResetMouseRegionStates() => mouseOverResizeHandle = false;
+        private void ResetMouseRegionStates()
+        {
+            _mouseOverResizeHandle = false;
+        }
     }
 }

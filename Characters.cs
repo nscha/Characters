@@ -35,13 +35,13 @@ namespace Kenedia.Modules.Characters
 
         public static readonly Logger Logger = Logger.GetLogger<Characters>();
 
-        private readonly Ticks ticks = new();
+        private readonly Ticks _ticks = new();
 
-        private CornerIcon cornerIcon;
-        private bool dataLoaded;
-        private RECT windowRectangle;
-        private Point clientRes = Point.Zero;
-        private RECT clientRectangle;
+        private CornerIcon _cornerIcon;
+        private bool _dataLoaded;
+        private RECT _windowRectangle;
+        private Point _clientRes = Point.Zero;
+        private RECT _clientRectangle;
 
         [ImportingConstructor]
         public Characters([Import("ModuleParameters")] ModuleParameters moduleParameters)
@@ -108,10 +108,10 @@ namespace Kenedia.Modules.Characters
 
         public bool DataLoaded
         {
-            get => dataLoaded;
+            get => _dataLoaded;
             set
             {
-                dataLoaded = value;
+                _dataLoaded = value;
                 if (value)
                 {
                     ModuleInstance.OnDataLoaded();
@@ -119,9 +119,9 @@ namespace Kenedia.Modules.Characters
             }
         }
 
-        public RECT WindowRectangle { get => windowRectangle; set => windowRectangle = value; }
+        public RECT WindowRectangle { get => _windowRectangle; set => _windowRectangle = value; }
 
-        public RECT ClientRectangle { get => clientRectangle; set => clientRectangle = value; }
+        public RECT ClientRectangle { get => _clientRectangle; set => _clientRectangle = value; }
 
         public int TitleBarHeight { get; private set; }
 
@@ -152,8 +152,8 @@ namespace Kenedia.Modules.Characters
         public void OnResolutionChanged(bool fireEvent = true)
         {
             IntPtr hWnd = GameService.GameIntegration.Gw2Instance.Gw2WindowHandle;
-            _ = GetWindowRect(hWnd, ref windowRectangle);
-            _ = GetClientRect(hWnd, out clientRectangle);
+            _ = GetWindowRect(hWnd, ref _windowRectangle);
+            _ = GetClientRect(hWnd, out _clientRectangle);
 
             TitleBarHeight = WindowRectangle.Bottom - WindowRectangle.Top - (ClientRectangle.Bottom - ClientRectangle.Top);
             SideBarWidth = WindowRectangle.Right - WindowRectangle.Left - (ClientRectangle.Right - ClientRectangle.Left);
@@ -297,15 +297,15 @@ namespace Kenedia.Modules.Characters
 
         protected override void Update(GameTime gameTime)
         {
-            ticks.Global += gameTime.ElapsedGameTime.TotalMilliseconds;
-            ticks.APIUpdate += gameTime.ElapsedGameTime.TotalSeconds;
-            ticks.Save += gameTime.ElapsedGameTime.TotalMilliseconds;
-            ticks.Tags += gameTime.ElapsedGameTime.TotalMilliseconds;
-            ticks.OCR += gameTime.ElapsedGameTime.TotalMilliseconds;
+            _ticks.Global += gameTime.ElapsedGameTime.TotalMilliseconds;
+            _ticks.APIUpdate += gameTime.ElapsedGameTime.TotalSeconds;
+            _ticks.Save += gameTime.ElapsedGameTime.TotalMilliseconds;
+            _ticks.Tags += gameTime.ElapsedGameTime.TotalMilliseconds;
+            _ticks.OCR += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (clientRes != GameService.Graphics.Resolution)
+            if (_clientRes != GameService.Graphics.Resolution)
             {
-                clientRes = GameService.Graphics.Resolution;
+                _clientRes = GameService.Graphics.Resolution;
                 OnResolutionChanged();
             }
 
@@ -318,9 +318,9 @@ namespace Kenedia.Modules.Characters
                 CharacterSwapping?.Run(gameTime);
             }
 
-            if (ticks.Global > 15000)
+            if (_ticks.Global > 15000)
             {
-                ticks.Global = 0;
+                _ticks.Global = 0;
                 CurrentCharacterModel = null;
 
                 if (GameService.GameIntegration.Gw2Instance.IsInGame)
@@ -338,32 +338,32 @@ namespace Kenedia.Modules.Characters
                 }
             }
 
-            if (ticks.APIUpdate > 300)
+            if (_ticks.APIUpdate > 300)
             {
-                ticks.APIUpdate = 0;
+                _ticks.APIUpdate = 0;
 
                 GW2APIHandler.CheckAPI();
             }
 
-            if (ticks.Save > 25 && SaveCharacters)
+            if (_ticks.Save > 25 && SaveCharacters)
             {
-                ticks.Save = 0;
+                _ticks.Save = 0;
 
                 SaveCharacterList();
                 SaveCharacters = false;
             }
 
-            if (ticks.Tags >= 10 && UpdateTags)
+            if (_ticks.Tags >= 10 && UpdateTags)
             {
-                ticks.Tags = 0;
+                _ticks.Tags = 0;
 
                 UpdateTags = false;
                 UpdateTagsCollection();
             }
 
-            if (ticks.OCR >= 50 && RunOCR)
+            if (_ticks.OCR >= 50 && RunOCR)
             {
-                ticks.OCR = 0;
+                _ticks.OCR = 0;
 
                 OCR ??= new OCR();
 
@@ -429,7 +429,10 @@ namespace Kenedia.Modules.Characters
             Settings.ShortcutKey.Value.Activated += ShortcutWindowToggle;
         }
 
-        protected override async Task LoadAsync() => await Task.Delay(0);
+        protected override async Task LoadAsync()
+        {
+            await Task.Delay(0);
+        }
 
         protected override void OnModuleLoaded(EventArgs e)
         {
@@ -448,7 +451,7 @@ namespace Kenedia.Modules.Characters
 
             Blish_HUD.Gw2Mumble.CurrentMap map = GameService.Gw2Mumble.CurrentMap;
             map.MapChanged += ForceUpdate;
-            clientRes = GameService.Graphics.Resolution;
+            _clientRes = GameService.Graphics.Resolution;
 
             GameService.GameIntegration.Gw2Instance.IsInGameChanged += ForceUpdate;
             GameService.Overlay.UserLocale.SettingChanged += UserLocale_SettingChanged;
@@ -463,14 +466,14 @@ namespace Kenedia.Modules.Characters
         protected override void Unload()
         {
             MainWindow?.Dispose();
-            cornerIcon?.Dispose();
+            _cornerIcon?.Dispose();
 
             TextureManager?.Dispose();
             TextureManager = null;
 
-            if (cornerIcon != null)
+            if (_cornerIcon != null)
             {
-                cornerIcon.Click -= ToggleModule;
+                _cornerIcon.Click -= ToggleModule;
             }
 
             DataLoaded_Event -= Characters_DataLoaded_Event;
@@ -505,9 +508,15 @@ namespace Kenedia.Modules.Characters
             }
         }
 
-        private void Gw2ApiManager_SubtokenUpdated(object sender, ValueEventArgs<IEnumerable<TokenPermission>> e) => GW2APIHandler.CheckAPI();
+        private void Gw2ApiManager_SubtokenUpdated(object sender, ValueEventArgs<IEnumerable<TokenPermission>> e)
+        {
+            GW2APIHandler.CheckAPI();
+        }
 
-        private void ToggleWindow_Activated(object sender, EventArgs e) => MainWindow?.ToggleWindow();
+        private void ToggleWindow_Activated(object sender, EventArgs e)
+        {
+            MainWindow?.ToggleWindow();
+        }
 
         private void ReloadKey_Activated(object sender, EventArgs e)
         {
@@ -559,7 +568,7 @@ namespace Kenedia.Modules.Characters
 
         private void ForceUpdate(object sender, EventArgs e)
         {
-            ticks.Global = 2000000;
+            _ticks.Global = 2000000;
             if (CurrentCharacterModel != null)
             {
                 CurrentCharacterModel.LastLogin = DateTime.UtcNow;
@@ -578,13 +587,19 @@ namespace Kenedia.Modules.Characters
             }
         }
 
-        private void Characters_DataLoaded_Event(object sender, EventArgs e) => CreateUI();
+        private void Characters_DataLoaded_Event(object sender, EventArgs e)
+        {
+            CreateUI();
+        }
 
-        private void ToggleModule(object sender, Blish_HUD.Input.MouseEventArgs e) => MainWindow?.ToggleWindow();
+        private void ToggleModule(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            MainWindow?.ToggleWindow();
+        }
 
         private void CreateCornerIcons()
         {
-            cornerIcon = new CornerIcon()
+            _cornerIcon = new CornerIcon()
             {
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156678),
                 HoverIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156679),
@@ -595,31 +610,34 @@ namespace Kenedia.Modules.Characters
 
             APISpinner = new LoadingSpinner()
             {
-                Location = new Point(cornerIcon.Left, cornerIcon.Bottom + 3),
+                Location = new Point(_cornerIcon.Left, _cornerIcon.Bottom + 3),
                 Parent = GameService.Graphics.SpriteScreen,
-                Size = new Point(cornerIcon.Width, cornerIcon.Height),
+                Size = new Point(_cornerIcon.Width, _cornerIcon.Height),
                 BasicTooltipText = "Fetching API data ...",
                 Visible = false,
             };
 
-            cornerIcon.Click += CornerIcon_Click;
-            cornerIcon.Moved += CornerIcon_Moved;
+            _cornerIcon.Click += CornerIcon_Click;
+            _cornerIcon.Moved += CornerIcon_Moved;
         }
 
-        private void CornerIcon_Moved(object sender, MovedEventArgs e) => APISpinner.Location = new Point(cornerIcon.Left, cornerIcon.Bottom + 3);
+        private void CornerIcon_Moved(object sender, MovedEventArgs e)
+        {
+            APISpinner.Location = new Point(_cornerIcon.Left, _cornerIcon.Bottom + 3);
+        }
 
         private void ShowCornerIcon_SettingChanged(object sender, ValueChangedEventArgs<bool> e)
         {
-            if (e.NewValue && cornerIcon == null)
+            if (e.NewValue && _cornerIcon == null)
             {
                 CreateCornerIcons();
             }
-            else if (cornerIcon != null && !e.NewValue)
+            else if (_cornerIcon != null && !e.NewValue)
             {
-                cornerIcon.Moved -= CornerIcon_Moved;
-                cornerIcon.Click -= CornerIcon_Click;
-                cornerIcon.Dispose();
-                cornerIcon = null;
+                _cornerIcon.Moved -= CornerIcon_Moved;
+                _cornerIcon.Click -= CornerIcon_Click;
+                _cornerIcon.Dispose();
+                _cornerIcon = null;
 
                 APISpinner.Dispose();
                 APISpinner = null;
@@ -640,7 +658,7 @@ namespace Kenedia.Modules.Characters
 
         private void UserLocale_SettingChanged(object sender, ValueChangedEventArgs<Gw2Sharp.WebApi.Locale> e)
         {
-            cornerIcon.BasicTooltipText = string.Format(Strings.common.Toggle, $"{Name}");
+            _cornerIcon.BasicTooltipText = string.Format(Strings.common.Toggle, $"{Name}");
             OnLanguageChanged(null, null);
         }
 
@@ -675,6 +693,9 @@ namespace Kenedia.Modules.Characters
             }
         }
 
-        private void MainWindow_Resized(object sender, ResizedEventArgs e) => Settings.WindowSize.Value = MainWindow.Size;
+        private void MainWindow_Resized(object sender, ResizedEventArgs e)
+        {
+            Settings.WindowSize.Value = MainWindow.Size;
+        }
     }
 }

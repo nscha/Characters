@@ -10,7 +10,7 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class ImageTextureToggle : Control
     {
-        private bool active;
+        private bool _active;
 
         public AsyncTexture2D ActiveTexture { get; set; }
 
@@ -32,21 +32,21 @@ namespace Kenedia.Modules.Characters.Controls
         {
             if (ActiveTexture != null)
             {
-                AsyncTexture2D texture = active ? ActiveTexture : InactiveTexture != null ? InactiveTexture : ActiveTexture;
+                AsyncTexture2D texture = _active ? ActiveTexture : InactiveTexture ?? ActiveTexture;
 
                 spriteBatch.DrawOnCtrl(
                     this,
                     texture,
                     new Rectangle(bounds.Left, bounds.Top, bounds.Height, bounds.Height),
                     TextureRectangle == Rectangle.Empty ? texture.Bounds : TextureRectangle,
-                    MouseOver ? ColorHovered : active ? ColorActive : ColorInactive,
+                    MouseOver ? ColorHovered : _active ? ColorActive : ColorInactive,
                     0f,
                     default);
             }
 
             if (ActiveText != null)
             {
-                string text = active ? ActiveText : InactiveText != null ? InactiveText : ActiveText;
+                string text = _active ? ActiveText : InactiveText ?? ActiveText;
 
                 spriteBatch.DrawStringOnCtrl(
                     this,
@@ -65,7 +65,7 @@ namespace Kenedia.Modules.Characters.Controls
         protected override void OnClick(MouseEventArgs e)
         {
             base.OnClick(e);
-            active = !active;
+            _active = !_active;
         }
     }
 }

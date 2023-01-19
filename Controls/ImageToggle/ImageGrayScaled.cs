@@ -9,26 +9,25 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class ImageGrayScaled : Control
     {
-        private static Color defaultColorHovered = new(255, 255, 255, 255);
-        private static Color defaultColorActive = new(200, 200, 200, 200);
-        private static Color defaultColorInActive = new(175, 175, 175, 255);
-        private Rectangle textureRectangle = Rectangle.Empty;
-        private Texture2D grayScaleTexture;
-        private AsyncTexture2D texture;
-        private bool active = false;
+        private static Color s_defaultColorHovered = new(255, 255, 255, 255);
+        private static Color s_defaultColorActive = new(200, 200, 200, 200);
+        private static Color s_defaultColorInActive = new(175, 175, 175, 255);
+        private Rectangle _textureRectangle = Rectangle.Empty;
+        private Texture2D _grayScaleTexture;
+        private AsyncTexture2D _texture;
 
         public bool UseGrayScale { get; set; } = true;
 
         public AsyncTexture2D Texture
         {
-            get => texture;
+            get => _texture;
             set
             {
-                texture = value;
-                texture.TextureSwapped += Texture_TextureSwapped;
+                _texture = value;
+                _texture.TextureSwapped += Texture_TextureSwapped;
                 if (value != null)
                 {
-                    grayScaleTexture = ToGrayScaledPalettable(value.Texture);
+                    _grayScaleTexture = ToGrayScaledPalettable(value.Texture);
                 }
             }
         }
@@ -37,15 +36,11 @@ namespace Kenedia.Modules.Characters.Controls
 
         public Rectangle TextureRectangle
         {
-            get => textureRectangle;
-            set => textureRectangle = value;
+            get => _textureRectangle;
+            set => _textureRectangle = value;
         }
 
-        public bool Active
-        {
-            get => active;
-            set => active = value;
-        }
+        public bool Active { get; set; } = false;
 
         public Color ColorHovered { get; set; } = new Color(255, 255, 255, 255);
 
@@ -57,9 +52,9 @@ namespace Kenedia.Modules.Characters.Controls
 
         public void ResetColors()
         {
-            ColorHovered = defaultColorHovered;
-            ColorActive = defaultColorActive;
-            ColorInActive = defaultColorInActive;
+            ColorHovered = s_defaultColorHovered;
+            ColorActive = s_defaultColorActive;
+            ColorInActive = s_defaultColorInActive;
         }
 
         public Texture2D ToGrayScaledPalettable(Texture2D original)
@@ -86,7 +81,7 @@ namespace Kenedia.Modules.Characters.Controls
                     // create the grayscale version of the pixel
                     float maxval = .3f + .59f + .11f + .79f;
                     float grayScale = (originalColor.R / 255f * .3f) + (originalColor.G / 255f * .59f) + (originalColor.B / 255f * .11f) + (originalColor.A / 255f * .79f);
-                    grayScale = grayScale / maxval;
+                    grayScale /= maxval;
 
                     destColors[index] = new Color(grayScale, grayScale, grayScale, originalColor.A);
                 }
@@ -98,14 +93,14 @@ namespace Kenedia.Modules.Characters.Controls
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (texture != null)
+            if (_texture != null)
             {
                 spriteBatch.DrawOnCtrl(
                     this,
-                    UseGrayScale && !active && !MouseOver ? grayScaleTexture : texture,
+                    UseGrayScale && !Active && !MouseOver ? _grayScaleTexture : _texture,
                     SizeRectangle != Rectangle.Empty ? SizeRectangle : bounds,
-                    textureRectangle == Rectangle.Empty ? texture.Bounds : textureRectangle,
-                    MouseOver ? ColorHovered : active ? ColorActive : ColorInActive * (UseGrayScale ? 0.5f : Alpha),
+                    _textureRectangle == Rectangle.Empty ? _texture.Bounds : _textureRectangle,
+                    MouseOver ? ColorHovered : Active ? ColorActive : ColorInActive * (UseGrayScale ? 0.5f : Alpha),
                     0f,
                     default);
             }
@@ -113,8 +108,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void Texture_TextureSwapped(object sender, ValueChangedEventArgs<Texture2D> e)
         {
-            grayScaleTexture = ToGrayScaledPalettable(texture);
-            texture.TextureSwapped -= Texture_TextureSwapped;
+            _grayScaleTexture = ToGrayScaledPalettable(_texture);
+            _texture.TextureSwapped -= Texture_TextureSwapped;
         }
     }
 }

@@ -10,16 +10,16 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class FilterSettings : FlowTab
     {
-        private readonly Dropdown filterBehaviorDropdown;
-        private readonly Dropdown matchingDropdown;
-        private readonly Checkbox nameCheckbox;
-        private readonly Checkbox levelCheckbox;
-        private readonly Checkbox raceCheckbox;
-        private readonly Checkbox professionCheckbox;
-        private readonly Checkbox mapCheckbox;
-        private readonly Checkbox craftingCheckbox;
-        private readonly Checkbox onlyMaxCraftingCheckbox;
-        private readonly Checkbox tagsCheckbox;
+        private readonly Dropdown _filterBehaviorDropdown;
+        private readonly Dropdown _matchingDropdown;
+        private readonly Checkbox _nameCheckbox;
+        private readonly Checkbox _levelCheckbox;
+        private readonly Checkbox _raceCheckbox;
+        private readonly Checkbox _professionCheckbox;
+        private readonly Checkbox _mapCheckbox;
+        private readonly Checkbox _craftingCheckbox;
+        private readonly Checkbox _onlyMaxCraftingCheckbox;
+        private readonly Checkbox _tagsCheckbox;
 
         public FilterSettings(int width = 190)
         {
@@ -31,7 +31,7 @@ namespace Kenedia.Modules.Characters.Controls
             ControlPadding = new Vector2(5, 5);
             Location = new Point(0, 25);
 
-            matchingDropdown = new Dropdown()
+            _matchingDropdown = new Dropdown()
             {
                 Parent = this,
                 Width = width,
@@ -41,15 +41,15 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
                 string entry = string.Join(" ", split);
-                matchingDropdown.Items.Add(entry);
+                _matchingDropdown.Items.Add(entry);
             }
 
             // this.matchingDropdown.Items.Add(Strings.common.MatchAnyFilter);
             // this.matchingDropdown.Items.Add(Strings.common.MatchAllFilter);
-            matchingDropdown.SelectedItem = Characters.ModuleInstance.Settings.FilterMatching.Value.GetMatchingBehavior();
-            matchingDropdown.ValueChanged += Matching_Dropdown_ValueChanged;
+            _matchingDropdown.SelectedItem = Characters.ModuleInstance.Settings.FilterMatching.Value.GetMatchingBehavior();
+            _matchingDropdown.ValueChanged += Matching_Dropdown_ValueChanged;
 
-            filterBehaviorDropdown = new Dropdown()
+            _filterBehaviorDropdown = new Dropdown()
             {
                 Parent = this,
                 Width = width,
@@ -59,76 +59,76 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
                 string entry = string.Join(" ", split);
-                filterBehaviorDropdown.Items.Add(entry);
+                _filterBehaviorDropdown.Items.Add(entry);
             }
 
             // this.filterBehaviorDropdown.Items.Add(Strings.common.IncludeMatches);
             // this.filterBehaviorDropdown.Items.Add(Strings.common.ExcludeMatches);
-            filterBehaviorDropdown.SelectedItem = Characters.ModuleInstance.Settings.FilterDirection.Value.GetFilterBehavior();
-            filterBehaviorDropdown.ValueChanged += FilterBehavior_Dropdown_ValueChanged;
+            _filterBehaviorDropdown.SelectedItem = Characters.ModuleInstance.Settings.FilterDirection.Value.GetFilterBehavior();
+            _filterBehaviorDropdown.ValueChanged += FilterBehavior_Dropdown_ValueChanged;
 
-            nameCheckbox = new Checkbox()
+            _nameCheckbox = new Checkbox()
             {
                 Parent = this,
                 Checked = Characters.ModuleInstance.Settings.CheckName.Value,
                 Text = string.Format(Strings.common.CheckItem, Strings.common.Name),
             };
-            nameCheckbox.CheckedChanged += CheckedChanged;
+            _nameCheckbox.CheckedChanged += CheckedChanged;
 
-            levelCheckbox = new Checkbox()
+            _levelCheckbox = new Checkbox()
             {
                 Parent = this,
                 Checked = Characters.ModuleInstance.Settings.CheckLevel.Value,
                 Text = string.Format(Strings.common.CheckItem, Strings.common.Level),
             };
-            levelCheckbox.CheckedChanged += CheckedChanged;
+            _levelCheckbox.CheckedChanged += CheckedChanged;
 
-            raceCheckbox = new Checkbox()
+            _raceCheckbox = new Checkbox()
             {
                 Parent = this,
                 Checked = Characters.ModuleInstance.Settings.CheckRace.Value,
                 Text = string.Format(Strings.common.CheckItem, Strings.common.Race),
             };
-            raceCheckbox.CheckedChanged += CheckedChanged;
+            _raceCheckbox.CheckedChanged += CheckedChanged;
 
-            professionCheckbox = new Checkbox()
+            _professionCheckbox = new Checkbox()
             {
                 Parent = this,
                 Checked = Characters.ModuleInstance.Settings.CheckProfession.Value,
                 Text = string.Format(Strings.common.CheckItem, Strings.common.Profession),
             };
-            professionCheckbox.CheckedChanged += CheckedChanged;
+            _professionCheckbox.CheckedChanged += CheckedChanged;
 
-            mapCheckbox = new Checkbox()
+            _mapCheckbox = new Checkbox()
             {
                 Parent = this,
                 Checked = Characters.ModuleInstance.Settings.CheckMap.Value,
                 Text = string.Format(Strings.common.CheckItem, Strings.common.Map),
             };
-            mapCheckbox.CheckedChanged += CheckedChanged;
+            _mapCheckbox.CheckedChanged += CheckedChanged;
 
-            craftingCheckbox = new Checkbox()
+            _craftingCheckbox = new Checkbox()
             {
                 Parent = this,
                 Checked = Characters.ModuleInstance.Settings.CheckCrafting.Value,
                 Text = string.Format(Strings.common.CheckItem, Strings.common.CraftingProfession),
             };
-            craftingCheckbox.CheckedChanged += CheckedChanged;
-            onlyMaxCraftingCheckbox = new Checkbox()
+            _craftingCheckbox.CheckedChanged += CheckedChanged;
+            _onlyMaxCraftingCheckbox = new Checkbox()
             {
                 Parent = this,
                 Checked = Characters.ModuleInstance.Settings.CheckOnlyMaxCrafting.Value,
                 Text = Strings.common.CheckOnlyMaxCrafting,
             };
-            onlyMaxCraftingCheckbox.CheckedChanged += CheckedChanged;
+            _onlyMaxCraftingCheckbox.CheckedChanged += CheckedChanged;
 
-            tagsCheckbox = new Checkbox()
+            _tagsCheckbox = new Checkbox()
             {
                 Parent = this,
                 Checked = Characters.ModuleInstance.Settings.CheckTags.Value,
                 Text = string.Format(Strings.common.CheckItem, Strings.common.Tags),
             };
-            tagsCheckbox.CheckedChanged += CheckedChanged;
+            _tagsCheckbox.CheckedChanged += CheckedChanged;
         }
 
         private void Matching_Dropdown_ValueChanged(object sender, ValueChangedEventArgs e)
@@ -145,35 +145,35 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void CheckedChanged(object sender, CheckChangedEvent e)
         {
-            if (sender == nameCheckbox)
+            if (sender == _nameCheckbox)
             {
                 Characters.ModuleInstance.Settings.CheckName.Value = e.Checked;
             }
-            else if (sender == levelCheckbox)
+            else if (sender == _levelCheckbox)
             {
                 Characters.ModuleInstance.Settings.CheckLevel.Value = e.Checked;
             }
-            else if (sender == raceCheckbox)
+            else if (sender == _raceCheckbox)
             {
                 Characters.ModuleInstance.Settings.CheckRace.Value = e.Checked;
             }
-            else if (sender == professionCheckbox)
+            else if (sender == _professionCheckbox)
             {
                 Characters.ModuleInstance.Settings.CheckProfession.Value = e.Checked;
             }
-            else if (sender == mapCheckbox)
+            else if (sender == _mapCheckbox)
             {
                 Characters.ModuleInstance.Settings.CheckMap.Value = e.Checked;
             }
-            else if (sender == craftingCheckbox)
+            else if (sender == _craftingCheckbox)
             {
                 Characters.ModuleInstance.Settings.CheckCrafting.Value = e.Checked;
             }
-            else if (sender == onlyMaxCraftingCheckbox)
+            else if (sender == _onlyMaxCraftingCheckbox)
             {
                 Characters.ModuleInstance.Settings.CheckOnlyMaxCrafting.Value = e.Checked;
             }
-            else if (sender == tagsCheckbox)
+            else if (sender == _tagsCheckbox)
             {
                 Characters.ModuleInstance.Settings.CheckTags.Value = e.Checked;
             }

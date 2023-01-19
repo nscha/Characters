@@ -12,7 +12,7 @@ namespace Kenedia.Modules.Characters.Controls
 {
     internal class FiltersPanel : FlowTab
     {
-        private readonly List<ImageColorToggle> toggles = new();
+        private readonly List<ImageColorToggle> _toggles = new();
 
         public FiltersPanel()
         {
@@ -73,7 +73,7 @@ namespace Kenedia.Modules.Characters.Controls
             // Profession All Specs
             foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> profession in profs)
             {
-                toggles.Add(new ImageColorToggle()
+                _toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = profession.Value.IconBig,
@@ -90,7 +90,7 @@ namespace Kenedia.Modules.Characters.Controls
 
             foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> profession in profs)
             {
-                toggles.Add(new ImageColorToggle()
+                _toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = profession.Value.IconBig,
@@ -118,10 +118,10 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> p in profs)
                 {
-                    ImageColorToggle t = specToggles.Find(e => p.Key == e.Profession && !toggles.Contains(e));
+                    ImageColorToggle t = specToggles.Find(e => p.Key == e.Profession && !_toggles.Contains(e));
                     if (t != null)
                     {
-                        toggles.Add(t);
+                        _toggles.Add(t);
                     }
                 }
             }
@@ -142,11 +142,11 @@ namespace Kenedia.Modules.Characters.Controls
                         TextureRectangle = crafting.Key > 0 ? new Rectangle(8, 7, 17, 19) : new Rectangle(4, 4, 24, 24),
                         SizeRectangle = new Rectangle(4, 4, 20, 20)
                     };
-                    toggles.Add(img);
+                    _toggles.Add(img);
                 }
             }
 
-            toggles.Add(new ImageColorToggle()
+            _toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(605021),
@@ -157,7 +157,7 @@ namespace Kenedia.Modules.Characters.Controls
                 BasicTooltipText = Strings.common.ShowHidden_Tooltip,
             });
 
-            toggles.Add(new ImageColorToggle()
+            _toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(593864),
@@ -170,7 +170,7 @@ namespace Kenedia.Modules.Characters.Controls
 
             foreach (KeyValuePair<Gw2Sharp.Models.RaceType, Data.Race> race in Characters.ModuleInstance.Data.Races)
             {
-                toggles.Add(new ImageColorToggle()
+                _toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = race.Value.Icon,
@@ -181,7 +181,7 @@ namespace Kenedia.Modules.Characters.Controls
                 });
             }
 
-            foreach (ImageColorToggle t in toggles)
+            foreach (ImageColorToggle t in _toggles)
             {
                 t.Parent = this;
             }
@@ -191,7 +191,7 @@ namespace Kenedia.Modules.Characters.Controls
 
         public void ResetToggles()
         {
-            foreach (ImageColorToggle t in toggles)
+            foreach (ImageColorToggle t in _toggles)
             {
                 t.Active = false;
             }

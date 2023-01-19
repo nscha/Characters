@@ -20,18 +20,18 @@ namespace Kenedia.Modules.Characters.Views
 {
     public class MainWindow : StandardWindow
     {
-        private readonly AsyncTexture2D windowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
+        private readonly AsyncTexture2D _windowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
 
-        private readonly Image displaySettingsButton;
-        private readonly ImageButton clearButton;
-        private readonly FlowPanel dropdownPanel;
-        private readonly SettingsSideMenu settingsSideMenu;
-        private readonly FilterSideMenu filterSideMenu;
+        private readonly Image _displaySettingsButton;
+        private readonly ImageButton _clearButton;
+        private readonly FlowPanel _dropdownPanel;
+        private readonly SettingsSideMenu _settingsSideMenu;
+        private readonly FilterSideMenu _filterSideMenu;
 
-        private bool filterCharacters;
-        private bool updateLayout;
-        private double tick = 0;
-        private double filterTick = 0;
+        private bool _filterCharacters;
+        private bool _updateLayout;
+        private double _tick = 0;
+        private double _filterTick = 0;
 
         public MainWindow(Texture2D background, Rectangle windowRegion, Rectangle contentRegion)
             : base(background, windowRegion, contentRegion)
@@ -47,7 +47,7 @@ namespace Kenedia.Modules.Characters.Views
 
             DraggingControl.LeftMouseButtonReleased += DraggingControl_LeftMouseButtonReleased;
 
-            dropdownPanel = new FlowPanel()
+            _dropdownPanel = new FlowPanel()
             {
                 Parent = this,
                 Location = new Point(0, 2),
@@ -56,18 +56,18 @@ namespace Kenedia.Modules.Characters.Views
                 ControlPadding = new Vector2(6, 0),
             };
 
-            displaySettingsButton = new Image()
+            _displaySettingsButton = new Image()
             {
-                Parent = dropdownPanel,
+                Parent = _dropdownPanel,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052),
                 Size = new Point(25, 25),
                 BasicTooltipText = string.Format(Strings.common.ShowItem, string.Format(Strings.common.ItemSettings, Strings.common.Display)),
             };
-            displaySettingsButton.MouseEntered += DisplaySettingsButton_MouseEntered;
-            displaySettingsButton.MouseLeft += DisplaySettingsButton_MouseLeft;
-            displaySettingsButton.Click += DisplaySettingsButton_Click;
+            _displaySettingsButton.MouseEntered += DisplaySettingsButton_MouseEntered;
+            _displaySettingsButton.MouseLeft += DisplaySettingsButton_MouseLeft;
+            _displaySettingsButton.Click += DisplaySettingsButton_Click;
 
-            clearButton = new ImageButton()
+            _clearButton = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175783),
@@ -77,25 +77,25 @@ namespace Kenedia.Modules.Characters.Views
                 BasicTooltipText = Strings.common.ClearFilters,
                 Visible = false,
             };
-            clearButton.Click += ClearButton_Click;
+            _clearButton.Click += ClearButton_Click;
 
             FilterBox = new TextBox()
             {
-                Parent = dropdownPanel,
+                Parent = _dropdownPanel,
                 PlaceholderText = Strings.common.Search,
-                Width = dropdownPanel.Width - displaySettingsButton.Width - 5,
+                Width = _dropdownPanel.Width - _displaySettingsButton.Width - 5,
             };
             FilterBox.TextChanged += FilterCharacters;
             FilterBox.Click += FilterBox_Click;
             FilterBox.EnterPressed += FilterBox_EnterPressed;
 
-            settingsSideMenu = new SettingsSideMenu()
+            _settingsSideMenu = new SettingsSideMenu()
             {
                 TextureOffset = new Point(25, 25),
                 Visible = false,
             };
 
-            filterSideMenu = new FilterSideMenu()
+            _filterSideMenu = new FilterSideMenu()
             {
                 TextureOffset = new Point(25, 25),
                 Visible = false,
@@ -108,7 +108,7 @@ namespace Kenedia.Modules.Characters.Views
             };
             CharacterEdit.Shown += CharacterEdit_Shown;
 
-            clearButton.Location = new Point(FilterBox.LocalBounds.Right - 25, FilterBox.LocalBounds.Top + 5);
+            _clearButton.Location = new Point(FilterBox.LocalBounds.Right - 25, FilterBox.LocalBounds.Top + 5);
             Characters.ModuleInstance.LanguageChanged += ModuleInstance_LanguageChanged;
         }
 
@@ -160,7 +160,10 @@ namespace Kenedia.Modules.Characters.Views
 
         public FlowPanel ContentPanel { get; private set; }
 
-        public void FilterCharacters(object sender = null, EventArgs e = null) => filterCharacters = true;
+        public void FilterCharacters(object sender = null, EventArgs e = null)
+        {
+            _filterCharacters = true;
+        }
 
         public void PerformFiltering()
         {
@@ -172,7 +175,7 @@ namespace Kenedia.Modules.Characters.Views
             Services.SettingsModel s = Characters.ModuleInstance.Settings;
             Services.Data data = Characters.ModuleInstance.Data;
 
-            IEnumerable<Tag> activeTags = filterSideMenu.Tags.Where(e => e.Active);
+            IEnumerable<Tag> activeTags = _filterSideMenu.Tags.Where(e => e.Active);
 
             bool anyTag = activeTags.Count() == 0;
             bool raceAny = CategoryFilters[FilterCategory.Race].Count == 0;
@@ -219,7 +222,7 @@ namespace Kenedia.Modules.Characters.Views
                     },
                 };
 
-                List<FilterTag> filterTags = filterSideMenu.Tags.Where(e => e.Active).Select(e => e.Text).ToList().CreateFilterTagList();
+                List<FilterTag> filterTags = _filterSideMenu.Tags.Where(e => e.Active).Select(e => e.Text).ToList().CreateFilterTagList();
                 List<FilterTag> filterStrings = textStrings.CreateFilterTagList();
 
                 if (!anyTag)
@@ -400,14 +403,14 @@ namespace Kenedia.Modules.Characters.Views
                 c.Visible = (c.Character.Show || includeHidden) && (s.FilterDirection.Value == FilterBehavior.Include ? matched && catMatched && tagMatched : !matched && !catMatched && !tagMatched);
             }
 
-            clearButton.Visible = !anyCategory || !matchAny || !anyTag;
+            _clearButton.Visible = !anyCategory || !matchAny || !anyTag;
             SortCharacters();
             ContentPanel.Invalidate();
         }
 
         public void UpdateLayout()
         {
-            updateLayout = false;
+            _updateLayout = false;
             CharacterPanelLayout panelLayout = Characters.ModuleInstance.Settings.PanelLayout.Value;
             PanelSizes panelSize = Characters.ModuleInstance.Settings.PanelSize.Value;
 
@@ -625,30 +628,27 @@ namespace Kenedia.Modules.Characters.Views
                 lastControl = c;
             }
 
-            if (lastControl.AbsoluteBounds.Bottom < m.Position.Y || (lastControl.AbsoluteBounds.Top < m.Position.Y && lastControl.AbsoluteBounds.Right < m.Position.X))
-            {
-                return CharacterControls.Count + 1;
-            }
-
-            return characterControl.Index;
+            return lastControl.AbsoluteBounds.Bottom < m.Position.Y || (lastControl.AbsoluteBounds.Top < m.Position.Y && lastControl.AbsoluteBounds.Right < m.Position.X)
+                ? CharacterControls.Count + 1
+                : characterControl.Index;
         }
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            if (filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
+            if (_filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - _filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
             {
-                filterTick = gameTime.TotalGameTime.TotalMilliseconds;
+                _filterTick = gameTime.TotalGameTime.TotalMilliseconds;
                 PerformFiltering();
-                filterCharacters = false;
+                _filterCharacters = false;
             }
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - tick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - _tick > 50)
             {
-                tick = gameTime.TotalGameTime.TotalMilliseconds;
+                _tick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (updateLayout)
+                if (_updateLayout)
                 {
                     UpdateLayout();
                 }
@@ -661,9 +661,9 @@ namespace Kenedia.Modules.Characters.Views
 
             spriteBatch.DrawOnCtrl(
                 this,
-                windowEmblem,
+                _windowEmblem,
                 new Rectangle(-43, -58, 128, 128),
-                windowEmblem.Bounds,
+                _windowEmblem.Bounds,
                 Color.White,
                 0f,
                 default);
@@ -686,8 +686,8 @@ namespace Kenedia.Modules.Characters.Views
         {
             base.OnHidden(e);
 
-            filterSideMenu?.Hide();
-            settingsSideMenu?.Hide();
+            _filterSideMenu?.Hide();
+            _settingsSideMenu?.Hide();
             CharacterEdit?.Hide();
         }
 
@@ -700,11 +700,11 @@ namespace Kenedia.Modules.Characters.Views
                 ContentPanel.Size = new Point(ContentRegion.Size.X, ContentRegion.Size.Y - 35);
             }
 
-            if (dropdownPanel != null)
+            if (_dropdownPanel != null)
             {
-                dropdownPanel.Size = new Point(ContentRegion.Size.X, 31);
-                FilterBox.Width = dropdownPanel.Width - displaySettingsButton.Width - 5;
-                clearButton.Location = new Point(FilterBox.LocalBounds.Right - 23, FilterBox.LocalBounds.Top + 6);
+                _dropdownPanel.Size = new Point(ContentRegion.Size.X, 31);
+                FilterBox.Width = _dropdownPanel.Width - _displaySettingsButton.Width - 5;
+                _clearButton.Location = new Point(FilterBox.LocalBounds.Right - 23, FilterBox.LocalBounds.Top + 6);
             }
 
             if (e.CurrentSize.Y < 135)
@@ -712,14 +712,14 @@ namespace Kenedia.Modules.Characters.Views
                 Size = new Point(Size.X, 135);
             }
 
-            if (settingsSideMenu != null && settingsSideMenu.Visible)
+            if (_settingsSideMenu != null && _settingsSideMenu.Visible)
             {
-                settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                _settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
 
-            if (filterSideMenu != null && filterSideMenu.Visible)
+            if (_filterSideMenu != null && _filterSideMenu.Visible)
             {
-                filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                _filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
 
             if (CharacterEdit != null && CharacterEdit.Visible)
@@ -732,14 +732,14 @@ namespace Kenedia.Modules.Characters.Views
         {
             base.OnMoved(e);
 
-            if (settingsSideMenu != null && settingsSideMenu.Visible)
+            if (_settingsSideMenu != null && _settingsSideMenu.Visible)
             {
-                settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                _settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
 
-            if (filterSideMenu != null && filterSideMenu.Visible)
+            if (_filterSideMenu != null && _filterSideMenu.Visible)
             {
-                filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                _filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
 
             if (CharacterEdit != null && CharacterEdit.Visible)
@@ -756,12 +756,12 @@ namespace Kenedia.Modules.Characters.Views
 
             ContentPanel?.Dispose();
             DraggingControl?.Dispose();
-            settingsSideMenu?.Dispose();
-            filterSideMenu?.Dispose();
+            _settingsSideMenu?.Dispose();
+            _filterSideMenu?.Dispose();
             CharacterEdit?.Dispose();
 
-            dropdownPanel?.Dispose();
-            displaySettingsButton?.Dispose();
+            _dropdownPanel?.Dispose();
+            _displaySettingsButton?.Dispose();
             FilterBox?.Dispose();
         }
 
@@ -782,8 +782,8 @@ namespace Kenedia.Modules.Characters.Views
 
         private void CharacterEdit_Shown(object sender, EventArgs e)
         {
-            filterSideMenu?.Hide();
-            settingsSideMenu?.Hide();
+            _filterSideMenu?.Hide();
+            _settingsSideMenu?.Hide();
 
             if (CharacterEdit != null && CharacterEdit.Visible)
             {
@@ -793,11 +793,14 @@ namespace Kenedia.Modules.Characters.Views
 
         private void ModuleInstance_LanguageChanged(object sender, EventArgs e)
         {
-            tick = tick + 10;
-            updateLayout = true;
+            _tick += 10;
+            _updateLayout = true;
         }
 
-        private void ClearButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e) => ResetFilters();
+        private void ClearButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            ResetFilters();
+        }
 
         private void ResetFilters()
         {
@@ -809,31 +812,37 @@ namespace Kenedia.Modules.Characters.Views
             CategoryFilters[FilterCategory.Hidden].Clear();
             CategoryFilters[FilterCategory.Birthday].Clear();
 
-            filterSideMenu.ResetToggles();
+            _filterSideMenu.ResetToggles();
             FilterBox.Text = null;
-            filterCharacters = true;
-            filterSideMenu.Tags.ForEach(t => t.Active = false);
+            _filterCharacters = true;
+            _filterSideMenu.Tags.ForEach(t => t.Active = false);
         }
 
         private void FilterBox_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            settingsSideMenu.Hide();
-            filterSideMenu.Show();
+            _settingsSideMenu.Hide();
+            _filterSideMenu.Show();
             CharacterEdit.Hide();
         }
 
         private void DisplaySettingsButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            filterSideMenu.Hide();
-            settingsSideMenu.Show();
-            settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            settingsSideMenu.Opacity = 1f;
+            _filterSideMenu.Hide();
+            _settingsSideMenu.Show();
+            _settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            _settingsSideMenu.Opacity = 1f;
             CharacterEdit.Hide();
         }
 
-        private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e) => displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052);
+        private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            _displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052);
+        }
 
-        private void DisplaySettingsButton_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e) => displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157110);
+        private void DisplaySettingsButton_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            _displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157110);
+        }
 
         private void DraggingControl_LeftMouseButtonReleased(object sender, Blish_HUD.Input.MouseEventArgs e)
         {

@@ -28,7 +28,7 @@ namespace Kenedia.Modules.Characters.Services
 
     public class CharacterSwapping
     {
-        private double tick;
+        private double _tick;
 
         public CharacterSwapping(Character_Model character_Model)
         {
@@ -47,9 +47,9 @@ namespace Kenedia.Modules.Characters.Services
 
         public void Run(GameTime gameTime)
         {
-            tick += gameTime.ElapsedGameTime.TotalMilliseconds;
+            _tick += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (tick < 0)
+            if (_tick < 0)
             {
                 return;
             }
@@ -60,11 +60,11 @@ namespace Kenedia.Modules.Characters.Services
                     if (LoggingOut())
                     {
                         State = SwappingState.LoggedOut;
-                        tick = -Characters.ModuleInstance.Settings.SwapDelay.Value;
+                        _tick = -Characters.ModuleInstance.Settings.SwapDelay.Value;
                     }
                     else
                     {
-                        tick = -1000;
+                        _tick = -1000;
                     }
 
                     break;
@@ -81,21 +81,13 @@ namespace Kenedia.Modules.Characters.Services
                     if (MoveToCharacter())
                     {
                         State = SwappingState.MovedToCharacter;
-                        tick = -750;
+                        _tick = -750;
                     }
 
                     break;
 
                 case SwappingState.MovedToCharacter:
-                    if (ConfirmName())
-                    {
-                        State = SwappingState.CharacterFound;
-                    }
-                    else
-                    {
-                        State = SwappingState.CharacterLost;
-                    }
-
+                    State = ConfirmName() ? SwappingState.CharacterFound : SwappingState.CharacterLost;
                     break;
 
                 case SwappingState.CharacterRead:
@@ -105,7 +97,7 @@ namespace Kenedia.Modules.Characters.Services
                     if (Login())
                     {
                         State = SwappingState.LoggingIn;
-                        tick = -1000;
+                        _tick = -1000;
                     }
 
                     break;
@@ -116,7 +108,7 @@ namespace Kenedia.Modules.Characters.Services
                         case SwappingState.None:
                             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
                             SubState = SwappingState.MovedLeft;
-                            tick = -750;
+                            _tick = -750;
                             break;
 
                         case SwappingState.MovedLeft:
@@ -134,7 +126,7 @@ namespace Kenedia.Modules.Characters.Services
                         case SwappingState.CheckedLeft:
                             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
                             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-                            tick = -750;
+                            _tick = -750;
                             SubState = SwappingState.MovedRight;
                             break;
 
@@ -174,7 +166,7 @@ namespace Kenedia.Modules.Characters.Services
         public void Reset()
         {
             State = SwappingState.None;
-            tick = 0;
+            _tick = 0;
         }
 
         private bool LoggingOut()
@@ -259,6 +251,9 @@ namespace Kenedia.Modules.Characters.Services
             return true;
         }
 
-        private bool IsLoaded() => GameService.GameIntegration.Gw2Instance.IsInGame;
+        private bool IsLoaded()
+        {
+            return GameService.GameIntegration.Gw2Instance.IsInGame;
+        }
     }
 }

@@ -19,75 +19,75 @@ namespace Kenedia.Modules.Characters.Services
 
     public class CharacterSorting
     {
-        private double tick;
-        private List<Character_Model> models;
-        private SortingState state;
-        private SortingState subState = SortingState.Selected;
+        private double _tick;
+        private List<Character_Model> _models;
+        private SortingState _state;
+        private SortingState _subState = SortingState.Selected;
 
-        private int currentIndex = 0;
+        private int _currentIndex = 0;
 
         public CharacterSorting(List<Character_Model> models)
         {
-            this.models = models.OrderByDescending(e => e.LastLogin).ToList();
+            this._models = models.OrderByDescending(e => e.LastLogin).ToList();
         }
 
         public event EventHandler Finished;
 
         public void Run(GameTime gameTime)
         {
-            tick += gameTime.ElapsedGameTime.TotalMilliseconds;
+            _tick += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (tick < 0)
+            if (_tick < 0)
             {
                 return;
             }
 
-            if (currentIndex == models.Count && subState == SortingState.NameFetched)
+            if (_currentIndex == _models.Count && _subState == SortingState.NameFetched)
             {
                 ScreenNotification.ShowNotification(Strings.common.CharactersFixed, ScreenNotification.NotificationType.Warning);
                 AdjustCharacterLogins();
                 Finished?.Invoke(null, null);
             }
 
-            switch (state)
+            switch (_state)
             {
                 case SortingState.None:
-                    for (int i = 0; i < models.Count; i++)
+                    for (int i = 0; i < _models.Count; i++)
                     {
                         Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
                     }
 
-                    state = SortingState.MovedToFirst;
-                    tick -= 250;
+                    _state = SortingState.MovedToFirst;
+                    _tick -= 250;
                     break;
 
                 case SortingState.MovedToFirst:
-                    if (subState == SortingState.Selected)
+                    if (_subState == SortingState.Selected)
                     {
                         string name = Characters.ModuleInstance.OCR.Read();
 
                         if (name != null)
                         {
-                            Character_Model c = models.Find(e => e.Name == name);
+                            Character_Model c = _models.Find(e => e.Name == name);
 
                             if (c != null)
                             {
-                                c.OrderIndex = currentIndex;
+                                c.OrderIndex = _currentIndex;
                             }
                             else
                             {
                                 ScreenNotification.ShowNotification(string.Format(Strings.common.CouldNotFindNamedItem, Strings.common.Character, name));
                             }
 
-                            subState = SortingState.NameFetched;
+                            _subState = SortingState.NameFetched;
                         }
                     }
                     else
                     {
                         Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-                        subState = SortingState.Selected;
-                        tick -= 250;
-                        currentIndex++;
+                        _subState = SortingState.Selected;
+                        _tick -= 250;
+                        _currentIndex++;
                     }
 
                     break;
@@ -99,7 +99,7 @@ namespace Kenedia.Modules.Characters.Services
 
         private void AdjustCharacterLogins()
         {
-            models = models.OrderBy(e => e.OrderIndex).ToList();
+            _models = _models.OrderBy(e => e.OrderIndex).ToList();
 
             bool messedUp = true;
 
@@ -107,10 +107,10 @@ namespace Kenedia.Modules.Characters.Services
             {
                 messedUp = false;
 
-                for (int i = 0; i < models.Count; i++)
+                for (int i = 0; i < _models.Count; i++)
                 {
-                    Character_Model next = models.Count > i + 1 ? models[i + 1] : null;
-                    Character_Model current = models[i];
+                    Character_Model next = _models.Count > i + 1 ? _models[i + 1] : null;
+                    Character_Model current = _models[i];
 
                     // var nCurr = string.Format("Current: {0} | LastLogin: {1} | More Recent: {2}", current.Name, current.LastLogin, next != null && current.LastLogin <= next.LastLogin);
                     // var nNext = string.Format("Next: {0} | LastLogin: {1} | More Recent: {2}", next != null ? next.Name : "No Next", next != null ? next.LastLogin : "No Next", next != null && current.LastLogin <= next.LastLogin);

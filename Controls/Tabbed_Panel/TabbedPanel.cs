@@ -15,8 +15,7 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class TabbedPanel : Panel
     {
-        private readonly List<PanelTab> tabs = new();
-        private readonly FlowPanel tabsButtonPanel = new()
+        private readonly FlowPanel _tabsButtonPanel = new()
         {
             FlowDirection = ControlFlowDirection.SingleLeftToRight,
             WidthSizingMode = SizingMode.Fill,
@@ -24,12 +23,12 @@ namespace Kenedia.Modules.Characters.Controls
             Height = 25,
         };
 
-        private PanelTab activeTab;
+        private PanelTab _activeTab;
 
         public TabbedPanel()
         {
-            tabsButtonPanel.Parent = this;
-            tabsButtonPanel.Resized += OnTabButtonPanelResized;
+            _tabsButtonPanel.Parent = this;
+            _tabsButtonPanel.Resized += OnTabButtonPanelResized;
 
             HeightSizingMode = SizingMode.AutoSize;
 
@@ -44,14 +43,11 @@ namespace Kenedia.Modules.Characters.Controls
 
         private event EventHandler TabRemoved;
 
-        public List<PanelTab> Tabs
-        {
-            get => tabs;
-        }
+        public List<PanelTab> Tabs { get; } = new();
 
         public PanelTab ActiveTab
         {
-            get => activeTab;
+            get => _activeTab;
             set => SwitchTab(value);
         }
 
@@ -69,9 +65,9 @@ namespace Kenedia.Modules.Characters.Controls
         {
             tab.Parent = this;
             tab.Disposed += OnTabDisposed;
-            tab.TabButton.Parent = tabsButtonPanel;
-            tab.TabButton.Click += (sender, model) => TabButton_Click(sender, model, tab);
-            tabs.Add(tab);
+            tab.TabButton.Parent = _tabsButtonPanel;
+            tab.TabButton.Click += (s, m) => TabButton_Click(tab);
+            Tabs.Add(tab);
             TabAdded?.Invoke(this, EventArgs.Empty);
             ActiveTab ??= tab;
             RecalculateLayout();
@@ -80,20 +76,20 @@ namespace Kenedia.Modules.Characters.Controls
         public void RemoveTab(PanelTab tab)
         {
             tab.Disposed -= OnTabDisposed;
-            tab.TabButton.Click -= (sender, model) => TabButton_Click(sender, model, tab);
+            tab.TabButton.Click -= (s, m) => TabButton_Click(tab);
             tab.Parent = null;
             tab.TabButton.Parent = null;
 
-            _ = tabs.Remove(tab);
+            _ = Tabs.Remove(tab);
             TabRemoved?.Invoke(this, EventArgs.Empty);
             RecalculateLayout();
         }
 
         public override void RecalculateLayout()
         {
-            int button_amount = Math.Max(1, tabsButtonPanel.Children.Count);
-            int width = (tabsButtonPanel.Width - ((button_amount - 1) * (int)tabsButtonPanel.ControlPadding.X)) / button_amount;
-            foreach (Control c in tabsButtonPanel.Children)
+            int button_amount = Math.Max(1, _tabsButtonPanel.Children.Count);
+            int width = (_tabsButtonPanel.Width - ((button_amount - 1) * (int)_tabsButtonPanel.ControlPadding.X)) / button_amount;
+            foreach (Control c in _tabsButtonPanel.Children)
             {
                 c.Width = width;
             }
@@ -142,7 +138,10 @@ namespace Kenedia.Modules.Characters.Controls
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
         }
 
-        protected override void OnResized(ResizedEventArgs e) => base.OnResized(e);
+        protected override void OnResized(ResizedEventArgs e)
+        {
+            base.OnResized(e);
+        }
 
         protected void SwitchTab(PanelTab tab = null)
         {
@@ -159,20 +158,29 @@ namespace Kenedia.Modules.Characters.Controls
                 tab.Active = true;
             }
 
-            activeTab = tab;
+            _activeTab = tab;
         }
 
         protected override void DisposeControl()
         {
             base.DisposeControl();
 
-            tabs.DisposeAll();
+            Tabs.DisposeAll();
         }
 
-        private void OnTabButtonPanelResized(object sender, ResizedEventArgs e) => RecalculateLayout();
+        private void OnTabButtonPanelResized(object sender, ResizedEventArgs e)
+        {
+            RecalculateLayout();
+        }
 
-        private void TabButton_Click(object sender, MouseEventArgs e, PanelTab t) => SwitchTab(t);
+        private void TabButton_Click(PanelTab t)
+        {
+            SwitchTab(t);
+        }
 
-        private void OnTabDisposed(object sender, EventArgs e) => RemoveTab((PanelTab)sender);
+        private void OnTabDisposed(object sender, EventArgs e)
+        {
+            RemoveTab((PanelTab)sender);
+        }
     }
 }

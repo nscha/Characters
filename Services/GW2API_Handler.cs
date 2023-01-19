@@ -11,19 +11,19 @@ namespace Kenedia.Modules.Characters.Services
 {
     public class GW2API_Handler
     {
-        private Account account;
+        private Account _account;
 
         public Account Account
         {
-            get => account;
+            get => _account;
             set
             {
-                if (value != null && (account == null || account.Name != value.Name))
+                if (value != null && (_account == null || _account.Name != value.Name))
                 {
                     UpdateFolderPaths(value.Name);
                 }
 
-                account = value;
+                _account = value;
             }
         }
 

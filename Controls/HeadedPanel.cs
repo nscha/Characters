@@ -3,6 +3,7 @@ using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using static Kenedia.Modules.Characters.Services.TextureManager;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -11,9 +12,9 @@ namespace Kenedia.Modules.Characters.Controls
 {
     internal class HeadedPanel : Panel
     {
-        private readonly AsyncTexture2D headerUnderline;
-        private readonly bool initialized = false;
-        private readonly Label headerLabel = new()
+        private readonly AsyncTexture2D _headerUnderline;
+        private readonly bool _initialized = false;
+        private readonly Label _headerLabel = new()
         {
             Font = GameService.Content.DefaultFont16,
             Location = new Point(5, 3),
@@ -22,7 +23,7 @@ namespace Kenedia.Modules.Characters.Controls
             Padding = new Thickness(4f),
         };
 
-        private readonly FlowPanel contentPanel = new()
+        private readonly FlowPanel _contentPanel = new()
         {
             WidthSizingMode = SizingMode.Fill,
             HeightSizingMode = SizingMode.AutoSize,
@@ -32,28 +33,28 @@ namespace Kenedia.Modules.Characters.Controls
             Location = new Point(0, 25),
         };
 
-        private string header = string.Empty;
+        private string _header = string.Empty;
 
         public HeadedPanel()
         {
             WidthSizingMode = SizingMode.Fill;
             HeightSizingMode = SizingMode.AutoSize;
 
-            headerLabel.Parent = this;
-            contentPanel.Parent = this;
+            _headerLabel.Parent = this;
+            _contentPanel.Parent = this;
 
-            headerUnderline = Characters.ModuleInstance.TextureManager.GetControlTexture(Controls.Separator);
+            _headerUnderline = Characters.ModuleInstance.TextureManager.GetControlTexture(ControlTextures.Separator);
 
-            initialized = true;
+            _initialized = true;
         }
 
         public string Header
         {
-            get => header;
+            get => _header;
             set
             {
-                header = value;
-                headerLabel.Text = value;
+                _header = value;
+                _headerLabel.Text = value;
             }
         }
 
@@ -64,7 +65,7 @@ namespace Kenedia.Modules.Characters.Controls
             base.PaintBeforeChildren(spriteBatch, bounds);
 
             Color color = Color.Black;
-            Rectangle b = contentPanel.LocalBounds;
+            Rectangle b = _contentPanel.LocalBounds;
             int pad = 5;
 
             if (TintContent)
@@ -84,13 +85,13 @@ namespace Kenedia.Modules.Characters.Controls
                 spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(b.Left, b.Top, b.Width - pad, b.Height), Rectangle.Empty, color * 0.5f);
             }
 
-            b = headerLabel.LocalBounds;
+            b = _headerLabel.LocalBounds;
 
             spriteBatch.DrawOnCtrl(
                 this,
-                headerUnderline,
+                _headerUnderline,
                 new Rectangle(bounds.Left, b.Bottom, bounds.Width, 5),
-                headerUnderline.Bounds,
+                _headerUnderline.Bounds,
                 Color.White,
                 0f,
                 default);
@@ -100,9 +101,9 @@ namespace Kenedia.Modules.Characters.Controls
         {
             base.OnChildAdded(e);
 
-            if (initialized)
+            if (_initialized)
             {
-                e.ChangedChild.Parent = contentPanel;
+                e.ChangedChild.Parent = _contentPanel;
             }
         }
     }

@@ -46,11 +46,11 @@ namespace Kenedia.Modules.Characters.Services
                 }
             }
 
-            values = Enum.GetValues(typeof(Controls));
+            values = Enum.GetValues(typeof(ControlTextures));
             if (values.Length > 0)
             {
                 controls = new List<Texture2D>(new Texture2D[values.Cast<int>().Max() + 1]);
-                foreach (Controls num in values)
+                foreach (ControlTextures num in values)
                 {
                     Texture2D texture = contentsManager.GetTexture(@"textures\controls\" + (int)num + ".png");
                     if (texture != null)
@@ -61,7 +61,7 @@ namespace Kenedia.Modules.Characters.Services
             }
         }
 
-        public enum Controls
+        public enum ControlTextures
         {
             Separator,
             Plus_Button,
@@ -112,35 +112,20 @@ namespace Kenedia.Modules.Characters.Services
         {
             int index = (int)background;
 
-            if (index < backgrounds.Count && backgrounds[index] != null)
-            {
-                return backgrounds[index];
-            }
-
-            return icons[0];
+            return index < backgrounds.Count && backgrounds[index] != null ? backgrounds[index] : icons[0];
         }
 
         public Texture2D GetIcon(Icons icon)
         {
             int index = (int)icon;
 
-            if (index < icons.Count && icons[index] != null)
-            {
-                return icons[index];
-            }
-
-            return icons[0];
+            return index < icons.Count && icons[index] != null ? icons[index] : icons[0];
         }
 
-        public Texture2D GetControlTexture(Controls control)
+        public Texture2D GetControlTexture(ControlTextures control)
         {
             int index = (int)control;
-            if (index < controls.Count && controls[index] != null)
-            {
-                return controls[index];
-            }
-
-            return icons[0];
+            return index < controls.Count && controls[index] != null ? controls[index] : icons[0];
         }
     }
 }

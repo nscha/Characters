@@ -10,22 +10,13 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class ImageButton : Control
     {
-        private static Color defaultColorHovered = new(255, 255, 255, 255);
-        private static Color defaultColorClicked = new(255, 255, 255, 255);
-        private static Color defaultColor = new(255, 255, 255, 255);
+        private static Color s_defaultColorHovered = new(255, 255, 255, 255);
+        private static Color s_defaultColorClicked = new(255, 255, 255, 255);
+        private static Color s_defaultColor = new(255, 255, 255, 255);
+        private Rectangle _textureRectangle = Rectangle.Empty;
+        private bool _clicked;
 
-        private AsyncTexture2D texture;
-        private Rectangle textureRectangle = Rectangle.Empty;
-        private bool clicked;
-
-        public AsyncTexture2D Texture
-        {
-            get => texture;
-            set
-            {
-                texture = value;
-            }
-        }
+        public AsyncTexture2D Texture { get; set; }
 
         public AsyncTexture2D HoveredTexture { get; set; }
 
@@ -35,8 +26,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         public Rectangle TextureRectangle
         {
-            get => textureRectangle;
-            set => textureRectangle = value;
+            get => _textureRectangle;
+            set => _textureRectangle = value;
         }
 
         public Color ColorHovered { get; set; } = new(255, 255, 255, 255);
@@ -47,24 +38,24 @@ namespace Kenedia.Modules.Characters.Controls
 
         public void ResetColors()
         {
-            ColorHovered = defaultColorHovered;
-            ColorClicked = defaultColorClicked;
-            ColorDefault = defaultColor;
+            ColorHovered = s_defaultColorHovered;
+            ColorClicked = s_defaultColorClicked;
+            ColorDefault = s_defaultColor;
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (texture != null)
+            if (Texture != null)
             {
-                AsyncTexture2D texture = clicked && ClickedTexture != null ? ClickedTexture : MouseOver && HoveredTexture != null ? HoveredTexture : Texture;
-                clicked = clicked && MouseOver;
+                AsyncTexture2D texture = _clicked && ClickedTexture != null ? ClickedTexture : MouseOver && HoveredTexture != null ? HoveredTexture : Texture;
+                _clicked = _clicked && MouseOver;
 
                 spriteBatch.DrawOnCtrl(
                     this,
                     texture,
                     SizeRectangle != Rectangle.Empty ? SizeRectangle : bounds,
-                    textureRectangle == Rectangle.Empty ? texture.Bounds : textureRectangle,
-                    MouseOver ? ColorHovered : MouseOver && clicked ? ColorClicked : ColorDefault,
+                    _textureRectangle == Rectangle.Empty ? texture.Bounds : _textureRectangle,
+                    MouseOver ? ColorHovered : MouseOver && _clicked ? ColorClicked : ColorDefault,
                     0f,
                     default);
             }
@@ -73,13 +64,13 @@ namespace Kenedia.Modules.Characters.Controls
         protected override void OnLeftMouseButtonPressed(MouseEventArgs e)
         {
             base.OnLeftMouseButtonPressed(e);
-            clicked = true;
+            _clicked = true;
         }
 
         protected override void OnLeftMouseButtonReleased(MouseEventArgs e)
         {
             base.OnLeftMouseButtonReleased(e);
-            clicked = false;
+            _clicked = false;
         }
     }
 }

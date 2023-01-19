@@ -11,7 +11,7 @@ namespace Kenedia.Modules.Characters.Controls
 {
     internal class TagsPanel : FlowTab
     {
-        private readonly FlowPanel tagPanel;
+        private readonly FlowPanel _tagPanel;
 
         public TagsPanel()
         {
@@ -28,7 +28,7 @@ namespace Kenedia.Modules.Characters.Controls
             ControlPadding = new Vector2(5, 3);
             Location = new Point(0, 25);
 
-            tagPanel = new FlowPanel()
+            _tagPanel = new FlowPanel()
             {
                 Parent = this,
                 WidthSizingMode = SizingMode.Fill,
@@ -40,7 +40,7 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 Tag tag = new()
                 {
-                    Parent = tagPanel,
+                    Parent = _tagPanel,
                     Text = t,
                     Active = false,
                     ShowDelete = false,
@@ -56,19 +56,22 @@ namespace Kenedia.Modules.Characters.Controls
 
         public List<Tag> Tags { get; } = new List<Tag>();
 
-        private void Tag_Click(object sender, MouseEventArgs e) => Characters.ModuleInstance.MainWindow.FilterCharacters();
+        private void Tag_Click(object sender, MouseEventArgs e)
+        {
+            Characters.ModuleInstance.MainWindow.FilterCharacters();
+        }
 
         private void Tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             foreach (string t in Characters.ModuleInstance.Tags)
             {
-                bool exists = tagPanel.Children.Cast<Tag>().ToList().Find(e => e.Text == t) != null;
+                bool exists = _tagPanel.Children.Cast<Tag>().ToList().Find(e => e.Text == t) != null;
 
                 if (!exists)
                 {
                     Tag tag = new()
                     {
-                        Parent = tagPanel,
+                        Parent = _tagPanel,
                         Text = t,
                         Active = false,
                         ShowDelete = false,

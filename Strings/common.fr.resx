@@ -185,7 +185,7 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
     <value>Double-cliquez pour passer à {0} !</value>
   </data>
   <data name="EnterOnSwap_Description" xml:space="preserve">
-    <value>Entrer dans le jeu automatiquement après avoir sélectionné le personnage dans la sélection des personnages.</value>
+    <value>Entrer dans le jeu automatiquement après avoir sélectionné le personnage dans la sélection des personnages</value>
   </data>
   <data name="EnterOnSwap_DisplayName" xml:space="preserve">
     <value>Connexion après avoir choisi le personnage</value>
@@ -203,7 +203,7 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
     <value>Cette clé d'API ne dispose pas des autorisations requises.</value>
   </data>
   <data name="FadeOut_Description" xml:space="preserve">
-    <value>Le filtre et la fenêtre de caractères s'effacent automatiquement après 2500 ms.</value>
+    <value>Le filtre et la fenêtre de caractères s'effacent automatiquement après 2500 ms</value>
   </data>
   <data name="FadeOut_DisplayName" xml:space="preserve">
     <value>s'estompent fenêtre supplémentaire</value>
@@ -216,7 +216,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Retard du filtre ({0} ms)</value>
   </data>
   <data name="FocusFilter_Description" xml:space="preserve">
-    <value>Lorsque le menu principal est affiché, le champ de recherche est automatiquement mis en évidence.</value>
+    <value>Lorsque le menu principal est affiché, le champ de recherche est automatiquement mis en évidence</value>
   </data>
   <data name="FocusFilter_DisplayName" xml:space="preserve">
     <value>Champ de recherche ciblé</value>
@@ -234,7 +234,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Niveau {0}</value>
   </data>
   <data name="LoginAfterSelect" xml:space="preserve">
-    <value>Entrer dans le jeu automatiquement après avoir sélectionné le personnage dans la sélection des personnages.</value>
+    <value>Entrer dans le jeu automatiquement après avoir sélectionné le personnage dans la sélection des personnages</value>
   </data>
   <data name="LoginCharacter" xml:space="preserve">
     <value>Personnage de connexion</value>
@@ -279,9 +279,6 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
   <data name="Scribe" xml:space="preserve">
     <value>Illustrateur</value>
   </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Recherche de ...</value>
-  </data>
   <data name="SearchGuide" xml:space="preserve">
     <value>-c Profession d'artisanat
 -p Profession/Spécialisation
@@ -289,7 +286,7 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
 -b Anniversaire
 -m MapName
 -t CustomTag
--c Chef ; -p Warrior affiche tous les guerriers et tous les chefs.</value>
+-c Chef ; -p Warrior affiche tous les guerriers et tous les chefs</value>
   </data>
   <data name="SelectImage" xml:space="preserve">
     <value>Choisis une image</value>
@@ -331,9 +328,6 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="SwapModifier_DisplayName" xml:space="preserve">
     <value>Modificateur nécessaire pour changer</value>
   </data>
-  <data name="SwitchTo" xml:space="preserve">
-    <value>Passer à {0}</value>
-  </data>
   <data name="Tailor" xml:space="preserve">
     <value>Tailleur</value>
   </data>
@@ -367,9 +361,6 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="Updating" xml:space="preserve">
     <value>Mise à jour de {0}</value>
   </data>
-  <data name="UseDefault" xml:space="preserve">
-    <value>Spécification</value>
-  </data>
   <data name="Utility" xml:space="preserve">
     <value>Utile</value>
   </data>
@@ -378,5 +369,251 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   </data>
   <data name="Years" xml:space="preserve">
     <value>Années</value>
+  </data>
+  <data name="Switch" xml:space="preserve">
+    <value>Passer à {0}</value>
+  </data>
+  <data name="WindowedMode" xml:space="preserve">
+    <value>Mode fenêtré</value>
+  </data>
+  <data name="AutoFix_Tooltip" xml:space="preserve">
+    <value>Lorsque vous ne parvenez pas à passer à un caractère, passez automatiquement en revue les caractères pour fixer leur ordre.</value>
+  </data>
+  <data name="UseOCR_Tooltip" xml:space="preserve">
+    <value>Utilisez la "reconnaissance optique de caractères" (ROC) pour confirmer le nom du caractère.</value>
+  </data>
+  <data name="UseOCR" xml:space="preserve">
+    <value>Utiliser l'OCR</value>
+  </data>
+  <data name="TopOffset" xml:space="preserve">
+    <value>Décalage supérieur</value>
+  </data>
+  <data name="TogglePortraitCapture_Tooltip" xml:space="preserve">
+    <value>Activez la commande de capture de portrait</value>
+  </data>
+  <data name="EditOCR_Tooltip" xml:space="preserve">
+    <value>Basculer le contrôle de l'édition de la région OCR</value>
+  </data>
+  <data name="TogglePortraitCapture" xml:space="preserve">
+    <value>Basculer la capture de portrait</value>
+  </data>
+  <data name="EmptyColumns_Tooltip" xml:space="preserve">
+    <value>Seuil du nombre de colonnes de pixels qui peuvent ne pas contenir de contenu</value>
+  </data>
+  <data name="Offset_Tooltip" xml:space="preserve">
+    <value>Les numéros de décalage correspondent à la région de la boîte ci-dessous qui est capturée pour l'OCR. Dans l'ordre : Gauche, Haut, Droite, Bas. Plus les chiffres sont élevés, plus la zone de capture est petite. Idéalement, vous devez définir les valeurs de manière à ce que vous ne puissiez pas voir de boîte jaune dans l'aperçu ci-dessus.</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Balises</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Balises</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Trier par {0}</value>
+  </data>
+  <data name="SortItem" xml:space="preserve">
+    <value>Trier par {0}</value>
+  </data>
+  <data name="ShowOnlyMaxCrafting" xml:space="preserve">
+    <value>Afficher uniquement l'artisanat maximum</value>
+  </data>
+  <data name="ShowInList" xml:space="preserve">
+    <value>Afficher dans la liste</value>
+  </data>
+  <data name="ShowHidden_Tooltip" xml:space="preserve">
+    <value>Afficher les personnages cachés</value>
+  </data>
+  <data name="Show_Birthday_Tooltip" xml:space="preserve">
+    <value>Afficher les personnages avec des cadeaux d'anniversaire</value>
+  </data>
+  <data name="ShowItem" xml:space="preserve">
+    <value>Afficher {0}</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Rechercher ...</value>
+  </data>
+  <data name="RightOffset" xml:space="preserve">
+    <value>Décalage à droite</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Supprimer {0}</value>
+  </data>
+  <data name="RefreshAPI" xml:space="preserve">
+    <value>Rafraîchir l'API</value>
+  </data>
+  <data name="Tag_Placeholder" xml:space="preserve">
+    <value>PvE, WvW, Principal, ERP ...</value>
+  </data>
+  <data name="PotraitSize" xml:space="preserve">
+    <value>Taille du portrait</value>
+  </data>
+  <data name="PotraitGap" xml:space="preserve">
+    <value>Espace du portrait</value>
+  </data>
+  <data name="PotraitFrame" xml:space="preserve">
+    <value>Cadre du portrait</value>
+  </data>
+  <data name="EmptyColumn_Tooltip" xml:space="preserve">
+    <value>Colonne de pixels qui ne contient aucun pixel "blanc"</value>
+  </data>
+  <data name="FixCharacters_Tooltip" xml:space="preserve">
+    <value>Effectuez une reconnaissance optique de caractères pour tous vos personnages afin de mettre à jour leur ordre actuel pour qu'il corresponde à la sélection de personnages</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Ordonner</value>
+  </data>
+  <data name="OpenPortraitFolder" xml:space="preserve">
+    <value>Ouvrir le dossier du portrait</value>
+  </data>
+  <data name="OpenItem" xml:space="preserve">
+    <value>Ouvrir {0}</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Décalage</value>
+  </data>
+  <data name="EmptyColumnsThreshold_Tooltip" xml:space="preserve">
+    <value>Nombre de colonnes</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="OCR_Instructions" xml:space="preserve">
+    <value>Déplacez et dimensionnez le cadre jaune pour qu'il ne contienne que la ligne du nom du personnage dans la sélection des personnages !</value>
+  </data>
+  <data name="MatchAnyFilter" xml:space="preserve">
+    <value>Correspond à n'importe quel filtre</value>
+  </data>
+  <data name="MatchAllFilter" xml:space="preserve">
+    <value>Correspondre à tous les filtres</value>
+  </data>
+  <data name="LoginWith" xml:space="preserve">
+    <value>Connectez-vous avec '{0}' !</value>
+  </data>
+  <data name="LeftOffset" xml:space="preserve">
+    <value>Décalage à gauche</value>
+  </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Dernière connexion</value>
+  </data>
+  <data name="Birthday_Text" xml:space="preserve">
+    <value>C'était l'anniversaire de {0} ! Ils ont maintenant {1} ans !</value>
+  </data>
+  <data name="WindowedMode_Tooltip" xml:space="preserve">
+    <value>Le jeu est-il en mode fenêtre ?</value>
+  </data>
+  <data name="IncludeMatches" xml:space="preserve">
+    <value>Inclure les correspondances</value>
+  </data>
+  <data name="IgnoredPart_Tooltip" xml:space="preserve">
+    <value>Partie ignorée de l'image en raison du seuil de colonne vide</value>
+  </data>
+  <data name="IgnoredPart" xml:space="preserve">
+    <value>Partie ignorée</value>
+  </data>
+  <data name="Hidden" xml:space="preserve">
+    <value>Caché</value>
+  </data>
+  <data name="GeneralAndWindows" xml:space="preserve">
+    <value>Paramètres généraux et fenêtres</value>
+  </data>
+  <data name="Folder" xml:space="preserve">
+    <value>Dossier</value>
+  </data>
+  <data name="FixCharacters" xml:space="preserve">
+    <value>Caractères de correction</value>
+  </data>
+  <data name="FilterToggles" xml:space="preserve">
+    <value>Toggles de filtre</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtre</value>
+  </data>
+  <data name="Error_FailedAPIFetch" xml:space="preserve">
+    <value>Impossible de récupérer les caractères depuis l'API.</value>
+  </data>
+  <data name="ExcludeMatches" xml:space="preserve">
+    <value>Exclure les correspondances</value>
+  </data>
+  <data name="EmptyColumns" xml:space="preserve">
+    <value>Colonnes vides</value>
+  </data>
+  <data name="EmptyColumn" xml:space="preserve">
+    <value>Colonne vide</value>
+  </data>
+  <data name="EditOCR" xml:space="preserve">
+    <value>Modifier la région OCR</value>
+  </data>
+  <data name="DragOverCharacter_Instructions" xml:space="preserve">
+    <value>Faites glisser ce contrôle pour que les cadres jaunes contiennent les portraits de vos personnages</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Afficher</value>
+  </data>
+  <data name="DetailedTooltip" xml:space="preserve">
+    <value>Info-bulle détaillée</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Descendre</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Supprimer {0}</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Personnalisé</value>
+  </data>
+  <data name="CouldNotFindNamedItem" xml:space="preserve">
+    <value>Impossible de trouver {0} avec le nom {1}</value>
+  </data>
+  <data name="CoreProfession" xml:space="preserve">
+    <value>Core {0}</value>
+  </data>
+  <data name="ClearFilters" xml:space="preserve">
+    <value>Effacer les filtres</value>
+  </data>
+  <data name="CheckOnlyMaxCrafting" xml:space="preserve">
+    <value>Vérifier seulement le Max Crafting</value>
+  </data>
+  <data name="CheckItem" xml:space="preserve">
+    <value>Vérifier {0}</value>
+  </data>
+  <data name="CharactersFixed" xml:space="preserve">
+    <value>Personnages corrigés !</value>
+  </data>
+  <data name="CharacterName" xml:space="preserve">
+    <value>Nom du personnage</value>
+  </data>
+  <data name="Character" xml:space="preserve">
+    <value>Personnage</value>
+  </data>
+  <data name="CapturePotraits" xml:space="preserve">
+    <value>Capturer des portraits</value>
+  </data>
+  <data name="CaptureImages" xml:space="preserve">
+    <value>Capture d'images</value>
+  </data>
+  <data name="BottomOffset" xml:space="preserve">
+    <value>Décalage du fond</value>
+  </data>
+  <data name="BestResultLargerDisclaimer" xml:space="preserve">
+    <value>Les meilleurs résultats sont obtenus avec l'interface réglée sur "plus grand" !</value>
+  </data>
+  <data name="AutoFix" xml:space="preserve">
+    <value>Correction automatique</value>
+  </data>
+  <data name="Ascending" xml:space="preserve">
+    <value>Ascendant</value>
+  </data>
+  <data name="AnyProfession" xml:space="preserve">
+    <value>Tout {0}</value>
+  </data>
+  <data name="AdjustSettings" xml:space="preserve">
+    <value>Ajustez les paramètres et les balises {0} !</value>
+  </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Ajouter {0}</value>
+  </data>
+  <data name="ItemSettings" xml:space="preserve">
+    <value>Paramètres {0}</value>
   </data>
 </root>

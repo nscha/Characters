@@ -1,6 +1,6 @@
 [
   {
-    "_Names": {
+    "Names": {
       "de": "Asura",
       "en": "Asura",
       "es": "Asura",
@@ -11,7 +11,7 @@
     "Name": "Asura"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Charr",
       "en": "Charr",
       "es": "Charr",
@@ -22,7 +22,7 @@
     "Name": "Charr"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Mensch",
       "en": "Human",
       "es": "Humano",
@@ -33,7 +33,7 @@
     "Name": "Humain"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Norn",
       "en": "Norn",
       "es": "Norn",
@@ -44,7 +44,7 @@
     "Name": "Norn"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sylvari",
       "en": "Sylvari",
       "es": "Sylvari",

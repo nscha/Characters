@@ -182,7 +182,7 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
     <value>Doble clic para intercambiar</value>
   </data>
   <data name="DoubleClickToSwap" xml:space="preserve">
-    <value>Haz doble clic para cambiar a {0}.</value>
+    <value>Haz doble clic para cambiar a {0}!</value>
   </data>
   <data name="EnterOnSwap_Description" xml:space="preserve">
     <value>Entrar en el juego automáticamente después de seleccionar el personaje en la selección de personajes</value>
@@ -197,7 +197,7 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
     <value>Pulse Enter para cambiar</value>
   </data>
   <data name="Error_Competivive" xml:space="preserve">
-    <value>El cambio de personajes está desactivado en el modo de competición.</value>
+    <value>El cambio de personajes está desactivado en el modo de competición!</value>
   </data>
   <data name="Error_InvalidPermissions" xml:space="preserve">
     <value>Esta clave API no tiene los permisos necesarios.</value>
@@ -210,7 +210,7 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
   </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Tiempo medio en milisegundos de espera entre el filtrado del panel de tus personajes.
-Para obtener el valor actual tendrás que cambiar las pestañas del módulo una vez para actualizar la página de configuración.</value>
+Para obtener el valor actual tendrás que cambiar las pestañas del módulo una vez para actualizar la página de configuración!</value>
   </data>
   <data name="FilterDelay_DisplayName" xml:space="preserve">
     <value>Retraso del filtro ({0} ms)</value>
@@ -243,7 +243,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Cerrar sesión</value>
   </data>
   <data name="LogoutDescription" xml:space="preserve">
-    <value>Tecla a pulsar para abrir el menú de cierre de sesión. Debe ser la misma que la combinación de teclas del juego para 'Cerrar sesión'.</value>
+    <value>Tecla a pulsar para abrir el menú de cierre de sesión. Debe ser la misma que la combinación de teclas del juego para 'Cerrar sesión'!</value>
   </data>
   <data name="Map" xml:space="preserve">
     <value>Mapa</value>
@@ -278,9 +278,6 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="Scribe" xml:space="preserve">
     <value>Escriba</value>
-  </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Búsqueda de ...</value>
   </data>
   <data name="SearchGuide" xml:space="preserve">
     <value>-c Profesión de artesano
@@ -320,13 +317,13 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="SwapDelay_Description" xml:space="preserve">
     <value>Tiempo medio de carga desde el inicio del juego hasta la selección del personaje.
-Para obtener el valor actual tendrás que cambiar las pestañas del módulo una vez para actualizar la página de configuración.</value>
+Para obtener el valor actual tendrás que cambiar las pestañas del módulo una vez para actualizar la página de configuración!</value>
   </data>
   <data name="SwapDelay_DisplayName" xml:space="preserve">
     <value>Délai de chargement ({0} ms)</value>
   </data>
   <data name="SwapModifier_Description" xml:space="preserve">
-    <value>Sólo cuando se pulsa el modificador se desencadena el cambio de carácter. Así se evita el intercambio accidental.</value>
+    <value>Sólo cuando se pulsa el modificador se desencadena el cambio de carácter. Así se evita el intercambio accidental!</value>
   </data>
   <data name="SwapModifier_DisplayName" xml:space="preserve">
     <value>Modificador necesario para cambiar</value>
@@ -347,10 +344,10 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Mostrar/ocultar caracteres ocultos</value>
   </data>
   <data name="UIScale_Error" xml:space="preserve">
-    <value>Por favor, pon el juego en 'WINDOWED' {0} y la escala de la interfaz de usuario en 'Larger'.</value>
+    <value>Por favor, pon el juego en 'WINDOWED' {0} y la escala de la interfaz de usuario en 'Larger'!</value>
   </data>
   <data name="UISizeDisclaimer" xml:space="preserve">
-    <value>Tienes que ajustar el tamaño de la superficie de juego a "Más grande" para obtener los recortes correctos.</value>
+    <value>Tienes que ajustar el tamaño de la superficie de juego a "Más grande" para obtener los recortes correctos!</value>
   </data>
   <data name="Unkown" xml:space="preserve">
     <value>Desconocido</value>
@@ -367,9 +364,6 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="Updating" xml:space="preserve">
     <value>Actualizando {0}</value>
   </data>
-  <data name="UseDefault" xml:space="preserve">
-    <value>Especificación</value>
-  </data>
   <data name="Utility" xml:space="preserve">
     <value>Útil</value>
   </data>
@@ -378,5 +372,248 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="Years" xml:space="preserve">
     <value>Años</value>
+  </data>
+  <data name="WindowedMode" xml:space="preserve">
+    <value>Modo Ventana</value>
+  </data>
+  <data name="AutoFix_Tooltip" xml:space="preserve">
+    <value>Cuando no consiga cambiar a un carácter, repase automáticamente los caracteres para fijar su orden.</value>
+  </data>
+  <data name="UseOCR_Tooltip" xml:space="preserve">
+    <value>Utilice el "Reconocimiento óptico de caracteres" (OCR) para confirmar el nombre del carácter.</value>
+  </data>
+  <data name="UseOCR" xml:space="preserve">
+    <value>Utilizar OCR</value>
+  </data>
+  <data name="TopOffset" xml:space="preserve">
+    <value>Desplazamiento superior</value>
+  </data>
+  <data name="TogglePortraitCapture_Tooltip" xml:space="preserve">
+    <value>Alternar el control de Captura de Potrait</value>
+  </data>
+  <data name="EditOCR_Tooltip" xml:space="preserve">
+    <value>Activar el control de edición de región OCR</value>
+  </data>
+  <data name="TogglePortraitCapture" xml:space="preserve">
+    <value>Activar la captura de retratos</value>
+  </data>
+  <data name="EmptyColumns_Tooltip" xml:space="preserve">
+    <value>Umbral de cuántas columnas de píxeles se permite que no contengan contenido</value>
+  </data>
+  <data name="Offset_Tooltip" xml:space="preserve">
+    <value>Los números de desplazamiento corresponden a la región del cuadro inferior que se captura para el OCR. En orden: Izquierda, Arriba, Derecha, Abajo. Aumentar los números hace que el área de captura sea más pequeña. Lo ideal es ajustar los valores de forma que no se vea ningún recuadro amarillo en la vista previa de arriba.</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Etiquetas</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Etiqueta</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Ordenar Por {0}</value>
+  </data>
+  <data name="SortItem" xml:space="preserve">
+    <value>Ordenar {0}</value>
+  </data>
+  <data name="ShowOnlyMaxCrafting" xml:space="preserve">
+    <value>Mostrar sólo Max Crafting</value>
+  </data>
+  <data name="ShowInList" xml:space="preserve">
+    <value>Mostrar en lista</value>
+  </data>
+  <data name="ShowHidden_Tooltip" xml:space="preserve">
+    <value>Mostrar personajes ocultos</value>
+  </data>
+  <data name="Show_Birthday_Tooltip" xml:space="preserve">
+    <value>Mostrar personajes con regalos de cumpleaños</value>
+  </data>
+  <data name="ShowItem" xml:space="preserve">
+    <value>Mostrar {0}</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Buscar ...</value>
+  </data>
+  <data name="RightOffset" xml:space="preserve">
+    <value>Desplazamiento a la derecha</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Eliminar {0}</value>
+  </data>
+  <data name="RefreshAPI" xml:space="preserve">
+    <value>Actualizar API</value>
+  </data>
+  <data name="Tag_Placeholder" xml:space="preserve">
+    <value>PvE, WvW, Principal, ERP ...</value>
+  </data>
+  <data name="PotraitSize" xml:space="preserve">
+    <value>Tamaño del retrato</value>
+  </data>
+  <data name="PotraitGap" xml:space="preserve">
+    <value>Hueco de retrato</value>
+  </data>
+  <data name="PotraitFrame" xml:space="preserve">
+    <value>Marco del retrato</value>
+  </data>
+  <data name="EmptyColumn_Tooltip" xml:space="preserve">
+    <value>Columna de píxeles que no contiene ningún píxel 'blanco'</value>
+  </data>
+  <data name="FixCharacters_Tooltip" xml:space="preserve">
+    <value>Realiza un OCR a través de todos tus personajes para actualizar su orden actual para que coincida con la selección de personajes</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Ordenar</value>
+  </data>
+  <data name="OpenPortraitFolder" xml:space="preserve">
+    <value>Abrir la carpeta Potrait</value>
+  </data>
+  <data name="OpenItem" xml:space="preserve">
+    <value>Abrir {0}</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Desplazamiento</value>
+  </data>
+  <data name="EmptyColumnsThreshold_Tooltip" xml:space="preserve">
+    <value>Número de columnas</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="OCR_Instructions" xml:space="preserve">
+    <value>Mover y Dimensionar el marco amarillo para que contenga sólo la fila del nombre del personaje en la selección de personajes!</value>
+  </data>
+  <data name="MatchAnyFilter" xml:space="preserve">
+    <value>Coincidir con cualquier filtro</value>
+  </data>
+  <data name="MatchAllFilter" xml:space="preserve">
+    <value>Coincidir todos los filtros</value>
+  </data>
+  <data name="LoginWith" xml:space="preserve">
+    <value>¡Entrar con '{0}'!</value>
+  </data>
+  <data name="LeftOffset" xml:space="preserve">
+    <value>Desplazamiento a la izquierda</value>
+  </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Última conexión</value>
+  </data>
+  <data name="Birthday_Text" xml:space="preserve">
+    <value>¡Era el cumpleaños de {0}! ¡Ahora tienen {1} años!</value>
+  </data>
+  <data name="WindowedMode_Tooltip" xml:space="preserve">
+    <value>¿Está el juego en modo Ventana?</value>
+  </data>
+  <data name="IncludeMatches" xml:space="preserve">
+    <value>Incluir coincidencias</value>
+  </data>
+  <data name="IgnoredPart_Tooltip" xml:space="preserve">
+    <value>Ignorada parte de la imagen debido al umbral de columna vacía</value>
+  </data>
+  <data name="IgnoredPart" xml:space="preserve">
+    <value>Parte ignorada</value>
+  </data>
+  <data name="Hidden" xml:space="preserve">
+    <value>Oculto</value>
+  </data>
+  <data name="GeneralAndWindows" xml:space="preserve">
+    <value>Configuración general y Windows</value>
+  </data>
+  <data name="Folder" xml:space="preserve">
+    <value>Carpeta</value>
+  </data>
+  <data name="FixCharacters" xml:space="preserve">
+    <value>Corregir caracteres</value>
+  </data>
+  <data name="FilterToggles" xml:space="preserve">
+    <value>Filtrar Toggles</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtrar</value>
+  </data>
+  <data name="Error_FailedAPIFetch" xml:space="preserve">
+    <value>Error al obtener caracteres de la API.</value>
+  </data>
+  <data name="ExcludeMatches" xml:space="preserve">
+    <value>Excluir coincidencias</value>
+  </data>
+  <data name="EmptyColumns" xml:space="preserve">
+    <value>Columnas vacías</value>
+  </data>
+  <data name="EmptyColumn" xml:space="preserve">
+    <value>Columna vacía</value>
+  </data>
+  <data name="EditOCR" xml:space="preserve">
+    <value>Editar región OCR</value>
+  </data>
+  <data name="DragOverCharacter_Instructions" xml:space="preserve">
+    <value>Arrastre este control para que los marcos amarillos contengan sus retratos de personajes</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
+  <data name="DetailedTooltip" xml:space="preserve">
+    <value>Información detallada</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Descendente</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Borrar {0}</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="CouldNotFindNamedItem" xml:space="preserve">
+    <value>No se ha encontrado ningún {0} con nombre {1}</value>
+  </data>
+  <data name="CoreProfession" xml:space="preserve">
+    <value>Núcleo {0}</value>
+  </data>
+  <data name="ClearFilters" xml:space="preserve">
+    <value>Limpiar filtros</value>
+  </data>
+  <data name="CheckOnlyMaxCrafting" xml:space="preserve">
+    <value>Marcar sólo Max Crafting</value>
+  </data>
+  <data name="CheckItem" xml:space="preserve">
+    <value>Comprobar {0}</value>
+  </data>
+  <data name="CharactersFixed" xml:space="preserve">
+    <value>Personajes arreglados!</value>
+  </data>
+  <data name="CharacterName" xml:space="preserve">
+    <value>Nombre del personaje</value>
+  </data>
+  <data name="Character" xml:space="preserve">
+    <value>Personaje</value>
+  </data>
+  <data name="CapturePotraits" xml:space="preserve">
+    <value>Capturar retratos</value>
+  </data>
+  <data name="CaptureImages" xml:space="preserve">
+    <value>Capturar Imágenes</value>
+  </data>
+  <data name="BottomOffset" xml:space="preserve">
+    <value>Desplazamiento inferior</value>
+  </data>
+  <data name="BestResultLargerDisclaimer" xml:space="preserve">
+    <value>Los mejores resultados se obtienen con la interfaz ajustada a "Más grande"!</value>
+  </data>
+  <data name="AutoFix" xml:space="preserve">
+    <value>Auto Fix</value>
+  </data>
+  <data name="Ascending" xml:space="preserve">
+    <value>Ascendente</value>
+  </data>
+  <data name="AnyProfession" xml:space="preserve">
+    <value>Cualquier {0}</value>
+  </data>
+  <data name="AdjustSettings" xml:space="preserve">
+    <value>¡Ajustar {0} configuraciones y etiquetas!</value>
+  </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Añadir {0}</value>
+  </data>
+  <data name="ItemSettings" xml:space="preserve">
+    <value>{0} Ajustes</value>
   </data>
 </root>

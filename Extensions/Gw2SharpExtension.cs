@@ -1,6 +1,7 @@
-﻿namespace Kenedia.Modules.Characters.Classes
+﻿namespace Kenedia.Modules.Characters.Extensions
 {
-    using static Kenedia.Modules.Characters.Classes.Data;
+    using Kenedia.Modules.Characters.Enums;
+    using static Kenedia.Modules.Characters.Services.Data;
 
     public static class Gw2SharpExtension
     {

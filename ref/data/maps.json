@@ -1,6 +1,6 @@
 [
   {
-    "_Names": {
+    "Names": {
       "de": "Königintal",
       "en": "Queensdale",
       "es": "Valle de la Reina",
@@ -18,7 +18,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Harathi-Hinterland",
       "en": "Harathi Hinterlands",
       "es": "Interior Harathi",
@@ -36,7 +36,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Götterfels",
       "en": "Divinity's Reach",
       "es": "Linde de la Divinidad",
@@ -54,7 +54,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ebenen von Aschfurt",
       "en": "Plains of Ashford",
       "es": "Llanuras de Ashford",
@@ -71,7 +71,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Flammenkamm-Steppe",
       "en": "Blazeridge Steppes",
       "es": "Estepas Crestafulgurante",
@@ -88,7 +88,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Felder der Verwüstung",
       "en": "Fields of Ruin",
       "es": "Campos de la Ruina",
@@ -105,7 +105,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Feuerherzhügel",
       "en": "Fireheart Rise",
       "es": "Colina del Corazón de Fuego",
@@ -122,7 +122,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kessex-Hügel",
       "en": "Kessex Hills",
       "es": "Colinas Kessex",
@@ -140,7 +140,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gendarran-Felder",
       "en": "Gendarran Fields",
       "es": "Campos de Gendarran",
@@ -157,7 +157,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eisenmark",
       "en": "Iron Marches",
       "es": "Fronteras de Hierro",
@@ -175,7 +175,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schauflerschreck-Klippen",
       "en": "Dredgehaunt Cliffs",
       "es": "Acantilados de Guaridadraga",
@@ -192,7 +192,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Lornars Pass",
       "en": "Lornar's Pass",
       "es": "Paso de Lornar",
@@ -209,7 +209,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wanderer-Hügel",
       "en": "Wayfarer Foothills",
       "es": "Colinas del Caminante",
@@ -227,7 +227,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Baumgrenzen-Fälle",
       "en": "Timberline Falls",
       "es": "Cataratas de Linarbórea",
@@ -244,7 +244,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eisklamm-Sund",
       "en": "Frostgorge Sound",
       "es": "Estrecho de Gorjaescarcha",
@@ -261,7 +261,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schneekuhlenhöhen",
       "en": "Snowden Drifts",
       "es": "Cúmulos de Guaridanieve",
@@ -278,7 +278,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Diessa-Plateau",
       "en": "Diessa Plateau",
       "es": "Meseta de Diessa",
@@ -295,7 +295,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Katakomben von Ascalon",
       "en": "Ascalonian Catacombs",
       "es": "Catacumbas Ascalonianas",
@@ -309,7 +309,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Caledon-Wald",
       "en": "Caledon Forest",
       "es": "Bosque de Caledon",
@@ -326,7 +326,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Provinz Metrica",
       "en": "Metrica Province",
       "es": "Provincia de Métrica",
@@ -344,7 +344,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Katakomben von Ascalon",
       "en": "Ascalonian Catacombs",
       "es": "Catacumbas Ascalonianas",
@@ -358,7 +358,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Brandanschlag aufs Waisenhaus",
       "en": "Arson at the Orphanage",
       "es": "Incendio provocado en el orfanato",
@@ -373,7 +373,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ewige Schlachtfelder",
       "en": "Eternal Battlegrounds",
       "es": "Campos de batalla eternos",
@@ -388,7 +388,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Mahlstromgipfel",
       "en": "Mount Maelstrom",
       "es": "Monte Vorágine",
@@ -405,7 +405,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Löwenstein",
       "en": "Lion's Arch",
       "es": "Arco del León",
@@ -424,7 +424,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Meerenge der Verwüstung",
       "en": "Straits of Devastation",
       "es": "Estrechos de la Devastación",
@@ -441,7 +441,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Funkenschwärmersumpf",
       "en": "Sparkfly Fen",
       "es": "Pantano de las Centellas",
@@ -458,7 +458,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Brisban-Wildnis",
       "en": "Brisban Wildlands",
       "es": "Selvas Brisbanas",
@@ -476,7 +476,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gefahr für das Hospital",
       "en": "The Hospital in Jeopardy",
       "es": "El hospital en peligro",
@@ -491,7 +491,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "In die Höhle des Löwen",
       "en": "Infiltration",
       "es": "Infiltración",
@@ -505,7 +505,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fluchküste",
       "en": "Cursed Shore",
       "es": "Ribera Maldita",
@@ -522,7 +522,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Umarmung der Betrübnis",
       "en": "Sorrow's Embrace",
       "es": "Abrazo del Pesar",
@@ -536,7 +536,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Umarmung der Betrübnis",
       "en": "Sorrow's Embrace",
       "es": "Abrazo del Pesar",
@@ -550,7 +550,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Malchors Sprung",
       "en": "Malchor's Leap",
       "es": "Salto de Malchor",
@@ -567,7 +567,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Flammenzitadelle",
       "en": "Citadel of Flame",
       "es": "Ciudadela de la Llama",
@@ -581,7 +581,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zwielichtgarten",
       "en": "Twilight Arbor",
       "es": "La Pérgola del Crepúsculo",
@@ -596,7 +596,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zwielichtgarten",
       "en": "Twilight Arbor",
       "es": "La Pérgola del Crepúsculo",
@@ -610,7 +610,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Flammenzitadelle",
       "en": "Citadel of Flame",
       "es": "Ciudadela de la Llama",
@@ -624,7 +624,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zierde der Wogen",
       "en": "Honor of the Waves",
       "es": "El Honor de las Olas",
@@ -640,7 +640,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zierde der Wogen",
       "en": "Honor of the Waves",
       "es": "El Honor de las Olas",
@@ -656,7 +656,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Blutstrom-Küste",
       "en": "Bloodtide Coast",
       "es": "Costa Mareasangrienta",
@@ -673,7 +673,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Caudecus' Anwesen",
       "en": "Caudecus's Manor",
       "es": "Mansión de Caudecus",
@@ -689,7 +689,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Caudecus' Anwesen",
       "en": "Caudecus's Manor",
       "es": "Mansión de Caudecus",
@@ -705,7 +705,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Einbruch",
       "en": "Search the Premises",
       "es": "Registro de las instalaciones",
@@ -720,7 +720,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Informant",
       "en": "The Informant",
       "es": "El informante",
@@ -735,7 +735,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine vornehme Gruppe",
       "en": "A Society Function",
       "es": "Una reunión social",
@@ -750,7 +750,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schmelztiegel der Ewigkeit",
       "en": "Crucible of Eternity",
       "es": "Crisol de la Eternidad",
@@ -764,7 +764,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schmelztiegel der Ewigkeit",
       "en": "Crucible of Eternity",
       "es": "Crisol de la Eternidad",
@@ -778,7 +778,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Banditen-Entführer",
       "en": "Chasing the Culprits",
       "es": "En busca de los culpables",
@@ -792,7 +792,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Hain",
       "en": "The Grove",
       "es": "La Arboleda",
@@ -809,7 +809,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Prozess von Julius Zamon",
       "en": "The Trial of Julius Zamon",
       "es": "El juicio de Julius Zamon",
@@ -824,7 +824,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": " Alpine Grenzlande",
       "en": " Alpine Borderlands",
       "es": " - Tierras Fronterizas alpinas",
@@ -839,7 +839,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": " Alpine Grenzlande",
       "en": " Alpine Borderlands",
       "es": " -Tierras Fronterizas alpinas",
@@ -854,7 +854,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "In die Höhle des Löwen",
       "en": "Infiltration",
       "es": "Infiltración",
@@ -869,7 +869,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Freundschaft mit Risiko",
       "en": "The Perils of Friendship",
       "es": "Los peligros de la amistad",
@@ -884,7 +884,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Triumph oder Tod",
       "en": "Victory or Death",
       "es": "Victoria o muerte",
@@ -899,7 +899,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Ruinenstadt Arah",
       "en": "The Ruined City of Arah",
       "es": "La ciudad en ruinas de Arah",
@@ -913,7 +913,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gestohlene Vorräte",
       "en": "Desperate Medicine",
       "es": "Medicina desesperada",
@@ -927,7 +927,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kommandeur",
       "en": "The Commander",
       "es": "El Comandante",
@@ -942,7 +942,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Verteidigung von Shaemoor",
       "en": "Defense of Shaemoor",
       "es": "Defensa de Shaemoor",
@@ -956,7 +956,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rata Sum",
       "en": "Rata Sum",
       "es": "Rata Sum",
@@ -974,7 +974,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Arzneikundlerin",
       "en": "The Apothecary",
       "es": "La botica",
@@ -988,7 +988,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verdeckt arbeiten",
       "en": "Going Undercover",
       "es": "De incógnito",
@@ -1002,7 +1002,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verdeckt arbeiten",
       "en": "Going Undercover",
       "es": "De incógnito",
@@ -1017,7 +1017,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Wohl der Allgemeinheit",
       "en": "The Greater Good",
       "es": "El bien común",
@@ -1032,7 +1032,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Rettung",
       "en": "The Rescue",
       "es": "El rescate",
@@ -1046,7 +1046,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gift hat seinen Preis",
       "en": "Breaking the Blade",
       "es": "Partiendo filos",
@@ -1061,7 +1061,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Untergang der Falken-Kompanie",
       "en": "The Fall of Falcon Company",
       "es": "La caída de la Compañía del Halcón",
@@ -1076,7 +1076,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Untergang der Falken-Kompanie",
       "en": "The Fall of Falcon Company",
       "es": "La caída de la Compañía del Halcón",
@@ -1090,7 +1090,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Stellt Euch Hauptmann Tervelan",
       "en": "Confronting Captain Tervelan",
       "es": "Enfrentarse al capitán Tervelan",
@@ -1104,7 +1104,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ersucht Logans Hilfe",
       "en": "Seek Logan's Aid",
       "es": "En busca de la ayuda de Logan",
@@ -1119,7 +1119,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ersucht Logans Hilfe",
       "en": "Seek Logan's Aid",
       "es": "En busca de la ayuda de Logan",
@@ -1133,7 +1133,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Anschuldigung",
       "en": "Accusation",
       "es": "Acusación",
@@ -1148,7 +1148,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Anschuldigung",
       "en": "Accusation",
       "es": "Acusación",
@@ -1162,7 +1162,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Befreiung",
       "en": "Liberation",
       "es": "Liberación",
@@ -1176,7 +1176,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Stimmen der Vergangenheit",
       "en": "Voices From the Past",
       "es": "Voces del pasado",
@@ -1191,7 +1191,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Stimmen der Vergangenheit",
       "en": "Voices From the Past",
       "es": "Voces del pasado",
@@ -1206,7 +1206,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Teilung des Mantels",
       "en": "Rending the Mantle",
       "es": "Desgarrar el Manto",
@@ -1220,7 +1220,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Teilung des Mantels",
       "en": "Rending the Mantle",
       "es": "Desgarrar el Manto",
@@ -1235,7 +1235,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der schwebende Ratzkreisel",
       "en": "The Floating Grizwhirl",
       "es": "El hipnomolino flotante",
@@ -1250,7 +1250,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der schwebende Ratzkreisel",
       "en": "The Floating Grizwhirl",
       "es": "El hipnomolino flotante",
@@ -1265,7 +1265,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der schwebende Ratzkreisel",
       "en": "The Floating Grizwhirl",
       "es": "El hipnomolino flotante",
@@ -1280,7 +1280,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kasperle-Kolleg",
       "en": "Clown College",
       "es": "Escuela de payasos",
@@ -1294,7 +1294,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Künstleratelier",
       "en": "The Artist's Workshop",
       "es": "El taller del artista",
@@ -1308,7 +1308,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auf in den Wald",
       "en": "Into the Woods",
       "es": "En el bosque",
@@ -1322,7 +1322,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Zirkusdirektor",
       "en": "The Ringmaster",
       "es": "El maestro de ceremonias",
@@ -1337,7 +1337,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Orden von Tyria",
       "en": "The Orders of Tyria",
       "es": "Las órdenes de Tyria",
@@ -1352,7 +1352,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Orden von Tyria",
       "en": "The Orders of Tyria",
       "es": "Las órdenes de Tyria",
@@ -1366,7 +1366,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rohe Gewalt",
       "en": "Brute Force",
       "es": "Fuerza bruta",
@@ -1380,7 +1380,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Mortus Virge",
       "en": "Mortus Virge",
       "es": "Mortus Virge",
@@ -1394,7 +1394,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Triskell-Kai",
       "en": "Triskell Quay",
       "es": "Muelle de Triskel",
@@ -1408,7 +1408,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Spur des Seraphen",
       "en": "Track the Seraph",
       "es": "El rastro del serafín",
@@ -1422,7 +1422,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sprecher der Toten",
       "en": "Speaker of the Dead",
       "es": "Portavoz de los muertos",
@@ -1436,7 +1436,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die traurige Geschichte der \"Raffgier\"",
       "en": "The Sad Tale of the \"Ravenous\"",
       "es": "La triste historia del \"Voraz\"",
@@ -1450,7 +1450,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kellachs Angriff",
       "en": "Kellach's Attack",
       "es": "El ataque de Kellach",
@@ -1465,7 +1465,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Gerechtigkeit der Königin",
       "en": "The Queen's Justice",
       "es": "La justicia de la reina",
@@ -1480,7 +1480,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Falle",
       "en": "The Trap",
       "es": "La trampa",
@@ -1495,7 +1495,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geniale Pläne",
       "en": "Best Laid Plans",
       "es": "Los mejores planes",
@@ -1509,7 +1509,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Willkommen zu Hause",
       "en": "Welcome Home",
       "es": "De vuelta en casa",
@@ -1524,7 +1524,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Ruf des Tribuns",
       "en": "The Tribune's Call",
       "es": "La Llamada del Tribuno",
@@ -1538,7 +1538,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Ruf des Tribuns",
       "en": "The Tribune's Call",
       "es": "La Llamada del Tribuno",
@@ -1552,7 +1552,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Ruf des Tribuns",
       "en": "The Tribune's Call",
       "es": "La Llamada del Tribuno",
@@ -1566,7 +1566,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schwarze Zitadelle",
       "en": "Black Citadel",
       "es": "Ciudadela Negra",
@@ -1583,7 +1583,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Einen Spion für einen Spion",
       "en": "A Spy for a Spy",
       "es": "Espía por espía",
@@ -1597,7 +1597,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schrottplatzstreuner",
       "en": "Scrapyard Dogs",
       "es": "Perros de desguace",
@@ -1611,7 +1611,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Einen Spion für einen Spion",
       "en": "A Spy for a Spy",
       "es": "Espía por espía",
@@ -1625,7 +1625,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auf dem Wege der Besserung",
       "en": "On the Mend",
       "es": "Convaleciente",
@@ -1640,7 +1640,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vergossenes Blut",
       "en": "Spilled Blood",
       "es": "Sangre derramada",
@@ -1654,7 +1654,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geisterlaufmuskete",
       "en": "Ghostbore Musket",
       "es": "Mosquete perforafantasmas",
@@ -1668,7 +1668,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Im eisernen Griff der Legion",
       "en": "Iron Grip of the Legion",
       "es": "El puño de hierro de la legión",
@@ -1682,7 +1682,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Anmarsch der Flamme",
       "en": "The Flame Advances",
       "es": "La Llama avanza",
@@ -1696,7 +1696,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Anmarsch der Flamme",
       "en": "The Flame Advances",
       "es": "La Llama avanza",
@@ -1710,7 +1710,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Prüft Euer Metall",
       "en": "Test Your Metal",
       "es": "Prueba tu metal",
@@ -1724,7 +1724,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geschwind und leise",
       "en": "Quick and Quiet",
       "es": "Rápido y en silencio",
@@ -1738,7 +1738,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Salma-Viertel (Heimatort)",
       "en": "Salma District (Home)",
       "es": "Distrito de Salma (Hogar)",
@@ -1755,7 +1755,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine ungewöhnliche Erbschaft",
       "en": "An Unusual Inheritance",
       "es": "Una herencia inusual",
@@ -1769,7 +1769,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Windfels-Labyrinth",
       "en": "Windrock Maze",
       "es": "Laberinto Rocaviento",
@@ -1783,7 +1783,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tief im Schlamm",
       "en": "Mired Deep",
       "es": "Enfangados",
@@ -1797,7 +1797,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tief im Schlamm",
       "en": "Mired Deep",
       "es": "Enfangados",
@@ -1811,7 +1811,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tödliche Gewalt",
       "en": "Deadly Force",
       "es": "Fuerza mortal",
@@ -1825,7 +1825,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geisterlauf-Artillerie",
       "en": "Ghostbore Artillery",
       "es": "Artillería perforafantasmas",
@@ -1839,7 +1839,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Keine Verhandlungen",
       "en": "No Negotiations",
       "es": "Sin negociación",
@@ -1853,7 +1853,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wiederverwertung von Schrott",
       "en": "Salvaging Scrap",
       "es": "Rescatando chatarra",
@@ -1867,7 +1867,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wiederverwertung von Schrott",
       "en": "Salvaging Scrap",
       "es": "Rescatando chatarra",
@@ -1881,7 +1881,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "In den Ruinen",
       "en": "In the Ruins",
       "es": "En las ruinas",
@@ -1895,7 +1895,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "In den Ruinen",
       "en": "In the Ruins",
       "es": "En las ruinas",
@@ -1909,7 +1909,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Befehlskette",
       "en": "Chain of Command",
       "es": "Cadena de mando",
@@ -1923,7 +1923,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Befehlskette",
       "en": "Chain of Command",
       "es": "Cadena de mando",
@@ -1937,7 +1937,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zeit für eine Beförderung",
       "en": "Time for a Promotion",
       "es": "Hora de un ascenso",
@@ -1951,7 +1951,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Endstation",
       "en": "The End of the Line",
       "es": "El final del trayecto",
@@ -1965,7 +1965,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Magische Benutzer",
       "en": "Magic Users",
       "es": "Usuarios de la magia",
@@ -1979,7 +1979,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Faust in der Tasche",
       "en": "Rage Suppression",
       "es": "Contención de la rabia",
@@ -1993,7 +1993,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Faust in der Tasche",
       "en": "Rage Suppression",
       "es": "Contención de la rabia",
@@ -2007,7 +2007,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Operation Bollwerk",
       "en": "Operation: Bulwark",
       "es": "Operación: Baluarte",
@@ -2021,7 +2021,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fahnenflüchtig",
       "en": "AWOL",
       "es": "Deserción",
@@ -2035,7 +2035,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Menschliches Wehklagen",
       "en": "Human's Lament",
       "es": "Lamento de Humano",
@@ -2049,7 +2049,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Rückkehr des Banners",
       "en": "Misplaced Faith",
       "es": "Fe equivocada",
@@ -2063,7 +2063,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Dicker als Wasser",
       "en": "Thicker Than Water",
       "es": "Más espeso que el agua",
@@ -2077,7 +2077,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unehrenhafte Entlassung",
       "en": "Dishonorable Discharge",
       "es": "Baja por conducta deshonrosa",
@@ -2091,7 +2091,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auf der Suche nach der Wahrheit",
       "en": "Searching for the Truth",
       "es": "En busca de la verdad",
@@ -2105,7 +2105,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Anzünden des Leuchtfeuers",
       "en": "Lighting the Beacons",
       "es": "El encendido de las balizas",
@@ -2119,7 +2119,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Feuer schüren",
       "en": "Stoking the Flame",
       "es": "Avivando la Llama",
@@ -2133,7 +2133,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Weg gabelt sich",
       "en": "A Fork in the Road",
       "es": "Una encrucijada en el camino",
@@ -2147,7 +2147,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Sünden des Vaters",
       "en": "Sins of the Father",
       "es": "Los pecados del padre",
@@ -2161,7 +2161,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Friedhofornamente",
       "en": "Graveyard Ornaments",
       "es": "Adornos de cementerio",
@@ -2175,7 +2175,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hoelbrak",
       "en": "Hoelbrak",
       "es": "Hoelbrak",
@@ -2193,7 +2193,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gestohlene Vorräte",
       "en": "Desperate Medicine",
       "es": "Medicina desesperada",
@@ -2208,7 +2208,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Seraphen-Hauptquartier",
       "en": "Seraph Headquarters",
       "es": "Cuartel general de los Serafines",
@@ -2225,7 +2225,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fasskeilerei",
       "en": "Keg Brawl",
       "es": "Pelea de barricas",
@@ -2242,7 +2242,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Klaueninsel",
       "en": "Claw Island",
       "es": "Isla Garra",
@@ -2259,7 +2259,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Heilige Halle der Geheimnisse",
       "en": "Chantry of Secrets",
       "es": "Capellanía de los Secretos",
@@ -2274,7 +2274,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Herz der Nebel",
       "en": "Heart of the Mists",
       "es": "Corazón de la Niebla",
@@ -2288,7 +2288,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Stachel",
       "en": "The Sting",
       "es": "La infiltración",
@@ -2302,7 +2302,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Den Kult hervorlocken",
       "en": "Drawing Out the Cult",
       "es": "El Manto destapado",
@@ -2316,7 +2316,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Asche meiner Vergangenheit",
       "en": "Ashes of the Past",
       "es": "Cenizas del pasado",
@@ -2330,7 +2330,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Heldenbezirk (Heimatort)",
       "en": "Hero's Canton (Home)",
       "es": "Cantón del Héroe (Hogar)",
@@ -2347,7 +2347,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bluttribun-Quartier",
       "en": "Blood Tribune Quarters",
       "es": "Alojamientos de los Tribunos de Sangre",
@@ -2364,7 +2364,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Kommandokern",
       "en": "The Command Core",
       "es": "El núcleo de mando",
@@ -2381,7 +2381,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Knut Weißbärs Speicher",
       "en": "Knut Whitebear's Loft",
       "es": "Desván de Knut Osoblanco",
@@ -2398,7 +2398,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Jägers Feuerstelle (Heimatort)",
       "en": "Hunter's Hearth (Home)",
       "es": "Hogar del Cazador (Hogar)",
@@ -2415,7 +2415,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Steinmacher-Gehöft",
       "en": "Stonewright's Steading",
       "es": "Finca del Cantero",
@@ -2432,7 +2432,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Thronsaal der Königin",
       "en": "Queen's Throne Room",
       "es": "Sala del Trono de la Reina",
@@ -2449,7 +2449,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Große Jagd",
       "en": "The Great Hunt",
       "es": "La Gran Caza",
@@ -2463,7 +2463,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine Waffe der Legenden",
       "en": "A Weapon of Legend",
       "es": "Un arma de leyenda",
@@ -2477,7 +2477,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Letzte der Riesen-Könige",
       "en": "The Last of the Giant-Kings",
       "es": "El último de los reyes gigantes",
@@ -2491,7 +2491,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Jünger des Drachens",
       "en": "Disciples of the Dragon",
       "es": "Los discípulos del Dragón",
@@ -2505,7 +2505,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine Waffe der Legenden",
       "en": "A Weapon of Legend",
       "es": "Un arma de leyenda",
@@ -2520,7 +2520,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Echos vergangener Zeiten",
       "en": "Echoes of Ages Past",
       "es": "Ecos del pasado",
@@ -2534,7 +2534,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wilde Geister",
       "en": "Wild Spirits",
       "es": "Espíritus salvajes",
@@ -2548,7 +2548,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aus den Himmeln",
       "en": "Out of the Skies",
       "es": "Desde los cielos",
@@ -2562,7 +2562,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Echos vergangener Zeiten",
       "en": "Echoes of Ages Past",
       "es": "Ecos del pasado",
@@ -2577,7 +2577,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zwielicht des Wolfes",
       "en": "Twilight of the Wolf",
       "es": "El crepúsculo del lobo",
@@ -2592,7 +2592,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rage der Minotauren",
       "en": "Rage of the Minotaurs",
       "es": "La rabia de los minotauros",
@@ -2606,7 +2606,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Krankheit des Lehrlings",
       "en": "A Pup's Illness",
       "es": "Un cachorro enfermo",
@@ -2621,7 +2621,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Den Schleier lüften",
       "en": "Through the Veil",
       "es": "A través del Velo",
@@ -2635,7 +2635,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine Falle vereitelt",
       "en": "A Trap Foiled",
       "es": "Una trampa frustrada",
@@ -2649,7 +2649,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verehrter Rabe",
       "en": "Raven's Revered",
       "es": "La reverencia del Cuervo",
@@ -2663,7 +2663,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein guter Schluck verlangt nach einem weiteren",
       "en": "One Good Drink Deserves Another",
       "es": "Un buen trago se merece otro",
@@ -2677,7 +2677,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Form des Geistes",
       "en": "Shape of the Spirit",
       "es": "La forma del espíritu",
@@ -2691,7 +2691,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hinein in die Nebel",
       "en": "Into the Mists",
       "es": "En la Niebla",
@@ -2706,7 +2706,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Den Schleier lüften",
       "en": "Through the Veil",
       "es": "A través del Velo",
@@ -2721,7 +2721,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Segen der Bärin",
       "en": "Blessed of Bear",
       "es": "Bendición de la Osa",
@@ -2735,7 +2735,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Tor schließen",
       "en": "The Wolf Havroun",
       "es": "El havroun del lobo",
@@ -2749,7 +2749,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ungezügelte Minotauren",
       "en": "Minotaur Rampant",
       "es": "Minotauro desenfrenado",
@@ -2764,7 +2764,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ungezügelte Minotauren",
       "en": "Minotaur Rampant",
       "es": "Minotauro desenfrenado",
@@ -2778,7 +2778,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unerwartete Besucher",
       "en": "Unexpected Visitors",
       "es": "Visitantes inesperados",
@@ -2793,7 +2793,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Man munkelt von Trubel",
       "en": "Rumors of Trouble",
       "es": "Problemas a la vista",
@@ -2808,7 +2808,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein neuer Herausforderer",
       "en": "A New Challenger",
       "es": "Un nuevo rival",
@@ -2823,7 +2823,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unerwartete Besucher",
       "en": "Unexpected Visitors",
       "es": "Visitantes inesperados",
@@ -2837,7 +2837,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Straßensperre",
       "en": "Roadblock",
       "es": "Barricada",
@@ -2851,7 +2851,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriff auf Mauldau",
       "en": "Assault on Moledavia",
       "es": "Ataque a Topovia",
@@ -2865,7 +2865,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Räum das Spielzeug weg",
       "en": "Don't Leave Your Toys Out",
       "es": "No dejes tirados tus juguetes",
@@ -2879,7 +2879,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein neuer Herausforderer",
       "en": "A New Challenger",
       "es": "Un nuevo rival",
@@ -2893,7 +2893,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Erster Angriff",
       "en": "First Attack",
       "es": "Primer ataque",
@@ -2907,7 +2907,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Todesstoß",
       "en": "The Finishing Blow",
       "es": "El golpe de gracia",
@@ -2921,7 +2921,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Halbfinale",
       "en": "The Semifinals",
       "es": "Las semifinales",
@@ -2935,7 +2935,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Meisterkampf",
       "en": "The Championship Fight",
       "es": "La lucha del campeonato",
@@ -2950,7 +2950,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Meisterkampf",
       "en": "The Championship Fight",
       "es": "La lucha del campeonato",
@@ -2965,7 +2965,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Maschine in Aktion",
       "en": "The Machine in Action",
       "es": "La máquina en acción",
@@ -2979,7 +2979,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unter den Kodan",
       "en": "Among the Kodan",
       "es": "Entre los kodan",
@@ -2993,7 +2993,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Man munkelt von Trubel",
       "en": "Rumors of Trouble",
       "es": "Problemas a la vista",
@@ -3007,7 +3007,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rage der Minotauren",
       "en": "Rage of the Minotaurs",
       "es": "La rabia de los minotauros",
@@ -3022,7 +3022,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Dunkelheit in Drakentelt",
       "en": "Darkness at Drakentelt",
       "es": "Oscuridad en Drakentelt",
@@ -3036,7 +3036,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bekämpft den Albtraum",
       "en": "Fighting the Nightmare",
       "es": "Lucha contra la Pesadilla",
@@ -3050,7 +3050,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Erhalt des Gleichgewichts",
       "en": "Preserving the Balance",
       "es": "Mantener el equilibrio",
@@ -3064,7 +3064,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Mittel zum Zweck",
       "en": "Means to an End",
       "es": "El fin justifica los medios",
@@ -3079,7 +3079,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schaufler-Technologie",
       "en": "Dredge Technology",
       "es": "Tecnología draga",
@@ -3094,7 +3094,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gelehrter des Untergrunds",
       "en": "Underground Scholar",
       "es": "Erudito subterráneo",
@@ -3108,7 +3108,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriff der Schaufler",
       "en": "Dredge Assault",
       "es": "Asalto draga",
@@ -3122,7 +3122,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Versteck der Schaufler",
       "en": "The Dredge Hideout",
       "es": "El escondite draga",
@@ -3136,7 +3136,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sabotieren",
       "en": "Sabotage",
       "es": "Sabotaje",
@@ -3150,7 +3150,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Code-Brecher",
       "en": "Codebreaker",
       "es": "Descifrador",
@@ -3164,7 +3164,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wettrüsten",
       "en": "Armaments",
       "es": "Armamento",
@@ -3178,7 +3178,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriff auf den Hügel",
       "en": "Assault the Hill",
       "es": "Asalto en la colina",
@@ -3192,7 +3192,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Lautlose Kriegsführung",
       "en": "Silent Warfare",
       "es": "Guerra silenciosa",
@@ -3206,7 +3206,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Kopf muss ab",
       "en": "Sever the Head",
       "es": "Cortar la cabeza",
@@ -3220,7 +3220,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zorn der Toten",
       "en": "Fury of the Dead",
       "es": "La furia de los muertos",
@@ -3234,7 +3234,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Weg gabelt sich",
       "en": "A Fork in the Road",
       "es": "Una encrucijada en el camino",
@@ -3248,7 +3248,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Militärgefängnis der Zitadelle\n",
       "en": "Citadel Stockade",
       "es": "Calabozo de la Ciudadela",
@@ -3265,7 +3265,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Abbilder der Tribune",
       "en": "Tribunes in Effigy",
       "es": "Efigies de tribunos",
@@ -3279,7 +3279,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Sünden des Vaters",
       "en": "Sins of the Father",
       "es": "Los pecados del padre",
@@ -3293,7 +3293,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Rückkehr des Banners",
       "en": "Misplaced Faith",
       "es": "Fe equivocada",
@@ -3307,7 +3307,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Friedhofornamente",
       "en": "Graveyard Ornaments",
       "es": "Adornos de cementerio",
@@ -3321,7 +3321,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Untotenbefall",
       "en": "Undead Infestation",
       "es": "Plaga de muertos vivientes",
@@ -3335,7 +3335,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geflüster im Dunkeln",
       "en": "Whispers in the Dark",
       "es": "Susurros en la oscuridad",
@@ -3349,7 +3349,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gefährliche Forschung",
       "en": "Dangerous Research",
       "es": "Investigación peligrosa",
@@ -3363,7 +3363,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Graben nach Antworten",
       "en": "Digging Up Answers",
       "es": "En busca de respuestas",
@@ -3377,7 +3377,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verteidigung der Feste",
       "en": "Defending the Keep",
       "es": "Defendiendo la fortaleza",
@@ -3391,7 +3391,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aufspüren der Untoten",
       "en": "Undead Detection",
       "es": "Detección de muertos vivientes",
@@ -3405,7 +3405,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Immer wachsam",
       "en": "Ever Vigilant",
       "es": "Siempre alerta",
@@ -3419,7 +3419,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Untersuchen und zerstören",
       "en": "Research and Destroy",
       "es": "Investigar y destruir",
@@ -3433,7 +3433,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rachegeflüster",
       "en": "Whispers of Vengeance",
       "es": "Susurros de venganza",
@@ -3447,7 +3447,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Killerinstinkt",
       "en": "Killer Instinct",
       "es": "Instinto asesino",
@@ -3461,7 +3461,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Meinen Mentor treffen",
       "en": "Meeting my Mentor",
       "es": "Reunión con mi mentor",
@@ -3475,7 +3475,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein instabiler Frieden",
       "en": "A Fragile Peace",
       "es": "Una frágil paz",
@@ -3489,7 +3489,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Überbringer schlechter Nachrichten",
       "en": "Don't Shoot the Messenger",
       "es": "No matéis al mensajero",
@@ -3503,7 +3503,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Meinen Mentor treffen",
       "en": "Meeting my Mentor",
       "es": "Reunión con mi mentor",
@@ -3517,7 +3517,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Vergangenheit ausgraben",
       "en": "Dredging Up the Past",
       "es": "Dragar el pasado",
@@ -3531,7 +3531,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Vergangenheit ausgraben",
       "en": "Dredging Up the Past",
       "es": "Dragar el pasado",
@@ -3545,7 +3545,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schrottplatzstreuner",
       "en": "Scrapyard Dogs",
       "es": "Perros de desguace",
@@ -3559,7 +3559,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Quästors Belagerung",
       "en": "Quaestor's Siege",
       "es": "Asedio del Cuestor",
@@ -3573,7 +3573,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Des Ministers Verteidigung",
       "en": "Minister's Defense",
       "es": "Defensa del Ministro",
@@ -3587,7 +3587,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Ruf der Pflicht",
       "en": "Called to Service",
       "es": "Llamada al servicio",
@@ -3604,7 +3604,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Ruf der Pflicht",
       "en": "Called to Service",
       "es": "Llamada al servicio",
@@ -3618,7 +3618,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Dem Tod zum Trotz",
       "en": "Mockery of Death",
       "es": "La burla de la muerte",
@@ -3635,7 +3635,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Entmantelung der Dunkelheit",
       "en": "Discovering Darkness",
       "es": "El descubrimiento de la oscuridad",
@@ -3649,7 +3649,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hunde und Gejagte",
       "en": "Hounds and the Hunted",
       "es": "Sabuesos y presas",
@@ -3663,7 +3663,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hunde und Gejagte",
       "en": "Hounds and the Hunted",
       "es": "Sabuesos y presas",
@@ -3680,7 +3680,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verliebt und verloren",
       "en": "Loved and Lost",
       "es": "Amor perdido",
@@ -3694,7 +3694,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rettet den Hirsch",
       "en": "Saving the Stag",
       "es": "Salvar al Ciervo",
@@ -3708,7 +3708,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verborgen in der Dunkelheit",
       "en": "Hidden in Darkness",
       "es": "Oculto en la oscuridad",
@@ -3722,7 +3722,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Alle Mühen umsonst",
       "en": "Good Work Spoiled",
       "es": "Un buen trabajo echado a perder",
@@ -3736,7 +3736,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schwarze Nacht, Weißer Hirsch",
       "en": "Black Night, White Stag",
       "es": "Noche negra, Ciervo blanco",
@@ -3753,7 +3753,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Omphalos-Kammer",
       "en": "The Omphalos Chamber",
       "es": "La Cámara de Omphalos",
@@ -3770,7 +3770,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Schwäche des Herzens",
       "en": "Weakness of the Heart",
       "es": "Debilidad de corazón",
@@ -3784,7 +3784,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Erwachen",
       "en": "Awakening",
       "es": "Despertar",
@@ -3801,7 +3801,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Kampf gegen die Finsternis",
       "en": "Holding Back the Darkness",
       "es": "Contra la oscuridad",
@@ -3815,7 +3815,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein schlauer Trick",
       "en": "A Sly Trick",
       "es": "Un truco ingenioso",
@@ -3832,7 +3832,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verworrene Wurzeln",
       "en": "Deep Tangled Roots",
       "es": "Raíces profundas enredadas",
@@ -3846,7 +3846,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Albtraumherz",
       "en": "The Heart of Nightmare",
       "es": "El corazón de la Pesadilla",
@@ -3860,7 +3860,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Mond scheint kalt",
       "en": "Beneath a Cold Moon",
       "es": "Bajo la fría luna",
@@ -3874,7 +3874,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Ritterduell",
       "en": "The Knight's Duel",
       "es": "El duelo del Caballero",
@@ -3888,7 +3888,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hammer und Stahl",
       "en": "Hammer and Steel",
       "es": "Martillo y acero",
@@ -3902,7 +3902,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wie das Leben so spielt",
       "en": "Where Life Goes",
       "es": "Adonde vaya la vida",
@@ -3916,7 +3916,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nach dem Sturm",
       "en": "After the Storm",
       "es": "Después de la tormenta",
@@ -3933,7 +3933,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nach dem Sturm",
       "en": "After the Storm",
       "es": "Después de la tormenta",
@@ -3947,7 +3947,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unter den Wellen",
       "en": "Beneath the Waves",
       "es": "Bajo las olas",
@@ -3961,7 +3961,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Spieglein, Spieglein",
       "en": "Mirror, Mirror",
       "es": "Dime, espejito mágico",
@@ -3975,7 +3975,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vision der Finsternis",
       "en": "A Vision of Darkness",
       "es": "Una visión de la oscuridad",
@@ -3993,7 +3993,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gebrochenes Licht",
       "en": "Shattered Light",
       "es": "Luz quebrada",
@@ -4009,7 +4009,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine unbekannte Seele",
       "en": "An Unknown Soul",
       "es": "Un alma desconocida",
@@ -4023,7 +4023,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine unbekannte Seele",
       "en": "An Unknown Soul",
       "es": "Un alma desconocida",
@@ -4040,7 +4040,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wie das Leben so spielt",
       "en": "Where Life Goes",
       "es": "Adonde vaya la vida",
@@ -4057,7 +4057,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Quelle der Angelegenheit",
       "en": "Source of the Issue",
       "es": "La raíz del problema",
@@ -4071,7 +4071,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wildwuchs",
       "en": "Wild Growth",
       "es": "Crecimiento salvaje",
@@ -4088,7 +4088,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wildwuchs",
       "en": "Wild Growth",
       "es": "Crecimiento salvaje",
@@ -4102,7 +4102,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auf der Suche nach dem Zalisco",
       "en": "Seeking the Zalisco",
       "es": "En busca del zalisco",
@@ -4116,7 +4116,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Frontalangriff",
       "en": "The Direct Approach",
       "es": "El enfoque directo",
@@ -4130,7 +4130,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wer überlistet wen?",
       "en": "Trading Trickery",
       "es": "Argucia comercial",
@@ -4144,7 +4144,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auge der Sonne",
       "en": "Eye of the Sun",
       "es": "El Ojo del sol",
@@ -4161,7 +4161,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Schlacht von Kyhlo",
       "en": "Battle of Kyhlo",
       "es": "La Batalla de Kyhlo",
@@ -4176,7 +4176,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auf der Suche nach dem Zalisco",
       "en": "Seeking the Zalisco",
       "es": "En busca del zalisco",
@@ -4193,7 +4193,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Wald von Niflhel",
       "en": "Forest of Niflhel",
       "es": "Bosque de Niflhel",
@@ -4208,7 +4208,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein anderer Traum",
       "en": "A Different Dream",
       "es": "Un sueño diferente",
@@ -4222,7 +4222,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein Splitter im Fleisch",
       "en": "A Splinter in the Flesh",
       "es": "Una astilla clavada",
@@ -4239,7 +4239,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Erstickende Glut",
       "en": "Shadow of the Tree",
       "es": "Sombra del Árbol",
@@ -4253,7 +4253,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auge der Sonne",
       "en": "Eye of the Sun",
       "es": "El Ojo del sol",
@@ -4267,7 +4267,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geschärfte Dornen",
       "en": "Sharpened Thorns",
       "es": "Espinas afiladas",
@@ -4281,7 +4281,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Dornen-Mauern",
       "en": "Bramble Walls",
       "es": "Muros de zarzas",
@@ -4295,7 +4295,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geheimnisse in der Erde",
       "en": "Secrets in the Earth",
       "es": "Secretos en la tierra",
@@ -4309,7 +4309,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Blüte der Jugend",
       "en": "The Blossom of Youth",
       "es": "La flor de la juventud",
@@ -4323,7 +4323,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der faule Apfel",
       "en": "The Bad Apple",
       "es": "La manzana podrida",
@@ -4337,7 +4337,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schwierigkeiten an der Wurzel",
       "en": "Trouble at the Roots",
       "es": "Problema de raíz",
@@ -4351,7 +4351,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Blume des Todes",
       "en": "Flower of Death",
       "es": "La flor de la muerte",
@@ -4365,7 +4365,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "In der Tiefe des Winters",
       "en": "Dead of Winter",
       "es": "En medio del invierno",
@@ -4379,7 +4379,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Im Gestrüpp",
       "en": "A Tangle of Weeds",
       "es": "Maleza enredada",
@@ -4393,7 +4393,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Explosiver Intellekt",
       "en": "Explosive Intellect",
       "es": "Intelecto explosivo",
@@ -4407,7 +4407,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "In Snaffs Fußstapfen",
       "en": "In Snaff's Footsteps",
       "es": "Tras los pasos de Snaff",
@@ -4421,7 +4421,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Golem-Positionierungssystem",
       "en": "Golem Positioning System",
       "es": "Sistema de posicionamiento gólem",
@@ -4438,7 +4438,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Universalschraubschlüssel",
       "en": "Monkey Wrench",
       "es": "Llave inglesa",
@@ -4452,7 +4452,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Problem entschärfen",
       "en": "Defusing the Problem",
       "es": "Desactivando el problema",
@@ -4469,7 +4469,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Liebesbeweise",
       "en": "The Things We Do For Love",
       "es": "Lo que hacemos por amor",
@@ -4483,7 +4483,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Snaff-Preis",
       "en": "The Snaff Prize",
       "es": "El Premio Snaff",
@@ -4497,7 +4497,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine funkelnde Rettung",
       "en": "A Sparkling Rescue",
       "es": "Un rescate chispeante",
@@ -4511,7 +4511,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hoher Wartungsaufwand",
       "en": "High Maintenance",
       "es": "Alto mantenimiento",
@@ -4525,7 +4525,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Snaff wäre stolz",
       "en": "Snaff Would Be Proud",
       "es": "Snaff estaría orgulloso",
@@ -4539,7 +4539,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Lorbeeren zurückholen",
       "en": "Taking Credit Back",
       "es": "Recuperación de crédito",
@@ -4553,7 +4553,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Politischer Mord",
       "en": "Political Homicide",
       "es": "Homicidio político",
@@ -4570,7 +4570,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Da und dort und überall",
       "en": "Here, There, Everywhere",
       "es": "Aquí, allá, en todas partes",
@@ -4584,7 +4584,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Teil-Verhandlungen",
       "en": "Piece Negotiations",
       "es": "Negociaciones de fragmentos",
@@ -4601,7 +4601,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ansteigende Messwerte",
       "en": "Readings On the Rise",
       "es": "Lecturas en aumento",
@@ -4618,7 +4618,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Snaff wäre stolz",
       "en": "Snaff Would Be Proud",
       "es": "Snaff estaría orgulloso",
@@ -4632,7 +4632,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ansteigende Messwerte",
       "en": "Readings On the Rise",
       "es": "Lecturas en aumento",
@@ -4646,7 +4646,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Außerplanmäßige Verzögerung",
       "en": "Unscheduled Delay",
       "es": "Retraso no previsto",
@@ -4660,7 +4660,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Haltet zu Eurer Kru",
       "en": "Stand By Your Krewe",
       "es": "Quédate con tu sociedad",
@@ -4674,7 +4674,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unwillkommene Besucher",
       "en": "Unwelcome Visitors",
       "es": "Visitantes no deseados",
@@ -4688,7 +4688,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wem Anerkennung gebührt",
       "en": "Where Credit Is Due",
       "es": "Donde corresponde",
@@ -4705,7 +4705,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wem Anerkennung gebührt",
       "en": "Where Credit Is Due",
       "es": "Donde corresponde",
@@ -4719,7 +4719,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kurze Lunte",
       "en": "Short Fuse",
       "es": "Mecha corta",
@@ -4733,7 +4733,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kurze Lunte",
       "en": "Short Fuse",
       "es": "Mecha corta",
@@ -4750,7 +4750,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Salz in der Wunde",
       "en": "Salt in the Wound",
       "es": "Sal en la herida",
@@ -4764,7 +4764,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Freier Lauf",
       "en": "Free Rein",
       "es": "Rienda suelta",
@@ -4778,7 +4778,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unruhe stiften",
       "en": "Serving Up Trouble",
       "es": "Creando problemas",
@@ -4795,7 +4795,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unruhe stiften",
       "en": "Serving Up Trouble",
       "es": "Creando problemas",
@@ -4809,7 +4809,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sturzflut",
       "en": "Flash Flood",
       "es": "Riada",
@@ -4826,7 +4826,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Es riecht nach Verrat",
       "en": "I Smell a Rat",
       "es": "Huelo una rata",
@@ -4840,7 +4840,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Magnum Opus",
       "en": "Magnum Opus",
       "es": "Obra maestra",
@@ -4856,7 +4856,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Magnum Opus",
       "en": "Magnum Opus",
       "es": "Obra maestra",
@@ -4873,7 +4873,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schlechtes Geschäft",
       "en": "Bad Business",
       "es": "Mal asunto",
@@ -4887,7 +4887,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beta-Test",
       "en": "Beta Test",
       "es": "Prueba beta",
@@ -4901,7 +4901,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beta-Test",
       "en": "Beta Test",
       "es": "Prueba beta",
@@ -4918,7 +4918,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Jede hinreichend fortschrittliche Wissenschaft",
       "en": "Any Sufficiently Advanced Science",
       "es": "Cualquier ciencia lo suficientemente avanzada",
@@ -4935,7 +4935,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Jede hinreichend fortschrittliche Wissenschaft",
       "en": "Any Sufficiently Advanced Science",
       "es": "Cualquier ciencia lo suficientemente avanzada",
@@ -4949,7 +4949,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schlechte Aussichten",
       "en": "Bad Forecast",
       "es": "Mala previsión",
@@ -4963,7 +4963,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Industriespionage",
       "en": "Industrial Espionage",
       "es": "Espionaje industrial",
@@ -4977,7 +4977,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sekundenbruchteil",
       "en": "Split Second",
       "es": "Una fracción de segundo",
@@ -4991,7 +4991,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tragt einen großen Stock",
       "en": "Carry a Big Stick",
       "es": "Lleva un buen garrote.",
@@ -5008,7 +5008,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Meinen Mentor treffen",
       "en": "Meeting my Mentor",
       "es": "Reunión con mi mentor",
@@ -5022,7 +5022,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geheimnis stehlen",
       "en": "Stealing Secrets",
       "es": "Robo de secretos",
@@ -5036,7 +5036,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine gewagte neue Theorie",
       "en": "A Bold New Theory",
       "es": "Una teoría nueva y atrevida",
@@ -5053,7 +5053,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Legale Fälschung",
       "en": "Forging Permission",
       "es": "Falsificación de permisos",
@@ -5070,7 +5070,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Legale Fälschung",
       "en": "Forging Permission",
       "es": "Falsificación de permisos",
@@ -5087,7 +5087,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Den Weg bereiten",
       "en": "Setting the Stage",
       "es": "Preparativos",
@@ -5101,7 +5101,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eindämmung",
       "en": "Containment",
       "es": "Contención",
@@ -5115,7 +5115,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eindämmung",
       "en": "Containment",
       "es": "Contención",
@@ -5129,7 +5129,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gefährliche Umgebung",
       "en": "Hazardous Environment",
       "es": "Entorno peligroso",
@@ -5146,7 +5146,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Durch die Luke",
       "en": "Down the Hatch",
       "es": "Arriba, abajo, al centro y... ¡pa dentro!\n",
@@ -5160,7 +5160,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Durch die Luke",
       "en": "Down the Hatch",
       "es": "Arriba, abajo, al centro y... ¡pa dentro!",
@@ -5174,7 +5174,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Steinhülle",
       "en": "The Stone Sheath",
       "es": "La vaina de piedra",
@@ -5188,7 +5188,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Böses Blut",
       "en": "Bad Blood",
       "es": "Mala sangre",
@@ -5202,7 +5202,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Versuchsobjekt",
       "en": "Test Subject",
       "es": "Sujeto de prueba",
@@ -5216,7 +5216,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Feldversuch",
       "en": "Field Test",
       "es": "Prueba de campo",
@@ -5230,7 +5230,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Haus Caithe",
       "en": "The House of Caithe",
       "es": "La Casa de Caithe",
@@ -5247,7 +5247,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Terrasse des Träumers (Heimatort)",
       "en": "Dreamer's Terrace (Home)",
       "es": "La Terraza del Soñador (Hogar)",
@@ -5264,7 +5264,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Omphalos-Kammer",
       "en": "The Omphalos Chamber",
       "es": "La Cámara de Omphalos",
@@ -5281,7 +5281,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Snaff-Gedenk-Labor",
       "en": "Snaff Memorial Lab",
       "es": "Laboratorio Conmemorativo de Snaff",
@@ -5298,7 +5298,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Labor für Angewandte Entwicklung (Heimatort)",
       "en": "Applied Development Lab (Home)",
       "es": "Laboratorio de Desarrollos Aplicados (Hogar)",
@@ -5315,7 +5315,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ratsebene",
       "en": "Council Level",
       "es": "Nivel del Consejo",
@@ -5332,7 +5332,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein Treffen der Gleichgesinnten",
       "en": "A Meeting of the Minds",
       "es": "Una reunión de mentes",
@@ -5349,7 +5349,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Mächtiger als das Schwert",
       "en": "Mightier than the Sword",
       "es": "Más poderoso que la espada",
@@ -5363,7 +5363,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sie sind da lang!",
       "en": "They Went Thataway",
       "es": "Se fueron por ahí",
@@ -5377,7 +5377,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kommunikationswege",
       "en": "Lines of Communication",
       "es": "Vías de comunicación",
@@ -5394,7 +5394,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ungezähmte Wildnis",
       "en": "Untamed Wilds",
       "es": "Selvas Indomables",
@@ -5408,7 +5408,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Jeden Tag einen Apfel",
       "en": "An Apple a Day",
       "es": "Una manzana al día",
@@ -5422,7 +5422,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Operationsbasis",
       "en": "Base of Operations",
       "es": "Base de operaciones",
@@ -5437,7 +5437,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Rückkehr des verlorenen Häuptlings",
       "en": "The Lost Chieftain's Return",
       "es": "El regreso del cabecilla perdido",
@@ -5451,7 +5451,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kalt erwischt",
       "en": "Thrown Off Guard",
       "es": "Guardia desperdiciada",
@@ -5465,7 +5465,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zähmlinge und Mauern stärken den Kral.",
       "en": "Pets and Walls Make Stronger Kraals",
       "es": "Con mascotas y murallas, los corrales dan más caña",
@@ -5479,7 +5479,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zweifel",
       "en": "Doubt",
       "es": "Duda",
@@ -5493,7 +5493,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Höhle der falschen Gottheit",
       "en": "The False God's Lair",
       "es": "La guarida del falso dios",
@@ -5507,7 +5507,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Böses Eis",
       "en": "Bad Ice",
       "es": "Hielo malvado",
@@ -5521,7 +5521,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Böses Eis",
       "en": "Bad Ice",
       "es": "Hielo malvado",
@@ -5535,7 +5535,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zähmlinge und Mauern stärken den Kral.",
       "en": "Pets and Walls Make Stronger Kraals",
       "es": "Con mascotas y murallas, los corrales dan más caña",
@@ -5549,7 +5549,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Versuchter Gottesmord",
       "en": "Attempted Deicide",
       "es": "Intento de deicidio",
@@ -5563,7 +5563,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zweifel",
       "en": "Doubt",
       "es": "Duda",
@@ -5577,7 +5577,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rat-Tastrophe",
       "en": "Rat-Tastrophe",
       "es": "Ratástrofe",
@@ -5591,7 +5591,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Erlösung durch Ketzerei",
       "en": "Salvation Through Heresy",
       "es": "La salvación mediante la herejía",
@@ -5605,7 +5605,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aufgebracht und unbeschämt",
       "en": "Enraged and Unashamed",
       "es": "Enfurecido y desvergonzado",
@@ -5619,7 +5619,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hüter der Vergangenheit",
       "en": "Pastkeeper",
       "es": "Celador del pasado",
@@ -5633,7 +5633,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zu viel protestieren",
       "en": "Protest Too Much",
       "es": "Protesta demasiado",
@@ -5647,7 +5647,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Auge öffnen",
       "en": "Prying the Eye Open",
       "es": "Abriendo el ojo con palanca",
@@ -5661,7 +5661,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Brutstätte",
       "en": "The Hatchery",
       "es": "El vivero",
@@ -5675,7 +5675,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Gläubigen überzeugen",
       "en": "Convincing the Faithful",
       "es": "Convenciendo a los fieles",
@@ -5689,7 +5689,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Evakuierung",
       "en": "Evacuation",
       "es": "Evacuación",
@@ -5703,7 +5703,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ungezähmte Wildnis",
       "en": "Untamed Wilds",
       "es": "Selvas Indomables",
@@ -5717,7 +5717,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Opfer des Champion",
       "en": "Champion's Sacrifice",
       "es": "Sacrificio de campeón",
@@ -5731,7 +5731,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Von Räubern räuben",
       "en": "Thieving from Thieves",
       "es": "Quien roba a un ladrón",
@@ -5745,7 +5745,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rückkehr der Recken",
       "en": "Crusader's Return",
       "es": "Retorno del Cruzado",
@@ -5759,7 +5759,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unheilige Erde",
       "en": "Unholy Grounds",
       "es": "Territorios impíos",
@@ -5773,7 +5773,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Von der Sonne auserwählt",
       "en": "Chosen of the Sun",
       "es": "Los elegidos del sol",
@@ -5787,7 +5787,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bereit zum Sprengen",
       "en": "Set to Blow",
       "es": "Lista para explotar",
@@ -5801,7 +5801,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gadds letztes Gerät",
       "en": "Gadd's Last Gizmo",
       "es": "El último artilugio de Gadd",
@@ -5815,7 +5815,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bibliothekswissenschaft",
       "en": "Library Science",
       "es": "Ciencia de biblioteca",
@@ -5829,7 +5829,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rakt und Ruin",
       "en": "Rakt and Ruin",
       "es": "Rakt y ruina",
@@ -5843,7 +5843,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verdächtige Aktivitäten",
       "en": "Suspicious Activity",
       "es": "Actividad sospechosa",
@@ -5857,7 +5857,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Erkundung",
       "en": "Reconnaissance",
       "es": "Reconocimiento",
@@ -5871,7 +5871,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kritischer Rückschlag",
       "en": "Critical Blowback",
       "es": "Contratiempo crítico",
@@ -5886,7 +5886,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schlacht auf der Klaueninsel",
       "en": "The Battle of Claw Island",
       "es": "La batalla de Isla Garra",
@@ -5900,7 +5900,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verdächtige Aktivitäten",
       "en": "Suspicious Activity",
       "es": "Actividad sospechosa",
@@ -5914,7 +5914,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bibliothek der Abtei",
       "en": "Priory Library",
       "es": "Biblioteca del Priorato",
@@ -5928,7 +5928,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Alarmstufe Rot",
       "en": "On Red Alert",
       "es": "En alerta roja",
@@ -5942,7 +5942,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gefahr erkannt, Gefahr gebannt",
       "en": "Forearmed Is Forewarned",
       "es": "Más vale prevenir que curar",
@@ -5956,7 +5956,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Redekunst",
       "en": "The Oratory",
       "es": "La oratoria",
@@ -5970,7 +5970,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Kriegsschauplatz",
       "en": "Killing Fields",
       "es": "Campos de muerte",
@@ -5984,7 +5984,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Geisterritus",
       "en": "The Ghost Rite",
       "es": "El rito fantasma",
@@ -5998,7 +5998,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kampf fürs Gute",
       "en": "The Good Fight",
       "es": "La buena pelea",
@@ -6012,7 +6012,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verteidigungsabkommen",
       "en": "Defense Contract",
       "es": "Contrato de defensa",
@@ -6026,7 +6026,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Scherben von Orr",
       "en": "Shards of Orr",
       "es": "Esquirlas de Orr",
@@ -6040,7 +6040,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Klang der Psi-Lanze",
       "en": "The Sound of Psi-Lance",
       "es": "El sonido de la lanza Psi",
@@ -6054,7 +6054,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vorzeitig entlassen",
       "en": "Early Parole",
       "es": "Pronta libertad",
@@ -6068,7 +6068,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Magie nervt",
       "en": "Magic Sucks",
       "es": "La magia apesta",
@@ -6085,7 +6085,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein Licht im Dunkeln",
       "en": "A Light in the Darkness",
       "es": "Una luz en la oscuridad",
@@ -6103,7 +6103,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sturm auf die Abtei",
       "en": "The Priory Assailed",
       "es": "Asedio al Priorato",
@@ -6117,7 +6117,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Belagert",
       "en": "Under Siege",
       "es": "Bajo asedio",
@@ -6131,7 +6131,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vergeltung",
       "en": "Retribution",
       "es": "Retribución",
@@ -6145,7 +6145,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vergeltung",
       "en": "Retribution",
       "es": "Retribución",
@@ -6159,7 +6159,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Klang der Psi-Lanze",
       "en": "The Sound of Psi-Lance",
       "es": "El sonido de la lanza Psi",
@@ -6173,7 +6173,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Feuchte Arbeit",
       "en": "Wet Work",
       "es": "Baño de sangre",
@@ -6187,7 +6187,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kriegsneurose",
       "en": "Shell Shock",
       "es": "Trauma de combate",
@@ -6201,7 +6201,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vulkanische Extraktion",
       "en": "Volcanic Extraction",
       "es": "Extracción volcánica",
@@ -6215,7 +6215,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Munitionserwerb",
       "en": "Munition Acquisition",
       "es": "Adquisición de munición",
@@ -6229,7 +6229,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Durch und durch",
       "en": "To the Core",
       "es": "Hasta el núcleo",
@@ -6243,7 +6243,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Schlacht um das Fort der Dreifaltigkeit",
       "en": "The Battle of Fort Trinity",
       "es": "La batalla de Fuerte Trinidad",
@@ -6257,7 +6257,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Turm gefallen",
       "en": "Tower Down",
       "es": "Torre abajo",
@@ -6271,7 +6271,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Pakt wird geschmiedet",
       "en": "Forging the Pact",
       "es": "La forja del Pacto",
@@ -6285,7 +6285,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Willige Gefangene",
       "en": "Willing Captives",
       "es": "Cautivos dispuestos",
@@ -6299,7 +6299,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Überbringer der Wahrheit",
       "en": "Marshaling the Truth",
       "es": "Reuniendo la verdad",
@@ -6313,7 +6313,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zerstörung des Knochenschiffs",
       "en": "Breaking the Bone Ship",
       "es": "Rompiendo el barco de hueso",
@@ -6327,7 +6327,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Apatias Befreiung",
       "en": "Liberating Apatia",
       "es": "Liberando a Apatia",
@@ -6341,7 +6341,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Apatias Befreiung",
       "en": "Liberating Apatia",
       "es": "Liberando a Apatia",
@@ -6356,7 +6356,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schuldzuweisung",
       "en": "Fixing the Blame",
       "es": "Tras el culpable",
@@ -6370,7 +6370,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine traurige Pflicht",
       "en": "A Sad Duty",
       "es": "Una misión triste",
@@ -6384,7 +6384,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Abwerfen der Ketten",
       "en": "Striking off the Chains",
       "es": "Rompiendo las cadenas",
@@ -6398,7 +6398,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Überbringer der Gerechtigkeit",
       "en": "Delivering Justice",
       "es": "Haciendo justicia",
@@ -6412,7 +6412,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Abfangen der Kugel",
       "en": "Intercepting the Orb",
       "es": "Interceptando el orbe",
@@ -6426,7 +6426,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Auge schließen",
       "en": "Close the Eye",
       "es": "Cierra el ojo",
@@ -6440,7 +6440,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Durch den Spiegel",
       "en": "Through the Looking Glass",
       "es": "A través del espejo",
@@ -6454,7 +6454,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Kathedrale der Stille",
       "en": "The Cathedral of Silence",
       "es": "Catedral del Silencio",
@@ -6468,7 +6468,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Bestie aushungern",
       "en": "Starving the Beast",
       "es": "Matar de hambre a la bestia",
@@ -6482,7 +6482,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gestohlenes Licht",
       "en": "Stealing Light",
       "es": "Robo de luz",
@@ -6496,7 +6496,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Jäger und Gejagte",
       "en": "Hunters and Prey",
       "es": "Cazadores y presa",
@@ -6510,7 +6510,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Romkes letzte Reise",
       "en": "Romke's Final Voyage",
       "es": "La última travesía de Romke",
@@ -6524,7 +6524,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Marschbefehle",
       "en": "Marching Orders",
       "es": "Órdenes de marcha",
@@ -6538,7 +6538,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Luftlandung",
       "en": "Air Drop",
       "es": "Suministro aéreo",
@@ -6552,7 +6552,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Haus der Verwesung",
       "en": "Estate of Decay",
       "es": "Estado de descomposición",
@@ -6566,7 +6566,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Im Auge des Betrachters",
       "en": "What the Eye Beholds",
       "es": "Lo que el ojo sí ve",
@@ -6580,7 +6580,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Kaperung der Totenschiffe",
       "en": "Conscript the Dead Ships",
       "es": "Recluta los Barcos Muertos",
@@ -6594,7 +6594,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ossarium der unruhigen Toten",
       "en": "Ossuary of Unquiet Dead",
       "es": "Osario de muertos inquietos",
@@ -6608,7 +6608,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Tempel des vergessenen Gottes",
       "en": "Temple of the Forgotten God",
       "es": "El templo del dios olvidado",
@@ -6622,7 +6622,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Tempel des vergessenen Gottes",
       "en": "Temple of the Forgotten God",
       "es": "El templo del dios olvidado",
@@ -6637,7 +6637,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Tempel des vergessenen Gottes",
       "en": "Temple of the Forgotten God",
       "es": "El templo del dios olvidado",
@@ -6651,7 +6651,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Durch den Spiegel",
       "en": "Through the Looking Glass",
       "es": "A través del espejo",
@@ -6665,7 +6665,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Bestie aushungern",
       "en": "Starving the Beast",
       "es": "Matar de hambre a la bestia",
@@ -6679,7 +6679,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gegen die Verderbnis",
       "en": "Against the Corruption",
       "es": "Contra la corrupción",
@@ -6693,7 +6693,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Quelle von Orr",
       "en": "The Source of Orr",
       "es": "La fuente de Orr",
@@ -6707,7 +6707,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Panzerwache",
       "en": "Armor Guard",
       "es": "Guardia de la armería",
@@ -6721,7 +6721,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Echo der Vergangenheit",
       "en": "Blast from the Past",
       "es": "Relámpagos del pasado",
@@ -6735,7 +6735,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Flut aus Stahl",
       "en": "The Steel Tide",
       "es": "La marea de acero",
@@ -6749,7 +6749,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vorstoß ins Herz Orrs",
       "en": "Further Into Orr",
       "es": "Adentrándose en Orr",
@@ -6763,7 +6763,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kriegsschiffe",
       "en": "Ships of the Line",
       "es": "Navíos de línea",
@@ -6777,7 +6777,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Quelle von Orr",
       "en": "Source of Orr",
       "es": "La fuente de Orr",
@@ -6791,7 +6791,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Triumph oder Tod",
       "en": "Victory or Death",
       "es": "Victoria o muerte",
@@ -6805,7 +6805,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine schaurige Lieferung",
       "en": "A Grisly Shipment",
       "es": "Un envío truculento",
@@ -6819,7 +6819,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Echo der Vergangenheit",
       "en": "Blast from the Past",
       "es": "Relámpagos del pasado",
@@ -6833,7 +6833,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Krankheit des Lehrlings",
       "en": "A Pup's Illness",
       "es": "Un cachorro enfermo",
@@ -6847,7 +6847,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Jäger und Gejagte",
       "en": "Hunters and Prey",
       "es": "Cazadores y presa",
@@ -6861,7 +6861,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vermächtnis des Feindfeuers",
       "en": "Legacy of the Foefire",
       "es": "El Legado del Fuego Enemigo",
@@ -6876,7 +6876,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Informant",
       "en": "The Informant",
       "es": "El informante",
@@ -6890,7 +6890,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zeugenaussage eines Verräters",
       "en": "A Traitor's Testimony",
       "es": "Testimonio de un traidor",
@@ -6904,7 +6904,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine heiße Spur",
       "en": "Follow the Trail",
       "es": "Sigue el rastro",
@@ -6918,7 +6918,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Erwachen",
       "en": "Awakening",
       "es": "Despertar",
@@ -6932,7 +6932,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auge des Nordens",
       "en": "Eye of the North",
       "es": "Ojo del Norte",
@@ -6949,7 +6949,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Omphalos-Kammer",
       "en": "The Omphalos Chamber",
       "es": "La Cámara de Omphalos",
@@ -6966,7 +6966,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Omphalos-Kammer",
       "en": "The Omphalos Chamber",
       "es": "La Cámara de Omphalos",
@@ -6983,7 +6983,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Code-Brecher",
       "en": "Codebreaker",
       "es": "Descifrador",
@@ -6997,7 +6997,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kastell Aval",
       "en": "Caer Aval",
       "es": "Aval de Caer",
@@ -7014,7 +7014,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Abtei Durmand",
       "en": "The Durmand Priory",
       "es": "El Priorato de Durmand",
@@ -7028,7 +7028,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hauptquartier der Wachsamen",
       "en": "Vigil Headquarters",
       "es": "Cuartel general de la Vigilia",
@@ -7042,7 +7042,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aschetribun-Quartier",
       "en": "Ash Tribune Quarters",
       "es": "Alojamientos de los Tribunos de Ceniza",
@@ -7058,7 +7058,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gebrochenes Licht",
       "en": "Shattered Light",
       "es": "Luz quebrada",
@@ -7073,7 +7073,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Grollen des Schnitters",
       "en": "Reaper's Rumble",
       "es": "Estruendo del Segador",
@@ -7088,7 +7088,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aufstieg in den Wahnsinn",
       "en": "Ascent to Madness",
       "es": "Ascenso a la Locura",
@@ -7103,7 +7103,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verrückte Inquisition",
       "en": "Lunatic Inquisition",
       "es": "Inquisición Lunática",
@@ -7117,7 +7117,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Uhrturm des Verrückten Königs",
       "en": "Mad King's Clock Tower",
       "es": "Torre del Reloj del Rey Loco",
@@ -7134,7 +7134,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Labyrinth des Verrückten Königs",
       "en": "Mad King's Labyrinth",
       "es": "Laberinto del Rey Loco",
@@ -7148,7 +7148,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7162,7 +7162,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Südlicht-Bucht",
       "en": "Southsun Cove",
       "es": "Cala del Sol Austral",
@@ -7179,7 +7179,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tempel des stillen Sturms",
       "en": "Temple of the Silent Storm",
       "es": "Templo de la Tormenta Silenciosa",
@@ -7194,7 +7194,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schneeballkrawall",
       "en": "Snowball Mayhem",
       "es": "Batalla campal de bolas de nieve",
@@ -7208,7 +7208,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tixx' Infinirarium",
       "en": "Tixx's Infinirarium",
       "es": "Infinirarium de Tixx",
@@ -7222,7 +7222,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Spielzeukalypse",
       "en": "Toypocalypse",
       "es": "Juguetecalipsis",
@@ -7236,7 +7236,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Glockenspiel-Ensemble",
       "en": "Bell Choir Ensemble",
       "es": "Conjunto del Coro de Campanas",
@@ -7250,7 +7250,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Winterwunderland",
       "en": "Winter Wonderland",
       "es": "País de las Maravillas Invernal",
@@ -7264,7 +7264,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geisterwacht",
       "en": "Spirit Watch",
       "es": "Vigilancia del Espíritu",
@@ -7279,7 +7279,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Super Adventure Box",
       "en": "Super Adventure Box",
       "es": "Super Adventure Box",
@@ -7297,7 +7297,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nördliche Nolan-Brutstätte",
       "en": "North Nolan Hatchery",
       "es": "Vivero de Nolan norte",
@@ -7311,7 +7311,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Klippheim",
       "en": "Cragstead",
       "es": "Paraje de Roca",
@@ -7325,7 +7325,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Obsidianrefugium",
       "en": "Obsidian Sanctum",
       "es": "Sagrario de Obsidiana",
@@ -7339,7 +7339,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hammer des Himmels",
       "en": "Skyhammer",
       "es": "Martillo Celestial",
@@ -7354,7 +7354,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Krebs-Wurfspiel",
       "en": "Crab Toss",
       "es": "Lanzamiento de cangrejos",
@@ -7369,7 +7369,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachenball-Arena",
       "en": "Dragon Ball Arena",
       "es": "Arena de la dragonbola",
@@ -7383,7 +7383,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Sackgasse",
       "en": "The Dead End",
       "es": "Callejón sin Salida",
@@ -7398,7 +7398,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aspekt-Arena",
       "en": "Aspect Arena",
       "es": "Arena de los Aspectos",
@@ -7412,7 +7412,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Refugium-Sprint",
       "en": "Sanctum Sprint",
       "es": "Sprint del Sagrario",
@@ -7426,7 +7426,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Südlicht-Überlebenskampf",
       "en": "Southsun Survival",
       "es": "Supervivencia en el Sol Austral",
@@ -7440,7 +7440,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Labyrinthklippen",
       "en": "Labyrinthine Cliffs",
       "es": "Acantilados Laberínticos",
@@ -7454,7 +7454,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Großmeister von Om",
       "en": "Grandmaster of Om",
       "es": "Gran maestro de Om",
@@ -7468,7 +7468,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Kronpavillon",
       "en": "The Crown Pavilion",
       "es": "El Pabellón de la Corona",
@@ -7482,7 +7482,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Super Adventure Box",
       "en": "Super Adventure Box",
       "es": "Super Adventure Box",
@@ -7498,7 +7498,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Super Adventure Box",
       "en": "Super Adventure Box",
       "es": "Super Adventure Box",
@@ -7512,7 +7512,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Turm der Albträume",
       "en": "Tower of Nightmares",
       "es": "Torre de las Pesadillas",
@@ -7526,7 +7526,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7540,7 +7540,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7554,7 +7554,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7568,7 +7568,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7582,7 +7582,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7596,7 +7596,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7610,7 +7610,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7624,7 +7624,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7638,7 +7638,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7652,7 +7652,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7666,7 +7666,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7680,7 +7680,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7694,7 +7694,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7708,7 +7708,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -7722,7 +7722,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Scarlets Geheimversteck",
       "en": "Scarlet's Secret Lair",
       "es": "Guarida Secreta de Scarlet",
@@ -7736,7 +7736,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rand der Nebel",
       "en": "Edge of the Mists",
       "es": "El Borde de la Niebla",
@@ -7751,7 +7751,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hof",
       "en": "Courtyard",
       "es": "Patio",
@@ -7766,7 +7766,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Trockenkuppe",
       "en": "Dry Top",
       "es": "Cima Seca",
@@ -7783,7 +7783,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Geheimnis von Wohlstand",
       "en": "Prosperity's Mystery",
       "es": "Misterio de Prosperidad",
@@ -7797,7 +7797,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bedrängt",
       "en": "Cornered",
       "es": "Acorralado",
@@ -7811,7 +7811,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Störung in der Brisban-Wildnis",
       "en": "Disturbance in Brisban Wildlands",
       "es": "Disturbio en las Selvas Brisbanas",
@@ -7825,7 +7825,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Abgestürzte Hoffnung",
       "en": "Fallen Hopes",
       "es": "Desesperanza",
@@ -7839,7 +7839,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Scarlets Geheimraum",
       "en": "Scarlet's Secret Room",
       "es": "Habitación secreta de Scarlet",
@@ -7853,7 +7853,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Concordia-Zwischenfall",
       "en": "The Concordia Incident",
       "es": "El incidente de Concordia",
@@ -7867,7 +7867,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Entdeckung von Scarlets Durchbruch",
       "en": "Discovering Scarlet's Breakthrough",
       "es": "Descubriendo el avance de Scarlet",
@@ -7881,7 +7881,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Maschine",
       "en": "The Machine",
       "es": "La máquina",
@@ -7895,7 +7895,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aufruhr in Fort Salma",
       "en": "Trouble at Fort Salma",
       "es": "Problemas en el Fuerte Salma",
@@ -7909,7 +7909,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Wegmarkenrätsel",
       "en": "The Waypoint Conundrum",
       "es": "El enigma de los puntos de ruta",
@@ -7923,7 +7923,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gipfeleinladungen",
       "en": "Summit Invitations",
       "es": "Invitaciones a la cumbre",
@@ -7938,7 +7938,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Mission ausgeführt",
       "en": "Mission Accomplished",
       "es": "Misión cumplida",
@@ -7952,7 +7952,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ruf zu den Waffen",
       "en": "Rallying Call",
       "es": "El llamamiento",
@@ -7966,7 +7966,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsplan",
       "en": "Plan of Attack",
       "es": "Plan de ataque",
@@ -7980,7 +7980,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Partypolitik",
       "en": "Party Politics",
       "es": "Fiesta política",
@@ -7997,7 +7997,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Säuberung des Feindfeuers",
       "en": "Foefire Cleansing",
       "es": "Purifica el Fuego Enemigo",
@@ -8011,7 +8011,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Wegmarken rekalibrieren",
       "en": "Recalibrating the Waypoints",
       "es": "Recalibrando los puntos de ruta",
@@ -8025,7 +8025,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Geister von Fort Salma",
       "en": "The Ghosts of Fort Salma",
       "es": "Los fantasmas del Fuerte Salma",
@@ -8039,7 +8039,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Taimis Gerät",
       "en": "Taimi's Device",
       "es": "Dispositivo de Taimi",
@@ -8053,7 +8053,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Zusammenkunft",
       "en": "The World Summit",
       "es": "La cumbre mundial",
@@ -8070,7 +8070,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Schlacht von Champions Dämmerung",
       "en": "Battle of Champion's Dusk",
       "es": "Batalla del Crepúsculo del Campeón",
@@ -8085,7 +8085,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Silberwüste",
       "en": "The Silverwastes",
       "es": "Los Páramos Argentos",
@@ -8102,7 +8102,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Versteckte Arkana",
       "en": "Hidden Arcana",
       "es": "Arcanos ocultos",
@@ -8118,7 +8118,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zusammenschluss mit dem Pakt",
       "en": "Reunion with the Pact",
       "es": "Reunión con el Pacto",
@@ -8132,7 +8132,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Caithes Aufklärungstrupp",
       "en": "Caithe's Reconnaissance Squad",
       "es": "Escuadrón de reconocimiento de Caithe",
@@ -8146,7 +8146,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fort der Dreifaltigkeit",
       "en": "Fort Trinity",
       "es": "Fuerte Trinidad",
@@ -8160,7 +8160,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ins Labyrinth",
       "en": "Into the Labyrinth",
       "es": "Hacia el laberinto",
@@ -8174,7 +8174,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zurück ins Lager der Standhaftigkeit",
       "en": "Return to Camp Resolve",
       "es": "Regreso al Campamento Determinación",
@@ -8188,7 +8188,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verfolgung der Aspektmeister",
       "en": "Tracking the Aspect Masters",
       "es": "Rastreando a los maestros de los Aspectos",
@@ -8202,7 +8202,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Keine Zuflucht",
       "en": "No Refuge",
       "es": "Sin refugio",
@@ -8216,7 +8216,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Neuerwachten",
       "en": "The Newly Awakened",
       "es": "Los recién despertados",
@@ -8233,7 +8233,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Begegnung mit den Asura",
       "en": "Meeting the Asura",
       "es": "Conoce a los asura",
@@ -8247,7 +8247,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriff auf den Pakt",
       "en": "Pact Assaulted",
       "es": "Asalto al Pacto",
@@ -8261,7 +8261,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Mysteriöse Höhle",
       "en": "The Mystery Cave",
       "es": "La cueva misteriosa",
@@ -8275,7 +8275,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Arkana Obskura",
       "en": "Arcana Obscura",
       "es": "Arcana Obscura",
@@ -8290,7 +8290,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wertvolle Habe",
       "en": "Prized Possessions",
       "es": "Valiosas pertenencias",
@@ -8305,7 +8305,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Begrabene Einsichten",
       "en": "Buried Insight",
       "es": "Conocimiento enterrado",
@@ -8320,7 +8320,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Mutter Dschungel sorgt für uns",
       "en": "The Jungle Provides",
       "es": "La selva abastece",
@@ -8335,7 +8335,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Körper und Geist",
       "en": "Hearts and Minds",
       "es": "Corazones y mentes",
@@ -8352,7 +8352,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Widerstand des Drachen",
       "en": "Dragon's Stand",
       "es": "Defensa del Dragón",
@@ -8371,7 +8371,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Grasgrüne Schwelle",
       "en": "Verdant Brink",
       "es": "Umbral Verdeante",
@@ -8385,7 +8385,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Güldener Talkessel",
       "en": "Auric Basin",
       "es": "Valle Áurico",
@@ -8404,7 +8404,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verschlungene Tiefen",
       "en": "Tangled Depths",
       "es": "Profundidades Enredadas",
@@ -8423,7 +8423,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wurzeln des Schreckens",
       "en": "Roots of Terror",
       "es": "Raíces de terror",
@@ -8438,7 +8438,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Stadt der Hoffnung",
       "en": "City of Hope",
       "es": "Ciudad de la esperanza",
@@ -8453,7 +8453,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Dem Himmel entrissen",
       "en": "Torn from the Sky",
       "es": "Arrancados del cielo",
@@ -8468,7 +8468,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gefangene des Drachen",
       "en": "Prisoners of the Dragon",
       "es": "Prisioneros del dragón",
@@ -8483,7 +8483,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Grasgrüne Schwelle",
       "en": "Verdant Brink",
       "es": "Umbral Verdeante",
@@ -8502,7 +8502,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bittere Ernte",
       "en": "Bitter Harvest",
       "es": "Cosecha amarga",
@@ -8517,7 +8517,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Seltsame Entdeckungen",
       "en": "Strange Observations",
       "es": "Observaciones extrañas",
@@ -8532,7 +8532,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Prolog: Auf nach Maguuma!",
       "en": "Prologue: Rally to Maguuma",
       "es": "Prólogo: Reagrupación en Maguuma",
@@ -8546,7 +8546,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geistertal",
       "en": "Spirit Vale",
       "es": "Valle Espiritual",
@@ -8565,7 +8565,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Krebs-Wurfspiel in der Südlicht-Bucht",
       "en": "Southsun Crab Toss",
       "es": "Lanzamiento de cangrejos del Sol Austral",
@@ -8579,7 +8579,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung des Verlorenen Abgrunds",
       "en": "Claiming the Lost Precipice",
       "es": "Reclamación del Precipicio Perdido",
@@ -8594,7 +8594,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angvars Schatzkammer",
       "en": "Angvar's Trove",
       "es": "Tesoro de Angvar",
@@ -8608,7 +8608,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Vergoldeten Senke",
       "en": "Claiming the Gilded Hollow",
       "es": "Reclamación de la Cueva Dorada",
@@ -8623,7 +8623,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angvars Schatzkammer",
       "en": "Angvar's Trove",
       "es": "Tesoro de Angvar",
@@ -8637,7 +8637,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vergoldete Senke",
       "en": "Gilded Hollow",
       "es": "Cueva Dorada",
@@ -8652,7 +8652,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verlorener Abgrund",
       "en": "Lost Precipice",
       "es": "Precipicio Perdido",
@@ -8667,7 +8667,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung des Verlorenen Abgrunds",
       "en": "Claiming the Lost Precipice",
       "es": "Reclamación del Precipicio Perdido",
@@ -8682,7 +8682,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verlorener Abgrund",
       "en": "Lost Precipice",
       "es": "Precipicio Perdido",
@@ -8697,7 +8697,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Krebs-Wurfspiel in der Südlicht-Bucht",
       "en": "Southsun Crab Toss",
       "es": "Lanzamiento de cangrejos del Sol Austral",
@@ -8711,7 +8711,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Dienststube der Gilden-Initiative",
       "en": "Guild Initiative Office",
       "es": "Oficina de la Iniciativa",
@@ -8725,7 +8725,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Faulwasserbecken Kristalldemolierer",
       "en": "Blightwater Shatterstrike",
       "es": "Quebranta Plagagua",
@@ -8739,7 +8739,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Proxemik-Labor",
       "en": "Proxemics Lab",
       "es": "Laboratorio de Proxémica",
@@ -8753,7 +8753,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verlorener Abgrund",
       "en": "Lost Precipice",
       "es": "Precipicio Perdido",
@@ -8768,7 +8768,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Vergoldeten Senke",
       "en": "Claiming the Gilded Hollow",
       "es": "Reclamación de la Cueva Dorada",
@@ -8783,7 +8783,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unruhige See",
       "en": "Deep Trouble",
       "es": "Con el agua hasta el cuello",
@@ -8797,7 +8797,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gebrandmarkt und gejagt",
       "en": "Branded for Termination",
       "es": "Marcado para eliminación",
@@ -8811,7 +8811,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Langmar-Anwesen",
       "en": "Langmar Estate",
       "es": "Hacienda de Langmar",
@@ -8825,7 +8825,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Langmar-Anwesen",
       "en": "Langmar Estate",
       "es": "Hacienda de Langmar",
@@ -8839,7 +8839,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unruhige See",
       "en": "Deep Trouble",
       "es": "Con el agua hasta el cuello",
@@ -8853,7 +8853,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Krebs-Wurfspiel in der Südlicht-Bucht",
       "en": "Southsun Crab Toss",
       "es": "Lanzamiento de cangrejos del Sol Austral",
@@ -8867,7 +8867,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vorräte beschützen",
       "en": "Save Our Supplies",
       "es": "Guarda nuestros suministros",
@@ -8881,7 +8881,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Proxemik-Labor",
       "en": "Proxemics Lab",
       "es": "Laboratorio de Proxémica",
@@ -8895,7 +8895,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Vergoldeten Senke",
       "en": "Claiming the Gilded Hollow",
       "es": "Reclamación de la Cueva Dorada",
@@ -8910,7 +8910,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angvars Schatzkammer",
       "en": "Angvar's Trove",
       "es": "Tesoro de Angvar",
@@ -8924,7 +8924,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Langmar-Anwesen",
       "en": "Langmar Estate",
       "es": "Hacienda de Langmar",
@@ -8938,7 +8938,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vorräte beschützen",
       "en": "Save Our Supplies",
       "es": "Guarda nuestros suministros",
@@ -8952,7 +8952,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verteidigung der Skritt-Wachposten",
       "en": "Scratch Sentry Defense",
       "es": "Defensa vigía de la fisura",
@@ -8966,7 +8966,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angvars Schatzkammer",
       "en": "Angvar's Trove",
       "es": "Tesoro de Angvar",
@@ -8980,7 +8980,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vorräte beschützen",
       "en": "Save Our Supplies",
       "es": "Guarda nuestros suministros",
@@ -8994,7 +8994,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Widerstand des Drachen (Heart of Thorns)",
       "en": "Dragon's Stand (Heart of Thorns)",
       "es": "Defensa del Dragón (Heart of Thorns)",
@@ -9009,7 +9009,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Proxemik-Labor",
       "en": "Proxemics Lab",
       "es": "Laboratorio de Proxémica",
@@ -9023,7 +9023,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Vergoldeten Senke",
       "en": "Claiming the Gilded Hollow",
       "es": "Reclamación de la Cueva Dorada",
@@ -9038,7 +9038,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": " Wüsten-Grenzlande",
       "en": " Desert Borderlands",
       "es": " - Tierras Fronterizas desérticas",
@@ -9053,7 +9053,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verteidigung der Skritt-Wachposten",
       "en": "Scratch Sentry Defense",
       "es": "Defensa vigía de la fisura",
@@ -9067,7 +9067,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vergoldete Senke",
       "en": "Gilded Hollow",
       "es": "Cueva Dorada",
@@ -9082,7 +9082,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verlorener Abgrund",
       "en": "Lost Precipice",
       "es": "Precipicio Perdido",
@@ -9097,7 +9097,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Langmar-Anwesen",
       "en": "Langmar Estate",
       "es": "Hacienda de Langmar",
@@ -9111,7 +9111,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unruhige See",
       "en": "Deep Trouble",
       "es": "Con el agua hasta el cuello",
@@ -9125,7 +9125,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vergoldete Senke",
       "en": "Gilded Hollow",
       "es": "Cueva Dorada",
@@ -9140,7 +9140,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vergoldete Senke",
       "en": "Gilded Hollow",
       "es": "Cueva Dorada",
@@ -9155,7 +9155,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angvars Schatzkammer",
       "en": "Angvar's Trove",
       "es": "Tesoro de Angvar",
@@ -9169,7 +9169,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schrottgewehr-Feldversuch",
       "en": "Scrap Rifle Field Test",
       "es": "Prueba de campo de rifle de chatarra",
@@ -9184,7 +9184,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verteidigung der Skritt-Wachposten",
       "en": "Scratch Sentry Defense",
       "es": "Defensa vigía de la fisura",
@@ -9198,7 +9198,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gebrandmarkt und gejagt",
       "en": "Branded for Termination",
       "es": "Marcado para eliminación",
@@ -9212,7 +9212,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verteidigung der Skritt-Wachposten",
       "en": "Scratch Sentry Defense",
       "es": "Defensa vigía de la fisura",
@@ -9226,7 +9226,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kampf als durchdrehender Haudrauf-o-Mat",
       "en": "Haywire Punch-o-Matic Battle",
       "es": "Batalla contra el puñomático enloquecido",
@@ -9241,7 +9241,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unruhige See",
       "en": "Deep Trouble",
       "es": "Con el agua hasta el cuello",
@@ -9255,7 +9255,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung des Verlorenen Abgrunds",
       "en": "Claiming the Lost Precipice",
       "es": "Reclamación del Precipicio Perdido",
@@ -9270,7 +9270,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vorräte beschützen",
       "en": "Save Our Supplies",
       "es": "Guarda nuestros suministros",
@@ -9284,7 +9284,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vergoldete Senke",
       "en": "Gilded Hollow",
       "es": "Cueva Dorada",
@@ -9299,7 +9299,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Vergoldeten Senke",
       "en": "Claiming the Gilded Hollow",
       "es": "Reclamación de la Cueva Dorada",
@@ -9314,7 +9314,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Faulwasserbecken Kristalldemolierer",
       "en": "Blightwater Shatterstrike",
       "es": "Quebranta Plagagua",
@@ -9328,7 +9328,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verlorener Abgrund",
       "en": "Lost Precipice",
       "es": "Precipicio Perdido",
@@ -9343,7 +9343,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Krebs-Wurfspiel in der Südlicht-Bucht",
       "en": "Southsun Crab Toss",
       "es": "Lanzamiento de cangrejos del Sol Austral",
@@ -9357,7 +9357,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Verteidigung der Skritt-Wachposten",
       "en": "Scratch Sentry Defense",
       "es": "Defensa vigía de la fisura",
@@ -9371,7 +9371,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Langmar-Anwesen",
       "en": "Langmar Estate",
       "es": "Hacienda de Langmar",
@@ -9385,7 +9385,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Unruhige See",
       "en": "Deep Trouble",
       "es": "Con el agua hasta el cuello",
@@ -9399,7 +9399,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Faulwasserbecken Kristalldemolierer",
       "en": "Blightwater Shatterstrike",
       "es": "Quebranta Plagagua",
@@ -9413,7 +9413,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung des Verlorenen Abgrunds",
       "en": "Claiming the Lost Precipice",
       "es": "Reclamación del Precipicio Perdido",
@@ -9428,7 +9428,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gebrandmarkt und gejagt",
       "en": "Branded for Termination",
       "es": "Marcado para eliminación",
@@ -9442,7 +9442,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Faulwasserbecken Kristalldemolierer",
       "en": "Blightwater Shatterstrike",
       "es": "Quebranta Plagagua",
@@ -9456,7 +9456,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gebrandmarkt und gejagt",
       "en": "Branded for Termination",
       "es": "Marcado para eliminación",
@@ -9470,7 +9470,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Proxemik-Labor",
       "en": "Proxemics Lab",
       "es": "Laboratorio de Proxémica",
@@ -9484,7 +9484,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Proxemik-Labor",
       "en": "Proxemics Lab",
       "es": "Laboratorio de Proxémica",
@@ -9498,7 +9498,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vorräte beschützen",
       "en": "Save Our Supplies",
       "es": "Guarda nuestros suministros",
@@ -9512,7 +9512,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Krebs-Wurfspiel in der Südlicht-Bucht",
       "en": "Southsun Crab Toss",
       "es": "Lanzamiento de cangrejos del Sol Austral",
@@ -9526,7 +9526,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung des Verlorenen Abgrunds",
       "en": "Claiming the Lost Precipice",
       "es": "Reclamación del Precipicio Perdido",
@@ -9541,7 +9541,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Faulwasserbecken Kristalldemolierer",
       "en": "Blightwater Shatterstrike",
       "es": "Quebranta Plagagua",
@@ -9555,7 +9555,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gebrandmarkt und gejagt",
       "en": "Branded for Termination",
       "es": "Marcado para eliminación",
@@ -9569,7 +9569,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geistertal",
       "en": "Spirit Vale",
       "es": "Valle Espiritual",
@@ -9588,7 +9588,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Erlösungspass",
       "en": "Salvation Pass",
       "es": "Paso de la Salvación",
@@ -9607,7 +9607,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tigerbau",
       "en": "Tiger Den",
       "es": "Guarida de tigre",
@@ -9621,7 +9621,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Übungsgelände der Spezialkräfte",
       "en": "Special Forces Training Area",
       "es": "Arena de entrenamiento de las Fuerzas Especiales",
@@ -9635,7 +9635,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Flugplatz von Löwenstein",
       "en": "Lion's Arch Aerodrome",
       "es": "Aeródromo de Arco del León",
@@ -9649,7 +9649,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Festung der Treuen",
       "en": "Stronghold of the Faithful",
       "es": "Fortaleza de los Fieles",
@@ -9668,7 +9668,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Torheit des Edelmanns",
       "en": "Noble's Folly",
       "es": "Capricho de noble",
@@ -9683,7 +9683,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Forschung in Rata Novus",
       "en": "Research in Rata Novus",
       "es": "Investigación en Rata Novus",
@@ -9702,7 +9702,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eirs Heimstatt",
       "en": "Eir's Homestead",
       "es": "Heredad de Eir",
@@ -9719,7 +9719,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rache der \"Steinbock\"",
       "en": "Revenge of the Capricorn",
       "es": "La Venganza del Capricornio",
@@ -9734,7 +9734,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -9748,7 +9748,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Blutsteinsumpf",
       "en": "Bloodstone Fen",
       "es": "Pantano de la Hematites",
@@ -9767,7 +9767,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Festung des Beichtvaters",
       "en": "Confessor's Stronghold",
       "es": "La Fortaleza del Confesor",
@@ -9781,7 +9781,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Taten eines Schattens",
       "en": "A Shadow's Deeds",
       "es": "Los actos de una sombra",
@@ -9796,7 +9796,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rata Novus",
       "en": "Rata Novus",
       "es": "Rata Novus",
@@ -9816,7 +9816,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Taimis Spiel",
       "en": "Taimi's Game",
       "es": "El Juego de Taimi",
@@ -9835,7 +9835,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ewiges Kolosseum",
       "en": "Eternal Coliseum",
       "es": "Coliseo Eterno",
@@ -9850,7 +9850,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachenwache",
       "en": "Dragon Vigil",
       "es": "Vigilia de la Dragona",
@@ -9869,7 +9869,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Taimis Spiel",
       "en": "Taimi's Game",
       "es": "El Juego de Taimi",
@@ -9883,7 +9883,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Glutbucht",
       "en": "Ember Bay",
       "es": "Bahía de las Ascuas",
@@ -9900,7 +9900,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Taimis Spiel",
       "en": "Taimi's Game",
       "es": "El Juego de Taimi",
@@ -9919,7 +9919,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -9933,7 +9933,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bitterfrost-Grenzland",
       "en": "Bitterfrost Frontier",
       "es": "Frontera de Escarchamarga",
@@ -9950,7 +9950,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bittere Kälte",
       "en": "The Bitter Cold",
       "es": "El frío extremo",
@@ -9964,7 +9964,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kaltgestellt",
       "en": "Frozen Out",
       "es": "Rompiendo el hielo",
@@ -9978,7 +9978,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Frühreife Aurene",
       "en": "Precocious Aurene",
       "es": "La precoz Aurene",
@@ -9993,7 +9993,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Doric-See",
       "en": "Lake Doric",
       "es": "Lago Doric",
@@ -10010,7 +10010,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bastion der Bußfertigen",
       "en": "Bastion of the Penitent",
       "es": "Bastión del Penitente",
@@ -10029,7 +10029,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Neue Befehle von der Königin",
       "en": "Regrouping with the Queen",
       "es": "Reunión con la reina",
@@ -10043,7 +10043,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ministerversammlung",
       "en": "A Meeting of Ministers",
       "es": "Consejo de ministros",
@@ -10057,7 +10057,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Ende des Beichtvaters",
       "en": "Confessor's End",
       "es": "El fin del confesor",
@@ -10073,7 +10073,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die zweite Vision",
       "en": "The Second Vision",
       "es": "La segunda visión",
@@ -10087,7 +10087,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die erste Vision",
       "en": "The First Vision",
       "es": "La primera visión",
@@ -10101,7 +10101,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das nachgewachsene Schwert",
       "en": "The Sword Regrown",
       "es": "La espada regenerada",
@@ -10115,7 +10115,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Draconis Mons",
       "en": "Draconis Mons",
       "es": "Draconis Mons",
@@ -10132,7 +10132,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Herz des Vulkans",
       "en": "Heart of the Volcano",
       "es": "El Corazón del Volcán",
@@ -10148,7 +10148,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Taimis Lieblingsprojekt",
       "en": "Taimi's Pet Project",
       "es": "El proyecto personal de Taimi",
@@ -10167,7 +10167,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Halle der Nebel",
       "en": "Hall of the Mists",
       "es": "Sala de la Niebla",
@@ -10182,7 +10182,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Asura-Arena",
       "en": "Asura Arena",
       "es": "Arena Asura",
@@ -10197,7 +10197,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Versteck des Weißen Mantels",
       "en": "White Mantle Hideout",
       "es": "Escondite del Manto Blanco",
@@ -10211,7 +10211,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zaubersängerlände",
       "en": "Siren's Landing",
       "es": "Desembarco de la Sirena",
@@ -10228,7 +10228,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tempel des Palasts",
       "en": "Palace Temple",
       "es": "Templo del palacio",
@@ -10242,7 +10242,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -10256,7 +10256,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nebelsperren-Zuflucht",
       "en": "Mistlock Sanctuary",
       "es": "Santuario del Bloqueo de la Niebla",
@@ -10270,7 +10270,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Letzte Chance",
       "en": "The Last Chance",
       "es": "La última oportunidad",
@@ -10284,7 +10284,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hauptquartier der Glänzenden Klinge",
       "en": "Shining Blade Headquarters",
       "es": "Cuartel General de la Hoja Brillante",
@@ -10298,7 +10298,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Opfer",
       "en": "The Sacrifice",
       "es": "El Sacrificio",
@@ -10316,7 +10316,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kristalloase",
       "en": "Crystal Oasis",
       "es": "Oasis de Cristal",
@@ -10334,7 +10334,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wüsten-Hochland",
       "en": "Desert Highlands",
       "es": "Tierras Altas del Desierto",
@@ -10352,7 +10352,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schreibstube des Ratsoberhaupts",
       "en": "Office of the Chief Councilor",
       "es": "Oficina de la Concejala Jefa",
@@ -10370,7 +10370,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Windgepeitschte Freistatt",
       "en": "Windswept Haven",
       "es": "Refugio Venteado",
@@ -10385,7 +10385,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Windgepeitschte Freistatt",
       "en": "Windswept Haven",
       "es": "Refugio Venteado",
@@ -10403,7 +10403,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Entzünden der Flamme",
       "en": "Sparking the Flame",
       "es": "Encender la Llama",
@@ -10421,7 +10421,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Feind meines Feindes: Der Fellmarschall",
       "en": "Enemy of My Enemy: The Beastmarshal",
       "es": "Enemigo de mi Enemigo: La Mariscal de las Bestias",
@@ -10439,7 +10439,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Entzünden der Flamme (Prolog)",
       "en": "Sparking the Flame (Prologue)",
       "es": "Encender la Llama (Prólogo)",
@@ -10453,7 +10453,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Weg nach vorn",
       "en": "The Way Forward",
       "es": "El Camino Hacia Adelante",
@@ -10467,7 +10467,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Windgepeitschten Freistatt",
       "en": "Claiming Windswept Haven",
       "es": "Reclamación del Refugio Venteado",
@@ -10482,7 +10482,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kleiner Sieg (Epilog)",
       "en": "Small Victory (Epilogue)",
       "es": "Pequeña victoria (Epílogo)",
@@ -10500,7 +10500,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Windgepeitschte Freistatt",
       "en": "Windswept Haven",
       "es": "Refugio Venteado",
@@ -10515,7 +10515,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Ödland",
       "en": "The Desolation",
       "es": "La Desolación",
@@ -10533,7 +10533,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geheiligter Boden: Grab der Altehrwürdigen Könige",
       "en": "Hallowed Ground: Tomb of Primeval Kings",
       "es": "Suelo Consagrado: Tumba de Reyes Primigenios",
@@ -10551,7 +10551,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Elon-Flusslande",
       "en": "Elon Riverlands",
       "es": "La Ribera del Elon",
@@ -10569,7 +10569,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Wahrheit stellen: Das Refugium",
       "en": "Facing the Truth: The Sanctum",
       "es": "Afrontando la Verdad: El Sagrario",
@@ -10584,7 +10584,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Windgepeitschten Freistatt",
       "en": "Claiming Windswept Haven",
       "es": "Reclamación del Refugio Venteado",
@@ -10599,7 +10599,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Windgepeitschte Freistatt",
       "en": "Windswept Haven",
       "es": "Refugio Venteado",
@@ -10614,7 +10614,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gottesmord",
       "en": "To Kill a God",
       "es": "Para Matar a un Dios",
@@ -10632,7 +10632,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Windgepeitschten Freistatt",
       "en": "Claiming Windswept Haven",
       "es": "Reclamación del Refugio Venteado",
@@ -10647,7 +10647,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Flammender Vorreiter",
       "en": "Blazing a Trail",
       "es": "Un Rastro en Llamas",
@@ -10665,7 +10665,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nacht der Feuer",
       "en": "Night of Fires",
       "es": "Noche de Fuegos",
@@ -10683,7 +10683,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zalamburs Schreibstube",
       "en": "Zalambur's Office",
       "es": "Oficina de Zalambur",
@@ -10701,7 +10701,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Windgepeitschte Freistatt",
       "en": "Windswept Haven",
       "es": "Refugio Venteado",
@@ -10716,7 +10716,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Windgepeitschten Freistatt",
       "en": "Claiming Windswept Haven",
       "es": "Reclamación del Refugio Venteado",
@@ -10731,7 +10731,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Abschied",
       "en": "The Departing",
       "es": "La Marcha",
@@ -10750,7 +10750,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kapitän Kiels Schreibstube",
       "en": "Captain Kiel's Office",
       "es": "Oficina de la Capitana Kiel",
@@ -10764,7 +10764,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Feind meines Feindes",
       "en": "Enemy of My Enemy",
       "es": "Enemigo de mi Enemigo",
@@ -10782,7 +10782,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Domäne Vaabi",
       "en": "Domain of Vabbi",
       "es": "Dominio de Vabbi",
@@ -10800,7 +10800,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Windgepeitschte Freistatt",
       "en": "Windswept Haven",
       "es": "Refugio Venteado",
@@ -10815,7 +10815,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Erinnerungen im Kristall",
       "en": "Crystalline Memories",
       "es": "Recuerdos Cristalinos",
@@ -10834,7 +10834,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bestie des Krieges",
       "en": "Beast of War",
       "es": "Bestia de Guerra",
@@ -10852,7 +10852,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Feind meines Feindes: Der Truppmarschall",
       "en": "Enemy of My Enemy: The Troopmarshal",
       "es": "Enemigo de mi Enemigo: El Mariscal de las Tropas",
@@ -10870,7 +10870,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die dunkle Bibliothek",
       "en": "The Dark Library",
       "es": "La Biblioteca Oscura",
@@ -10884,7 +10884,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Speermarschalls Klage",
       "en": "Spearmarshal's Lament",
       "es": "Lamento del Mariscal Lancero",
@@ -10902,7 +10902,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auge des Brandsturms",
       "en": "Eye of the Brandstorm",
       "es": "El Ojo de la Tormenta de la Marca",
@@ -10917,7 +10917,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Domäne Istan",
       "en": "Domain of Istan",
       "es": "Dominio de Istan",
@@ -10934,7 +10934,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Halle der Ketten",
       "en": "Hall of Chains",
       "es": "Sala de las Cadenas",
@@ -10948,7 +10948,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Held von Istan",
       "en": "The Hero of Istan",
       "es": "El Héroe de Istan",
@@ -10964,7 +10964,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Höhle des Sonnenspeer-Champions",
       "en": "Cave of the Sunspear Champion",
       "es": "Cueva del Campeón de los Lanceros del Sol",
@@ -10980,7 +10980,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -10994,7 +10994,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fahranur, die Erste Stadt",
       "en": "Fahranur, the First City",
       "es": "Fahranur, la Primera Ciudad",
@@ -11009,7 +11009,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Spielzeukalypse",
       "en": "Toypocalypse",
       "es": "Juguetecalipsis",
@@ -11023,7 +11023,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sandgepeitschte Inseln",
       "en": "Sandswept Isles",
       "es": "Islas Arenosas",
@@ -11041,7 +11041,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Sturmangriff",
       "en": "The Charge",
       "es": "La Carga",
@@ -11055,7 +11055,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hof",
       "en": "Courtyard",
       "es": "Patio",
@@ -11069,7 +11069,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Versuchsobjekt",
       "en": "The Test Subject",
       "es": "El Sujeto de Prueba",
@@ -11087,7 +11087,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der Sturmangriff",
       "en": "The Charge",
       "es": "La Carga",
@@ -11101,7 +11101,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "???",
       "en": "???",
       "es": "¿?",
@@ -11116,7 +11116,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "FEHLER: SIGNAL VERLOREN",
       "en": "ERROR: SIGNAL LOST",
       "es": "ERROR: SEÑAL PERDIDA",
@@ -11130,7 +11130,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vergoltene Güte",
       "en": "A Kindness Repaid",
       "es": "El bien con bien se paga",
@@ -11145,7 +11145,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Dem Wissenschaftler auf der Spur",
       "en": "Tracking the Scientist",
       "es": "Tras la pista del científico",
@@ -11160,7 +11160,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "???",
       "en": "???",
       "es": "¿?",
@@ -11174,7 +11174,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "???",
       "en": "???",
       "es": "¿?",
@@ -11188,7 +11188,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Domäne Kourna",
       "en": "Domain of Kourna",
       "es": "Dominio de Kourna",
@@ -11206,7 +11206,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Festgesetzt",
       "en": "Seized",
       "es": "Atrapados",
@@ -11221,7 +11221,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -11235,7 +11235,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gefahr erkannt, Gefahr gebannt",
       "en": "Forearmed Is Forewarned",
       "es": "Más vale prevenir que curar",
@@ -11249,7 +11249,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hereinspaziert!",
       "en": "Be My Guest",
       "es": "Estás en tu casa",
@@ -11264,7 +11264,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sonnen-Zuflucht",
       "en": "Sun's Refuge",
       "es": "Refugio del Sol",
@@ -11279,7 +11279,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Vermächtnis",
       "en": "Legacy",
       "es": "Legado",
@@ -11294,7 +11294,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sturm-Ortung",
       "en": "Storm Tracking",
       "es": "Tras la tormenta",
@@ -11308,7 +11308,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine zerschmetterte Nation",
       "en": "A Shattered Nation",
       "es": "Una nación asolada",
@@ -11323,7 +11323,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sturm-Ortung",
       "en": "Storm Tracking",
       "es": "Tras la tormenta",
@@ -11338,7 +11338,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aus der Asche: Scharfschütze",
       "en": "From the Ashes—The Deadeye",
       "es": "Desde las cenizas: La certera",
@@ -11353,7 +11353,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Jahai-Klippen",
       "en": "Jahai Bluffs",
       "es": "Acantilados de Jahai",
@@ -11371,7 +11371,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Sturm-Ortung",
       "en": "Storm Tracking",
       "es": "Tras la tormenta",
@@ -11386,7 +11386,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Mythenschreiber-Wagnis",
       "en": "Mythwright Gambit",
       "es": "Táctica del Forjador de Mitos",
@@ -11400,7 +11400,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rennbahn des Verrückten Königs",
       "en": "Mad King's Raceway",
       "es": "Circuito del Rey Loco",
@@ -11414,7 +11414,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Dschinn-Reich",
       "en": "Djinn's Dominion",
       "es": "Dominio de la Djinn",
@@ -11429,7 +11429,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geheimer Unterschlupf der Schneemänner (Einsatztrupp)",
       "en": "Secret Lair of the Snowmen (Squad)",
       "es": "Guarida Secreta de los Muñecos de Nieve (escuadrón)",
@@ -11443,7 +11443,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nachkommin & Champion",
       "en": "Scion & Champion",
       "es": "Vástago y Campeón",
@@ -11458,7 +11458,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -11472,7 +11472,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Donnerkopf-Gipfel",
       "en": "Thunderhead Peaks",
       "es": "Picos del Trueno",
@@ -11489,7 +11489,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kristalldrache",
       "en": "The Crystal Dragon",
       "es": "El Dragón de Cristal",
@@ -11503,7 +11503,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kristallblüte",
       "en": "The Crystal Blooms",
       "es": "Las Floraciones de Cristal",
@@ -11517,7 +11517,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bastion des Waffenstillstands",
       "en": "Armistice Bastion",
       "es": "Bastión del Armisticio",
@@ -11531,7 +11531,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nebel-Riss",
       "en": "Mists Rift",
       "es": "Fisura de la Niebla",
@@ -11545,7 +11545,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachensturz",
       "en": "Dragonfall",
       "es": "Dragoncaído",
@@ -11563,7 +11563,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachensturz",
       "en": "Dragonfall",
       "es": "Dragoncaído",
@@ -11578,7 +11578,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Abstieg",
       "en": "Descent",
       "es": "Descenso",
@@ -11592,7 +11592,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Das Ende",
       "en": "The End",
       "es": "Fin",
@@ -11606,7 +11606,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachenflug",
       "en": "Dragonflight",
       "es": "Vuelo Dracónico",
@@ -11620,7 +11620,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Epilog",
       "en": "Epilogue",
       "es": "Epílogo",
@@ -11634,7 +11634,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schlüssel von Ahdashim",
       "en": "The Key of Ahdashim",
       "es": "La Llave de Ahdashim",
@@ -11652,7 +11652,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachen-Gepolter-Arena",
       "en": "Dragon Bash Arena",
       "es": "Arena del Festival del Dragonicidio",
@@ -11669,7 +11669,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Überlebenskampf der Drachen-Arena",
       "en": "Dragon Arena Survival",
       "es": "Supervivencia en la Arena del Dragón",
@@ -11686,7 +11686,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Güldene Spanne",
       "en": "Auric Span",
       "es": "Franja Áurica",
@@ -11701,7 +11701,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Heimkehr",
       "en": "Coming Home",
       "es": "Regreso a Casa",
@@ -11715,7 +11715,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Grothmar-Tal",
       "en": "Grothmar Valley",
       "es": "Valle de Grothmar",
@@ -11732,7 +11732,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: \"Zittergipfel-Pass\" (öffentlich)",
       "en": "Strike Mission: Shiverpeaks Pass (Public)",
       "es": "Misión de ataque: Paso de las Picosescalofriantes (pública)",
@@ -11746,7 +11746,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: \"Zittergipfel-Pass\" (Einsatztrupp)",
       "en": "Strike Mission: Shiverpeaks Pass (Squad)",
       "es": "Misión de ataque: Paso de las Picosescalofriantes (Escuadrón)",
@@ -11760,7 +11760,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tiefer und tiefer",
       "en": "Deeper and Deeper",
       "es": "Cada vez más adentro",
@@ -11774,7 +11774,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Rüstungswettlauf",
       "en": "A Race to Arms",
       "es": "Carrera armamentística",
@@ -11788,7 +11788,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Böses Blut",
       "en": "Bad Blood",
       "es": "Mala sangre",
@@ -11802,7 +11802,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wöchentliche Angriffsmission: Knochenhäuter (Einsatztrupp)",
       "en": "Weekly Strike Mission: Boneskinner (Squad)",
       "es": "Misión de ataque de la semana: Pelahuesos (escuadrón)",
@@ -11816,7 +11816,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wöchentliche Angriffsmission: Stimme der Gefallenen und Klaue der Gefallenen (öffentlich)",
       "en": "Weekly Strike Mission: Voice of the Fallen and Claw of the Fallen (Public)",
       "es": "Misión de ataque de la semana: Voz de los Caídos y Garra de los Caídos (pública)",
@@ -11830,7 +11830,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wöchentliche Angriffsmission: Fraenir Jormags (Einsatztrupp)",
       "en": "Weekly Strike Mission: Fraenir of Jormag (Squad)",
       "es": "Misión de ataque de la semana: Fraenir de Jormag (escuadrón)",
@@ -11844,7 +11844,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Einladung",
       "en": "The Invitation",
       "es": "La Invitación",
@@ -11858,7 +11858,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Bjora-Sümpfe",
       "en": "Bjora Marches",
       "es": "Marca de Bjora",
@@ -11875,7 +11875,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wöchentliche Angriffsmission: Fraenir Jormags (öffentlich)",
       "en": "Weekly Strike Mission: Fraenir of Jormag (Public)",
       "es": "Misión de ataque de la semana: Fraenir de Jormag (pública)",
@@ -11889,7 +11889,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Was übrig bleibt",
       "en": "What's Left Behind",
       "es": "Lo que queda atrás",
@@ -11903,7 +11903,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wöchentliche Angriffsmission: Stimme der Gefallenen und Klaue der Gefallenen (Einsatztrupp)",
       "en": "Weekly Strike Mission: Voice of the Fallen and Claw of the Fallen (Squad)",
       "es": "Misión de ataque de la semana: Voz de los Caídos y Garra de los Caídos (escuadrón)",
@@ -11917,7 +11917,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Stille",
       "en": "Silence",
       "es": "Silencio",
@@ -11931,7 +11931,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Wöchentliche Angriffsmission: Knochenhäuter (öffentlich)",
       "en": "Weekly Strike Mission: Boneskinner (Public)",
       "es": "Misión de ataque de la semana: Pelahuesos (pública)",
@@ -11945,7 +11945,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geheimer Unterschlupf der Schneemänner (öffentlich)",
       "en": "Secret Lair of the Snowmen (Public)",
       "es": "Guarida Secreta de los Muñecos de Nieve (pública)",
@@ -11959,7 +11959,7 @@
     "ContinentId": 0
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Himmlische Herausforderung",
       "en": "Celestial Challenge",
       "es": "Desafío celestial",
@@ -11973,7 +11973,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Stimme in der Tiefe",
       "en": "Voice in the Deep",
       "es": "La voz de las profundidades",
@@ -11987,7 +11987,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Geister-Jagd",
       "en": "Chasing Ghosts",
       "es": "Persiguiendo fantasmas",
@@ -12004,7 +12004,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: Geflüster des Jormag (öffentlich)",
       "en": "Strike Mission: Whisper of Jormag (Public)",
       "es": "Misión de ataque: Susurro de Jormag (pública)",
@@ -12018,7 +12018,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auge des Nordens",
       "en": "Eye of the North",
       "es": "Ojo del Norte",
@@ -12035,7 +12035,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: Geflüster des Jormag (Einsatztrupp)",
       "en": "Strike Mission: Whisper of Jormag (Squad)",
       "es": "Misión de ataque: Susurro de Jormag (escuadrón)",
@@ -12049,7 +12049,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Inkarnation des Albtraums",
       "en": "The Nightmare Incarnate",
       "es": "La encarnación de la Pesadilla",
@@ -12063,7 +12063,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Stahlschmiede (öffentlich)",
       "en": "Forging Steel (Public)",
       "es": "Forja de Acero (pública)",
@@ -12077,7 +12077,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nördliche Nolan-Brutstätte",
       "en": "North Nolan Hatchery",
       "es": "Vivero de Nolan norte",
@@ -12091,7 +12091,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Klippheim",
       "en": "Cragstead",
       "es": "Paraje de Roca",
@@ -12105,7 +12105,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Düsterfels-Höhlen",
       "en": "Darkrime Delves",
       "es": "Cuevas de Escarchaoscura",
@@ -12119,7 +12119,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Stahlschmiede (Einsatztrupp)",
       "en": "Forging Steel (Squad)",
       "es": "Forja de Acero (escuadrón)",
@@ -12133,7 +12133,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Canachs Unterschlupf",
       "en": "Canach's Lair",
       "es": "La guarida de Canach",
@@ -12148,7 +12148,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auge des Nordens",
       "en": "Eye of the North",
       "es": "Ojo del Norte",
@@ -12165,7 +12165,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nieselwald-Küste",
       "en": "Drizzlewood Coast",
       "es": "Costa de Bosquellovizna",
@@ -12182,7 +12182,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Umschwung",
       "en": "Turnabout",
       "es": "Giro radical",
@@ -12198,7 +12198,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gezielte Verhandlung",
       "en": "Pointed Parley",
       "es": "Negociación peliaguda",
@@ -12214,7 +12214,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: Kalter Krieg (Einsatztrupp)",
       "en": "Strike Mission: Cold War (Squad)",
       "es": "Misión de ataque: Guerra fría (escuadrón)",
@@ -12228,7 +12228,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Brechender Stahl",
       "en": "Snapping Steel",
       "es": "Acero quebrado",
@@ -12244,7 +12244,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: Kalter Krieg (öffentlich)",
       "en": "Strike Mission: Cold War (Public)",
       "es": "Misión de ataque: Guerra fría (pública)",
@@ -12258,7 +12258,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Hinter feindlichen Linien",
       "en": "Behind Enemy Lines",
       "es": "Tras las líneas enemigas",
@@ -12275,7 +12275,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ein Volk der Charr, ein Drache, ein Champion",
       "en": "One Charr, One Dragon, One Champion",
       "es": "Un charr, un dragón, un campeón",
@@ -12292,7 +12292,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Epilog",
       "en": "Epilogue",
       "es": "Epílogo",
@@ -12306,7 +12306,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Arena des Vielfraßes",
       "en": "Arena of the Wolverine",
       "es": "La arena del Glotón",
@@ -12323,7 +12323,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Eine simple Verhandlung",
       "en": "A Simple Negotiation",
       "es": "Una negociación sencilla",
@@ -12340,7 +12340,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Fraktale der Nebel",
       "en": "Fractals of the Mists",
       "es": "Fractales de la Niebla",
@@ -12354,7 +12354,7 @@
     "ContinentId": 2
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Caledon-Wald (privat)",
       "en": "Caledon Forest (Private)",
       "es": "Bosque de Caledon (privada)",
@@ -12368,7 +12368,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Donnerkopf-Gipfel (privat)",
       "en": "Thunderhead Peaks (Private)",
       "es": "Picos del Trueno (privada)",
@@ -12382,7 +12382,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Blutstrom-Küste (öffentlich)",
       "en": "Bloodtide Coast (Public)",
       "es": "Costa Mareasangrienta (pública)",
@@ -12396,7 +12396,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schneekuhlenhöhen (privat)",
       "en": "Snowden Drifts (Private)",
       "es": "Cúmulos de Guaridanieve (privada)",
@@ -12410,7 +12410,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Schneekuhlenhöhen (öffentlich)",
       "en": "Snowden Drifts (Public)",
       "es": "Cúmulos de Guaridanieve (pública)",
@@ -12424,7 +12424,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Feuerherzhügel (öffentlich)",
       "en": "Fireheart Rise (Public)",
       "es": "Colina del Corazón de Fuego (pública)",
@@ -12438,7 +12438,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Brisban-Wildnis (privat)",
       "en": "Brisban Wildlands (Private)",
       "es": "Selvas Brisbanas (privada)",
@@ -12452,7 +12452,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Primordus erhebt sich",
       "en": "Primordus Rising",
       "es": "Primordus desatado",
@@ -12466,7 +12466,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Doric-See (öffentlich)",
       "en": "Lake Doric (Public)",
       "es": "Lago Doric (pública)",
@@ -12480,7 +12480,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Blutstrom-Küste (privat)",
       "en": "Bloodtide Coast (Private)",
       "es": "Costa Mareasangrienta (privada)",
@@ -12494,7 +12494,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Donnerkopf-Gipfel (öffentlich)",
       "en": "Thunderhead Peaks (Public)",
       "es": "Picos del Trueno (pública)",
@@ -12508,7 +12508,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gendarran-Felder (öffentlich)",
       "en": "Gendarran Fields (Public)",
       "es": "Campos de Gendarran (pública)",
@@ -12522,7 +12522,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Provinz Metrica (öffentlich)",
       "en": "Metrica Province (Public)",
       "es": "Provincia de Métrica (pública)",
@@ -12536,7 +12536,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Felder der Verwüstung (öffentlich)",
       "en": "Fields of Ruin (Public)",
       "es": "Campos de la Ruina (pública)",
@@ -12550,7 +12550,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Brisban-Wildnis (öffentlich)",
       "en": "Brisban Wildlands (Public)",
       "es": "Selvas Brisbanas (pública)",
@@ -12564,7 +12564,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Felder der Verwüstung (privat)",
       "en": "Fields of Ruin (Private)",
       "es": "Campos de la Ruina (privada)",
@@ -12578,7 +12578,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Provinz Metrica (privat)",
       "en": "Metrica Province (Private)",
       "es": "Provincia de Métrica (privada)",
@@ -12592,7 +12592,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Doric-See (privat)",
       "en": "Lake Doric (Private)",
       "es": "Lago Doric (privada)",
@@ -12606,7 +12606,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Caledon-Wald (öffentlich)",
       "en": "Caledon Forest (Public)",
       "es": "Bosque de Caledon (pública)",
@@ -12621,7 +12621,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Feuerherzhügel (privat)",
       "en": "Fireheart Rise (Private)",
       "es": "Colina del Corazón de Fuego (privada)",
@@ -12635,7 +12635,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Gendarran-Felder (privat)",
       "en": "Gendarran Fields (Private)",
       "es": "Campos de Gendarran (privada)",
@@ -12649,7 +12649,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ratsebene",
       "en": "Council Level",
       "es": "Nivel del Consejo",
@@ -12666,7 +12666,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Lauffeuer",
       "en": "Wildfire",
       "es": "Incendio incontrolado",
@@ -12682,7 +12682,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachensturm (Privater Einsatztrupp)",
       "en": "Dragonstorm (Private Squad)",
       "es": "Tormenta Dracónica (Escuadrón privado)",
@@ -12696,7 +12696,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ende des Champions",
       "en": "Champion's End",
       "es": "El Fin del Campeón",
@@ -12710,7 +12710,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachensturm (Öffentlich)",
       "en": "Dragonstorm (Public)",
       "es": "Tormenta Dracónica (pública)",
@@ -12724,7 +12724,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachensturm",
       "en": "Dragonstorm",
       "es": "Tormenta Dracónica",
@@ -12738,7 +12738,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Verdrehte Marionette (öffentlich)",
       "en": "The Twisted Marionette (Public)",
       "es": "La marioneta retorcida (pública)",
@@ -12753,7 +12753,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Verdrehte Marionette (privater Einsatztrupp)",
       "en": "The Twisted Marionette (Private Squad)",
       "es": "La marioneta retorcida (escuadrón privado)",
@@ -12768,7 +12768,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Zukunft in Jade: Kraftwerk",
       "en": "The Future in Jade: Power Plant",
       "es": "Un futuro de jade: Planta de Energía",
@@ -12783,7 +12783,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Tiefste Geheimnisse: Yong-Reaktor",
       "en": "Deepest Secrets: Yong Reactor",
       "es": "Los secretos mejor guardados: Reactor de Yong",
@@ -12797,7 +12797,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Insel der Reflexion",
       "en": "Isle of Reflection",
       "es": "Isla del Reflejo",
@@ -12812,7 +12812,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auswirkungen: Nikas Klinge",
       "en": "Fallout: Nika's Blade",
       "es": "Contratiempo: La Hoja de Nika",
@@ -12827,7 +12827,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "???",
       "en": "???",
       "es": "¿?",
@@ -12842,7 +12842,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Drachen-Ende",
       "en": "Dragon's End",
       "es": "Muerte del Dragón",
@@ -12860,7 +12860,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Insel der Reflexion",
       "en": "Isle of Reflection",
       "es": "Isla del Reflejo",
@@ -12875,7 +12875,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Alle Last der Welt: Madame Joons Anwesen",
       "en": "Weight of the World: Lady Joon's Estate",
       "es": "El peso del mundo: Mansión de Joon",
@@ -12890,7 +12890,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Arborstein",
       "en": "Arborstone",
       "es": "Piedra Arbórea",
@@ -12908,7 +12908,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der wiedergeborene Zyklus: Arborstein",
       "en": "The Cycle, Reborn: Arborstone",
       "es": "El ciclo, renacido: Piedra Arbórea",
@@ -12923,7 +12923,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Insel der Reflexion",
       "en": "Claiming the Isle of Reflection",
       "es": "Reclamación de la Isla del Reflejo",
@@ -12938,7 +12938,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: Ätherklingen-Versteck",
       "en": "Strike Mission: Aetherblade Hideout",
       "es": "Misión de ataque: Escondite Filoetéreo",
@@ -12952,7 +12952,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Alte Freunde",
       "en": "Old Friends",
       "es": "Viejos amigos",
@@ -12966,7 +12966,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Leer",
       "en": "Empty",
       "es": "Vacío",
@@ -12981,7 +12981,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Insel der Reflexion",
       "en": "Isle of Reflection",
       "es": "Isla del Reflejo",
@@ -12996,7 +12996,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Extraktionspunkt: Kommandoquartier",
       "en": "Extraction Point: Command Quarters",
       "es": "Punto de extracción: Sala de Mando",
@@ -13011,7 +13011,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: Erntetempel",
       "en": "Strike Mission: Harvest Temple",
       "es": "Misión de ataque: Templo de la Cosecha",
@@ -13025,7 +13025,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Stadt Neu-Kaineng",
       "en": "New Kaineng City",
       "es": "Ciudad de Nueva Kaineng",
@@ -13043,7 +13043,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Einzig und allein",
       "en": "The Only One",
       "es": "La única",
@@ -13058,7 +13058,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Zur Ruhe gebettet",
       "en": "Laying to Rest",
       "es": "Descanso eterno",
@@ -13073,7 +13073,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Provinz Seitung",
       "en": "Seitung Province",
       "es": "Provincia de Seitung",
@@ -13091,7 +13091,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Insel der Reflexion",
       "en": "Isle of Reflection",
       "es": "Isla del Reflejo",
@@ -13106,7 +13106,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Zukunft in Jade: Nahpui-Labor",
       "en": "The Future in Jade: Nahpui Lab",
       "es": "Un futuro de jade: Laboratorio de Nahpui",
@@ -13121,7 +13121,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ätherklingen-Armada",
       "en": "Aetherblade Armada",
       "es": "Armada filoetérea",
@@ -13135,7 +13135,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Der wiedergeborene Zyklus: Die Sackgassen-Bar",
       "en": "The Cycle, Reborn: The Dead End Bar",
       "es": "El ciclo, renacido: La taberna Callejón sin Salida",
@@ -13150,7 +13150,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aurenes Zuflucht",
       "en": "Aurene's Sanctuary",
       "es": "Santuario de Aurene",
@@ -13165,7 +13165,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: Xunlai-Jade-Schrottplatz",
       "en": "Strike Mission: Xunlai Jade Junkyard",
       "es": "Misión de ataque: Chatarrería de Xunlai Jade",
@@ -13179,7 +13179,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Angriffsmission: Kaineng-Aussichtspunkt",
       "en": "Strike Mission: Kaineng Overlook",
       "es": "Misión de ataque: Mirador de Kaineng",
@@ -13193,7 +13193,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Die Echowald-Wildnis",
       "en": "The Echovald Wilds",
       "es": "Las Selvas de Echovald",
@@ -13211,7 +13211,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ministerium der Sicherheit: Hauptbüro",
       "en": "Ministry of Security: Main Office",
       "es": "Ministerio de Seguridad: Sede Principal",
@@ -13226,7 +13226,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kleine Umwege: Docks von Kaineng",
       "en": "The Scenic Route: Kaineng Docks",
       "es": "La ruta panorámica: Puerto de Kaineng",
@@ -13241,7 +13241,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Insel der Reflexion",
       "en": "Claiming the Isle of Reflection",
       "es": "Reclamación de la Isla del Reflejo",
@@ -13256,7 +13256,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Haftanstalt",
       "en": "Detention Facility",
       "es": "Instalación de detención",
@@ -13271,7 +13271,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Aurenes Zuflucht",
       "en": "Aurene's Sanctuary",
       "es": "Santuario de Aurene",
@@ -13286,7 +13286,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Insel der Reflexion",
       "en": "Claiming the Isle of Reflection",
       "es": "Reclamación de la Isla del Reflejo",
@@ -13301,7 +13301,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Kaiserin Ihns Hof",
       "en": "Empress Ihn's Court",
       "es": "Corte de la emperatriz Ihn",
@@ -13316,7 +13316,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Versteck von Zen Daijun",
       "en": "Zen Daijun Hideaway",
       "es": "Escondrijo de Zen Daijun",
@@ -13331,7 +13331,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Insel der Reflexion",
       "en": "Isle of Reflection",
       "es": "Isla del Reflejo",
@@ -13346,7 +13346,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Beanspruchung der Insel der Reflexion",
       "en": "Claiming the Isle of Reflection",
       "es": "Reclamación de la Isla del Reflejo",
@@ -13361,7 +13361,7 @@
     "ContinentId": 1
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Auswirkungen: Arborstein",
       "en": "Fallout: Arborstone",
       "es": "Contratiempo: Piedra Arbórea",

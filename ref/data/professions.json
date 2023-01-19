@@ -1,6 +1,6 @@
 [
   {
-    "_Names": {
+    "Names": {
       "de": "Wächter",
       "en": "Guardian",
       "es": "Guardián",
@@ -11,7 +11,7 @@
     "Name": "Gardien"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Krieger",
       "en": "Warrior",
       "es": "Guerrero",
@@ -22,7 +22,7 @@
     "Name": "Guerrier"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Ingenieur",
       "en": "Engineer",
       "es": "Ingeniero",
@@ -33,7 +33,7 @@
     "Name": "Ingénieur"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Waldläufer",
       "en": "Ranger",
       "es": "Guardabosques",
@@ -44,7 +44,7 @@
     "Name": "Rôdeur"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Dieb",
       "en": "Thief",
       "es": "Ladrón",
@@ -55,7 +55,7 @@
     "Name": "Voleur"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Elementarmagier",
       "en": "Elementalist",
       "es": "Elementalista",
@@ -66,7 +66,7 @@
     "Name": "Élémentaliste"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Mesmer",
       "en": "Mesmer",
       "es": "Hipnotizador",
@@ -77,7 +77,7 @@
     "Name": "Envoûteur"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Nekromant",
       "en": "Necromancer",
       "es": "Nigromante",
@@ -88,7 +88,7 @@
     "Name": "Nécromant"
   },
   {
-    "_Names": {
+    "Names": {
       "de": "Widergänger",
       "en": "Revenant",
       "es": "Retornado",

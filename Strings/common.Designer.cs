@@ -19,7 +19,7 @@ namespace Kenedia.Modules.Characters.Strings {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class common {
@@ -70,6 +70,33 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add {0}.
+        /// </summary>
+        internal static string AddItem {
+            get {
+                return ResourceManager.GetString("AddItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust {0} settings and tags!.
+        /// </summary>
+        internal static string AdjustSettings {
+            get {
+                return ResourceManager.GetString("AdjustSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any {0}.
+        /// </summary>
+        internal static string AnyProfession {
+            get {
+                return ResourceManager.GetString("AnyProfession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Armorsmith.
         /// </summary>
         internal static string Armorsmith {
@@ -84,6 +111,33 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string Artificer {
             get {
                 return ResourceManager.GetString("Artificer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ascending.
+        /// </summary>
+        internal static string Ascending {
+            get {
+                return ResourceManager.GetString("Ascending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Fix.
+        /// </summary>
+        internal static string AutoFix {
+            get {
+                return ResourceManager.GetString("AutoFix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When failing to swap to a character automatically go through the characters to fix their order..
+        /// </summary>
+        internal static string AutoFix_Tooltip {
+            get {
+                return ResourceManager.GetString("AutoFix_Tooltip", resourceCulture);
             }
         }
         
@@ -107,11 +161,38 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Best results with Interface set to &apos;Larger&apos;!.
+        /// </summary>
+        internal static string BestResultLargerDisclaimer {
+            get {
+                return ResourceManager.GetString("BestResultLargerDisclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birthday.
         /// </summary>
         internal static string Birthday {
             get {
                 return ResourceManager.GetString("Birthday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It was {0}&apos;s birthday! They are now {1} years old!.
+        /// </summary>
+        internal static string Birthday_Text {
+            get {
+                return ResourceManager.GetString("Birthday_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom Offset.
+        /// </summary>
+        internal static string BottomOffset {
+            get {
+                return ResourceManager.GetString("BottomOffset", resourceCulture);
             }
         }
         
@@ -143,6 +224,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Capture Images.
+        /// </summary>
+        internal static string CaptureImages {
+            get {
+                return ResourceManager.GetString("CaptureImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saved as {0}!.
         /// </summary>
         internal static string CaptureNotification {
@@ -152,11 +242,65 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Capture Potraits.
+        /// </summary>
+        internal static string CapturePotraits {
+            get {
+                return ResourceManager.GetString("CapturePotraits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character.
+        /// </summary>
+        internal static string Character {
+            get {
+                return ResourceManager.GetString("Character", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character Name.
+        /// </summary>
+        internal static string CharacterName {
+            get {
+                return ResourceManager.GetString("CharacterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Characters.
         /// </summary>
         internal static string Characters {
             get {
                 return ResourceManager.GetString("Characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Characters fixed!.
+        /// </summary>
+        internal static string CharactersFixed {
+            get {
+                return ResourceManager.GetString("CharactersFixed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check {0}.
+        /// </summary>
+        internal static string CheckItem {
+            get {
+                return ResourceManager.GetString("CheckItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check Only Max Crafting.
+        /// </summary>
+        internal static string CheckOnlyMaxCrafting {
+            get {
+                return ResourceManager.GetString("CheckOnlyMaxCrafting", resourceCulture);
             }
         }
         
@@ -179,11 +323,38 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear Filters.
+        /// </summary>
+        internal static string ClearFilters {
+            get {
+                return ResourceManager.GetString("ClearFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core {0}.
+        /// </summary>
+        internal static string CoreProfession {
+            get {
+                return ResourceManager.GetString("CoreProfession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not find any {0} with name {1}.
+        /// </summary>
+        internal static string CouldNotFindNamedItem {
+            get {
+                return ResourceManager.GetString("CouldNotFindNamedItem", resourceCulture);
             }
         }
         
@@ -202,6 +373,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string CreateImages {
             get {
                 return ResourceManager.GetString("CreateImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        internal static string Custom {
+            get {
+                return ResourceManager.GetString("Custom", resourceCulture);
             }
         }
         
@@ -233,6 +413,42 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete {0}.
+        /// </summary>
+        internal static string DeleteItem {
+            get {
+                return ResourceManager.GetString("DeleteItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descending.
+        /// </summary>
+        internal static string Descending {
+            get {
+                return ResourceManager.GetString("Descending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detailed Tooltip.
+        /// </summary>
+        internal static string DetailedTooltip {
+            get {
+                return ResourceManager.GetString("DetailedTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display.
+        /// </summary>
+        internal static string Display {
+            get {
+                return ResourceManager.GetString("Display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enables double clicking the character in the character list to login to that character..
         /// </summary>
         internal static string DoubleClickToEnter_Description {
@@ -256,6 +472,78 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string DoubleClickToSwap {
             get {
                 return ResourceManager.GetString("DoubleClickToSwap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag this control so the yellow frames contain your character portraits.
+        /// </summary>
+        internal static string DragOverCharacter_Instructions {
+            get {
+                return ResourceManager.GetString("DragOverCharacter_Instructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit OCR Region.
+        /// </summary>
+        internal static string EditOCR {
+            get {
+                return ResourceManager.GetString("EditOCR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle the OCR Region edit control.
+        /// </summary>
+        internal static string EditOCR_Tooltip {
+            get {
+                return ResourceManager.GetString("EditOCR_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty Column.
+        /// </summary>
+        internal static string EmptyColumn {
+            get {
+                return ResourceManager.GetString("EmptyColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pixel Column which does not contain any &apos;white&apos;ish&apos; pixels.
+        /// </summary>
+        internal static string EmptyColumn_Tooltip {
+            get {
+                return ResourceManager.GetString("EmptyColumn_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty Columns.
+        /// </summary>
+        internal static string EmptyColumns {
+            get {
+                return ResourceManager.GetString("EmptyColumns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Threshold of how many pixel columns are allowed to contain no content.
+        /// </summary>
+        internal static string EmptyColumns_Tooltip {
+            get {
+                return ResourceManager.GetString("EmptyColumns_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of columns.
+        /// </summary>
+        internal static string EmptyColumnsThreshold_Tooltip {
+            get {
+                return ResourceManager.GetString("EmptyColumnsThreshold_Tooltip", resourceCulture);
             }
         }
         
@@ -305,11 +593,29 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to fetch characters from the API..
+        /// </summary>
+        internal static string Error_FailedAPIFetch {
+            get {
+                return ResourceManager.GetString("Error_FailedAPIFetch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This API key does not have the required permissions..
         /// </summary>
         internal static string Error_InvalidPermissions {
             get {
                 return ResourceManager.GetString("Error_InvalidPermissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude matches.
+        /// </summary>
+        internal static string ExcludeMatches {
+            get {
+                return ResourceManager.GetString("ExcludeMatches", resourceCulture);
             }
         }
         
@@ -328,6 +634,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string FadeOut_DisplayName {
             get {
                 return ResourceManager.GetString("FadeOut_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        internal static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
             }
         }
         
@@ -351,6 +666,33 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter Toggles.
+        /// </summary>
+        internal static string FilterToggles {
+            get {
+                return ResourceManager.GetString("FilterToggles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fix Characters.
+        /// </summary>
+        internal static string FixCharacters {
+            get {
+                return ResourceManager.GetString("FixCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perform a OCR through all your characters to update their current order to match the character selection.
+        /// </summary>
+        internal static string FixCharacters_Tooltip {
+            get {
+                return ResourceManager.GetString("FixCharacters_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to When toggling the main menu to show, automatically focus the search field.
         /// </summary>
         internal static string FocusFilter_Description {
@@ -369,11 +711,74 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        internal static string Folder {
+            get {
+                return ResourceManager.GetString("Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General Settings &amp; Windows.
+        /// </summary>
+        internal static string GeneralAndWindows {
+            get {
+                return ResourceManager.GetString("GeneralAndWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hidden.
+        /// </summary>
+        internal static string Hidden {
+            get {
+                return ResourceManager.GetString("Hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Huntsman.
         /// </summary>
         internal static string Huntsman {
             get {
                 return ResourceManager.GetString("Huntsman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignored Part.
+        /// </summary>
+        internal static string IgnoredPart {
+            get {
+                return ResourceManager.GetString("IgnoredPart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignored part of the image due to the empty column threshold.
+        /// </summary>
+        internal static string IgnoredPart_Tooltip {
+            get {
+                return ResourceManager.GetString("IgnoredPart_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include matches.
+        /// </summary>
+        internal static string IncludeMatches {
+            get {
+                return ResourceManager.GetString("IncludeMatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Settings.
+        /// </summary>
+        internal static string ItemSettings {
+            get {
+                return ResourceManager.GetString("ItemSettings", resourceCulture);
             }
         }
         
@@ -387,11 +792,29 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Login.
+        /// </summary>
+        internal static string LastLogin {
+            get {
+                return ResourceManager.GetString("LastLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leatherworker.
         /// </summary>
         internal static string Leatherworker {
             get {
                 return ResourceManager.GetString("Leatherworker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left Offset.
+        /// </summary>
+        internal static string LeftOffset {
+            get {
+                return ResourceManager.GetString("LeftOffset", resourceCulture);
             }
         }
         
@@ -423,6 +846,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log in with &apos;{0}&apos;!.
+        /// </summary>
+        internal static string LoginWith {
+            get {
+                return ResourceManager.GetString("LoginWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
         internal static string Logout {
@@ -450,6 +882,24 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match all filter.
+        /// </summary>
+        internal static string MatchAllFilter {
+            get {
+                return ResourceManager.GetString("MatchAllFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match any filter.
+        /// </summary>
+        internal static string MatchAnyFilter {
+            get {
+                return ResourceManager.GetString("MatchAnyFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A tool to easily switch characters even with a lot of them!
         ///This will require an API-Key with permissions at least for the &apos;characters&apos; endpoint!.
         /// </summary>
@@ -460,11 +910,47 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Crafting Profession.
         /// </summary>
         internal static string NoCraftingProfession {
             get {
                 return ResourceManager.GetString("NoCraftingProfession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move and Size the yellow frame to contain only the character name row in the character selection!.
+        /// </summary>
+        internal static string OCR_Instructions {
+            get {
+                return ResourceManager.GetString("OCR_Instructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offset.
+        /// </summary>
+        internal static string Offset {
+            get {
+                return ResourceManager.GetString("Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The offset numbers correspond to the region of the box below that is captured for OCR. In order: Left, Top, Right, Bottom. Increasing the numbers makes the capture area smaller. Ideally, you want the values set so that you cannot see any yellow box in the preview above..
+        /// </summary>
+        internal static string Offset_Tooltip {
+            get {
+                return ResourceManager.GetString("Offset_Tooltip", resourceCulture);
             }
         }
         
@@ -487,6 +973,60 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open {0}.
+        /// </summary>
+        internal static string OpenItem {
+            get {
+                return ResourceManager.GetString("OpenItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Potrait Folder.
+        /// </summary>
+        internal static string OpenPortraitFolder {
+            get {
+                return ResourceManager.GetString("OpenPortraitFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        internal static string Order {
+            get {
+                return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potrait Frame.
+        /// </summary>
+        internal static string PotraitFrame {
+            get {
+                return ResourceManager.GetString("PotraitFrame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potrait Gap.
+        /// </summary>
+        internal static string PotraitGap {
+            get {
+                return ResourceManager.GetString("PotraitGap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potrait Size.
+        /// </summary>
+        internal static string PotraitSize {
+            get {
+                return ResourceManager.GetString("PotraitSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profession.
         /// </summary>
         internal static string Profession {
@@ -505,11 +1045,38 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresh API.
+        /// </summary>
+        internal static string RefreshAPI {
+            get {
+                return ResourceManager.GetString("RefreshAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refresh Images.
         /// </summary>
         internal static string RefreshImages {
             get {
                 return ResourceManager.GetString("RefreshImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove {0}.
+        /// </summary>
+        internal static string RemoveItem {
+            get {
+                return ResourceManager.GetString("RemoveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right Offset.
+        /// </summary>
+        internal static string RightOffset {
+            get {
+                return ResourceManager.GetString("RightOffset", resourceCulture);
             }
         }
         
@@ -541,11 +1108,11 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for ....
+        ///   Looks up a localized string similar to Search ....
         /// </summary>
-        internal static string SearchFor {
+        internal static string Search {
             get {
-                return ResourceManager.GetString("SearchFor", resourceCulture);
+                return ResourceManager.GetString("Search", resourceCulture);
             }
         }
         
@@ -592,6 +1159,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Characters with Birthday Gifts.
+        /// </summary>
+        internal static string Show_Birthday_Tooltip {
+            get {
+                return ResourceManager.GetString("Show_Birthday_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Corner Icon.
         /// </summary>
         internal static string ShowCorner_Name {
@@ -628,11 +1204,65 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Hidden Characters.
+        /// </summary>
+        internal static string ShowHidden_Tooltip {
+            get {
+                return ResourceManager.GetString("ShowHidden_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show/Hides {0} in the character list..
         /// </summary>
         internal static string ShowHide_Tooltip {
             get {
                 return ResourceManager.GetString("ShowHide_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show in List.
+        /// </summary>
+        internal static string ShowInList {
+            get {
+                return ResourceManager.GetString("ShowInList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show {0}.
+        /// </summary>
+        internal static string ShowItem {
+            get {
+                return ResourceManager.GetString("ShowItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Only Max Crafting.
+        /// </summary>
+        internal static string ShowOnlyMaxCrafting {
+            get {
+                return ResourceManager.GetString("ShowOnlyMaxCrafting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort By {0}.
+        /// </summary>
+        internal static string SortBy {
+            get {
+                return ResourceManager.GetString("SortBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort {0}.
+        /// </summary>
+        internal static string SortItem {
+            get {
+                return ResourceManager.GetString("SortItem", resourceCulture);
             }
         }
         
@@ -692,6 +1322,33 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tag.
+        /// </summary>
+        internal static string Tag {
+            get {
+                return ResourceManager.GetString("Tag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PvE, WvW, Main, ERP ....
+        /// </summary>
+        internal static string Tag_Placeholder {
+            get {
+                return ResourceManager.GetString("Tag_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        internal static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tailor.
         /// </summary>
         internal static string Tailor {
@@ -719,11 +1376,38 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle Potrait Capture.
+        /// </summary>
+        internal static string TogglePortraitCapture {
+            get {
+                return ResourceManager.GetString("TogglePortraitCapture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle the Potrait Capture control.
+        /// </summary>
+        internal static string TogglePortraitCapture_Tooltip {
+            get {
+                return ResourceManager.GetString("TogglePortraitCapture_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show/Hide hidden Characters.
         /// </summary>
         internal static string ToggleVisible {
             get {
                 return ResourceManager.GetString("ToggleVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Offset.
+        /// </summary>
+        internal static string TopOffset {
+            get {
+                return ResourceManager.GetString("TopOffset", resourceCulture);
             }
         }
         
@@ -791,11 +1475,20 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use Spec Icon.
+        ///   Looks up a localized string similar to Use OCR.
         /// </summary>
-        internal static string UseDefault {
+        internal static string UseOCR {
             get {
-                return ResourceManager.GetString("UseDefault", resourceCulture);
+                return ResourceManager.GetString("UseOCR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use &apos;Optical Character Recognition&apos; (OCR) to confirm the character name..
+        /// </summary>
+        internal static string UseOCR_Tooltip {
+            get {
+                return ResourceManager.GetString("UseOCR_Tooltip", resourceCulture);
             }
         }
         
@@ -814,6 +1507,24 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string Weaponsmith {
             get {
                 return ResourceManager.GetString("Weaponsmith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windowed Mode.
+        /// </summary>
+        internal static string WindowedMode {
+            get {
+                return ResourceManager.GetString("WindowedMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is the game set to Window Mode?.
+        /// </summary>
+        internal static string WindowedMode_Tooltip {
+            get {
+                return ResourceManager.GetString("WindowedMode_Tooltip", resourceCulture);
             }
         }
         

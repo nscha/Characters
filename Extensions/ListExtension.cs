@@ -1,4 +1,4 @@
-﻿namespace Kenedia.Modules.Characters
+﻿namespace Kenedia.Modules.Characters.Extensions
 {
     using System;
     using System.Collections.Generic;

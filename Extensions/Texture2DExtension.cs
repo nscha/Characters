@@ -1,4 +1,4 @@
-﻿namespace Kenedia.Modules.Characters
+﻿namespace Kenedia.Modules.Characters.Extensions
 {
     using System.IO;
     using Microsoft.Xna.Framework.Graphics;

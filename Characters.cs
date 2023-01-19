@@ -14,14 +14,16 @@
     using Blish_HUD.Modules.Managers;
     using Blish_HUD.Settings;
     using Gw2Sharp.WebApi.V2.Models;
-    using Kenedia.Modules.Characters.Classes;
-    using Kenedia.Modules.Characters.Classes.Classes.UI_Controls;
-    using Kenedia.Modules.Characters.Classes.MainWindow;
+    using Kenedia.Modules.Characters.Controls;
+    using Kenedia.Modules.Characters.Enums;
+    using Kenedia.Modules.Characters.Models;
+    using Kenedia.Modules.Characters.Services;
+    using Kenedia.Modules.Characters.Views;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
     using Newtonsoft.Json;
-    using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
-    using static Kenedia.Modules.Characters.Classes.WindowsUtil.WindowsUtil;
+    using static Kenedia.Modules.Characters.Services.TextureManager;
+    using static Kenedia.Modules.Characters.Utility.WindowsUtil.WindowsUtil;
     using Point = Microsoft.Xna.Framework.Point;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -143,6 +145,7 @@
 
         public void OnLanguageChanged(object sender, EventArgs e)
         {
+            this.RebuildUI();
             this.LanguageChanged?.Invoke(this, EventArgs.Empty);
         }
 
@@ -381,12 +384,14 @@
             this.Settings = new SettingsModel(settings);
             this.Settings.ShowCornerIcon.SettingChanged += this.ShowCornerIcon_SettingChanged;
 
+#if DEBUG
             this.ReloadKey = settings.DefineSetting(
                 nameof(this.ReloadKey),
                 new Blish_HUD.Input.KeyBinding(ModifierKeys.Alt, Keys.R));
 
             this.ReloadKey.Value.Enabled = true;
             this.ReloadKey.Value.Activated += this.ReloadKey_Activated;
+#endif
         }
 
         protected override void Initialize()
@@ -516,11 +521,26 @@
 
         private void ReloadKey_Activated(object sender, EventArgs e)
         {
-            this.MainWindow?.Dispose();
-            this.PotraitCapture?.Dispose();
-            this.OCR?.Dispose();
-            this.CreateUI(true);
+            this.RebuildUI();
             this.MainWindow?.ToggleWindow();
+        }
+
+        private void RebuildUI()
+        {
+            if (this.MainWindow != null)
+            {
+                var shown = this.MainWindow.Visible;
+
+                this.MainWindow?.Dispose();
+                this.PotraitCapture?.Dispose();
+                this.OCR?.Dispose();
+                this.CreateUI(true);
+
+                if (shown)
+                {
+                    this.MainWindow?.Show();
+                }
+            }
         }
 
         private void Tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

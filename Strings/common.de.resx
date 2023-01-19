@@ -279,9 +279,6 @@ Dies erfordert einen API-Schlüssel mit Berechtigungen zumindest für den Endpun
   <data name="Scribe" xml:space="preserve">
     <value>Schreiber</value>
   </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Suche nach ...</value>
-  </data>
   <data name="SearchGuide" xml:space="preserve">
     <value>-c Handwerklicher Beruf
 -p Beruf/Spezialisierung
@@ -317,9 +314,6 @@ Dies erfordert einen API-Schlüssel mit Berechtigungen zumindest für den Endpun
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Spezialisierung</value>
-  </data>
-  <data name="SpecIcon" xml:space="preserve">
-    <value>Spezifikationssymbol</value>
   </data>
   <data name="SwapDelay_Description" xml:space="preserve">
     <value>Durchschnittliche Ladezeit von Ingame bis zur Charakterauswahl.
@@ -378,5 +372,248 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   </data>
   <data name="Years" xml:space="preserve">
     <value>Jahre</value>
+  </data>
+  <data name="WindowedMode" xml:space="preserve">
+    <value>Fenstermodus</value>
+  </data>
+  <data name="AutoFix_Tooltip" xml:space="preserve">
+    <value>Wenn Sie nicht zu einem Zeichen wechseln können, gehen Sie automatisch die Zeichen durch, um ihre Reihenfolge festzulegen.</value>
+  </data>
+  <data name="UseOCR_Tooltip" xml:space="preserve">
+    <value>Verwenden Sie die "Optische Zeichenerkennung" (OCR), um den Zeichennamen zu bestätigen.</value>
+  </data>
+  <data name="UseOCR" xml:space="preserve">
+    <value>OCR verwenden</value>
+  </data>
+  <data name="TopOffset" xml:space="preserve">
+    <value>Oberer Versatz</value>
+  </data>
+  <data name="TogglePortraitCapture_Tooltip" xml:space="preserve">
+    <value>Schalten Sie das Steuerelement "Potrait Capture" um</value>
+  </data>
+  <data name="EditOCR_Tooltip" xml:space="preserve">
+    <value>Schalten Sie das Steuerelement OCR Region editieren um</value>
+  </data>
+  <data name="TogglePortraitCapture" xml:space="preserve">
+    <value>Potrait Capture umschalten</value>
+  </data>
+  <data name="EmptyColumns_Tooltip" xml:space="preserve">
+    <value>Schwellenwert für die Anzahl der Pixelspalten, die keinen Inhalt enthalten dürfen</value>
+  </data>
+  <data name="Offset_Tooltip" xml:space="preserve">
+    <value>Die Offset-Zahlen entsprechen dem Bereich des unteren Kastens, der für die OCR erfasst wird. In dieser Reihenfolge: Links, Oben, Rechts, Unten. Durch Erhöhen der Zahlen wird der Erfassungsbereich kleiner. Idealerweise stellen Sie die Werte so ein, dass Sie in der Vorschau oben keinen gelben Kasten sehen.</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Markierungen</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Sortieren nach {0}</value>
+  </data>
+  <data name="SortItem" xml:space="preserve">
+    <value>Sortieren {0}</value>
+  </data>
+  <data name="ShowOnlyMaxCrafting" xml:space="preserve">
+    <value>Nur Max Crafting anzeigen</value>
+  </data>
+  <data name="ShowInList" xml:space="preserve">
+    <value>In Liste anzeigen</value>
+  </data>
+  <data name="ShowHidden_Tooltip" xml:space="preserve">
+    <value>Versteckte Charaktere anzeigen</value>
+  </data>
+  <data name="Show_Birthday_Tooltip" xml:space="preserve">
+    <value>Charaktere mit Geburtstagsgeschenken anzeigen</value>
+  </data>
+  <data name="ShowItem" xml:space="preserve">
+    <value>Zeige {0}</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Suchen ...</value>
+  </data>
+  <data name="RightOffset" xml:space="preserve">
+    <value>Rechtsversatz</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Lösche {0}</value>
+  </data>
+  <data name="RefreshAPI" xml:space="preserve">
+    <value>API aktualisieren</value>
+  </data>
+  <data name="Tag_Placeholder" xml:space="preserve">
+    <value>PvE, WvW, Hauptcharacter, ERP ...</value>
+  </data>
+  <data name="PotraitSize" xml:space="preserve">
+    <value>Potrait Größe</value>
+  </data>
+  <data name="PotraitGap" xml:space="preserve">
+    <value>Potrait Lücke</value>
+  </data>
+  <data name="PotraitFrame" xml:space="preserve">
+    <value>Potrait-Rahmen</value>
+  </data>
+  <data name="EmptyColumn_Tooltip" xml:space="preserve">
+    <value>Pixelspalte, die keine 'weißen' Pixel enthält</value>
+  </data>
+  <data name="FixCharacters_Tooltip" xml:space="preserve">
+    <value>Führt eine OCR durch alle eure Charaktere durch, um ihre aktuelle Reihenfolge zu aktualisieren, damit sie mit der Charakterauswahl übereinstimmt</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Reihenfolge</value>
+  </data>
+  <data name="OpenPortraitFolder" xml:space="preserve">
+    <value>Potrait-Ordner öffnen</value>
+  </data>
+  <data name="OpenItem" xml:space="preserve">
+    <value>Öffnen {0}</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Versatz</value>
+  </data>
+  <data name="EmptyColumnsThreshold_Tooltip" xml:space="preserve">
+    <value>Anzahl der Spalten</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="OCR_Instructions" xml:space="preserve">
+    <value>Verschiebe und vergrößere den gelben Rahmen so, dass er nur die Zeile mit dem Zeichennamen in der Zeichenauswahl enthält!</value>
+  </data>
+  <data name="MatchAnyFilter" xml:space="preserve">
+    <value>Entspricht einem beliebigen Filter</value>
+  </data>
+  <data name="MatchAllFilter" xml:space="preserve">
+    <value>Mit allen Filtern übereinstimmen</value>
+  </data>
+  <data name="LoginWith" xml:space="preserve">
+    <value>Anmelden mit '{0}'!</value>
+  </data>
+  <data name="LeftOffset" xml:space="preserve">
+    <value>Linker Versatz</value>
+  </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Letzte Anmeldung</value>
+  </data>
+  <data name="Birthday_Text" xml:space="preserve">
+    <value>Es war {0}s Geburtstag! Sie sind jetzt {1} Jahre alt!</value>
+  </data>
+  <data name="WindowedMode_Tooltip" xml:space="preserve">
+    <value>Ist das Spiel auf Fenstermodus eingestellt?</value>
+  </data>
+  <data name="IncludeMatches" xml:space="preserve">
+    <value>Treffer einbeziehen</value>
+  </data>
+  <data name="IgnoredPart_Tooltip" xml:space="preserve">
+    <value>Ein Teil des Bildes wurde aufgrund des Schwellenwertes für leere Spalten ignoriert</value>
+  </data>
+  <data name="IgnoredPart" xml:space="preserve">
+    <value>Ignorierter Teil</value>
+  </data>
+  <data name="Hidden" xml:space="preserve">
+    <value>Versteckt</value>
+  </data>
+  <data name="GeneralAndWindows" xml:space="preserve">
+    <value>Allgemeine Einstellungen &amp; Fenster</value>
+  </data>
+  <data name="Folder" xml:space="preserve">
+    <value>Ordner</value>
+  </data>
+  <data name="FixCharacters" xml:space="preserve">
+    <value>Fixe Charaktere</value>
+  </data>
+  <data name="FilterToggles" xml:space="preserve">
+    <value>Filter Umschaltknöpfe</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Error_FailedAPIFetch" xml:space="preserve">
+    <value>Es konnten keine Charaktere von der API abgerufen werden.</value>
+  </data>
+  <data name="ExcludeMatches" xml:space="preserve">
+    <value>Treffer ausschließen</value>
+  </data>
+  <data name="EmptyColumns" xml:space="preserve">
+    <value>Leere Spalten</value>
+  </data>
+  <data name="EmptyColumn" xml:space="preserve">
+    <value>Leere Spalte</value>
+  </data>
+  <data name="EditOCR" xml:space="preserve">
+    <value>OCR-Bereich bearbeiten</value>
+  </data>
+  <data name="DragOverCharacter_Instructions" xml:space="preserve">
+    <value>Ziehen Sie dieses Steuerelement so, dass die gelben Rahmen Ihre Zeichenporträts enthalten</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Anzeige</value>
+  </data>
+  <data name="DetailedTooltip" xml:space="preserve">
+    <value>Detaillierter Tooltip</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Absteigend</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>{0} löschen</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Benutzerdefiniert</value>
+  </data>
+  <data name="CouldNotFindNamedItem" xml:space="preserve">
+    <value>Konnte keine {0} mit Namen {1} finden</value>
+  </data>
+  <data name="CoreProfession" xml:space="preserve">
+    <value>Kern {0}</value>
+  </data>
+  <data name="ClearFilters" xml:space="preserve">
+    <value>Filter löschen</value>
+  </data>
+  <data name="CheckOnlyMaxCrafting" xml:space="preserve">
+    <value>Nur Max Handwerk prüfen</value>
+  </data>
+  <data name="CheckItem" xml:space="preserve">
+    <value>{0} prüfen</value>
+  </data>
+  <data name="CharactersFixed" xml:space="preserve">
+    <value>Charaktere korrigiert!</value>
+  </data>
+  <data name="CharacterName" xml:space="preserve">
+    <value>Charakter Name</value>
+  </data>
+  <data name="Character" xml:space="preserve">
+    <value>Charakter</value>
+  </data>
+  <data name="CapturePotraits" xml:space="preserve">
+    <value>Porträts aufnehmen</value>
+  </data>
+  <data name="CaptureImages" xml:space="preserve">
+    <value>Bilder aufnehmen</value>
+  </data>
+  <data name="BottomOffset" xml:space="preserve">
+    <value>Unterer Versatz</value>
+  </data>
+  <data name="BestResultLargerDisclaimer" xml:space="preserve">
+    <value>Die besten Ergebnisse werden erzielt, wenn die Benutzeroberflächengröße auf 'Größer' eingestellt ist!</value>
+  </data>
+  <data name="AutoFix" xml:space="preserve">
+    <value>Auto-Fix</value>
+  </data>
+  <data name="Ascending" xml:space="preserve">
+    <value>Aufsteigend</value>
+  </data>
+  <data name="AnyProfession" xml:space="preserve">
+    <value>Beliebige {0}</value>
+  </data>
+  <data name="AdjustSettings" xml:space="preserve">
+    <value>Passen Sie {0} Einstellungen und Tags an!</value>
+  </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>{0} hinzufügen</value>
+  </data>
+  <data name="ItemSettings" xml:space="preserve">
+    <value>{0} Einstellungen</value>
   </data>
 </root>

@@ -120,11 +120,29 @@
   <data name="Activated" xml:space="preserve">
     <value>activated</value>
   </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Add {0}</value>
+  </data>
+  <data name="AdjustSettings" xml:space="preserve">
+    <value>Adjust {0} settings and tags!</value>
+  </data>
+  <data name="AnyProfession" xml:space="preserve">
+    <value>Any {0}</value>
+  </data>
   <data name="Armorsmith" xml:space="preserve">
     <value>Armorsmith</value>
   </data>
   <data name="Artificer" xml:space="preserve">
     <value>Artificer</value>
+  </data>
+  <data name="Ascending" xml:space="preserve">
+    <value>Ascending</value>
+  </data>
+  <data name="AutoFix" xml:space="preserve">
+    <value>Auto Fix</value>
+  </data>
+  <data name="AutoFix_Tooltip" xml:space="preserve">
+    <value>When failing to swap to a character automatically go through the characters to fix their order.</value>
   </data>
   <data name="AutoLogin_Description" xml:space="preserve">
     <value>If enabled on the first load of Blish and beeing in character selection the module enters the game. After entering the game it will wait until the MumbleLink and API Token is fully loaded.
@@ -133,8 +151,17 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="AutoLogin_DisplayName" xml:space="preserve">
     <value>Auto Login to selected Character</value>
   </data>
+  <data name="BestResultLargerDisclaimer" xml:space="preserve">
+    <value>Best results with Interface set to 'Larger'!</value>
+  </data>
   <data name="Birthday" xml:space="preserve">
     <value>Birthday</value>
+  </data>
+  <data name="Birthday_Text" xml:space="preserve">
+    <value>It was {0}'s birthday! They are now {1} years old!</value>
+  </data>
+  <data name="BottomOffset" xml:space="preserve">
+    <value>Bottom Offset</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -145,11 +172,32 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="CaptureAll" xml:space="preserve">
     <value>Capture All</value>
   </data>
+  <data name="CaptureImages" xml:space="preserve">
+    <value>Capture Images</value>
+  </data>
   <data name="CaptureNotification" xml:space="preserve">
     <value>Saved as {0}!</value>
   </data>
+  <data name="CapturePotraits" xml:space="preserve">
+    <value>Capture Potraits</value>
+  </data>
+  <data name="Character" xml:space="preserve">
+    <value>Character</value>
+  </data>
+  <data name="CharacterName" xml:space="preserve">
+    <value>Character Name</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Characters</value>
+  </data>
+  <data name="CharactersFixed" xml:space="preserve">
+    <value>Characters fixed!</value>
+  </data>
+  <data name="CheckItem" xml:space="preserve">
+    <value>Check {0}</value>
+  </data>
+  <data name="CheckOnlyMaxCrafting" xml:space="preserve">
+    <value>Check Only Max Crafting</value>
   </data>
   <data name="Chef" xml:space="preserve">
     <value>Chef</value>
@@ -157,14 +205,26 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="ClearFilters" xml:space="preserve">
+    <value>Clear Filters</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="CoreProfession" xml:space="preserve">
+    <value>Core {0}</value>
+  </data>
+  <data name="CouldNotFindNamedItem" xml:space="preserve">
+    <value>Could not find any {0} with name {1}</value>
   </data>
   <data name="CraftingProfession" xml:space="preserve">
     <value>Crafting Profession</value>
   </data>
   <data name="CreateImages" xml:space="preserve">
     <value>Create Images</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Custom</value>
   </data>
   <data name="CustomTags" xml:space="preserve">
     <value>Custom Tags</value>
@@ -175,6 +235,18 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="Deactivated" xml:space="preserve">
     <value>deactivated</value>
   </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Delete {0}</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Descending</value>
+  </data>
+  <data name="DetailedTooltip" xml:space="preserve">
+    <value>Detailed Tooltip</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Display</value>
+  </data>
   <data name="DoubleClickToEnter_Description" xml:space="preserve">
     <value>Enables double clicking the character in the character list to login to that character.</value>
   </data>
@@ -183,6 +255,30 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   </data>
   <data name="DoubleClickToSwap" xml:space="preserve">
     <value>Doubleclick to swap to {0}!</value>
+  </data>
+  <data name="DragOverCharacter_Instructions" xml:space="preserve">
+    <value>Drag this control so the yellow frames contain your character portraits</value>
+  </data>
+  <data name="EditOCR" xml:space="preserve">
+    <value>Edit OCR Region</value>
+  </data>
+  <data name="EditOCR_Tooltip" xml:space="preserve">
+    <value>Toggle the OCR Region edit control</value>
+  </data>
+  <data name="EmptyColumn" xml:space="preserve">
+    <value>Empty Column</value>
+  </data>
+  <data name="EmptyColumns" xml:space="preserve">
+    <value>Empty Columns</value>
+  </data>
+  <data name="EmptyColumnsThreshold_Tooltip" xml:space="preserve">
+    <value>Number of columns</value>
+  </data>
+  <data name="EmptyColumns_Tooltip" xml:space="preserve">
+    <value>Threshold of how many pixel columns are allowed to contain no content</value>
+  </data>
+  <data name="EmptyColumn_Tooltip" xml:space="preserve">
+    <value>Pixel Column which does not contain any 'white'ish' pixels</value>
   </data>
   <data name="EnterOnSwap_Description" xml:space="preserve">
     <value>Enter the game automatically after selecting the character in the character selection</value>
@@ -199,14 +295,23 @@ Once fully loaded it will switch to the character which is set to be the "Login 
   <data name="Error_Competivive" xml:space="preserve">
     <value>Character swapping is disabled in competition mode!</value>
   </data>
+  <data name="Error_FailedAPIFetch" xml:space="preserve">
+    <value>Failed to fetch characters from the API.</value>
+  </data>
   <data name="Error_InvalidPermissions" xml:space="preserve">
     <value>This API key does not have the required permissions.</value>
+  </data>
+  <data name="ExcludeMatches" xml:space="preserve">
+    <value>Exclude matches</value>
   </data>
   <data name="FadeOut_Description" xml:space="preserve">
     <value>Fade the filter and character window automatically after 2500 ms</value>
   </data>
   <data name="FadeOut_DisplayName" xml:space="preserve">
     <value>Fade extra window</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
   </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Average time in milliseconds waited between filtering your characters' panel.
@@ -215,20 +320,56 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="FilterDelay_DisplayName" xml:space="preserve">
     <value>Filter Delay ({0} ms)</value>
   </data>
+  <data name="FilterToggles" xml:space="preserve">
+    <value>Filter Toggles</value>
+  </data>
+  <data name="FixCharacters" xml:space="preserve">
+    <value>Fix Characters</value>
+  </data>
+  <data name="FixCharacters_Tooltip" xml:space="preserve">
+    <value>Perform a OCR through all your characters to update their current order to match the character selection</value>
+  </data>
   <data name="FocusFilter_Description" xml:space="preserve">
     <value>When toggling the main menu to show, automatically focus the search field</value>
   </data>
   <data name="FocusFilter_DisplayName" xml:space="preserve">
     <value>Focus search field</value>
   </data>
+  <data name="Folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="GeneralAndWindows" xml:space="preserve">
+    <value>General Settings &amp; Windows</value>
+  </data>
+  <data name="Hidden" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
   <data name="Huntsman" xml:space="preserve">
     <value>Huntsman</value>
+  </data>
+  <data name="IgnoredPart" xml:space="preserve">
+    <value>Ignored Part</value>
+  </data>
+  <data name="IgnoredPart_Tooltip" xml:space="preserve">
+    <value>Ignored part of the image due to the empty column threshold</value>
+  </data>
+  <data name="IncludeMatches" xml:space="preserve">
+    <value>Include matches</value>
+  </data>
+  <data name="ItemSettings" xml:space="preserve">
+    <value>{0} Settings</value>
   </data>
   <data name="Jeweler" xml:space="preserve">
     <value>Jeweler</value>
   </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Last Login</value>
+  </data>
   <data name="Leatherworker" xml:space="preserve">
     <value>Leatherworker</value>
+  </data>
+  <data name="LeftOffset" xml:space="preserve">
+    <value>Left Offset</value>
   </data>
   <data name="Level" xml:space="preserve">
     <value>Level {0}</value>
@@ -239,6 +380,9 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="LoginCharacter" xml:space="preserve">
     <value>Log in character</value>
   </data>
+  <data name="LoginWith" xml:space="preserve">
+    <value>Log in with '{0}'!</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
@@ -248,12 +392,30 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="Map" xml:space="preserve">
     <value>Map</value>
   </data>
+  <data name="MatchAllFilter" xml:space="preserve">
+    <value>Match all filter</value>
+  </data>
+  <data name="MatchAnyFilter" xml:space="preserve">
+    <value>Match any filter</value>
+  </data>
   <data name="ModuleDescription" xml:space="preserve">
     <value>A tool to easily switch characters even with a lot of them!
 This will require an API-Key with permissions at least for the 'characters' endpoint!</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="NoCraftingProfession" xml:space="preserve">
     <value>No Crafting Profession</value>
+  </data>
+  <data name="OCR_Instructions" xml:space="preserve">
+    <value>Move and Size the yellow frame to contain only the character name row in the character selection!</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="Offset_Tooltip" xml:space="preserve">
+    <value>The offset numbers correspond to the region of the box below that is captured for OCR. In order: Left, Top, Right, Bottom. Increasing the numbers makes the capture area smaller. Ideally, you want the values set so that you cannot see any yellow box in the preview above.</value>
   </data>
   <data name="OnlyMaxCrafting_Description" xml:space="preserve">
     <value>Show only crafts that are at a 500 rank (Jeweler &amp; Scribe at 400).</value>
@@ -261,14 +423,41 @@ This will require an API-Key with permissions at least for the 'characters' endp
   <data name="OnlyMaxCrafting_DisplayName" xml:space="preserve">
     <value>Show only maxed out crafting Professions</value>
   </data>
+  <data name="OpenItem" xml:space="preserve">
+    <value>Open {0}</value>
+  </data>
+  <data name="OpenPortraitFolder" xml:space="preserve">
+    <value>Open Potrait Folder</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="PotraitFrame" xml:space="preserve">
+    <value>Potrait Frame</value>
+  </data>
+  <data name="PotraitGap" xml:space="preserve">
+    <value>Potrait Gap</value>
+  </data>
+  <data name="PotraitSize" xml:space="preserve">
+    <value>Potrait Size</value>
+  </data>
   <data name="Profession" xml:space="preserve">
     <value>Profession</value>
   </data>
   <data name="Race" xml:space="preserve">
     <value>Race</value>
   </data>
+  <data name="RefreshAPI" xml:space="preserve">
+    <value>Refresh API</value>
+  </data>
   <data name="RefreshImages" xml:space="preserve">
     <value>Refresh Images</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Remove {0}</value>
+  </data>
+  <data name="RightOffset" xml:space="preserve">
+    <value>Right Offset</value>
   </data>
   <data name="RunStateChange" xml:space="preserve">
     <value>{0} {1} !</value>
@@ -279,8 +468,8 @@ This will require an API-Key with permissions at least for the 'characters' endp
   <data name="Scribe" xml:space="preserve">
     <value>Scribe</value>
   </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Search for ...</value>
+  <data name="Search" xml:space="preserve">
+    <value>Search ...</value>
   </data>
   <data name="SearchGuide" xml:space="preserve">
     <value>-c Crafting Profession
@@ -312,8 +501,29 @@ This will require an API-Key with permissions at least for the 'characters' endp
   <data name="ShowCorner_Tooltip" xml:space="preserve">
     <value>Show / Hide the Corner Icon of {0}.</value>
   </data>
+  <data name="ShowHidden_Tooltip" xml:space="preserve">
+    <value>Show Hidden Characters</value>
+  </data>
   <data name="ShowHide_Tooltip" xml:space="preserve">
     <value>Show/Hides {0} in the character list.</value>
+  </data>
+  <data name="ShowInList" xml:space="preserve">
+    <value>Show in List</value>
+  </data>
+  <data name="ShowItem" xml:space="preserve">
+    <value>Show {0}</value>
+  </data>
+  <data name="ShowOnlyMaxCrafting" xml:space="preserve">
+    <value>Show Only Max Crafting</value>
+  </data>
+  <data name="Show_Birthday_Tooltip" xml:space="preserve">
+    <value>Show Characters with Birthday Gifts</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Sort By {0}</value>
+  </data>
+  <data name="SortItem" xml:space="preserve">
+    <value>Sort {0}</value>
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Specialization</value>
@@ -334,6 +544,15 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="Switch" xml:space="preserve">
     <value>Switch to {0}</value>
   </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Tag_Placeholder" xml:space="preserve">
+    <value>PvE, WvW, Main, ERP ...</value>
+  </data>
   <data name="Tailor" xml:space="preserve">
     <value>Tailor</value>
   </data>
@@ -343,8 +562,17 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="ToggleAll" xml:space="preserve">
     <value>Toggle All</value>
   </data>
+  <data name="TogglePortraitCapture" xml:space="preserve">
+    <value>Toggle Potrait Capture</value>
+  </data>
+  <data name="TogglePortraitCapture_Tooltip" xml:space="preserve">
+    <value>Toggle the Potrait Capture control</value>
+  </data>
   <data name="ToggleVisible" xml:space="preserve">
     <value>Show/Hide hidden Characters</value>
+  </data>
+  <data name="TopOffset" xml:space="preserve">
+    <value>Top Offset</value>
   </data>
   <data name="UIScale_Error" xml:space="preserve">
     <value>Please set the game to 'WINDOWED' {0} and the UI Scale to 'Larger'!</value>
@@ -367,14 +595,23 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="Updating" xml:space="preserve">
     <value>Updating {0}</value>
   </data>
-  <data name="UseDefault" xml:space="preserve">
-    <value>Use Spec Icon</value>
+  <data name="UseOCR" xml:space="preserve">
+    <value>Use OCR</value>
+  </data>
+  <data name="UseOCR_Tooltip" xml:space="preserve">
+    <value>Use 'Optical Character Recognition' (OCR) to confirm the character name.</value>
   </data>
   <data name="Utility" xml:space="preserve">
     <value>Utility</value>
   </data>
   <data name="Weaponsmith" xml:space="preserve">
     <value>Weaponsmith</value>
+  </data>
+  <data name="WindowedMode" xml:space="preserve">
+    <value>Windowed Mode</value>
+  </data>
+  <data name="WindowedMode_Tooltip" xml:space="preserve">
+    <value>Is the game set to Window Mode?</value>
   </data>
   <data name="Years" xml:space="preserve">
     <value>Years</value>

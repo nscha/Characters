@@ -134,11 +134,6 @@
     <Compile Include="Controls\Dummy.cs" />
     <Compile Include="Controls\Settings SideMenu\FilterSettings.cs" />
     <Compile Include="Controls\IconLabel.cs" />
-    <Compile Include="Strings\common1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>common.resx</DependentUpon>
-    </Compile>
     <Compile Include="Views\MainWindow.cs" />
     <Compile Include="Services\Settings.cs" />
     <Compile Include="Services\TextureManager.cs" />

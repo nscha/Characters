@@ -205,26 +205,23 @@ namespace Kenedia.Modules.Characters.Services
 
         private bool MoveToFirstCharacter()
         {
-            for (int i = 0; i < Characters.ModuleInstance.CharacterModels.Count; i++)
-            {
-                Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
-            }
-
+            Characters.ModuleInstance.CharacterModels.ForEach(x => Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false));
             return true;
         }
 
         private bool MoveToCharacter()
         {
             IOrderedEnumerable<Character_Model> order = Characters.ModuleInstance.CharacterModels.OrderByDescending(e => e.LastLogin);
-            foreach (Character_Model c in order)
+
+            order.ToList().ForEach(x =>
             {
-                if (c == Character)
+                if (x == Character)
                 {
-                    break;
+                    return;
                 }
 
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-            }
+            });
 
             return true;
         }

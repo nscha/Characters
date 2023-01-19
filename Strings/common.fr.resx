@@ -149,13 +149,13 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
     <value>Enregistré sous {0}!</value>
   </data>
   <data name="Characters" xml:space="preserve">
-    <value>Caractères</value>
+    <value>Personnages</value>
   </data>
   <data name="Chef" xml:space="preserve">
     <value>Maître-queux</value>
   </data>
   <data name="Clear" xml:space="preserve">
-    <value>Clair</value>
+    <value>Effacer</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Fermer</value>
@@ -191,7 +191,7 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
     <value>Connexion après avoir choisi le personnage</value>
   </data>
   <data name="EnterToLogin_Description" xml:space="preserve">
-    <value>Si le champ de recherche est focalisé et que tu appuies sur 'RETURN', passe au premier personnage de la liste.</value>
+    <value>Si le champ de recherche est focalisé, appuyer sur retour 'RETOUR' connecte au premier personnage de la liste.</value>
   </data>
   <data name="EnterToLogin_DisplayName" xml:space="preserve">
     <value>Appuie sur Entrée pour changer</value>
@@ -203,10 +203,10 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
     <value>Cette clé d'API ne dispose pas des autorisations requises.</value>
   </data>
   <data name="FadeOut_Description" xml:space="preserve">
-    <value>Le filtre et la fenêtre de caractères s'effacent automatiquement après 2500 ms</value>
+    <value>Le filtre et la fenêtre de personnages s'effacent automatiquement après 2500 ms</value>
   </data>
   <data name="FadeOut_DisplayName" xml:space="preserve">
-    <value>s'estompent fenêtre supplémentaire</value>
+    <value>Estomper la fenêtre supplémentaire</value>
   </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Temps moyen, en millisecondes, d'attente entre le filtrage du panneau de vos personnages.
@@ -219,7 +219,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Lorsque le menu principal est affiché, le champ de recherche est automatiquement mis en évidence</value>
   </data>
   <data name="FocusFilter_DisplayName" xml:space="preserve">
-    <value>Champ de recherche ciblé</value>
+    <value>Cibler le champ de recherche</value>
   </data>
   <data name="Huntsman" xml:space="preserve">
     <value>Chasseur</value>
@@ -243,7 +243,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Déconnexion</value>
   </data>
   <data name="LogoutDescription" xml:space="preserve">
-    <value>Touche à appuyer pour ouvrir le menu de déconnexion. Doit être la même que celle utilisée dans le jeu pour 'Déconnexion' !</value>
+    <value>Touche à appuyer pour ouvrir le menu de déconnexion. Doit-être la même que celle utilisée dans le jeu pour 'Déconnexion' !</value>
   </data>
   <data name="Map" xml:space="preserve">
     <value>Carte</value>
@@ -265,7 +265,7 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
     <value>Profession</value>
   </data>
   <data name="Race" xml:space="preserve">
-    <value>Course</value>
+    <value>Race</value>
   </data>
   <data name="RefreshImages" xml:space="preserve">
     <value>Actualiser les images</value>
@@ -292,16 +292,16 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
     <value>Choisis une image</value>
   </data>
   <data name="ShortcutToggle_Description" xml:space="preserve">
-    <value>Touche à presser pour accéder au menu des personnages.</value>
+    <value>Touche à appuyer pour accéder au menu des personnages.</value>
   </data>
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Changer de menu</value>
   </data>
   <data name="ShowCornerIcon_Description" xml:space="preserve">
-    <value>Afficher/masquer l'icône de coin</value>
+    <value>Afficher/masquer l'icône d'angle</value>
   </data>
   <data name="ShowCornerIcon_DisplayName" xml:space="preserve">
-    <value>Afficher l'icône de coin</value>
+    <value>Afficher l'icône d'angle</value>
   </data>
   <data name="ShowCorner_Name" xml:space="preserve">
     <value>Afficher l'icône d'angle</value>
@@ -332,16 +332,16 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Tailleur</value>
   </data>
   <data name="Toggle" xml:space="preserve">
-    <value>Basculer le {0}</value>
+    <value>Basculer {0}</value>
   </data>
   <data name="ToggleAll" xml:space="preserve">
-    <value>Commuter tout</value>
+    <value>Basculer tout</value>
   </data>
   <data name="ToggleVisible" xml:space="preserve">
     <value>Afficher/masquer les personnages cachés</value>
   </data>
   <data name="UIScale_Error" xml:space="preserve">
-    <value>Veuillez régler le jeu sur 'WINDOWED' {0} et l'échelle de l'interface utilisateur sur 'Larger' !</value>
+    <value>Veuillez régler le jeu sur 'FENETRE' {0} et l'échelle de l'interface utilisateur sur 'PLUS GRAND' !</value>
   </data>
   <data name="UISizeDisclaimer" xml:space="preserve">
     <value>Vous devez régler la taille de l'interface de jeu sur 'Plus grand' pour obtenir les bonnes découpes !</value>
@@ -362,7 +362,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Mise à jour de {0}</value>
   </data>
   <data name="Utility" xml:space="preserve">
-    <value>Utile</value>
+    <value>Utilitaire</value>
   </data>
   <data name="Weaponsmith" xml:space="preserve">
     <value>Forgeron d'armes</value>
@@ -377,7 +377,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Mode fenêtré</value>
   </data>
   <data name="AutoFix_Tooltip" xml:space="preserve">
-    <value>Lorsque vous ne parvenez pas à passer à un caractère, passez automatiquement en revue les caractères pour fixer leur ordre.</value>
+    <value>Lorsque vous ne parvenez pas à passer à un personnage, passez automatiquement en revue les personnages pour corriger leur ordre.</value>
   </data>
   <data name="UseOCR_Tooltip" xml:space="preserve">
     <value>Utilisez la "reconnaissance optique de caractères" (ROC) pour confirmer le nom du caractère.</value>
@@ -407,7 +407,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Balises</value>
   </data>
   <data name="Tag" xml:space="preserve">
-    <value>Balises</value>
+    <value>Balise</value>
   </data>
   <data name="SortBy" xml:space="preserve">
     <value>Trier par {0}</value>
@@ -458,7 +458,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Colonne de pixels qui ne contient aucun pixel "blanc"</value>
   </data>
   <data name="FixCharacters_Tooltip" xml:space="preserve">
-    <value>Effectuez une reconnaissance optique de caractères pour tous vos personnages afin de mettre à jour leur ordre actuel pour qu'il corresponde à la sélection de personnages</value>
+    <value>Effectuez une reconnaissance optique de vos personnages afin de mettre à jour leur ordre actuel pour qu'il corresponde à la sélection de personnages</value>
   </data>
   <data name="Order" xml:space="preserve">
     <value>Ordonner</value>
@@ -497,10 +497,10 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Dernière connexion</value>
   </data>
   <data name="Birthday_Text" xml:space="preserve">
-    <value>C'était l'anniversaire de {0} ! Ils ont maintenant {1} ans !</value>
+    <value>C'était l'anniversaire de {0} ! Il a maintenant {1} ans !</value>
   </data>
   <data name="WindowedMode_Tooltip" xml:space="preserve">
-    <value>Le jeu est-il en mode fenêtre ?</value>
+    <value>Le jeu est-il en mode fenêtré ?</value>
   </data>
   <data name="IncludeMatches" xml:space="preserve">
     <value>Inclure les correspondances</value>
@@ -521,16 +521,16 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Dossier</value>
   </data>
   <data name="FixCharacters" xml:space="preserve">
-    <value>Caractères de correction</value>
+    <value>Corriger les personnages</value>
   </data>
   <data name="FilterToggles" xml:space="preserve">
     <value>Toggles de filtre</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>Filtre</value>
+    <value>Filtrer</value>
   </data>
   <data name="Error_FailedAPIFetch" xml:space="preserve">
-    <value>Impossible de récupérer les caractères depuis l'API.</value>
+    <value>Impossible de récupérer les personnages depuis l'API.</value>
   </data>
   <data name="ExcludeMatches" xml:space="preserve">
     <value>Exclure les correspondances</value>

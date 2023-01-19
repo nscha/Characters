@@ -1,13 +1,13 @@
-﻿namespace Kenedia.Modules.Characters.Services
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Controls.Extern;
-    using Kenedia.Modules.Characters.Models;
-    using Microsoft.Xna.Framework;
+﻿using Blish_HUD.Controls;
+using Blish_HUD.Controls.Extern;
+using Kenedia.Modules.Characters.Models;
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace Kenedia.Modules.Characters.Services
+{
     public enum SortingState
     {
         None,
@@ -35,59 +35,59 @@
 
         public void Run(GameTime gameTime)
         {
-            this.tick += gameTime.ElapsedGameTime.TotalMilliseconds;
+            tick += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (this.tick < 0)
+            if (tick < 0)
             {
                 return;
             }
 
-            if (this.currentIndex == this.models.Count && this.subState == SortingState.NameFetched)
+            if (currentIndex == models.Count && subState == SortingState.NameFetched)
             {
                 ScreenNotification.ShowNotification(Strings.common.CharactersFixed, ScreenNotification.NotificationType.Warning);
-                this.AdjustCharacterLogins();
-                this.Finished?.Invoke(null, null);
+                AdjustCharacterLogins();
+                Finished?.Invoke(null, null);
             }
 
-            switch (this.state)
+            switch (state)
             {
                 case SortingState.None:
-                    for (int i = 0; i < this.models.Count; i++)
+                    for (int i = 0; i < models.Count; i++)
                     {
                         Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
                     }
 
-                    this.state = SortingState.MovedToFirst;
-                    this.tick -= 250;
+                    state = SortingState.MovedToFirst;
+                    tick -= 250;
                     break;
 
                 case SortingState.MovedToFirst:
-                    if (this.subState == SortingState.Selected)
+                    if (subState == SortingState.Selected)
                     {
-                        var name = Characters.ModuleInstance.OCR.Read();
+                        string name = Characters.ModuleInstance.OCR.Read();
 
                         if (name != null)
                         {
-                            var c = this.models.Find(e => e.Name == name);
+                            Character_Model c = models.Find(e => e.Name == name);
 
                             if (c != null)
                             {
-                                c.OrderIndex = this.currentIndex;
+                                c.OrderIndex = currentIndex;
                             }
                             else
                             {
                                 ScreenNotification.ShowNotification(string.Format(Strings.common.CouldNotFindNamedItem, Strings.common.Character, name));
                             }
 
-                            this.subState = SortingState.NameFetched;
+                            subState = SortingState.NameFetched;
                         }
                     }
                     else
                     {
                         Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-                        this.subState = SortingState.Selected;
-                        this.tick -= 250;
-                        this.currentIndex++;
+                        subState = SortingState.Selected;
+                        tick -= 250;
+                        currentIndex++;
                     }
 
                     break;
@@ -99,18 +99,18 @@
 
         private void AdjustCharacterLogins()
         {
-            this.models = this.models.OrderBy(e => e.OrderIndex).ToList();
+            models = models.OrderBy(e => e.OrderIndex).ToList();
 
-            var messedUp = true;
+            bool messedUp = true;
 
             while (messedUp)
             {
                 messedUp = false;
 
-                for (int i = 0; i < this.models.Count; i++)
+                for (int i = 0; i < models.Count; i++)
                 {
-                    var next = this.models.Count > i + 1 ? this.models[i + 1] : null;
-                    var current = this.models[i];
+                    Character_Model next = models.Count > i + 1 ? models[i + 1] : null;
+                    Character_Model current = models[i];
 
                     // var nCurr = string.Format("Current: {0} | LastLogin: {1} | More Recent: {2}", current.Name, current.LastLogin, next != null && current.LastLogin <= next.LastLogin);
                     // var nNext = string.Format("Next: {0} | LastLogin: {1} | More Recent: {2}", next != null ? next.Name : "No Next", next != null ? next.LastLogin : "No Next", next != null && current.LastLogin <= next.LastLogin);

@@ -1,32 +1,32 @@
-﻿namespace Kenedia.Modules.Characters
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel.Composition;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Threading.Tasks;
-    using Blish_HUD;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Controls.Extern;
-    using Blish_HUD.Modules;
-    using Blish_HUD.Modules.Managers;
-    using Blish_HUD.Settings;
-    using Gw2Sharp.WebApi.V2.Models;
-    using Kenedia.Modules.Characters.Controls;
-    using Kenedia.Modules.Characters.Enums;
-    using Kenedia.Modules.Characters.Models;
-    using Kenedia.Modules.Characters.Services;
-    using Kenedia.Modules.Characters.Views;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Input;
-    using Newtonsoft.Json;
-    using static Kenedia.Modules.Characters.Services.TextureManager;
-    using static Kenedia.Modules.Characters.Utility.WindowsUtil.WindowsUtil;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Controls;
+using Blish_HUD.Controls.Extern;
+using Blish_HUD.Modules;
+using Blish_HUD.Modules.Managers;
+using Blish_HUD.Settings;
+using Gw2Sharp.WebApi.V2.Models;
+using Kenedia.Modules.Characters.Controls;
+using Kenedia.Modules.Characters.Enums;
+using Kenedia.Modules.Characters.Models;
+using Kenedia.Modules.Characters.Services;
+using Kenedia.Modules.Characters.Views;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using static Kenedia.Modules.Characters.Services.TextureManager;
+using static Kenedia.Modules.Characters.Utility.WindowsUtil.WindowsUtil;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters
+{
     [Export(typeof(Module))]
     public class Characters : Module
     {
@@ -35,7 +35,7 @@
 
         public static readonly Logger Logger = Logger.GetLogger<Characters>();
 
-        private readonly Ticks ticks = new ();
+        private readonly Ticks ticks = new();
 
         private CornerIcon cornerIcon;
         private bool dataLoaded;
@@ -108,10 +108,10 @@
 
         public bool DataLoaded
         {
-            get => this.dataLoaded;
+            get => dataLoaded;
             set
             {
-                this.dataLoaded = value;
+                dataLoaded = value;
                 if (value)
                 {
                     ModuleInstance.OnDataLoaded();
@@ -119,9 +119,9 @@
             }
         }
 
-        public RECT WindowRectangle { get => this.windowRectangle; set => this.windowRectangle = value; }
+        public RECT WindowRectangle { get => windowRectangle; set => windowRectangle = value; }
 
-        public RECT ClientRectangle { get => this.clientRectangle; set => this.clientRectangle = value; }
+        public RECT ClientRectangle { get => clientRectangle; set => clientRectangle = value; }
 
         public int TitleBarHeight { get; private set; }
 
@@ -129,13 +129,13 @@
 
         internal static Characters ModuleInstance { get; set; }
 
-        internal SettingsManager SettingsManager => this.ModuleParameters.SettingsManager;
+        internal SettingsManager SettingsManager => ModuleParameters.SettingsManager;
 
-        internal ContentsManager ContentsManager => this.ModuleParameters.ContentsManager;
+        internal ContentsManager ContentsManager => ModuleParameters.ContentsManager;
 
-        internal DirectoriesManager DirectoriesManager => this.ModuleParameters.DirectoriesManager;
+        internal DirectoriesManager DirectoriesManager => ModuleParameters.DirectoriesManager;
 
-        internal Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
+        internal Gw2ApiManager Gw2ApiManager => ModuleParameters.Gw2ApiManager;
 
         [DllImport("user32")]
         public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
@@ -145,87 +145,87 @@
 
         public void OnLanguageChanged(object sender, EventArgs e)
         {
-            this.RebuildUI();
-            this.LanguageChanged?.Invoke(this, EventArgs.Empty);
+            RebuildUI();
+            LanguageChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public void OnResolutionChanged(object sender, EventArgs e, bool fireEvent = true)
+        public void OnResolutionChanged(bool fireEvent = true)
         {
-            var hWnd = GameService.GameIntegration.Gw2Instance.Gw2WindowHandle;
-            GetWindowRect(hWnd, ref this.windowRectangle);
-            GetClientRect(hWnd, out this.clientRectangle);
+            IntPtr hWnd = GameService.GameIntegration.Gw2Instance.Gw2WindowHandle;
+            _ = GetWindowRect(hWnd, ref windowRectangle);
+            _ = GetClientRect(hWnd, out clientRectangle);
 
-            this.TitleBarHeight = this.WindowRectangle.Bottom - this.WindowRectangle.Top - (this.ClientRectangle.Bottom - this.ClientRectangle.Top);
-            this.SideBarWidth = this.WindowRectangle.Right - this.WindowRectangle.Left - (this.ClientRectangle.Right - this.ClientRectangle.Left);
+            TitleBarHeight = WindowRectangle.Bottom - WindowRectangle.Top - (ClientRectangle.Bottom - ClientRectangle.Top);
+            SideBarWidth = WindowRectangle.Right - WindowRectangle.Left - (ClientRectangle.Right - ClientRectangle.Left);
 
             if (fireEvent)
             {
-                this.ResolutionChanged?.Invoke(this, EventArgs.Empty);
+                ResolutionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         public void FixCharacterOrder()
         {
-            if (this.CharacterSorting == null)
+            if (CharacterSorting == null)
             {
-                this.CharacterSorting = new CharacterSorting(this.CharacterModels);
-                if (this.Settings.AutoSortCharacters.Value)
+                CharacterSorting = new CharacterSorting(CharacterModels);
+                if (Settings.AutoSortCharacters.Value)
                 {
-                    this.CharacterSwapping?.Reset();
+                    CharacterSwapping?.Reset();
                 }
                 else
                 {
-                    this.CharacterSwapping = null;
+                    CharacterSwapping = null;
                 }
 
-                this.CharacterSorting.Finished += (sender, e) =>
+                CharacterSorting.Finished += (sender, e) =>
                 {
-                    this.CharacterSorting = null;
-                    this.MainWindow.SortCharacters();
+                    CharacterSorting = null;
+                    MainWindow.SortCharacters();
                 };
             }
         }
 
         public void SwapTo(Character_Model character)
         {
-            var player = GameService.Gw2Mumble.PlayerCharacter;
+            Blish_HUD.Gw2Mumble.PlayerCharacter player = GameService.Gw2Mumble.PlayerCharacter;
 
             if (character.Name != player.Name || !GameService.GameIntegration.Gw2Instance.IsInGame)
             {
-                if (this.CharacterSwapping != null)
+                if (CharacterSwapping != null)
                 {
                 }
 
-                this.CharacterSwapping = new CharacterSwapping(character);
-                this.CharacterSwapping.Succeeded += (sender, e) =>
+                CharacterSwapping = new CharacterSwapping(character);
+                CharacterSwapping.Succeeded += (sender, e) =>
                 {
-                    this.CharacterSwapping = null;
-                    this.ForceUpdate(null, null);
-                    this.MainWindow.SortCharacters();
+                    CharacterSwapping = null;
+                    ForceUpdate(null, null);
+                    MainWindow.SortCharacters();
                 };
-                this.CharacterSwapping.Failed += this.CharacterSwapping_Failed;
+                CharacterSwapping.Failed += CharacterSwapping_Failed;
             }
         }
 
         public void CreateCharacterControls()
         {
-            if (this.MainWindow != null)
+            if (MainWindow != null)
             {
-                foreach (Character_Model c in this.CharacterModels)
+                foreach (Character_Model c in CharacterModels)
                 {
-                    if (this.MainWindow.CharacterControls.Find(e => e.Character.Name == c.Name) == null)
+                    if (MainWindow.CharacterControls.Find(e => e.Character.Name == c.Name) == null)
                     {
-                        this.MainWindow.CharacterControls.Add(new CharacterControl()
+                        MainWindow.CharacterControls.Add(new CharacterControl()
                         {
                             Character = c,
-                            Parent = this.MainWindow.ContentPanel,
-                            ZIndex = this.MainWindow.ZIndex + 1,
+                            Parent = MainWindow.ContentPanel,
+                            ZIndex = MainWindow.ZIndex + 1,
                         });
                     }
                 }
 
-                this.MainWindow.FilterCharacters();
-                this.MainWindow.UpdateLayout();
+                MainWindow.FilterCharacters();
+                MainWindow.UpdateLayout();
             }
         }
 
@@ -233,42 +233,42 @@
         {
             try
             {
-                if (System.IO.File.Exists(this.CharactersPath))
+                if (System.IO.File.Exists(CharactersPath))
                 {
-                    var infos = new FileInfo(this.CharactersPath);
-                    var content = System.IO.File.ReadAllText(this.CharactersPath);
-                    var player = GameService.Gw2Mumble.PlayerCharacter;
+                    FileInfo infos = new(CharactersPath);
+                    string content = System.IO.File.ReadAllText(CharactersPath);
+                    Blish_HUD.Gw2Mumble.PlayerCharacter player = GameService.Gw2Mumble.PlayerCharacter;
                     List<Character_Model> characters = JsonConvert.DeserializeObject<List<Character_Model>>(content);
 
                     if (characters != null)
                     {
-                        this.CharacterModels = characters;
-                        foreach (Character_Model c in this.CharacterModels)
+                        CharacterModels = characters;
+                        foreach (Character_Model c in CharacterModels)
                         {
                             foreach (string t in c.Tags)
                             {
-                                if (!this.Tags.Contains(t))
+                                if (!Tags.Contains(t))
                                 {
-                                    this.Tags.Add(t);
+                                    Tags.Add(t);
                                 }
                             }
 
                             c.Initialize();
                         }
 
-                        this.DataLoaded = true;
+                        DataLoaded = true;
                         return true;
                     }
                 }
 
-                this.DataLoaded = true;
+                DataLoaded = true;
                 return false;
             }
             catch (Exception ex)
             {
-                Logger.Warn(ex, "Failed to load the local characters from file '" + this.CharactersPath + "'.");
-                System.IO.File.Copy(this.CharactersPath, this.CharactersPath.Replace(".json", " [" + DateTimeOffset.Now.ToUnixTimeSeconds().ToString() + "].corruped.json"));
-                this.DataLoaded = true;
+                Logger.Warn(ex, "Failed to load the local characters from file '" + CharactersPath + "'.");
+                System.IO.File.Copy(CharactersPath, CharactersPath.Replace(".json", " [" + DateTimeOffset.Now.ToUnixTimeSeconds().ToString() + "].corruped.json"));
+                DataLoaded = true;
                 return false;
             }
         }
@@ -276,104 +276,103 @@
         public void SaveCharacterList()
         {
             Logger.Debug("Saving Character List.");
-            var data = new List<JsonCharacter_Model>();
+            List<JsonCharacter_Model> data = new();
 
-            foreach (Character_Model c in this.CharacterModels)
+            foreach (Character_Model c in CharacterModels)
             {
                 data.Add(new JsonCharacter_Model(c));
             }
 
-            var settings = new JsonSerializerSettings();
-            settings.Formatting = Formatting.Indented;
-            settings.NullValueHandling = NullValueHandling.Ignore;
+            JsonSerializerSettings settings = new()
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore
+            };
 
             string json = JsonConvert.SerializeObject(data.ToArray(), Formatting.Indented, settings);
 
             // write string to file
-            System.IO.File.WriteAllText(this.CharactersPath, json);
+            System.IO.File.WriteAllText(CharactersPath, json);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            this.ticks.Global += gameTime.ElapsedGameTime.TotalMilliseconds;
-            this.ticks.APIUpdate += gameTime.ElapsedGameTime.TotalSeconds;
-            this.ticks.Save += gameTime.ElapsedGameTime.TotalMilliseconds;
-            this.ticks.Tags += gameTime.ElapsedGameTime.TotalMilliseconds;
-            this.ticks.OCR += gameTime.ElapsedGameTime.TotalMilliseconds;
+            ticks.Global += gameTime.ElapsedGameTime.TotalMilliseconds;
+            ticks.APIUpdate += gameTime.ElapsedGameTime.TotalSeconds;
+            ticks.Save += gameTime.ElapsedGameTime.TotalMilliseconds;
+            ticks.Tags += gameTime.ElapsedGameTime.TotalMilliseconds;
+            ticks.OCR += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (this.clientRes != GameService.Graphics.Resolution)
+            if (clientRes != GameService.Graphics.Resolution)
             {
-                this.clientRes = GameService.Graphics.Resolution;
-                this.OnResolutionChanged(null, null);
+                clientRes = GameService.Graphics.Resolution;
+                OnResolutionChanged();
             }
 
-            if (this.CharacterSorting != null)
+            if (CharacterSorting != null)
             {
-                this.CharacterSorting.Run(gameTime);
+                CharacterSorting.Run(gameTime);
             }
-            else if (this.CharacterSwapping != null)
+            else
             {
-                this.CharacterSwapping.Run(gameTime);
+                CharacterSwapping?.Run(gameTime);
             }
 
-            if (this.ticks.Global > 15000)
+            if (ticks.Global > 15000)
             {
-                this.ticks.Global = 0;
-                this.CurrentCharacterModel = null;
+                ticks.Global = 0;
+                CurrentCharacterModel = null;
 
                 if (GameService.GameIntegration.Gw2Instance.IsInGame)
                 {
-                    var player = GameService.Gw2Mumble.PlayerCharacter;
-                    this.CurrentCharacterModel = this.CharacterModels.Find(e => e.Name == player.Name);
+                    Blish_HUD.Gw2Mumble.PlayerCharacter player = GameService.Gw2Mumble.PlayerCharacter;
+                    CurrentCharacterModel = CharacterModels.Find(e => e.Name == player.Name);
 
-                    if (this.CurrentCharacterModel != null)
+                    if (CurrentCharacterModel != null)
                     {
-                        this.CurrentCharacterModel.Specialization = (SpecializationType)player.Specialization;
-                        this.CurrentCharacterModel.Map = GameService.Gw2Mumble.CurrentMap.Id;
-                        this.CurrentCharacterModel.LastLogin = DateTime.UtcNow;
-                        this.MainWindow?.SortCharacters();
+                        CurrentCharacterModel.Specialization = (SpecializationType)player.Specialization;
+                        CurrentCharacterModel.Map = GameService.Gw2Mumble.CurrentMap.Id;
+                        CurrentCharacterModel.LastLogin = DateTime.UtcNow;
+                        MainWindow?.SortCharacters();
                     }
                 }
             }
 
-            if (this.ticks.APIUpdate > 300)
+            if (ticks.APIUpdate > 300)
             {
-                this.ticks.APIUpdate = 0;
+                ticks.APIUpdate = 0;
 
-                this.GW2APIHandler.CheckAPI();
+                GW2APIHandler.CheckAPI();
             }
 
-            if (this.ticks.Save > 25 && this.SaveCharacters)
+            if (ticks.Save > 25 && SaveCharacters)
             {
-                this.ticks.Save = 0;
+                ticks.Save = 0;
 
-                this.SaveCharacterList();
-                this.SaveCharacters = false;
+                SaveCharacterList();
+                SaveCharacters = false;
             }
 
-            if (this.ticks.Tags >= 10 && this.UpdateTags)
+            if (ticks.Tags >= 10 && UpdateTags)
             {
-                this.ticks.Tags = 0;
+                ticks.Tags = 0;
 
-                this.UpdateTags = false;
-                this.UpdateTagsCollection();
+                UpdateTags = false;
+                UpdateTagsCollection();
             }
 
-            if (this.ticks.OCR >= 50 && this.RunOCR)
+            if (ticks.OCR >= 50 && RunOCR)
             {
-                this.ticks.OCR = 0;
+                ticks.OCR = 0;
 
-                if (this.OCR == null)
+                OCR ??= new OCR();
+
+                if (OCR != null && OCR.Read() != null)
                 {
-                    this.OCR = new OCR();
-                }
-
-                if (this.OCR != null && this.OCR.Read() != null)
-                {
-                    this.RunOCR = false;
-                    if (this.RunOCR)
+                    RunOCR = false;
+                    if (RunOCR)
                     {
-                        this.OCR.ToggleContainer();
+                        OCR.ToggleContainer();
                     }
                 }
             }
@@ -381,22 +380,22 @@
 
         protected override void DefineSettings(SettingCollection settings)
         {
-            this.Settings = new SettingsModel(settings);
-            this.Settings.ShowCornerIcon.SettingChanged += this.ShowCornerIcon_SettingChanged;
+            Settings = new SettingsModel(settings);
+            Settings.ShowCornerIcon.SettingChanged += ShowCornerIcon_SettingChanged;
 
 #if DEBUG
-            this.ReloadKey = settings.DefineSetting(
-                nameof(this.ReloadKey),
+            ReloadKey = settings.DefineSetting(
+                nameof(ReloadKey),
                 new Blish_HUD.Input.KeyBinding(ModifierKeys.Alt, Keys.R));
 
-            this.ReloadKey.Value.Enabled = true;
-            this.ReloadKey.Value.Activated += this.ReloadKey_Activated;
+            ReloadKey.Value.Enabled = true;
+            ReloadKey.Value.Activated += ReloadKey_Activated;
 #endif
         }
 
         protected override void Initialize()
         {
-            Logger.Info($"Starting  {this.Name} v." + this.Version.BaseVersion());
+            Logger.Info($"Starting  {Name} v." + Version.BaseVersion());
 
             ModKeyMapping = new VirtualKeyShort[5];
             ModKeyMapping[(int)ModifierKeys.Ctrl] = VirtualKeyShort.CONTROL;
@@ -404,61 +403,58 @@
             ModKeyMapping[(int)ModifierKeys.Shift] = VirtualKeyShort.LSHIFT;
 
             // string path = DirectoriesManager.GetFullDirectoryPath("characters") + @"\" + API_Account.Name;
-            this.BasePath = this.DirectoriesManager.GetFullDirectoryPath("characters");
+            BasePath = DirectoriesManager.GetFullDirectoryPath("characters");
 
-            if (!System.IO.File.Exists(this.BasePath + @"\gw2.traineddata"))
+            if (!System.IO.File.Exists(BasePath + @"\gw2.traineddata"))
             {
-                using Stream target = System.IO.File.Create(this.BasePath + @"\gw2.traineddata");
-                Stream source = this.ContentsManager.GetFileStream(@"data\gw2.traineddata");
-                source.Seek(0, SeekOrigin.Begin);
+                using Stream target = System.IO.File.Create(BasePath + @"\gw2.traineddata");
+                Stream source = ContentsManager.GetFileStream(@"data\gw2.traineddata");
+                _ = source.Seek(0, SeekOrigin.Begin);
                 source.CopyTo(target);
             }
 
-            if (!System.IO.File.Exists(this.BasePath + @"\tesseract.dll"))
+            if (!System.IO.File.Exists(BasePath + @"\tesseract.dll"))
             {
-                using Stream target = System.IO.File.Create(this.BasePath + @"\tesseract.dll");
-                Stream source = this.ContentsManager.GetFileStream(@"data\tesseract.dll");
-                source.Seek(0, SeekOrigin.Begin);
+                using Stream target = System.IO.File.Create(BasePath + @"\tesseract.dll");
+                Stream source = ContentsManager.GetFileStream(@"data\tesseract.dll");
+                _ = source.Seek(0, SeekOrigin.Begin);
                 source.CopyTo(target);
             }
 
-            this.Data = new Data();
+            Data = new Data();
 
-            this.Gw2ApiManager.SubtokenUpdated += this.Gw2ApiManager_SubtokenUpdated;
+            Gw2ApiManager.SubtokenUpdated += Gw2ApiManager_SubtokenUpdated;
 
-            this.Settings.ShortcutKey.Value.Enabled = true;
-            this.Settings.ShortcutKey.Value.Activated += this.ShortcutWindowToggle;
+            Settings.ShortcutKey.Value.Enabled = true;
+            Settings.ShortcutKey.Value.Activated += ShortcutWindowToggle;
         }
 
-        protected override async Task LoadAsync()
-        {
-            await Task.Delay(0);
-        }
+        protected override async Task LoadAsync() => await Task.Delay(0);
 
         protected override void OnModuleLoaded(EventArgs e)
         {
-            this.TextureManager = new TextureManager();
+            TextureManager = new TextureManager();
 
-            if (this.Settings.ShowCornerIcon.Value)
+            if (Settings.ShowCornerIcon.Value)
             {
-                this.CreateCornerIcons();
+                CreateCornerIcons();
             }
 
-            this.DataLoaded_Event += this.Characters_DataLoaded_Event;
+            DataLoaded_Event += Characters_DataLoaded_Event;
 
-            var player = GameService.Gw2Mumble.PlayerCharacter;
-            player.SpecializationChanged += this.ForceUpdate;
-            player.NameChanged += this.ForceUpdate;
+            Blish_HUD.Gw2Mumble.PlayerCharacter player = GameService.Gw2Mumble.PlayerCharacter;
+            player.SpecializationChanged += ForceUpdate;
+            player.NameChanged += ForceUpdate;
 
-            var map = GameService.Gw2Mumble.CurrentMap;
-            map.MapChanged += this.ForceUpdate;
-            this.clientRes = GameService.Graphics.Resolution;
+            Blish_HUD.Gw2Mumble.CurrentMap map = GameService.Gw2Mumble.CurrentMap;
+            map.MapChanged += ForceUpdate;
+            clientRes = GameService.Graphics.Resolution;
 
-            GameService.GameIntegration.Gw2Instance.IsInGameChanged += this.ForceUpdate;
-            GameService.Overlay.UserLocale.SettingChanged += this.UserLocale_SettingChanged;
+            GameService.GameIntegration.Gw2Instance.IsInGameChanged += ForceUpdate;
+            GameService.Overlay.UserLocale.SettingChanged += UserLocale_SettingChanged;
 
-            this.Tags.CollectionChanged += this.Tags_CollectionChanged;
-            this.OnResolutionChanged(null, null, false);
+            Tags.CollectionChanged += Tags_CollectionChanged;
+            OnResolutionChanged(false);
 
             // Base handler must be called
             base.OnModuleLoaded(e);
@@ -466,102 +462,96 @@
 
         protected override void Unload()
         {
-            this.MainWindow?.Dispose();
-            this.cornerIcon?.Dispose();
+            MainWindow?.Dispose();
+            cornerIcon?.Dispose();
 
-            this.TextureManager?.Dispose();
-            this.TextureManager = null;
+            TextureManager?.Dispose();
+            TextureManager = null;
 
-            if (this.cornerIcon != null)
+            if (cornerIcon != null)
             {
-                this.cornerIcon.Click -= this.ToggleModule;
+                cornerIcon.Click -= ToggleModule;
             }
 
-            this.DataLoaded_Event -= this.Characters_DataLoaded_Event;
-            GameService.Overlay.UserLocale.SettingChanged -= this.UserLocale_SettingChanged;
+            DataLoaded_Event -= Characters_DataLoaded_Event;
+            GameService.Overlay.UserLocale.SettingChanged -= UserLocale_SettingChanged;
 
-            var player = GameService.Gw2Mumble.PlayerCharacter;
-            player.SpecializationChanged -= this.ForceUpdate;
-            player.NameChanged -= this.ForceUpdate;
+            Blish_HUD.Gw2Mumble.PlayerCharacter player = GameService.Gw2Mumble.PlayerCharacter;
+            player.SpecializationChanged -= ForceUpdate;
+            player.NameChanged -= ForceUpdate;
 
-            var map = GameService.Gw2Mumble.CurrentMap;
-            map.MapChanged -= this.ForceUpdate;
+            Blish_HUD.Gw2Mumble.CurrentMap map = GameService.Gw2Mumble.CurrentMap;
+            map.MapChanged -= ForceUpdate;
 
-            GameService.GameIntegration.Gw2Instance.IsInGameChanged -= this.ForceUpdate;
+            GameService.GameIntegration.Gw2Instance.IsInGameChanged -= ForceUpdate;
 
             ModuleInstance = null;
         }
 
         private void OnDataLoaded()
         {
-            this.DataLoaded_Event?.Invoke(this, EventArgs.Empty);
-            if (this.MainWindow == null)
+            DataLoaded_Event?.Invoke(this, EventArgs.Empty);
+            if (MainWindow == null)
             {
-                this.CreateUI();
+                CreateUI();
             }
         }
 
         private void ShortcutWindowToggle(object sender, EventArgs e)
         {
-            if (!(Control.ActiveControl is TextBox))
+            if (Control.ActiveControl is not TextBox)
             {
-                this.MainWindow?.ToggleWindow();
+                MainWindow?.ToggleWindow();
             }
         }
 
-        private void Gw2ApiManager_SubtokenUpdated(object sender, ValueEventArgs<IEnumerable<TokenPermission>> e)
-        {
-            this.GW2APIHandler.CheckAPI();
-        }
+        private void Gw2ApiManager_SubtokenUpdated(object sender, ValueEventArgs<IEnumerable<TokenPermission>> e) => GW2APIHandler.CheckAPI();
 
-        private void ToggleWindow_Activated(object sender, EventArgs e)
-        {
-            this.MainWindow?.ToggleWindow();
-        }
+        private void ToggleWindow_Activated(object sender, EventArgs e) => MainWindow?.ToggleWindow();
 
         private void ReloadKey_Activated(object sender, EventArgs e)
         {
-            this.RebuildUI();
-            this.MainWindow?.ToggleWindow();
+            RebuildUI();
+            MainWindow?.ToggleWindow();
         }
 
         private void RebuildUI()
         {
-            if (this.MainWindow != null)
+            if (MainWindow != null)
             {
-                var shown = this.MainWindow.Visible;
+                bool shown = MainWindow.Visible;
 
-                this.MainWindow?.Dispose();
-                this.PotraitCapture?.Dispose();
-                this.OCR?.Dispose();
-                this.CreateUI(true);
+                MainWindow?.Dispose();
+                PotraitCapture?.Dispose();
+                OCR?.Dispose();
+                CreateUI(true);
 
                 if (shown)
                 {
-                    this.MainWindow?.Show();
+                    MainWindow?.Show();
                 }
             }
         }
 
         private void Tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (this.DataLoaded)
+            if (DataLoaded)
             {
-                this.UpdateTagsCollection();
+                UpdateTagsCollection();
             }
         }
 
         private void UpdateTagsCollection()
         {
-            foreach (Character_Model c in this.CharacterModels)
+            foreach (Character_Model c in CharacterModels)
             {
-                var tList = new ObservableCollection<string>(c.Tags);
+                ObservableCollection<string> tList = new(c.Tags);
 
                 foreach (string t in tList)
                 {
-                    if (!this.Tags.Contains(t))
+                    if (!Tags.Contains(t))
                     {
-                        c.Tags.Remove(t);
+                        _ = c.Tags.Remove(t);
                     }
                 }
             }
@@ -569,112 +559,100 @@
 
         private void ForceUpdate(object sender, EventArgs e)
         {
-            this.ticks.Global = 2000000;
-            if (this.CurrentCharacterModel != null)
+            ticks.Global = 2000000;
+            if (CurrentCharacterModel != null)
             {
-                this.CurrentCharacterModel.LastLogin = DateTime.UtcNow;
+                CurrentCharacterModel.LastLogin = DateTime.UtcNow;
             }
 
-            this.CurrentCharacterModel = null;
+            CurrentCharacterModel = null;
         }
 
         private void CornerIcon_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            this.MainWindow?.ToggleWindow();
-            if (this.MainWindow == null)
+            MainWindow?.ToggleWindow();
+            if (MainWindow == null)
             {
                 ScreenNotification.ShowNotification("New API Request sent...");
-                this.GW2APIHandler.CheckAPI();
+                GW2APIHandler.CheckAPI();
             }
         }
 
-        private void Characters_DataLoaded_Event(object sender, EventArgs e)
-        {
-            this.CreateUI();
-        }
+        private void Characters_DataLoaded_Event(object sender, EventArgs e) => CreateUI();
 
-        private void ToggleModule(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            if (this.MainWindow != null)
-            {
-                this.MainWindow.ToggleWindow();
-            }
-        }
+        private void ToggleModule(object sender, Blish_HUD.Input.MouseEventArgs e) => MainWindow?.ToggleWindow();
 
         private void CreateCornerIcons()
         {
-            this.cornerIcon = new CornerIcon()
+            cornerIcon = new CornerIcon()
             {
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156678),
                 HoverIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156679),
-                BasicTooltipText = string.Format(Strings.common.Toggle, $"{this.Name}"),
+                BasicTooltipText = string.Format(Strings.common.Toggle, $"{Name}"),
                 Parent = GameService.Graphics.SpriteScreen,
-                Visible = this.Settings.ShowCornerIcon.Value,
+                Visible = Settings.ShowCornerIcon.Value,
             };
 
-            this.APISpinner = new LoadingSpinner()
+            APISpinner = new LoadingSpinner()
             {
-                Location = new Point(this.cornerIcon.Left, this.cornerIcon.Bottom + 3),
+                Location = new Point(cornerIcon.Left, cornerIcon.Bottom + 3),
                 Parent = GameService.Graphics.SpriteScreen,
-                Size = new Point(this.cornerIcon.Width, this.cornerIcon.Height),
+                Size = new Point(cornerIcon.Width, cornerIcon.Height),
                 BasicTooltipText = "Fetching API data ...",
                 Visible = false,
             };
 
-            this.cornerIcon.Click += this.CornerIcon_Click;
-            this.cornerIcon.Moved += this.CornerIcon_Moved;
+            cornerIcon.Click += CornerIcon_Click;
+            cornerIcon.Moved += CornerIcon_Moved;
         }
 
-        private void CornerIcon_Moved(object sender, MovedEventArgs e)
-        {
-            this.APISpinner.Location = new Point(this.cornerIcon.Left, this.cornerIcon.Bottom + 3);
-        }
+        private void CornerIcon_Moved(object sender, MovedEventArgs e) => APISpinner.Location = new Point(cornerIcon.Left, cornerIcon.Bottom + 3);
 
         private void ShowCornerIcon_SettingChanged(object sender, ValueChangedEventArgs<bool> e)
         {
-            if (e.NewValue && this.cornerIcon == null)
+            if (e.NewValue && cornerIcon == null)
             {
-                this.CreateCornerIcons();
+                CreateCornerIcons();
             }
-            else if (this.cornerIcon != null && !e.NewValue)
+            else if (cornerIcon != null && !e.NewValue)
             {
-                this.cornerIcon.Moved -= this.CornerIcon_Moved;
-                this.cornerIcon.Click -= this.CornerIcon_Click;
-                this.cornerIcon.Dispose();
-                this.cornerIcon = null;
+                cornerIcon.Moved -= CornerIcon_Moved;
+                cornerIcon.Click -= CornerIcon_Click;
+                cornerIcon.Dispose();
+                cornerIcon = null;
 
-                this.APISpinner.Dispose();
-                this.APISpinner = null;
+                APISpinner.Dispose();
+                APISpinner = null;
             }
         }
 
         private void CharacterSwapping_Failed(object sender, EventArgs e)
         {
-            ScreenNotification.ShowNotification("Failed to swap to " + this.CharacterSwapping.Character.Name + "!");
-            if (this.Settings.AutoSortCharacters.Value)
+            ScreenNotification.ShowNotification("Failed to swap to " + CharacterSwapping.Character.Name + "!");
+            if (Settings.AutoSortCharacters.Value)
             {
                 ScreenNotification.ShowNotification("Fixing Characters!");
-                this.FixCharacterOrder();
+                FixCharacterOrder();
             }
 
-            this.CharacterSwapping.Failed -= this.CharacterSwapping_Failed;
+            CharacterSwapping.Failed -= CharacterSwapping_Failed;
         }
 
         private void UserLocale_SettingChanged(object sender, ValueChangedEventArgs<Gw2Sharp.WebApi.Locale> e)
         {
-            this.cornerIcon.BasicTooltipText = string.Format(Strings.common.Toggle, $"{this.Name}");
-            this.OnLanguageChanged(null, null);
+            cornerIcon.BasicTooltipText = string.Format(Strings.common.Toggle, $"{Name}");
+            OnLanguageChanged(null, null);
         }
 
         private void CreateUI(bool force = false)
         {
-            if (this.MainWindow == null || force)
+            if (MainWindow == null || force)
             {
                 // var bg = GameService.Content.DatAssetCache.GetTextureFromAssetId(155985).Texture;
-                var bg = this.TextureManager.GetBackground(Backgrounds.MainWindow);
-                var cutBg = bg.GetRegion(25, 25, bg.Width - 100, bg.Height - 325);
+                Microsoft.Xna.Framework.Graphics.Texture2D bg = TextureManager.GetBackground(Backgrounds.MainWindow);
+                Microsoft.Xna.Framework.Graphics.Texture2D cutBg = bg.GetRegion(25, 25, bg.Width - 100, bg.Height - 325);
 
-                this.MainWindow = new MainWindow(
+                MainWindow = new MainWindow(
                     bg,
                     new Rectangle(25, 25, cutBg.Width + 10, cutBg.Height),
                     new Rectangle(35, 14, cutBg.Width - 10, cutBg.Height - 10))
@@ -687,19 +665,16 @@
                     CanResize = true,
                 };
 
-                this.MainWindow.Resized += this.MainWindow_Resized;
-                this.MainWindow.Size = this.Settings.CurrentWindowSize;
+                MainWindow.Resized += MainWindow_Resized;
+                MainWindow.Size = Settings.CurrentWindowSize;
 
-                this.CreateCharacterControls();
+                CreateCharacterControls();
 
-                this.PotraitCapture = new CharacterPotraitCapture() { Parent = GameService.Graphics.SpriteScreen, Visible = false, ZIndex = 999 };
-                this.OCR = new OCR();
+                PotraitCapture = new CharacterPotraitCapture() { Parent = GameService.Graphics.SpriteScreen, Visible = false, ZIndex = 999 };
+                OCR = new OCR();
             }
         }
 
-        private void MainWindow_Resized(object sender, ResizedEventArgs e)
-        {
-            this.Settings.WindowSize.Value = this.MainWindow.Size;
-        }
+        private void MainWindow_Resized(object sender, ResizedEventArgs e) => Settings.WindowSize.Value = MainWindow.Size;
     }
 }

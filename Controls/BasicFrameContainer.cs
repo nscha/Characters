@@ -1,12 +1,12 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Microsoft.Xna.Framework.Graphics;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Microsoft.Xna.Framework.Graphics;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class BasicFrameContainer : Container
     {
         public Color FrameColor { get; set; } = Color.Honeydew;
@@ -19,19 +19,19 @@
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
 
-            if (this.Background != null)
+            if (Background != null)
             {
                 spriteBatch.DrawOnCtrl(
                     this,
-                    this.Background,
+                    Background,
                     bounds,
-                    this.TextureRectangle != Rectangle.Empty ? this.TextureRectangle : this.Background.Bounds,
+                    TextureRectangle != Rectangle.Empty ? TextureRectangle : Background.Bounds,
                     Color.Black * 0.9f,
                     0f,
                     default);
             }
 
-            var color = this.FrameColor;
+            Color color = FrameColor;
 
             // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);

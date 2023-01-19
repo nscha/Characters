@@ -347,7 +347,7 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
     <value>Bitte stellen Sie das Spiel auf 'WINDOWED' {0} und die UI Scale auf 'Larger'!</value>
   </data>
   <data name="UISizeDisclaimer" xml:space="preserve">
-    <value>Sie müssen die Größe der Spieloberfläche auf 'Größer' einstellen, um die richtigen Ausschnitte zu erhalten!</value>
+    <value>Sie müssen die Größe der Benutzeroberfläche auf 'Größer' einstellen, um die richtigen Ausschnitte zu erhalten!</value>
   </data>
   <data name="Unkown" xml:space="preserve">
     <value>Unbekannte</value>

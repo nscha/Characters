@@ -1,20 +1,20 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Kenedia.Modules.Characters.Models;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using MonoGame.Extended.BitmapFonts;
-    using static Kenedia.Modules.Characters.Services.SettingsModel;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Kenedia.Modules.Characters.Models;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.BitmapFonts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using static Kenedia.Modules.Characters.Services.SettingsModel;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class CharacterTooltip : Container
     {
         private readonly AsyncTexture2D iconFrame = GameService.Content.DatAssetCache.GetTextureFromAssetId(1414041);
@@ -35,18 +35,18 @@
         private Rectangle iconRectangle;
         private Rectangle contentRectangle;
 
-        private Point textureOffset = new Point(25, 25);
+        private Point textureOffset = new(25, 25);
         private Character_Model character;
         private BitmapFont font = GameService.Content.DefaultFont14;
 
         public CharacterTooltip()
         {
-            this.HeightSizingMode = SizingMode.AutoSize;
+            HeightSizingMode = SizingMode.AutoSize;
 
-            this.BackgroundColor = new Color(0, 0, 0, 75);
-            this.AutoSizePadding = new Point(5, 5);
+            BackgroundColor = new Color(0, 0, 0, 75);
+            AutoSizePadding = new Point(5, 5);
 
-            this.contentPanel = new FlowPanel()
+            contentPanel = new FlowPanel()
             {
                 Parent = this,
                 FlowDirection = ControlFlowDirection.SingleTopToBottom,
@@ -54,79 +54,79 @@
                 OuterControlPadding = new Vector2(5, 0),
                 AutoSizePadding = new Point(5, 5),
             };
-            this.iconDummy = new Dummy()
+            iconDummy = new Dummy()
             {
                 Parent = this,
             };
 
-            this.nameLabel = new IconLabel()
+            nameLabel = new IconLabel()
             {
-                Parent = this.contentPanel,
+                Parent = contentPanel,
                 AutoSizeWidth = true,
                 AutoSizeHeight = true,
             };
 
-            this.levelLabel = new IconLabel()
+            levelLabel = new IconLabel()
             {
-                Parent = this.contentPanel,
+                Parent = contentPanel,
                 AutoSizeWidth = true,
                 AutoSizeHeight = true,
             };
-            this.raceLabel = new IconLabel()
+            raceLabel = new IconLabel()
             {
-                Parent = this.contentPanel,
+                Parent = contentPanel,
                 AutoSizeWidth = true,
                 AutoSizeHeight = true,
             };
-            this.professionLabel = new IconLabel()
+            professionLabel = new IconLabel()
             {
-                Parent = this.contentPanel,
+                Parent = contentPanel,
                 AutoSizeWidth = true,
                 AutoSizeHeight = true,
             };
-            this.mapLabel = new IconLabel()
+            mapLabel = new IconLabel()
             {
-                Parent = this.contentPanel,
+                Parent = contentPanel,
                 AutoSizeWidth = true,
                 AutoSizeHeight = true,
             };
 
-            this.craftingControl = new CraftingControl()
+            craftingControl = new CraftingControl()
             {
-                Parent = this.contentPanel,
-                Width = this.contentPanel.Width,
+                Parent = contentPanel,
+                Width = contentPanel.Width,
                 Height = 20,
-                Character = this.Character,
+                Character = Character,
             };
 
-            this.lastLoginLabel = new IconLabel()
+            lastLoginLabel = new IconLabel()
             {
-                Parent = this.contentPanel,
+                Parent = contentPanel,
                 AutoSizeWidth = true,
                 AutoSizeHeight = true,
             };
 
-            this.tagPanel = new FlowPanel()
+            tagPanel = new FlowPanel()
             {
-                Parent = this.contentPanel,
+                Parent = contentPanel,
                 WidthSizingMode = SizingMode.Fill,
                 HeightSizingMode = SizingMode.AutoSize,
                 ControlPadding = new Vector2(3, 2),
-                Height = this.Font.LineHeight + 5,
+                Height = Font.LineHeight + 5,
                 Visible = false,
             };
-            this.tagPanel.Resized += this.Tag_Panel_Resized;
+            tagPanel.Resized += Tag_Panel_Resized;
 
-            this.dataControls = new List<Control>()
+            dataControls = new List<Control>()
             {
-                this.nameLabel,
-                this.levelLabel,
-                this.raceLabel,
-                this.professionLabel,
-                this.mapLabel,
-                this.lastLoginLabel,
-                this.craftingControl,
-                this.tagPanel,
+                nameLabel,
+                levelLabel,
+                raceLabel,
+                professionLabel,
+                mapLabel,
+                lastLoginLabel,
+                craftingControl,
+                tagPanel,
             };
         }
 
@@ -138,10 +138,10 @@
 
         public BitmapFont Font
         {
-            get => this.font;
+            get => font;
             set
             {
-                this.font = value;
+                font = value;
             }
         }
 
@@ -149,58 +149,58 @@
 
         public Character_Model Character
         {
-            get => this.character; set
+            get => character; set
             {
-                this.character = value;
-                this.ApplyCharacter(null, null);
+                character = value;
+                ApplyCharacter(null, null);
             }
         }
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
-            this.Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 35);
+            Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 35);
 
-            if (this.Character != null && this.lastLoginLabel.Visible && Characters.ModuleInstance.CurrentCharacterModel != this.Character)
+            if (Character != null && lastLoginLabel.Visible && Characters.ModuleInstance.CurrentCharacterModel != Character)
             {
-                var ts = DateTimeOffset.UtcNow.Subtract(this.Character.LastLogin);
-                this.lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, Math.Floor(ts.TotalDays), ts.Hours, ts.Minutes, ts.Seconds);
+                TimeSpan ts = DateTimeOffset.UtcNow.Subtract(Character.LastLogin);
+                lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, Math.Floor(ts.TotalDays), ts.Hours, ts.Minutes, ts.Seconds);
             }
         }
 
         public void UpdateLayout()
         {
-            if (this.iconRectangle.IsEmpty)
+            if (iconRectangle.IsEmpty)
             {
-                this.iconRectangle = new Rectangle(Point.Zero, new Point(Math.Min(this.Width, this.Height), Math.Min(this.Width, this.Height)));
+                iconRectangle = new Rectangle(Point.Zero, new Point(Math.Min(Width, Height), Math.Min(Width, Height)));
             }
 
-            this.UpdateLabelLayout();
-            this.UpdateSize();
+            UpdateLabelLayout();
+            UpdateSize();
 
-            this.contentRectangle = new Rectangle(new Point(this.iconRectangle.Right, 0), this.contentPanel.Size);
-            this.contentPanel.Location = this.contentRectangle.Location;
+            contentRectangle = new Rectangle(new Point(iconRectangle.Right, 0), contentPanel.Size);
+            contentPanel.Location = contentRectangle.Location;
         }
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
 
-            if (this.Background != null)
+            if (Background != null)
             {
-                var rect = new Rectangle(this.textureOffset.X, this.textureOffset.Y, bounds.Width, bounds.Height);
+                Rectangle rect = new(textureOffset.X, textureOffset.Y, bounds.Width, bounds.Height);
 
                 spriteBatch.DrawOnCtrl(
                     this,
-                    this.Background,
+                    Background,
                     bounds,
                     rect,
-                    this.BackgroundTint,
+                    BackgroundTint,
                     0f,
                     default);
             }
 
-            var color = Color.Black;
+            Color color = Color.Black;
 
             // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
@@ -218,37 +218,37 @@
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 2, bounds.Top, 2, bounds.Height), Rectangle.Empty, color * 0.5f);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
 
-            if (!this.Character.HasDefaultIcon && this.Character.Icon != null)
+            if (!Character.HasDefaultIcon && Character.Icon != null)
             {
                 spriteBatch.DrawOnCtrl(
                     this,
-                    this.Character.Icon,
-                    this.iconRectangle,
-                    this.Character.Icon.Bounds,
+                    Character.Icon,
+                    iconRectangle,
+                    Character.Icon.Bounds,
                     Color.White,
                     0f,
                     default);
             }
             else
             {
-                var texture = this.Character.SpecializationIcon;
+                AsyncTexture2D texture = Character.SpecializationIcon;
 
                 if (texture != null)
                 {
                     spriteBatch.DrawOnCtrl(
                         this,
-                        this.iconFrame,
-                        new Rectangle(this.iconRectangle.X, this.iconRectangle.Y, this.iconRectangle.Width, this.iconRectangle.Height),
-                        this.iconFrame.Bounds,
+                        iconFrame,
+                        new Rectangle(iconRectangle.X, iconRectangle.Y, iconRectangle.Width, iconRectangle.Height),
+                        iconFrame.Bounds,
                         Color.White,
                         0f,
                         default);
 
                     spriteBatch.DrawOnCtrl(
                         this,
-                        this.iconFrame,
-                        new Rectangle(this.iconRectangle.Width, this.iconRectangle.Height, this.iconRectangle.Width, this.iconRectangle.Height),
-                        this.iconFrame.Bounds,
+                        iconFrame,
+                        new Rectangle(iconRectangle.Width, iconRectangle.Height, iconRectangle.Width, iconRectangle.Height),
+                        iconFrame.Bounds,
                         Color.White,
                         6.28f / 2,
                         default);
@@ -256,7 +256,7 @@
                     spriteBatch.DrawOnCtrl(
                         this,
                         texture,
-                        new Rectangle(8, 8, this.iconRectangle.Width - 16, this.iconRectangle.Height - 16),
+                        new Rectangle(8, 8, iconRectangle.Width - 16, iconRectangle.Height - 16),
                         texture.Bounds,
                         Color.White,
                         0f,
@@ -267,60 +267,60 @@
 
         public void UpdateLabelLayout()
         {
-            var onlyIcon = Characters.ModuleInstance.Settings.PanelLayout.Value == CharacterPanelLayout.OnlyIcons;
+            bool onlyIcon = Characters.ModuleInstance.Settings.PanelLayout.Value == CharacterPanelLayout.OnlyIcons;
 
-            this.iconDummy.Visible = this.iconRectangle != Rectangle.Empty;
-            this.iconDummy.Size = this.iconRectangle.Size;
-            this.iconDummy.Location = this.iconRectangle.Location;
+            iconDummy.Visible = iconRectangle != Rectangle.Empty;
+            iconDummy.Size = iconRectangle.Size;
+            iconDummy.Location = iconRectangle.Location;
 
-            this.nameLabel.Visible = true;
-            this.nameLabel.Font = this.NameFont;
+            nameLabel.Visible = true;
+            nameLabel.Font = NameFont;
 
-            this.levelLabel.Visible = true;
-            this.levelLabel.Font = this.Font;
+            levelLabel.Visible = true;
+            levelLabel.Font = Font;
 
-            this.professionLabel.Visible = true;
-            this.professionLabel.Font = this.Font;
+            professionLabel.Visible = true;
+            professionLabel.Font = Font;
 
-            this.raceLabel.Visible = true;
-            this.raceLabel.Font = this.Font;
+            raceLabel.Visible = true;
+            raceLabel.Font = Font;
 
-            this.mapLabel.Visible = true;
-            this.mapLabel.Font = this.Font;
+            mapLabel.Visible = true;
+            mapLabel.Font = Font;
 
-            this.lastLoginLabel.Visible = true;
-            this.lastLoginLabel.Font = this.Font;
+            lastLoginLabel.Visible = true;
+            lastLoginLabel.Font = Font;
 
-            this.craftingControl.Visible = true;
-            this.craftingControl.Font = this.Font;
+            craftingControl.Visible = true;
+            craftingControl.Font = Font;
 
-            this.tagPanel.Visible = this.Character.Tags.Count > 0;
-            foreach (Tag tag in this.tagPanel.Children)
+            tagPanel.Visible = Character.Tags.Count > 0;
+            foreach (Tag tag in tagPanel.Children)
             {
-                tag.Font = this.Font;
+                tag.Font = Font;
             }
 
-            this.craftingControl.Height = this.Font.LineHeight + 2;
+            craftingControl.Height = Font.LineHeight + 2;
         }
 
         public void UpdateSize()
         {
-            var visibleControls = this.dataControls.Where(e => e.Visible);
-            var amount = visibleControls.Count();
+            IEnumerable<Control> visibleControls = dataControls.Where(e => e.Visible);
+            int amount = visibleControls.Count();
 
-            var height = visibleControls.Count() > 0 ? visibleControls.Aggregate(0, (result, ctrl) => result + ctrl.Height + (int)this.contentPanel.ControlPadding.Y) : 0;
-            var width = visibleControls.Count() > 0 ? visibleControls.Max(ctrl => ctrl.Width) : 0;
+            int height = visibleControls.Count() > 0 ? visibleControls.Aggregate(0, (result, ctrl) => result + ctrl.Height + (int)contentPanel.ControlPadding.Y) : 0;
+            int width = visibleControls.Count() > 0 ? visibleControls.Max(ctrl => ctrl.Width) : 0;
 
-            this.contentPanel.Height = height;
-            this.contentPanel.Width = width + (int)this.contentPanel.ControlPadding.X;
-            this.tagPanel.Width = width;
+            contentPanel.Height = height;
+            contentPanel.Width = width + (int)contentPanel.ControlPadding.X;
+            tagPanel.Width = width;
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
 
-            this.Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 35);
+            Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 35);
         }
 
         private void Tag_Panel_Resized(object sender, ResizedEventArgs e)
@@ -329,47 +329,47 @@
 
         private void ApplyCharacter(object sender, EventArgs e)
         {
-            this.nameLabel.Text = this.Character.Name;
-            this.nameLabel.TextColor = new Microsoft.Xna.Framework.Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255);
+            nameLabel.Text = Character.Name;
+            nameLabel.TextColor = new Microsoft.Xna.Framework.Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255);
 
-            this.levelLabel.Text = string.Format(Strings.common.Level, this.Character.Level);
-            this.levelLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
-            this.levelLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(157085);
+            levelLabel.Text = string.Format(Strings.common.Level, Character.Level);
+            levelLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
+            levelLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(157085);
 
-            this.professionLabel.Icon = this.Character.SpecializationIcon;
-            this.professionLabel.Text = this.Character.SpecializationName;
+            professionLabel.Icon = Character.SpecializationIcon;
+            professionLabel.Text = Character.SpecializationName;
 
-            if (this.professionLabel.Icon != null)
+            if (professionLabel.Icon != null)
             {
-                this.professionLabel.TextureRectangle = this.professionLabel.Icon.Width == 32 ? new Rectangle(2, 2, 28, 28) : new Rectangle(4, 4, 56, 56);
+                professionLabel.TextureRectangle = professionLabel.Icon.Width == 32 ? new Rectangle(2, 2, 28, 28) : new Rectangle(4, 4, 56, 56);
             }
 
-            this.raceLabel.Text = Characters.ModuleInstance.Data.Races[this.Character.Race].Name;
-            this.raceLabel.Icon = Characters.ModuleInstance.Data.Races[this.Character.Race].Icon;
+            raceLabel.Text = Characters.ModuleInstance.Data.Races[Character.Race].Name;
+            raceLabel.Icon = Characters.ModuleInstance.Data.Races[Character.Race].Icon;
 
-            this.mapLabel.Text = Characters.ModuleInstance.Data.GetMapById(this.Character.Map).Name;
-            this.mapLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
-            this.mapLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(358406); // 358406 //517180 //157122;
+            mapLabel.Text = Characters.ModuleInstance.Data.GetMapById(Character.Map).Name;
+            mapLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
+            mapLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(358406); // 358406 //517180 //157122;
 
-            this.lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(841721);
-            this.lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, 0, 0, 0, 0);
-            this.lastLoginLabel.TextureRectangle = Rectangle.Empty;
+            lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(841721);
+            lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, 0, 0, 0, 0);
+            lastLoginLabel.TextureRectangle = Rectangle.Empty;
 
-            this.tagPanel.ClearChildren();
-            foreach (var tagText in this.Character.Tags)
+            tagPanel.ClearChildren();
+            foreach (string tagText in Character.Tags)
             {
-                new Tag()
+                _ = new Tag()
                 {
-                    Parent = this.tagPanel,
+                    Parent = tagPanel,
                     Text = tagText,
                     Active = true,
                     ShowDelete = false,
                 };
             }
 
-            this.craftingControl.Character = this.Character;
-            this.UpdateLabelLayout();
-            this.UpdateSize();
+            craftingControl.Character = Character;
+            UpdateLabelLayout();
+            UpdateSize();
 
             // UpdateLayout();
         }

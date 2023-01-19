@@ -1,29 +1,29 @@
-﻿namespace Kenedia.Modules.Characters.Models
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Kenedia.Modules.Characters.Enums;
+﻿using Kenedia.Modules.Characters.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace Kenedia.Modules.Characters.Models
+{
     internal class JsonCharacter_Model
     {
         public JsonCharacter_Model(Character_Model c)
         {
-            this.Name = c.Name;
-            this.Level = c.Level;
-            this.Map = c.Map;
-            this.Crafting = c.Crafting;
-            this.Race = c.Race;
-            this.Profession = c.Profession;
-            this.Specialization = c.Specialization;
-            this.Created = c.Created;
-            this.LastModified = c.LastModified;
-            this.LastLogin = c.LastLogin;
-            this.IconPath = c.IconPath;
-            this.Tags = c.Tags.ToList();
-            this.Index = c.Index;
-            this.Position = c.Position;
-            this.Show = c.Show;
+            Name = c.Name;
+            Level = c.Level;
+            Map = c.Map;
+            Crafting = c.Crafting;
+            Race = c.Race;
+            Profession = c.Profession;
+            Specialization = c.Specialization;
+            Created = c.Created;
+            LastModified = c.LastModified;
+            LastLogin = c.LastLogin;
+            IconPath = c.IconPath;
+            Tags = c.Tags.ToList();
+            Index = c.Index;
+            Position = c.Position;
+            Show = c.Show;
         }
 
         public string Name { get; set; }

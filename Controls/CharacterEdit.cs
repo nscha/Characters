@@ -1,22 +1,22 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Input;
-    using Kenedia.Modules.Characters.Models;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using static Kenedia.Modules.Characters.Services.TextureManager;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Blish_HUD.Input;
+using Kenedia.Modules.Characters.Models;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using static Kenedia.Modules.Characters.Services.TextureManager;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class CharacterEdit : Container
     {
         private readonly Checkbox show;
@@ -34,7 +34,7 @@
         private readonly int expandedWidth = 725;
         private readonly bool initialized;
 
-        private readonly List<Tag> tags = new List<Tag>();
+        private readonly List<Tag> tags = new();
 
         private double opacityTick = 0;
         private DateTime lastMouseOver = DateTime.Now;
@@ -43,21 +43,21 @@
 
         public CharacterEdit()
         {
-            this.Width = this.width;
-            new Dummy()
+            Width = width;
+            _ = new Dummy()
             {
                 Width = 350,
             };
-            this.Parent = GameService.Graphics.SpriteScreen;
-            this.HeightSizingMode = SizingMode.AutoSize;
-            this.AutoSizePadding = new Point(5, 5);
-            this.ZIndex = 999;
+            Parent = GameService.Graphics.SpriteScreen;
+            HeightSizingMode = SizingMode.AutoSize;
+            AutoSizePadding = new Point(5, 5);
+            ZIndex = 999;
 
-            this.Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003); // 155985
+            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003); // 155985
 
-            var tM = Characters.ModuleInstance.TextureManager;
+            Services.TextureManager tM = Characters.ModuleInstance.TextureManager;
 
-            this.image = new ImageButton()
+            image = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(358353),
@@ -65,126 +65,126 @@
                 Location = new Point(5 + 2, 5 + 2),
                 Size = new Point(64, 64),
             };
-            this.image.Click += this.Image_Click;
+            image.Click += Image_Click;
 
-            this.delete = new ImageButton()
+            delete = new ImageButton()
             {
                 Parent = this,
                 Texture = tM.GetControlTexture(Controls.Delete_Button),
                 HoveredTexture = tM.GetControlTexture(Controls.Delete_Button_Hovered),
-                Location = new Point(this.Right - 24 - 5, 5),
+                Location = new Point(Right - 24 - 5, 5),
                 Size = new Point(24, 24),
                 BasicTooltipText = string.Format(Strings.common.DeleteItem, Strings.common.Character),
             };
-            this.delete.Click += this.Delete_Click;
+            delete.Click += Delete_Click;
 
-            this.name = new Label()
+            name = new Label()
             {
                 Text = Strings.common.CharacterName,
                 Parent = this,
                 TextColor = new Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255),
                 Font = GameService.Content.DefaultFont16,
                 AutoSizeWidth = true,
-                Location = new Point(this.image.Right + 5 + 2, 5),
+                Location = new Point(image.Right + 5 + 2, 5),
             };
 
-            this.show = new Checkbox()
+            show = new Checkbox()
             {
                 Parent = this,
-                Location = new Point(this.image.Right + 5 + 2, this.name.Bottom + 5 + 2),
+                Location = new Point(image.Right + 5 + 2, name.Bottom + 5 + 2),
                 Size = new Point(100, 21),
                 Text = Strings.common.ShowInList,
             };
-            this.show.Click += this.Show_Click;
+            show.Click += Show_Click;
 
-            this.captureImages = new StandardButton()
+            captureImages = new StandardButton()
             {
                 Parent = this,
-                Location = new Point(this.image.Right + 4, this.image.Bottom - 28),
+                Location = new Point(image.Right + 4, image.Bottom - 28),
                 Size = new Point(130, 30),
                 Text = Strings.common.CaptureImages,
                 BasicTooltipText = Strings.common.TogglePortraitCapture_Tooltip,
                 Icon = tM.GetIcon(Icons.Camera),
                 ResizeIcon = true,
             };
-            this.captureImages.Click += this.CaptureImages_Click;
+            captureImages.Click += CaptureImages_Click;
 
-            this.openFolder = new StandardButton()
+            openFolder = new StandardButton()
             {
                 Parent = this,
-                Location = new Point(this.captureImages.Right + 4, this.image.Bottom - 28),
+                Location = new Point(captureImages.Right + 4, image.Bottom - 28),
                 Size = new Point(125, 30),
                 Text = string.Format(Strings.common.OpenItem, Strings.common.Folder),
                 BasicTooltipText = Strings.common.OpenPortraitFolder,
                 Icon = tM.GetIcon(Icons.Folder),
                 ResizeIcon = true,
             };
-            this.openFolder.Click += this.OpenFolder_Click;
+            openFolder.Click += OpenFolder_Click;
 
-            this.addTag = new ImageButton()
+            addTag = new ImageButton()
             {
                 Parent = this,
                 Texture = tM.GetControlTexture(Controls.Plus_Button),
                 HoveredTexture = tM.GetControlTexture(Controls.Plus_Button_Hovered),
-                Location = new Point(this.Right - 24 - 5, this.image.Bottom + 5 + 2),
+                Location = new Point(Right - 24 - 5, image.Bottom + 5 + 2),
                 Size = new Point(24, 24),
                 BasicTooltipText = string.Format(Strings.common.OpenItem, Strings.common.Tag),
             };
-            this.addTag.Click += this.AddTag_Click;
+            addTag.Click += AddTag_Click;
 
-            this.tagBox = new TextBox()
+            tagBox = new TextBox()
             {
                 Parent = this,
-                Location = new Point(5, this.image.Bottom + 5 + 2),
-                Size = new Point(this.Width - 10 - 24 - 2, 24),
+                Location = new Point(5, image.Bottom + 5 + 2),
+                Size = new Point(Width - 10 - 24 - 2, 24),
                 PlaceholderText = Strings.common.Tag_Placeholder,
             };
-            this.tagBox.EnterPressed += this.AddTag_Click;
-            this.tagBox.TextChanged += this.SetInteracted;
+            tagBox.EnterPressed += AddTag_Click;
+            tagBox.TextChanged += SetInteracted;
 
-            this.tagPanel = new FlowPanel()
+            tagPanel = new FlowPanel()
             {
                 Parent = this,
-                Location = new Point(5, this.tagBox.Bottom + 5),
+                Location = new Point(5, tagBox.Bottom + 5),
                 WidthSizingMode = SizingMode.Fill,
                 HeightSizingMode = SizingMode.AutoSize,
                 ControlPadding = new Vector2(3, 2),
             };
 
-            this.imagePanel = new ImageSelector()
+            imagePanel = new ImageSelector()
             {
                 Parent = this,
-                Location = new Point(5, this.image.Bottom + 5),
+                Location = new Point(5, image.Bottom + 5),
                 ControlPadding = new Vector2(3, 2),
                 Visible = false,
-                Width = this.expandedWidth - 10,
+                Width = expandedWidth - 10,
             };
-            this.imagePanel.Shown += this.LoadImages;
+            imagePanel.Shown += LoadImages;
 
-            new Dummy()
+            _ = new Dummy()
             {
-                Parent = this.imagePanel,
+                Parent = imagePanel,
                 Size = new Point(0, 64),
             };
 
             foreach (string t in Characters.ModuleInstance.Tags)
             {
-                this.tags.Add(this.AddTag(t, true));
+                tags.Add(AddTag(t, true));
             }
 
-            this.initialized = true;
+            initialized = true;
         }
 
         public Character_Model Character
         {
-            get => this.character;
+            get => character;
             set
             {
-                this.character = value;
+                character = value;
                 if (value != null)
                 {
-                    this.character.Updated += this.ApplyCharacter;
-                    this.ApplyCharacter(null, null);
+                    character.Updated += ApplyCharacter;
+                    ApplyCharacter(null, null);
                 }
             }
         }
@@ -201,25 +201,25 @@
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
 
-            if (this.Background != null)
+            if (Background != null)
             {
                 // var rect = TextureRectangle != Rectangle.Empty ? TextureRectangle : new Rectangle(TextureOffset.X, TextureOffset.Y, Background.Bounds.Width, Background.Bounds.Height);
                 // var rect = new Rectangle(TextureOffset.X, TextureOffset.Y, Background.Bounds.Width - (TextureOffset.X * 3), Background.Bounds.Height - (TextureOffset.Y * 3 ));
-                var rect = new Rectangle(this.TextureOffset.X, this.TextureOffset.Y, bounds.Width, bounds.Height);
+                Rectangle rect = new(TextureOffset.X, TextureOffset.Y, bounds.Width, bounds.Height);
 
                 spriteBatch.DrawOnCtrl(
                     this,
-                    this.Background,
+                    Background,
                     bounds,
                     rect,
-                    this.BackgroundTint,
+                    BackgroundTint,
                     0f,
                     default);
             }
 
-            var color = Color.Black;
+            Color color = Color.Black;
 
-            var b = this.image.LocalBounds.Add(new Rectangle(-2, -2, 4, 4));
+            Rectangle b = image.LocalBounds.Add(new Rectangle(-2, -2, 4, 4));
 
             spriteBatch.DrawOnCtrl(
                 this,
@@ -267,16 +267,16 @@
         {
             base.UpdateContainer(gameTime);
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - this.opacityTick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - opacityTick > 50)
             {
-                this.opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
+                opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (!this.MouseOver && DateTime.Now.Subtract(this.lastMouseOver).TotalMilliseconds >= 5000 && !Characters.ModuleInstance.PotraitCapture.Visible)
+                if (!MouseOver && DateTime.Now.Subtract(lastMouseOver).TotalMilliseconds >= 5000 && !Characters.ModuleInstance.PotraitCapture.Visible)
                 {
-                    this.Opacity = this.Opacity - 0.05F;
-                    if (this.Opacity <= 0F)
+                    Opacity = Opacity - 0.05F;
+                    if (Opacity <= 0F)
                     {
-                        this.Hide();
+                        Hide();
                     }
                 }
             }
@@ -284,52 +284,52 @@
 
         public void LoadImages(object sender, EventArgs eArgs)
         {
-            var path = Characters.ModuleInstance.AccountImagesPath;
-            var images = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories);
+            string path = Characters.ModuleInstance.AccountImagesPath;
+            string[] images = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories);
 
-            var mHeight = Characters.ModuleInstance.MainWindow.ContentRegion.Height - 65;
-            this.imagePanel.Height = Math.Min(((int)Math.Ceiling(images.Count() / 7.0) * (96 + (int)this.imagePanel.ControlPadding.Y)) + (int)this.imagePanel.OuterControlPadding.Y, mHeight) + 5;
+            int mHeight = Characters.ModuleInstance.MainWindow.ContentRegion.Height - 65;
+            imagePanel.Height = Math.Min(((int)Math.Ceiling(images.Count() / 7.0) * (96 + (int)imagePanel.ControlPadding.Y)) + (int)imagePanel.OuterControlPadding.Y, mHeight) + 5;
 
             GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
             {
-                this.imagePanel.ClearChildren();
+                imagePanel.ClearChildren();
 
                 AsyncTexture2D noImgTexture = null;
 
-                if (this.Visible && this.Character != null)
+                if (Visible && Character != null)
                 {
-                    noImgTexture = this.Character.SpecializationIcon;
+                    noImgTexture = Character.SpecializationIcon;
 
-                    var noImg = new Image()
+                    Image noImg = new()
                     {
                         Size = new Point(96, 96),
-                        Parent = this.imagePanel,
+                        Parent = imagePanel,
                         Texture = noImgTexture,
                     };
 
                     noImg.Click += (s, e) =>
                     {
-                        this.character.IconPath = null;
-                        this.character.Icon = null;
-                        this.ApplyCharacter(null, null);
+                        character.IconPath = null;
+                        character.Icon = null;
+                        ApplyCharacter(null, null);
                     };
                 }
 
                 foreach (string p in images)
                 {
-                    var texture = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(p, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                    Texture2D texture = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(p, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
-                    var img = new Image()
+                    Image img = new()
                     {
                         Size = new Point(96, 96),
-                        Parent = this.imagePanel,
+                        Parent = imagePanel,
                         Texture = texture,
                     };
                     img.Click += (s, e) =>
                     {
-                        this.character.IconPath = p.Replace(Characters.ModuleInstance.BasePath, string.Empty);
-                        this.character.Icon = texture;
-                        this.ApplyCharacter(null, null);
+                        character.IconPath = p.Replace(Characters.ModuleInstance.BasePath, string.Empty);
+                        character.Icon = texture;
+                        ApplyCharacter(null, null);
                     };
                 }
             });
@@ -338,142 +338,133 @@
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            this.Width = this.width;
+            Width = width;
 
-            this.SetInteracted(null, null);
+            SetInteracted(null, null);
         }
 
         protected override void OnMouseMoved(MouseEventArgs e)
         {
             base.OnMouseMoved(e);
 
-            this.SetInteracted(null, null);
+            SetInteracted(null, null);
         }
 
         protected override void OnResized(ResizedEventArgs e)
         {
             base.OnResized(e);
 
-            if (this.initialized)
+            if (initialized)
             {
-                this.delete.Location = new Point(e.CurrentSize.X - 24 - 5, 5);
+                delete.Location = new Point(e.CurrentSize.X - 24 - 5, 5);
 
-                this.show.Visible = this.Width == this.width;
-                this.tagBox.Visible = this.Width == this.width;
-                this.tagPanel.Visible = this.Width == this.width;
-                this.addTag.Visible = this.Width == this.width;
-                this.imagePanel.Visible = this.Width == this.expandedWidth;
-                this.captureImages.Visible = this.Width == this.expandedWidth;
-                this.openFolder.Visible = this.Width == this.expandedWidth;
+                show.Visible = Width == width;
+                tagBox.Visible = Width == width;
+                tagPanel.Visible = Width == width;
+                addTag.Visible = Width == width;
+                imagePanel.Visible = Width == expandedWidth;
+                captureImages.Visible = Width == expandedWidth;
+                openFolder.Visible = Width == expandedWidth;
             }
         }
 
         private void Tag_Deleted(object sender, EventArgs e)
         {
-            var tag = (Tag)sender;
-            this.tags.Remove(tag);
-            Characters.ModuleInstance.Tags.Remove(tag.Text);
+            Tag tag = (Tag)sender;
+            _ = tags.Remove(tag);
+            _ = Characters.ModuleInstance.Tags.Remove(tag.Text);
 
-            tag.Deleted -= this.Tag_Deleted;
+            tag.Deleted -= Tag_Deleted;
         }
 
         private void ApplyCharacter(object sender, EventArgs e)
         {
-            foreach (Tag t in this.tags)
+            foreach (Tag t in tags)
             {
-                t.Active = this.character.Tags.Contains(t.Text);
+                t.Active = character.Tags.Contains(t.Text);
             }
 
-            this.name.Text = this.character.Name;
-            this.image.Texture = this.character.Icon;
-            this.show.Checked = this.character.Show;
+            name.Text = character.Name;
+            image.Texture = character.Icon;
+            show.Checked = character.Show;
 
-            if (this.imagePanel.Visible)
+            if (imagePanel.Visible)
             {
-                var noImgTexture = this.Character.SpecializationIcon;
+                AsyncTexture2D noImgTexture = Character.SpecializationIcon;
 
-                var noImg = (Image)this.imagePanel.Children[0];
+                Image noImg = (Image)imagePanel.Children[0];
                 noImg.Texture = noImgTexture;
             }
         }
 
-        private void Show_Click(object sender, MouseEventArgs e)
-        {
-            this.character.Show = this.show.Checked;
-        }
+        private void Show_Click(object sender, MouseEventArgs e) => character.Show = show.Checked;
 
         private void SetInteracted(object sender, EventArgs e)
         {
-            this.lastMouseOver = DateTime.Now;
-            this.Opacity = 1f;
+            lastMouseOver = DateTime.Now;
+            Opacity = 1f;
         }
 
         private void OpenFolder_Click(object sender, MouseEventArgs e)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo
+            ProcessStartInfo startInfo = new()
             {
                 Arguments = Characters.ModuleInstance.AccountImagesPath,
                 FileName = "explorer.exe",
             };
 
-            Process.Start(startInfo);
+            _ = Process.Start(startInfo);
         }
 
         private void Delete_Click(object sender, MouseEventArgs e)
         {
-            this.Character.Delete();
-            this.Character = null;
-            this.Hide();
+            Character.Delete();
+            Character = null;
+            Hide();
         }
 
-        private void CaptureImages_Click(object sender, MouseEventArgs e)
-        {
-            Characters.ModuleInstance.PotraitCapture.Visible = !Characters.ModuleInstance.PotraitCapture.Visible;
-        }
+        private void CaptureImages_Click(object sender, MouseEventArgs e) => Characters.ModuleInstance.PotraitCapture.Visible = !Characters.ModuleInstance.PotraitCapture.Visible;
 
-        private void Image_Click(object sender, MouseEventArgs e)
-        {
-            this.Width = this.Width == this.width ? this.expandedWidth : this.width;
-        }
+        private void Image_Click(object sender, MouseEventArgs e) => Width = Width == width ? expandedWidth : width;
 
         private void AddTag_Click(object sender, EventArgs e)
         {
-            if (this.tagBox.Text != null && this.tagBox.Text.Length > 0 && !Characters.ModuleInstance.Tags.Contains(this.tagBox.Text))
+            if (tagBox.Text != null && tagBox.Text.Length > 0 && !Characters.ModuleInstance.Tags.Contains(tagBox.Text))
             {
-                Characters.ModuleInstance.Tags.Add(this.tagBox.Text);
-                this.Character.Tags.Add(this.tagBox.Text);
-                this.tags.Add(this.AddTag(this.tagBox.Text, true));
+                Characters.ModuleInstance.Tags.Add(tagBox.Text);
+                Character.Tags.Add(tagBox.Text);
+                tags.Add(AddTag(tagBox.Text, true));
 
-                this.tagBox.Text = null;
+                tagBox.Text = null;
             }
         }
 
         private Tag AddTag(string txt, bool active = false)
         {
-            var tag = new Tag()
+            Tag tag = new()
             {
                 Text = txt,
-                Parent = this.tagPanel,
+                Parent = tagPanel,
                 Active = active,
             };
 
-            tag.Deleted += this.Tag_Deleted;
-            tag.Click += this.Tag_Click;
+            tag.Deleted += Tag_Deleted;
+            tag.Click += Tag_Click;
 
             return tag;
         }
 
         private void Tag_Click(object sender, MouseEventArgs e)
         {
-            var tag = (Tag)sender;
+            Tag tag = (Tag)sender;
 
             if (tag.Active)
             {
-                this.character.Tags.Remove(tag.Text);
+                _ = character.Tags.Remove(tag.Text);
             }
             else
             {
-                this.character.Tags.Add(tag.Text);
+                character.Tags.Add(tag.Text);
             }
         }
     }

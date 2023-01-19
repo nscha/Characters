@@ -1,20 +1,19 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using static Kenedia.Modules.Characters.Services.TextureManager;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     internal class HeadedPanel : Panel
     {
         private readonly AsyncTexture2D headerUnderline;
         private readonly bool initialized = false;
-        private readonly Label headerLabel = new ()
+        private readonly Label headerLabel = new()
         {
             Font = GameService.Content.DefaultFont16,
             Location = new Point(5, 3),
@@ -23,7 +22,7 @@
             Padding = new Thickness(4f),
         };
 
-        private readonly FlowPanel contentPanel = new ()
+        private readonly FlowPanel contentPanel = new()
         {
             WidthSizingMode = SizingMode.Fill,
             HeightSizingMode = SizingMode.AutoSize,
@@ -37,24 +36,24 @@
 
         public HeadedPanel()
         {
-            this.WidthSizingMode = SizingMode.Fill;
-            this.HeightSizingMode = SizingMode.AutoSize;
+            WidthSizingMode = SizingMode.Fill;
+            HeightSizingMode = SizingMode.AutoSize;
 
-            this.headerLabel.Parent = this;
-            this.contentPanel.Parent = this;
+            headerLabel.Parent = this;
+            contentPanel.Parent = this;
 
-            this.headerUnderline = Characters.ModuleInstance.TextureManager.GetControlTexture(Controls.Separator);
+            headerUnderline = Characters.ModuleInstance.TextureManager.GetControlTexture(Controls.Separator);
 
-            this.initialized = true;
+            initialized = true;
         }
 
         public string Header
         {
-            get => this.header;
+            get => header;
             set
             {
-                this.header = value;
-                this.headerLabel.Text = value;
+                header = value;
+                headerLabel.Text = value;
             }
         }
 
@@ -64,11 +63,11 @@
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
 
-            var color = Color.Black;
-            var b = this.contentPanel.LocalBounds;
-            var pad = 5;
+            Color color = Color.Black;
+            Rectangle b = contentPanel.LocalBounds;
+            int pad = 5;
 
-            if (this.TintContent)
+            if (TintContent)
             {
                 // Bottom
                 spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(b.Left, b.Bottom - 2, b.Width - pad, 2), Rectangle.Empty, color * 0.5f);
@@ -85,13 +84,13 @@
                 spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(b.Left, b.Top, b.Width - pad, b.Height), Rectangle.Empty, color * 0.5f);
             }
 
-            b = this.headerLabel.LocalBounds;
+            b = headerLabel.LocalBounds;
 
             spriteBatch.DrawOnCtrl(
                 this,
-                this.headerUnderline,
+                headerUnderline,
                 new Rectangle(bounds.Left, b.Bottom, bounds.Width, 5),
-                this.headerUnderline.Bounds,
+                headerUnderline.Bounds,
                 Color.White,
                 0f,
                 default);
@@ -101,9 +100,9 @@
         {
             base.OnChildAdded(e);
 
-            if (this.initialized)
+            if (initialized)
             {
-                e.ChangedChild.Parent = this.contentPanel;
+                e.ChangedChild.Parent = contentPanel;
             }
         }
     }

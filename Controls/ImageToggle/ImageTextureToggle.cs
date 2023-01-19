@@ -1,13 +1,13 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Input;
-    using Microsoft.Xna.Framework.Graphics;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Blish_HUD.Input;
+using Microsoft.Xna.Framework.Graphics;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class ImageTextureToggle : Control
     {
         private bool active;
@@ -30,23 +30,23 @@
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (this.ActiveTexture != null)
+            if (ActiveTexture != null)
             {
-                var texture = this.active ? this.ActiveTexture : this.InactiveTexture != null ? this.InactiveTexture : this.ActiveTexture;
+                AsyncTexture2D texture = active ? ActiveTexture : InactiveTexture != null ? InactiveTexture : ActiveTexture;
 
                 spriteBatch.DrawOnCtrl(
                     this,
                     texture,
                     new Rectangle(bounds.Left, bounds.Top, bounds.Height, bounds.Height),
-                    this.TextureRectangle == Rectangle.Empty ? texture.Bounds : this.TextureRectangle,
-                    this.MouseOver ? this.ColorHovered : this.active ? this.ColorActive : this.ColorInactive,
+                    TextureRectangle == Rectangle.Empty ? texture.Bounds : TextureRectangle,
+                    MouseOver ? ColorHovered : active ? ColorActive : ColorInactive,
                     0f,
                     default);
             }
 
-            if (this.ActiveText != null)
+            if (ActiveText != null)
             {
-                var text = this.active ? this.ActiveText : this.InactiveText != null ? this.InactiveText : this.ActiveText;
+                string text = active ? ActiveText : InactiveText != null ? InactiveText : ActiveText;
 
                 spriteBatch.DrawStringOnCtrl(
                     this,
@@ -65,7 +65,7 @@
         protected override void OnClick(MouseEventArgs e)
         {
             base.OnClick(e);
-            this.active = !this.active;
+            active = !active;
         }
     }
 }

@@ -1,15 +1,15 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Kenedia.Modules.Characters.Models;
-    using Microsoft.Xna.Framework.Graphics;
-    using MonoGame.Extended.BitmapFonts;
-    using static Kenedia.Modules.Characters.Services.Data;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Kenedia.Modules.Characters.Models;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.BitmapFonts;
+using static Kenedia.Modules.Characters.Services.Data;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class CraftingControl : Control
     {
         private readonly AsyncTexture2D craftingIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156711);
@@ -24,13 +24,13 @@
 
         public BitmapFont Font
         {
-            get => this.font;
+            get => font;
             set
             {
-                this.font = value;
+                font = value;
                 if (value != null)
                 {
-                    this.Width = this.Height + 4 + (int)value.MeasureString(Strings.common.NoCraftingProfession).Width;
+                    Width = Height + 4 + (int)value.MeasureString(Strings.common.NoCraftingProfession).Width;
                 }
             }
         }
@@ -40,30 +40,30 @@
             string toolTipText = null;
             spriteBatch.DrawOnCtrl(
                 this,
-                this.craftingIcon,
+                craftingIcon,
                 new Rectangle(4, 2, bounds.Height - 4, bounds.Height - 4),
                 new Rectangle(6, 6, 20, 20),
                 Color.White,
                 0f,
                 default);
 
-            var craftingDisplayed = false;
-            if (this.Character != null && this.Character.Crafting.Count > 0)
+            bool craftingDisplayed = false;
+            if (Character != null && Character.Crafting.Count > 0)
             {
-                var craftingDictionary = Characters.ModuleInstance.Data.CrafingProfessions;
+                System.Collections.Generic.Dictionary<int, CrafingProfession> craftingDictionary = Characters.ModuleInstance.Data.CrafingProfessions;
 
                 int i = 0;
-                foreach (CharacterCrafting crafting in this.Character.Crafting)
+                foreach (CharacterCrafting crafting in Character.Crafting)
                 {
-                    craftingDictionary.TryGetValue(crafting.Id, out CrafingProfession craftingProfession);
+                    _ = craftingDictionary.TryGetValue(crafting.Id, out CrafingProfession craftingProfession);
                     if (craftingProfession != null)
                     {
-                        var onlyMax = Characters.ModuleInstance.Settings.ShowOnlyMaxCrafting.Value;
+                        bool onlyMax = Characters.ModuleInstance.Settings.ShowOnlyMaxCrafting.Value;
 
                         if (craftingProfession.Icon != null && (!onlyMax || crafting.Rating == craftingProfession.MaxRating))
                         {
                             craftingDisplayed = true;
-                            var craftBounds = new Rectangle(bounds.Height + 6 + (i * bounds.Height), 2, bounds.Height - 4, bounds.Height - 4);
+                            Rectangle craftBounds = new(bounds.Height + 6 + (i * bounds.Height), 2, bounds.Height - 4, bounds.Height - 4);
 
                             spriteBatch.DrawOnCtrl(
                                 this,
@@ -76,7 +76,7 @@
 
                             i++;
 
-                            if (craftBounds.Contains(this.RelativeMousePosition))
+                            if (craftBounds.Contains(RelativeMousePosition))
                             {
                                 toolTipText = craftingProfession.Name + " (" + crafting.Rating + "/" + craftingProfession.MaxRating + ")";
                             }
@@ -90,7 +90,7 @@
                 spriteBatch.DrawStringOnCtrl(
                     this,
                     Strings.common.NoCraftingProfession,
-                    this.Font,
+                    Font,
                     new Rectangle(bounds.Height + 4, 0, bounds.Width - (bounds.Height + 4), bounds.Height),
                     Color.Gray,
                     false,
@@ -98,7 +98,7 @@
                     VerticalAlignment.Middle);
             }
 
-            this.BasicTooltipText = toolTipText;
+            BasicTooltipText = toolTipText;
         }
     }
 }

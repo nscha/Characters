@@ -1,8 +1,8 @@
-﻿namespace Kenedia.Modules.Characters.Utility.WindowsUtil
-{
-    using System;
-    using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
+namespace Kenedia.Modules.Characters.Utility.WindowsUtil
+{
     public class WindowsUtil
     {
         [DllImport("user32.dll", SetLastError = true)]

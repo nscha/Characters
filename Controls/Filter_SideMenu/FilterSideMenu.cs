@@ -1,14 +1,14 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using System;
-    using System.Collections.Generic;
-    using Blish_HUD;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Input;
-    using Microsoft.Xna.Framework;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
+﻿using Blish_HUD;
+using Blish_HUD.Controls;
+using Blish_HUD.Input;
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class FilterSideMenu : TabbedPanel
     {
         private readonly FiltersPanel filters;
@@ -19,47 +19,44 @@
 
         public FilterSideMenu()
         {
-            this.Size = new Point(200, 100);
-            this.Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003); // 155985
-            this.ColorBackground = Color.Black * 0.75f;
-            this.BackgroundTint = new Color(200, 200, 200, 255);
+            Size = new Point(200, 100);
+            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003); // 155985
+            ColorBackground = Color.Black * 0.75f;
+            BackgroundTint = new Color(200, 200, 200, 255);
 
-            this.Parent = GameService.Graphics.SpriteScreen;
-            this.ZIndex = 999;
-            this.Visible = false;
-            this.HeightSizingMode = SizingMode.AutoSize;
+            Parent = GameService.Graphics.SpriteScreen;
+            ZIndex = 999;
+            Visible = false;
+            HeightSizingMode = SizingMode.AutoSize;
 
-            this.filters = new FiltersPanel();
-            this.AddTab(this.filters);
+            filters = new FiltersPanel();
+            AddTab(filters);
 
-            this.tagsPanel = new TagsPanel() { Visible = false };
-            this.AddTab(this.tagsPanel);
+            tagsPanel = new TagsPanel() { Visible = false };
+            AddTab(tagsPanel);
         }
 
         public List<Tag> Tags
         {
-            get => this.tagsPanel.Tags;
+            get => tagsPanel.Tags;
         }
 
-        public void ResetToggles()
-        {
-            this.filters.ResetToggles();
-        }
+        public void ResetToggles() => filters.ResetToggles();
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - this.opacityTick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - opacityTick > 50)
             {
-                this.opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
+                opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (!this.MouseOver && DateTime.Now.Subtract(this.lastMouseOver).TotalMilliseconds >= 2500 && !Characters.ModuleInstance.MainWindow.FilterBox.Focused)
+                if (!MouseOver && DateTime.Now.Subtract(lastMouseOver).TotalMilliseconds >= 2500 && !Characters.ModuleInstance.MainWindow.FilterBox.Focused)
                 {
-                    this.Opacity = this.Opacity - 0.05F;
-                    if (this.Opacity <= 0F)
+                    Opacity = Opacity - 0.05F;
+                    if (Opacity <= 0F)
                     {
-                        this.Hide();
+                        Hide();
                     }
                 }
             }
@@ -68,23 +65,23 @@
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            this.lastMouseOver = DateTime.Now;
-            this.Opacity = 1f;
-            this.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            lastMouseOver = DateTime.Now;
+            Opacity = 1f;
+            Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
         }
 
         protected override void OnResized(ResizedEventArgs e)
         {
             base.OnResized(e);
 
-            var newSize = new Point(this.Width / 2, 25);
+            Point newSize = new(Width / 2, 25);
         }
 
         protected override void OnMouseMoved(MouseEventArgs e)
         {
             base.OnMouseMoved(e);
-            this.lastMouseOver = DateTime.Now;
-            this.Opacity = 1f;
+            lastMouseOver = DateTime.Now;
+            Opacity = 1f;
         }
     }
 }

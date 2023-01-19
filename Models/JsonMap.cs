@@ -1,7 +1,7 @@
-﻿namespace Kenedia.Modules.Characters.Models
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Kenedia.Modules.Characters.Models
+{
     public class JsonMap
     {
         public Names Names { get; set; } = new Names();

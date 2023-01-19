@@ -1,20 +1,20 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Input;
-    using Kenedia.Modules.Characters.Extensions;
-    using Microsoft.Xna.Framework.Graphics;
-    using MonoGame.Extended.BitmapFonts;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Blish_HUD.Input;
+using Kenedia.Modules.Characters.Extensions;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.BitmapFonts;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class TabButton : Control
     {
         public TabButton()
         {
-            this.Height = 25;
+            Height = 25;
         }
 
         public bool Active { get; set; }
@@ -31,30 +31,30 @@
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            var bgColor = this.Active ? Color.Transparent : Color.Black;
-            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, bounds, Rectangle.Empty, bgColor * (this.MouseOver ? 0.35f : 0.55f));
+            Color bgColor = Active ? Color.Transparent : Color.Black;
+            spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, bounds, Rectangle.Empty, bgColor * (MouseOver ? 0.35f : 0.55f));
 
-            if (this.Icon != null)
+            if (Icon != null)
             {
-                var tRect = this.TextureRectangle != Rectangle.Empty ? this.TextureRectangle : this.Icon.Bounds;
-                var size = bounds.Height - 4;
+                Rectangle tRect = TextureRectangle != Rectangle.Empty ? TextureRectangle : Icon.Bounds;
+                int size = bounds.Height - 4;
 
-                if (this.UseGrayScale && this.IconGrayScale == null)
+                if (UseGrayScale && IconGrayScale == null)
                 {
-                    this.IconGrayScale = this.Icon.Texture.ToGrayScaledPalettable();
+                    IconGrayScale = Icon.Texture.ToGrayScaledPalettable();
                 }
 
                 spriteBatch.DrawOnCtrl(
                     this,
-                    this.Active ? this.Icon : this.UseGrayScale ? this.IconGrayScale : this.Icon,
+                    Active ? Icon : UseGrayScale ? IconGrayScale : Icon,
                     new Rectangle(2 + ((bounds.Width - size) / 2), 3, size, size),
                     tRect,
-                    this.Active ? Color.White : new Color(75, 75, 75),
+                    Active ? Color.White : new Color(75, 75, 75),
                     0f,
                     default);
             }
 
-            var color = Color.Black;
+            Color color = Color.Black;
 
             // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
@@ -69,11 +69,6 @@
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
         }
 
-        protected override void OnClick(MouseEventArgs e)
-        {
-            base.OnClick(e);
-
-            // Active = true;
-        }
+        protected override void OnClick(MouseEventArgs e) => base.OnClick(e);// Active = true;
     }
 }

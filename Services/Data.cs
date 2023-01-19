@@ -1,18 +1,18 @@
-﻿namespace Kenedia.Modules.Characters.Services
-{
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Kenedia.Modules.Characters.Enums;
-    using Kenedia.Modules.Characters.Models;
-    using Microsoft.Xna.Framework.Graphics;
-    using Newtonsoft.Json;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Locale = Gw2Sharp.WebApi.Locale;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Kenedia.Modules.Characters.Enums;
+using Kenedia.Modules.Characters.Models;
+using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Color = Microsoft.Xna.Framework.Color;
+using Locale = Gw2Sharp.WebApi.Locale;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Services
+{
     public enum ArmorWeight
     {
         Heavy,
@@ -24,7 +24,7 @@
     {
         public Data()
         {
-            var path = @"data\maps.json";
+            string path = @"data\maps.json";
             Map[] maps = new Map[1];
 
             string jsonString = new StreamReader(Characters.ModuleInstance.ContentsManager.GetFileStream(path)).ReadToEnd();
@@ -41,7 +41,7 @@
                 }
             }
 
-            this.Maps = maps;
+            Maps = maps;
         }
 
         public Map[] Maps { get; set; }
@@ -1042,9 +1042,9 @@
 
         public Map GetMapById(int id)
         {
-            if (this.Maps.Length > id && this.Maps[id] != null)
+            if (Maps.Length > id && Maps[id] != null)
             {
-                return this.Maps[id];
+                return Maps[id];
             }
 
             return new Map() { Name = "Unkown Map", Id = 0 };
@@ -1066,10 +1066,10 @@
             {
                 get
                 {
-                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
+                    Locale locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
                     string name;
 
-                    return this.Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return Names.TryGetValue(locale, out name) ? name : "No Name Set.";
                 }
             }
         }
@@ -1094,26 +1094,26 @@
 
             public AsyncTexture2D Icon
             {
-                get => this.icon;
+                get => icon;
                 set
                 {
-                    this.icon = value;
-                    if (this.icon != null)
+                    icon = value;
+                    if (icon != null)
                     {
-                        this.icon.TextureSwapped += this.Icon_TextureSwapped;
+                        icon.TextureSwapped += Icon_TextureSwapped;
                     }
                 }
             }
 
             public AsyncTexture2D IconBig
             {
-                get => this.iconBig;
+                get => iconBig;
                 set
                 {
-                    this.iconBig = value;
-                    if (this.iconBig != null)
+                    iconBig = value;
+                    if (iconBig != null)
                     {
-                        this.iconBig.TextureSwapped += this.IconBig_TextureSwapped;
+                        iconBig.TextureSwapped += IconBig_TextureSwapped;
                     }
                 }
             }
@@ -1124,10 +1124,10 @@
             {
                 get
                 {
-                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
+                    Locale locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
                     string name;
 
-                    return this.Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return Names.TryGetValue(locale, out name) ? name : "No Name Set.";
                 }
             }
 
@@ -1135,8 +1135,8 @@
             {
                 if (e.NewValue != null)
                 {
-                    this.IconBig.TextureSwapped -= this.IconBig_TextureSwapped;
-                    this.IconBig.SwapTexture(this.IconBig.Texture.GetRegion(new Rectangle(5, 5, this.IconBig.Width - 10, this.IconBig.Height - 10)));
+                    IconBig.TextureSwapped -= IconBig_TextureSwapped;
+                    IconBig.SwapTexture(IconBig.Texture.GetRegion(new Rectangle(5, 5, IconBig.Width - 10, IconBig.Height - 10)));
                 }
             }
 
@@ -1144,8 +1144,8 @@
             {
                 if (e.NewValue != null)
                 {
-                    this.Icon.TextureSwapped -= this.Icon_TextureSwapped;
-                    this.Icon.SwapTexture(this.Icon.Texture.GetRegion(new Rectangle(5, 5, this.Icon.Width - 10, this.Icon.Height - 10)));
+                    Icon.TextureSwapped -= Icon_TextureSwapped;
+                    Icon.SwapTexture(Icon.Texture.GetRegion(new Rectangle(5, 5, Icon.Width - 10, Icon.Height - 10)));
                 }
             }
         }
@@ -1168,10 +1168,10 @@
             {
                 get
                 {
-                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
+                    Locale locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
                     string name;
 
-                    return this.Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return Names.TryGetValue(locale, out name) ? name : "No Name Set.";
                 }
             }
         }
@@ -1188,10 +1188,10 @@
             {
                 get
                 {
-                    var locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
+                    Locale locale = GameService.Overlay.UserLocale.Value != Locale.Korean && GameService.Overlay.UserLocale.Value != Locale.Chinese ? GameService.Overlay.UserLocale.Value : Locale.English;
                     string name;
 
-                    return this.Names.TryGetValue(locale, out name) ? name : "No Name Set.";
+                    return Names.TryGetValue(locale, out name) ? name : "No Name Set.";
                 }
             }
 

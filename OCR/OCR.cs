@@ -1,20 +1,20 @@
-﻿namespace Kenedia.Modules.Characters
-{
-    using System;
-    using System.Globalization;
-    using System.IO;
-    using System.Threading.Tasks;
-    using Blish_HUD;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Input;
-    using Kenedia.Modules.Characters.Controls;
-    using Kenedia.Modules.Characters.Extensions;
-    using Microsoft.Xna.Framework;
-    using Patagames.Ocr;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Controls;
+using Blish_HUD.Input;
+using Kenedia.Modules.Characters.Controls;
+using Kenedia.Modules.Characters.Extensions;
+using Microsoft.Xna.Framework;
+using Patagames.Ocr;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Threading.Tasks;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters
+{
     public class OCR : IDisposable
     {
         private readonly BasicFrameContainer contentContainer;
@@ -36,14 +36,14 @@
 
         public OCR()
         {
-            OcrApi.PathToEngine = this.BasePath + @"\tesseract.dll";
+            OcrApi.PathToEngine = BasePath + @"\tesseract.dll";
 
-            this.ocrApi = OcrApi.Create();
-            this.ocrApi.Init(this.BasePath + @"\", "gw2");
+            ocrApi = OcrApi.Create();
+            ocrApi.Init(BasePath + @"\", "gw2");
 
-            var tM = Characters.ModuleInstance.TextureManager;
+            Services.TextureManager tM = Characters.ModuleInstance.TextureManager;
 
-            this.contentContainer = new BasicFrameContainer()
+            contentContainer = new BasicFrameContainer()
             {
                 Parent = GameService.Graphics.SpriteScreen,
                 FrameColor = Color.Black, // new Color(32, 32 , 32),
@@ -55,9 +55,9 @@
                 Visible = false,
             };
 
-            var contentFlowPanel = new FlowPanel()
+            FlowPanel contentFlowPanel = new()
             {
-                Parent = this.contentContainer,
+                Parent = contentContainer,
                 WidthSizingMode = SizingMode.AutoSize,
                 HeightSizingMode = SizingMode.AutoSize,
                 AutoSizePadding = new Point(5, 5),
@@ -65,7 +65,7 @@
                 FlowDirection = ControlFlowDirection.SingleTopToBottom,
             };
 
-            this.instructions = new Label()
+            instructions = new Label()
             {
                 Text = Strings.common.OCR_Instructions,
                 Parent = contentFlowPanel,
@@ -74,7 +74,7 @@
                 TextColor = ContentService.Colors.ColonialWhite,
             };
 
-            var offsetPanel = new FlowPanel()
+            FlowPanel offsetPanel = new()
             {
                 Parent = contentFlowPanel,
                 WidthSizingMode = SizingMode.AutoSize,
@@ -85,7 +85,7 @@
                 FlowDirection = ControlFlowDirection.SingleLeftToRight,
             };
 
-            var offsetLabel = new Label()
+            Label offsetLabel = new()
             {
                 Parent = offsetPanel,
                 Text = Strings.common.Offset,
@@ -95,43 +95,43 @@
                 BasicTooltipText = Strings.common.Offset_Tooltip,
             };
 
-            this.leftBox = new ()
+            leftBox = new()
             {
                 Parent = offsetPanel,
                 Size = new Point(50, 25),
-                Text = this.CustomOffset.Left.ToString(),
+                Text = CustomOffset.Left.ToString(),
                 BasicTooltipText = Strings.common.LeftOffset,
             };
-            this.leftBox.TextChanged += this.OffsetChanged;
+            leftBox.TextChanged += OffsetChanged;
 
-            this.topBox = new ()
+            topBox = new()
             {
                 Parent = offsetPanel,
                 Size = new Point(50, 25),
-                Text = this.CustomOffset.Top.ToString(),
+                Text = CustomOffset.Top.ToString(),
                 BasicTooltipText = Strings.common.TopOffset,
             };
-            this.topBox.TextChanged += this.OffsetChanged;
+            topBox.TextChanged += OffsetChanged;
 
-            this.rightBox = new ()
+            rightBox = new()
             {
                 Parent = offsetPanel,
                 Size = new Point(50, 25),
-                Text = this.CustomOffset.Right.ToString(),
+                Text = CustomOffset.Right.ToString(),
                 BasicTooltipText = Strings.common.RightOffset,
             };
-            this.rightBox.TextChanged += this.OffsetChanged;
+            rightBox.TextChanged += OffsetChanged;
 
-            this.bottomBox = new ()
+            bottomBox = new()
             {
                 Parent = offsetPanel,
                 Size = new Point(50, 25),
-                Text = this.CustomOffset.Bottom.ToString(),
+                Text = CustomOffset.Bottom.ToString(),
                 BasicTooltipText = Strings.common.BottomOffset,
             };
-            this.bottomBox.TextChanged += this.OffsetChanged;
+            bottomBox.TextChanged += OffsetChanged;
 
-            this.windowedCheckBox = new ()
+            windowedCheckBox = new()
             {
                 Parent = offsetPanel,
                 Text = Strings.common.WindowedMode,
@@ -140,10 +140,10 @@
                 Height = 25,
                 Width = 200,
             };
-            this.windowedCheckBox.Click += this.WindowedCheckBox_Click;
-            Characters.ModuleInstance.Settings.WindowedMode.SettingChanged += (s, e) => { this.windowedCheckBox.Checked = Characters.ModuleInstance.Settings.WindowedMode.Value; };
+            windowedCheckBox.Click += WindowedCheckBox_Click;
+            Characters.ModuleInstance.Settings.WindowedMode.SettingChanged += (s, e) => { windowedCheckBox.Checked = Characters.ModuleInstance.Settings.WindowedMode.Value; };
 
-            this.result = new Label()
+            result = new Label()
             {
                 Parent = contentFlowPanel,
                 AutoSizeHeight = false,
@@ -153,17 +153,17 @@
                 Font = GameService.Content.DefaultFont32,
             };
 
-            this.oCRResultImage = new Image()
+            oCRResultImage = new Image()
             {
                 Parent = contentFlowPanel,
             };
 
-            this.oCRResultImageBlackWhite = new Image()
+            oCRResultImageBlackWhite = new Image()
             {
                 Parent = contentFlowPanel,
             };
 
-            var thresholdPanel = new FlowPanel()
+            FlowPanel thresholdPanel = new()
             {
                 Parent = contentFlowPanel,
                 WidthSizingMode = SizingMode.AutoSize,
@@ -174,7 +174,7 @@
                 FlowDirection = ControlFlowDirection.SingleLeftToRight,
             };
 
-            new Label()
+            _ = new Label()
             {
                 Parent = thresholdPanel,
                 Text = Strings.common.EmptyColumns,
@@ -183,22 +183,22 @@
                 TextColor = ContentService.Colors.ColonialWhite,
                 BasicTooltipText = Strings.common.EmptyColumns_Tooltip,
             };
-            this.columnBox = new TextBox()
+            columnBox = new TextBox()
             {
                 Parent = thresholdPanel,
                 Size = new Point(50, 25),
-                Text = this.CustomThreshold.ToString(),
+                Text = CustomThreshold.ToString(),
                 BasicTooltipText = Strings.common.EmptyColumnsThreshold_Tooltip,
             };
-            this.columnBox.TextChanged += this.ColumnThresholdChanged;
+            columnBox.TextChanged += ColumnThresholdChanged;
 
-            new Panel()
+            _ = new Panel()
             {
                 Parent = thresholdPanel,
-                BackgroundColor = new Color(this.spacingColor.R, this.spacingColor.G, this.spacingColor.B, this.spacingColor.A),
+                BackgroundColor = new Color(spacingColor.R, spacingColor.G, spacingColor.B, spacingColor.A),
                 Size = new Point(25, 25),
             };
-            new Label()
+            _ = new Label()
             {
                 Parent = thresholdPanel,
                 Text = Strings.common.EmptyColumn,
@@ -207,13 +207,13 @@
                 TextColor = ContentService.Colors.ColonialWhite,
                 BasicTooltipText = Strings.common.EmptyColumn_Tooltip,
             };
-            new Panel()
+            _ = new Panel()
             {
                 Parent = thresholdPanel,
-                BackgroundColor = new Color(this.ignoredColor.R, this.ignoredColor.G, this.ignoredColor.B, this.ignoredColor.A),
+                BackgroundColor = new Color(ignoredColor.R, ignoredColor.G, ignoredColor.B, ignoredColor.A),
                 Size = new Point(25, 25),
             };
-            new Label()
+            _ = new Label()
             {
                 Parent = thresholdPanel,
                 Text = Strings.common.IgnoredPart,
@@ -223,7 +223,7 @@
                 BasicTooltipText = Strings.common.IgnoredPart_Tooltip,
             };
 
-            this.container = new SizeablePanel()
+            container = new SizeablePanel()
             {
                 Parent = GameService.Graphics.SpriteScreen,
                 ZIndex = 999,
@@ -233,13 +233,13 @@
                 TintOnHover = false,
                 ShowResizeOnlyOnMouseOver = true,
             };
-            this.container.Resized += this.Container_Changed;
-            this.container.Moved += this.Container_Changed;
-            this.container.LeftMouseButtonReleased += this.Container_LeftMouseButtonReleased;
-            this.container.MouseLeft += this.Container_LeftMouseButtonReleased;
+            container.Resized += Container_Changed;
+            container.Moved += Container_Changed;
+            container.LeftMouseButtonReleased += Container_LeftMouseButtonReleased;
+            container.MouseLeft += Container_LeftMouseButtonReleased;
 
-            var height = Characters.ModuleInstance.Settings.ActiveOCRRegion.Size.Y;
-            this.contentContainer.Location = new Point(this.container.Left, this.container.Top - (height * 3) - 115);
+            int height = Characters.ModuleInstance.Settings.ActiveOCRRegion.Size.Y;
+            contentContainer.Location = new Point(container.Left, container.Top - (height * 3) - 115);
         }
 
         private Rectangle CustomOffset
@@ -261,26 +261,26 @@
 
         public void ToggleContainer()
         {
-            this.contentContainer?.ToggleVisibility();
-            this.container?.ToggleVisibility();
+            contentContainer?.ToggleVisibility();
+            container?.ToggleVisibility();
 
-            if (this.container.Visible)
+            if (container.Visible)
             {
-                this.Read(true);
+                _ = Read(true);
             }
         }
 
         public void Dispose()
         {
-            if (!this.disposed)
+            if (!disposed)
             {
-                this.disposed = true;
-                this.container?.Dispose();
-                this.instructions?.Dispose();
-                this.oCRResultImage?.Dispose();
-                this.oCRResultImageBlackWhite?.Dispose();
-                this.result?.Dispose();
-                this.contentContainer?.Dispose();
+                disposed = true;
+                container?.Dispose();
+                instructions?.Dispose();
+                oCRResultImage?.Dispose();
+                oCRResultImageBlackWhite?.Dispose();
+                result?.Dispose();
+                contentContainer?.Dispose();
             }
         }
 
@@ -290,59 +290,59 @@
             string? plainText = null;
             string? finalText = null;
 
-            if (this.container.Visible && !show)
+            if (container.Visible && !show)
             {
-                this.ToggleContainer();
+                ToggleContainer();
                 return null;
             }
 
-            var windowed = Characters.ModuleInstance.Settings.WindowedMode.Value;
-            var wndBounds = Characters.ModuleInstance.WindowRectangle;
-            var titleBarHeight = !windowed ? 0 : Characters.ModuleInstance.TitleBarHeight;
-            var sideBarWidth = !windowed ? 0 : Characters.ModuleInstance.SideBarWidth;
+            bool windowed = Characters.ModuleInstance.Settings.WindowedMode.Value;
+            Utility.WindowsUtil.WindowsUtil.RECT wndBounds = Characters.ModuleInstance.WindowRectangle;
+            int titleBarHeight = !windowed ? 0 : Characters.ModuleInstance.TitleBarHeight;
+            int sideBarWidth = !windowed ? 0 : Characters.ModuleInstance.SideBarWidth;
 
             double factor = GameService.Graphics.UIScaleMultiplier;
-            var size = new Point(Math.Min((int)((this.container.Width + 5) * factor), 499), Math.Min((int)((this.container.Height + 5) * factor), 499));
+            Point size = new(Math.Min((int)((container.Width + 5) * factor), 499), Math.Min((int)((container.Height + 5) * factor), 499));
 
-            using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(size.X, size.Y))
+            using (System.Drawing.Bitmap bitmap = new(size.X, size.Y))
             {
-                System.Drawing.Bitmap spacingVisibleBitmap = new System.Drawing.Bitmap(size.X, size.Y);
+                System.Drawing.Bitmap spacingVisibleBitmap = new(size.X, size.Y);
 
                 using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
                 {
-                    var left = (int)(wndBounds.Left + sideBarWidth);
-                    var top = (int)(wndBounds.Top + titleBarHeight);
+                    int left = (int)(wndBounds.Left + sideBarWidth);
+                    int top = (int)(wndBounds.Top + titleBarHeight);
 
-                    var x = (int)Math.Ceiling((this.container.Left - 10 + this.CustomOffset.Left) * factor);
-                    var y = (int)Math.Ceiling((this.container.Top - 10 + this.CustomOffset.Top) * factor);
+                    int x = (int)Math.Ceiling((container.Left - 10 + CustomOffset.Left) * factor);
+                    int y = (int)Math.Ceiling((container.Top - 10 + CustomOffset.Top) * factor);
 
-                    g.CopyFromScreen(new System.Drawing.Point(left + x, top + y), System.Drawing.Point.Empty, new System.Drawing.Size(size.X - this.CustomOffset.Right, size.Y - this.CustomOffset.Bottom));
+                    g.CopyFromScreen(new System.Drawing.Point(left + x, top + y), System.Drawing.Point.Empty, new System.Drawing.Size(size.X - CustomOffset.Right, size.Y - CustomOffset.Bottom));
 
                     if (show)
                     {
-                        using (MemoryStream s = new MemoryStream())
+                        using (MemoryStream s = new())
                         {
                             bitmap.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
 
-                            this.oCRResultImage.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
-                            this.oCRResultImage.Texture = s.CreateTexture2D();
+                            oCRResultImage.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
+                            oCRResultImage.Texture = s.CreateTexture2D();
                         }
                     }
 
-                    var black = System.Drawing.Color.FromArgb(255, 0, 0, 0);
-                    var white = System.Drawing.Color.FromArgb(255, 255, 255, 255);
+                    System.Drawing.Color black = System.Drawing.Color.FromArgb(255, 0, 0, 0);
+                    System.Drawing.Color white = System.Drawing.Color.FromArgb(255, 255, 255, 255);
 
-                    var emptyPixelRow = 0;
+                    int emptyPixelRow = 0;
                     for (int i = 0; i < bitmap.Width; i++)
                     {
-                        var containsPixel = false;
+                        bool containsPixel = false;
 
                         for (int j = 0; j < bitmap.Height; j++)
                         {
                             System.Drawing.Color oc = bitmap.GetPixel(i, j);
-                            var threshold = 150;
+                            int threshold = 150;
 
-                            if (oc.R >= threshold && oc.G >= threshold && oc.B >= threshold && emptyPixelRow < this.CustomThreshold)
+                            if (oc.R >= threshold && oc.G >= threshold && oc.B >= threshold && emptyPixelRow < CustomThreshold)
                             {
                                 bitmap.SetPixel(i, j, black);
                                 if (show)
@@ -352,11 +352,11 @@
 
                                 containsPixel = true;
                             }
-                            else if (emptyPixelRow >= this.CustomThreshold)
+                            else if (emptyPixelRow >= CustomThreshold)
                             {
                                 if (show)
                                 {
-                                    spacingVisibleBitmap.SetPixel(i, j, this.ignoredColor);
+                                    spacingVisibleBitmap.SetPixel(i, j, ignoredColor);
                                 }
 
                                 bitmap.SetPixel(i, j, white);
@@ -372,13 +372,13 @@
                             }
                         }
 
-                        if (emptyPixelRow < this.CustomThreshold && show)
+                        if (emptyPixelRow < CustomThreshold && show)
                         {
                             if (!containsPixel)
                             {
                                 for (int j = 0; j < bitmap.Height; j++)
                                 {
-                                    spacingVisibleBitmap.SetPixel(i, j, this.spacingColor);
+                                    spacingVisibleBitmap.SetPixel(i, j, spacingColor);
                                 }
 
                                 emptyPixelRow++;
@@ -390,23 +390,23 @@
                         }
                     }
 
-                    using (MemoryStream s = new MemoryStream())
+                    using (MemoryStream s = new())
                     {
                         spacingVisibleBitmap.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
 
                         if (show)
                         {
-                            this.oCRResultImageBlackWhite.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
-                            this.oCRResultImageBlackWhite.Texture = s.CreateTexture2D();
+                            oCRResultImageBlackWhite.Size = new Point(bitmap.Size.Width, bitmap.Size.Height);
+                            oCRResultImageBlackWhite.Texture = s.CreateTexture2D();
                         }
                     }
                 }
 
-                plainText = this.ocrApi.GetTextFromImage(bitmap);
+                plainText = ocrApi.GetTextFromImage(bitmap);
 
                 foreach (string word in plainText.Split(' '))
                 {
-                    var wordText = word.Trim();
+                    string wordText = word.Trim();
 
                     if (wordText.StartsWith("l"))
                     {
@@ -418,7 +418,7 @@
 
                 finalText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(finalText?.ToLower());
 
-                this.result.Text = finalText;
+                result.Text = finalText;
             }
 
             return finalText;
@@ -427,61 +427,58 @@
 
         private void ColumnThresholdChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(this.columnBox.Text, out int threshold))
+            if (int.TryParse(columnBox.Text, out int threshold))
             {
-                this.CustomThreshold = threshold;
+                CustomThreshold = threshold;
             }
         }
 
         private async void Container_LeftMouseButtonReleased(object sender, MouseEventArgs e)
         {
-            if (!this.container.MouseOver)
+            if (!container.MouseOver)
             {
-                await this.DelayedRead();
+                await DelayedRead();
             }
         }
 
         private async Task DelayedRead()
         {
             await Task.Delay(5);
-            this.Read(true);
+            _ = Read(true);
         }
 
         private void OffsetChanged(object sender, EventArgs e)
         {
-            int left = this.CustomOffset.Left, top = this.CustomOffset.Top, right = this.CustomOffset.Right, bottom = this.CustomOffset.Bottom;
+            int left = CustomOffset.Left, top = CustomOffset.Top, right = CustomOffset.Right, bottom = CustomOffset.Bottom;
 
-            int.TryParse(this.leftBox.Text, out left);
-            int.TryParse(this.topBox.Text, out top);
-            int.TryParse(this.rightBox.Text, out right);
-            int.TryParse(this.bottomBox.Text, out bottom);
+            _ = int.TryParse(leftBox.Text, out left);
+            _ = int.TryParse(topBox.Text, out top);
+            _ = int.TryParse(rightBox.Text, out right);
+            _ = int.TryParse(bottomBox.Text, out bottom);
 
-            this.CustomOffset = new Rectangle(left, top, right, bottom);
-            this.Read(true);
+            CustomOffset = new Rectangle(left, top, right, bottom);
+            _ = Read(true);
         }
 
         private void Container_Changed(object sender, EventArgs e)
         {
-            var res = GameService.Graphics.Resolution.ToString();
-            var regions = Characters.ModuleInstance.Settings.OCRRegions.Value;
+            string res = GameService.Graphics.Resolution.ToString();
+            System.Collections.Generic.Dictionary<string, Rectangle> regions = Characters.ModuleInstance.Settings.OCRRegions.Value;
 
-            this.Read(true);
+            _ = Read(true);
 
             if (!regions.ContainsKey(res))
             {
-                regions.Add(res, this.container.LocalBounds);
+                regions.Add(res, container.LocalBounds);
             }
             else
             {
-                regions[res] = this.container.LocalBounds;
+                regions[res] = container.LocalBounds;
             }
 
-            this.contentContainer.Location = new Point(this.container.Left, this.container.Top - this.contentContainer.Height - 5);
+            contentContainer.Location = new Point(container.Left, container.Top - contentContainer.Height - 5);
         }
 
-        private void WindowedCheckBox_Click(object sender, MouseEventArgs e)
-        {
-            Characters.ModuleInstance.Settings.WindowedMode.Value = this.windowedCheckBox.Checked;
-        }
+        private void WindowedCheckBox_Click(object sender, MouseEventArgs e) => Characters.ModuleInstance.Settings.WindowedMode.Value = windowedCheckBox.Checked;
     }
 }

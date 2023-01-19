@@ -1,7 +1,7 @@
-﻿namespace Kenedia.Modules.Characters.Extensions
-{
-    using static Kenedia.Modules.Characters.Services.SettingsModel;
+﻿using static Kenedia.Modules.Characters.Services.SettingsModel;
 
+namespace Kenedia.Modules.Characters.Extensions
+{
     public static class SortTypeExtension
     {
         public static ESortType GetSortType(this string s)

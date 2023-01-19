@@ -1,17 +1,17 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Microsoft.Xna.Framework.Graphics;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Microsoft.Xna.Framework.Graphics;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class ImageGrayScaled : Control
     {
-        private static Color defaultColorHovered = new Color(255, 255, 255, 255);
-        private static Color defaultColorActive = new Color(200, 200, 200, 200);
-        private static Color defaultColorInActive = new Color(175, 175, 175, 255);
+        private static Color defaultColorHovered = new(255, 255, 255, 255);
+        private static Color defaultColorActive = new(200, 200, 200, 200);
+        private static Color defaultColorInActive = new(175, 175, 175, 255);
         private Rectangle textureRectangle = Rectangle.Empty;
         private Texture2D grayScaleTexture;
         private AsyncTexture2D texture;
@@ -21,14 +21,14 @@
 
         public AsyncTexture2D Texture
         {
-            get => this.texture;
+            get => texture;
             set
             {
-                this.texture = value;
-                this.texture.TextureSwapped += this.Texture_TextureSwapped;
+                texture = value;
+                texture.TextureSwapped += Texture_TextureSwapped;
                 if (value != null)
                 {
-                    this.grayScaleTexture = this.ToGrayScaledPalettable(value.Texture);
+                    grayScaleTexture = ToGrayScaledPalettable(value.Texture);
                 }
             }
         }
@@ -37,14 +37,14 @@
 
         public Rectangle TextureRectangle
         {
-            get => this.textureRectangle;
-            set => this.textureRectangle = value;
+            get => textureRectangle;
+            set => textureRectangle = value;
         }
 
         public bool Active
         {
-            get => this.active;
-            set => this.active = value;
+            get => active;
+            set => active = value;
         }
 
         public Color ColorHovered { get; set; } = new Color(255, 255, 255, 255);
@@ -57,9 +57,9 @@
 
         public void ResetColors()
         {
-            this.ColorHovered = defaultColorHovered;
-            this.ColorActive = defaultColorActive;
-            this.ColorInActive = defaultColorInActive;
+            ColorHovered = defaultColorHovered;
+            ColorActive = defaultColorActive;
+            ColorInActive = defaultColorInActive;
         }
 
         public Texture2D ToGrayScaledPalettable(Texture2D original)
@@ -70,7 +70,7 @@
             Color[] destColors = new Color[original.Width * original.Height];
             Texture2D newTexture;
 
-            using (var device = GameService.Graphics.LendGraphicsDeviceContext())
+            using (Blish_HUD.Graphics.GraphicsDeviceContext device = GameService.Graphics.LendGraphicsDeviceContext())
             {
                 newTexture = new Texture2D(device.GraphicsDevice, original.Width, original.Height);
             }
@@ -98,14 +98,14 @@
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (this.texture != null)
+            if (texture != null)
             {
                 spriteBatch.DrawOnCtrl(
                     this,
-                    this.UseGrayScale && !this.active && !this.MouseOver ? this.grayScaleTexture : this.texture,
-                    this.SizeRectangle != Rectangle.Empty ? this.SizeRectangle : bounds,
-                    this.textureRectangle == Rectangle.Empty ? this.texture.Bounds : this.textureRectangle,
-                    this.MouseOver ? this.ColorHovered : this.active ? this.ColorActive : this.ColorInActive * (this.UseGrayScale ? 0.5f : this.Alpha),
+                    UseGrayScale && !active && !MouseOver ? grayScaleTexture : texture,
+                    SizeRectangle != Rectangle.Empty ? SizeRectangle : bounds,
+                    textureRectangle == Rectangle.Empty ? texture.Bounds : textureRectangle,
+                    MouseOver ? ColorHovered : active ? ColorActive : ColorInActive * (UseGrayScale ? 0.5f : Alpha),
                     0f,
                     default);
             }
@@ -113,8 +113,8 @@
 
         private void Texture_TextureSwapped(object sender, ValueChangedEventArgs<Texture2D> e)
         {
-            this.grayScaleTexture = this.ToGrayScaledPalettable(this.texture);
-            this.texture.TextureSwapped -= this.Texture_TextureSwapped;
+            grayScaleTexture = ToGrayScaledPalettable(texture);
+            texture.TextureSwapped -= Texture_TextureSwapped;
         }
     }
 }

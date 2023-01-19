@@ -1,16 +1,16 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using System;
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using MonoGame.Extended.BitmapFonts;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.BitmapFonts;
+using System;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class BasicTooltip : Control
     {
         private BitmapFont font = GameService.Content.DefaultFont14;
@@ -23,62 +23,62 @@
 
         public BitmapFont Font
         {
-            get => this.font;
+            get => font;
             set
             {
-                this.font = value;
-                this.UpdateLayout();
+                font = value;
+                UpdateLayout();
             }
         }
 
         public string Text
         {
-            get => this.text;
+            get => text;
             set
             {
-                this.text = value;
+                text = value;
                 if (value == null)
                 {
-                    this.Hide();
+                    Hide();
                 }
 
-                this.UpdateLayout();
+                UpdateLayout();
             }
         }
 
         public override void DoUpdate(GameTime gameTime)
         {
             base.DoUpdate(gameTime);
-            this.Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 25);
+            Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 25);
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (this.Font == null || this.Text == null)
+            if (Font == null || Text == null)
             {
                 return;
             }
 
             spriteBatch.DrawOnCtrl(
                 this,
-                this.Background,
+                Background,
                 bounds,
-                this.TextureRectangle != Rectangle.Empty ? this.TextureRectangle : this.Background.Bounds,
+                TextureRectangle != Rectangle.Empty ? TextureRectangle : Background.Bounds,
                 Color.White,
                 0f,
                 default);
 
             spriteBatch.DrawStringOnCtrl(
                 this,
-                this.Text,
-                this.Font,
+                Text,
+                Font,
                 bounds,
                 Color.White, // new Color(247, 231, 182, 97),
                 false,
                 HorizontalAlignment.Center,
                 VerticalAlignment.Middle);
 
-            var color = Color.Black;
+            Color color = Color.Black;
 
             // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
@@ -101,15 +101,15 @@
         {
             base.OnShown(e);
 
-            this.Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 25);
+            Location = new Point(Input.Mouse.Position.X, Input.Mouse.Position.Y + 25);
         }
 
         private void UpdateLayout()
         {
-            if (this.Font != null && this.Text != null)
+            if (Font != null && Text != null)
             {
-                var sSize = this.Font.MeasureString(this.Text);
-                this.Size = new Point(10 + (int)sSize.Width, 10 + (int)sSize.Height);
+                MonoGame.Extended.Size2 sSize = Font.MeasureString(Text);
+                Size = new Point(10 + (int)sSize.Width, 10 + (int)sSize.Height);
             }
         }
     }

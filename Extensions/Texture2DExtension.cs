@@ -1,16 +1,16 @@
-﻿namespace Kenedia.Modules.Characters.Extensions
-{
-    using System.IO;
-    using Microsoft.Xna.Framework.Graphics;
-    using Color = Microsoft.Xna.Framework.Color;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System.IO;
+using Color = Microsoft.Xna.Framework.Color;
 
+namespace Kenedia.Modules.Characters.Extensions
+{
     internal static class Texture2DExtension
     {
         public static Texture2D CreateTexture2D(this MemoryStream s)
         {
             Texture2D texture;
 
-            using (var device = Blish_HUD.GameService.Graphics.LendGraphicsDeviceContext())
+            using (Blish_HUD.Graphics.GraphicsDeviceContext device = Blish_HUD.GameService.Graphics.LendGraphicsDeviceContext())
             {
                 texture = Texture2D.FromStream(device.GraphicsDevice, s);
             }
@@ -26,7 +26,7 @@
             Color[] destColors = new Color[original.Width * original.Height];
             Texture2D newTexture;
 
-            using (var device = Blish_HUD.GameService.Graphics.LendGraphicsDeviceContext())
+            using (Blish_HUD.Graphics.GraphicsDeviceContext device = Blish_HUD.GameService.Graphics.LendGraphicsDeviceContext())
             {
                 newTexture = new Texture2D(device.GraphicsDevice, original.Width, original.Height);
             }

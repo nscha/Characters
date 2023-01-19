@@ -1,13 +1,13 @@
-﻿namespace Kenedia.Modules.Characters.Models
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Runtime.CompilerServices;
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Kenedia.Modules.Characters.Enums;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Kenedia.Modules.Characters.Enums;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
 
+namespace Kenedia.Modules.Characters.Models
+{
     public class Character_Model
     {
         private string name;
@@ -37,52 +37,52 @@
 
         public string Name
         {
-            get => this.name;
-            set => this.SetProperty(ref this.name, value);
+            get => name;
+            set => SetProperty(ref name, value);
         }
 
         public int Level
         {
-            get => this.level;
-            set => this.SetProperty(ref this.level, value);
+            get => level;
+            set => SetProperty(ref level, value);
         }
 
         public int Map
         {
-            get => this.map;
-            set => this.SetProperty(ref this.map, value);
+            get => map;
+            set => SetProperty(ref map, value);
         }
 
         public List<CharacterCrafting> Crafting { get; set; } = new List<CharacterCrafting>();
 
         public Gw2Sharp.Models.RaceType Race
         {
-            get => this.race;
-            set => this.SetProperty(ref this.race, value);
+            get => race;
+            set => SetProperty(ref race, value);
         }
 
         public Gw2Sharp.Models.ProfessionType Profession
         {
-            get => this.profession;
-            set => this.SetProperty(ref this.profession, value);
+            get => profession;
+            set => SetProperty(ref profession, value);
         }
 
         public SpecializationType Specialization
         {
-            get => this.specialization;
-            set => this.SetProperty(ref this.specialization, value);
+            get => specialization;
+            set => SetProperty(ref specialization, value);
         }
 
         public DateTimeOffset Created
         {
-            get => this.created;
-            set => this.SetProperty(ref this.created, value);
+            get => created;
+            set => SetProperty(ref created, value);
         }
 
         public DateTime LastModified
         {
-            get => this.lastModified;
-            set => this.SetProperty(ref this.lastModified, value);
+            get => lastModified;
+            set => SetProperty(ref lastModified, value);
         }
 
         public int OrderIndex { get; set; } = 0;
@@ -91,55 +91,55 @@
 
         public DateTime LastLogin
         {
-            get => this.lastLogin.AddMilliseconds(-this.OrderOffset);
-            set => this.SetProperty(ref this.lastLogin, value);
+            get => lastLogin.AddMilliseconds(-OrderOffset);
+            set => SetProperty(ref lastLogin, value);
         }
 
         public string IconPath
         {
-            get => this.iconPath;
+            get => iconPath;
             set
             {
-                this.iconPath = value;
-                this.icon = null;
-                this.pathChecked = false;
-                this.OnUpdated();
+                iconPath = value;
+                icon = null;
+                pathChecked = false;
+                OnUpdated();
             }
         }
 
         public string ProfessionName
         {
-            get => Characters.ModuleInstance.Data.Professions[this.Profession].Name;
+            get => Characters.ModuleInstance.Data.Professions[Profession].Name;
         }
 
         public string SpecializationName
         {
             get
             {
-                if (this.Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), this.Specialization))
+                if (Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), Specialization))
                 {
-                    return Characters.ModuleInstance.Data.Specializations[this.Specialization].Name;
+                    return Characters.ModuleInstance.Data.Specializations[Specialization].Name;
                 }
 
-                return this.ProfessionName;
+                return ProfessionName;
             }
         }
 
         public AsyncTexture2D ProfessionIcon
         {
-            get => Characters.ModuleInstance.Data.Professions[this.Profession].IconBig;
+            get => Characters.ModuleInstance.Data.Professions[Profession].IconBig;
         }
 
         public AsyncTexture2D SpecializationIcon
         {
             get
             {
-                if (this.Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), this.Specialization))
+                if (Specialization != SpecializationType.None && Enum.IsDefined(typeof(SpecializationType), Specialization))
                 {
-                    return Characters.ModuleInstance.Data.Specializations[this.Specialization].IconBig;
+                    return Characters.ModuleInstance.Data.Specializations[Specialization].IconBig;
                 }
 
-                return this.ProfessionIcon;
+                return ProfessionIcon;
             }
         }
 
@@ -147,33 +147,33 @@
         {
             get
             {
-                if (!this.pathChecked)
+                if (!pathChecked)
                 {
-                    var path = Characters.ModuleInstance.BasePath + (this.IconPath ?? string.Empty);
+                    string path = Characters.ModuleInstance.BasePath + (IconPath ?? string.Empty);
 
-                    if (this.IconPath != null && File.Exists(path))
+                    if (IconPath != null && File.Exists(path))
                     {
                         GameService.Graphics.QueueMainThreadRender((graphicsDevice) =>
                         {
-                            this.icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + this.IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                            icon = TextureUtil.FromStreamPremultiplied(graphicsDevice, new FileStream(Characters.ModuleInstance.BasePath + IconPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                         });
                     }
 
-                    this.pathChecked = true;
+                    pathChecked = true;
                 }
 
-                if (this.icon == null)
+                if (icon == null)
                 {
-                    return this.SpecializationIcon;
+                    return SpecializationIcon;
                 }
 
-                return this.icon;
+                return icon;
             }
 
             set
             {
-                this.icon = value;
-                this.Updated?.Invoke(this, null);
+                icon = value;
+                Updated?.Invoke(this, null);
             }
         }
 
@@ -181,35 +181,35 @@
         {
             get
             {
-                return this.Icon == this.SpecializationIcon;
+                return Icon == SpecializationIcon;
             }
         }
 
         public bool Show
         {
-            get => this.show;
-            set => this.SetProperty(ref this.show, value);
+            get => show;
+            set => SetProperty(ref show, value);
         }
 
         public TagList Tags { get; set; } = new TagList();
 
         public int Position
         {
-            get => this.position;
+            get => position;
             set
             {
-                this.position = value;
-                this.Save();
+                position = value;
+                Save();
             }
         }
 
         public int Index
         {
-            get => this.index;
+            get => index;
             set
             {
-                this.index = value;
-                this.Save();
+                index = value;
+                Save();
             }
         }
 
@@ -218,13 +218,13 @@
             get
             {
                 // Save today's date.
-                var today = DateTimeOffset.UtcNow;
+                DateTimeOffset today = DateTimeOffset.UtcNow;
 
                 // Calculate the age.
-                var age = today.Year - this.Created.Year;
+                int age = today.Year - Created.Year;
 
                 // Go back to the year in which the person was born in case of a leap year
-                if (this.Created.Date > today.AddYears(-age))
+                if (Created.Date > today.AddYears(-age))
                 {
                     age--;
                 }
@@ -240,11 +240,11 @@
                 DateTime nextBirthday = DateTime.MinValue;
                 for (int i = 1; i < 100; i++)
                 {
-                    DateTime birthDay = this.Created.AddYears(i).DateTime;
+                    DateTime birthDay = Created.AddYears(i).DateTime;
 
                     if (birthDay <= DateTime.UtcNow)
                     {
-                        if (birthDay > this.LastLogin)
+                        if (birthDay > LastLogin)
                         {
                             return true;
                         }
@@ -261,15 +261,15 @@
 
         public void Delete()
         {
-            this.Deleted?.Invoke(null, null);
-            Characters.ModuleInstance.CharacterModels.Remove(this);
-            this.Save();
+            Deleted?.Invoke(null, null);
+            _ = Characters.ModuleInstance.CharacterModels.Remove(this);
+            Save();
         }
 
         public void Initialize()
         {
-            this.Tags.CollectionChanged += this.Tags_CollectionChanged;
-            this.initialized = true;
+            Tags.CollectionChanged += Tags_CollectionChanged;
+            initialized = true;
         }
 
         protected bool SetProperty<T>(ref T property, T newValue, [CallerMemberName] string caller = "")
@@ -280,9 +280,9 @@
             }
 
             property = newValue;
-            if (this.initialized && caller != nameof(this.LastLogin) && caller != nameof(this.LastModified) && caller != nameof(this.LastLogin))
+            if (initialized && caller != nameof(LastLogin) && caller != nameof(LastModified) && caller != nameof(LastLogin))
             {
-                this.OnUpdated();
+                OnUpdated();
             }
 
             return true;
@@ -291,18 +291,15 @@
         private void Tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             Characters.Logger.Debug(nameof(this.Tags_CollectionChanged));
-            this.OnUpdated();
+            OnUpdated();
         }
 
         private void OnUpdated()
         {
-            this.Updated?.Invoke(this, EventArgs.Empty);
-            this.Save();
+            Updated?.Invoke(this, EventArgs.Empty);
+            Save();
         }
 
-        private void Save()
-        {
-            Characters.ModuleInstance.SaveCharacters = true;
-        }
+        private void Save() => Characters.ModuleInstance.SaveCharacters = true;
     }
 }

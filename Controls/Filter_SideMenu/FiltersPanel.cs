@@ -1,33 +1,33 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using Blish_HUD;
-    using Blish_HUD.Controls;
-    using Kenedia.Modules.Characters.Enums;
-    using Kenedia.Modules.Characters.Services;
-    using Microsoft.Xna.Framework;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Controls;
+using Kenedia.Modules.Characters.Enums;
+using Kenedia.Modules.Characters.Services;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     internal class FiltersPanel : FlowTab
     {
-        private readonly List<ImageColorToggle> toggles = new ();
+        private readonly List<ImageColorToggle> toggles = new();
 
         public FiltersPanel()
         {
-            this.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(440021);
-            this.Name = Strings.common.FilterToggles;
-            this.FlowDirection = ControlFlowDirection.TopToBottom;
-            this.WidthSizingMode = SizingMode.Fill;
-            this.AutoSizePadding = new Point(5, 5);
-            this.HeightSizingMode = SizingMode.Standard;
-            this.Height = 250;
-            this.OuterControlPadding = new Vector2(5, 5);
-            this.ControlPadding = new Vector2(5, 3);
-            this.Location = new Point(0, 25);
+            Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(440021);
+            Name = Strings.common.FilterToggles;
+            FlowDirection = ControlFlowDirection.TopToBottom;
+            WidthSizingMode = SizingMode.Fill;
+            AutoSizePadding = new Point(5, 5);
+            HeightSizingMode = SizingMode.Standard;
+            Height = 250;
+            OuterControlPadding = new Vector2(5, 5);
+            ControlPadding = new Vector2(5, 3);
+            Location = new Point(0, 25);
 
-            var toggleDir = new Dictionary<Gw2Sharp.Models.ProfessionType, List<ImageColorToggle>>()
+            Dictionary<Gw2Sharp.Models.ProfessionType, List<ImageColorToggle>> toggleDir = new()
             {
                 {
                     Gw2Sharp.Models.ProfessionType.Guardian,
@@ -67,13 +67,13 @@
                 },
             };
 
-            var profs = Characters.ModuleInstance.Data.Professions.ToDictionary(entry => entry.Key, entry => entry.Value);
+            Dictionary<Gw2Sharp.Models.ProfessionType, Data.Profession> profs = Characters.ModuleInstance.Data.Professions.ToDictionary(entry => entry.Key, entry => entry.Value);
             profs = profs.OrderBy(e => e.Value.WeightClass).ThenBy(e => e.Value.APIId).ToDictionary(e => e.Key, e => e.Value);
 
             // Profession All Specs
             foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> profession in profs)
             {
-                this.toggles.Add(new ImageColorToggle()
+                toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = profession.Value.IconBig,
@@ -90,7 +90,7 @@
 
             foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> profession in profs)
             {
-                this.toggles.Add(new ImageColorToggle()
+                toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = profession.Value.IconBig,
@@ -100,7 +100,7 @@
                 });
             }
 
-            var specToggles = new List<ImageColorToggle>();
+            List<ImageColorToggle> specToggles = new();
             foreach (KeyValuePair<SpecializationType, Data.Specialization> specialization in Characters.ModuleInstance.Data.Specializations)
             {
                 specToggles.Add(new ImageColorToggle()
@@ -118,10 +118,10 @@
             {
                 foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> p in profs)
                 {
-                    var t = specToggles.Find(e => p.Key == e.Profession && !this.toggles.Contains(e));
+                    ImageColorToggle t = specToggles.Find(e => p.Key == e.Profession && !toggles.Contains(e));
                     if (t != null)
                     {
-                        this.toggles.Add(t);
+                        toggles.Add(t);
                     }
                 }
             }
@@ -131,7 +131,7 @@
             {
                 if (crafting.Key > 0)
                 {
-                    var img = new ImageColorToggle()
+                    ImageColorToggle img = new()
                     {
                         Size = new Point(23, 23),
                         Texture = crafting.Value.Icon,
@@ -139,14 +139,14 @@
                         FilterObject = (int)crafting.Key,
                         FilterCategory = FilterCategory.Crafting,
                         BasicTooltipText = crafting.Value.Name,
+                        TextureRectangle = crafting.Key > 0 ? new Rectangle(8, 7, 17, 19) : new Rectangle(4, 4, 24, 24),
+                        SizeRectangle = new Rectangle(4, 4, 20, 20)
                     };
-                    img.TextureRectangle = crafting.Key > 0 ? new Rectangle(8, 7, 17, 19) : new Rectangle(4, 4, 24, 24);
-                    img.SizeRectangle = new Rectangle(4, 4, 20, 20);
-                    this.toggles.Add(img);
+                    toggles.Add(img);
                 }
             }
 
-            this.toggles.Add(new ImageColorToggle()
+            toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(605021),
@@ -157,7 +157,7 @@
                 BasicTooltipText = Strings.common.ShowHidden_Tooltip,
             });
 
-            this.toggles.Add(new ImageColorToggle()
+            toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(593864),
@@ -170,7 +170,7 @@
 
             foreach (KeyValuePair<Gw2Sharp.Models.RaceType, Data.Race> race in Characters.ModuleInstance.Data.Races)
             {
-                this.toggles.Add(new ImageColorToggle()
+                toggles.Add(new ImageColorToggle()
                 {
                     Size = new Point(23, 23),
                     Texture = race.Value.Icon,
@@ -181,17 +181,17 @@
                 });
             }
 
-            foreach (ImageColorToggle t in this.toggles)
+            foreach (ImageColorToggle t in toggles)
             {
                 t.Parent = this;
             }
 
-            this.RecalculateLayout();
+            RecalculateLayout();
         }
 
         public void ResetToggles()
         {
-            foreach (ImageColorToggle t in this.toggles)
+            foreach (ImageColorToggle t in toggles)
             {
                 t.Active = false;
             }

@@ -8,10 +8,10 @@
             {
                 return Blish_HUD.GameService.Overlay.UserLocale.Value switch
                 {
-                    Gw2Sharp.WebApi.Locale.German => this.Names.De,
-                    Gw2Sharp.WebApi.Locale.French => this.Names.Fr,
-                    Gw2Sharp.WebApi.Locale.Spanish => this.Names.Es,
-                    _ => this.Names.En,
+                    Gw2Sharp.WebApi.Locale.German => Names.De,
+                    Gw2Sharp.WebApi.Locale.French => Names.Fr,
+                    Gw2Sharp.WebApi.Locale.Spanish => Names.Es,
+                    _ => Names.En,
                 };
             }
 
@@ -20,19 +20,19 @@
                 switch (Blish_HUD.GameService.Overlay.UserLocale.Value)
                 {
                     case Gw2Sharp.WebApi.Locale.German:
-                        this.Names.De = value;
+                        Names.De = value;
                         break;
 
                     case Gw2Sharp.WebApi.Locale.French:
-                        this.Names.Fr = value;
+                        Names.Fr = value;
                         break;
 
                     case Gw2Sharp.WebApi.Locale.Spanish:
-                        this.Names.Es = value;
+                        Names.Es = value;
                         break;
 
                     default:
-                        this.Names.En = value;
+                        Names.En = value;
                         break;
                 }
             }

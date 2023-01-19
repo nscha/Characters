@@ -1,12 +1,12 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Blish_HUD.Controls;
-    using Microsoft.Xna.Framework;
-    using Point = Microsoft.Xna.Framework.Point;
+﻿using Blish_HUD.Controls;
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Point = Microsoft.Xna.Framework.Point;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class FlowTab : PanelTab
     {
         private ControlFlowDirection flowDirection = ControlFlowDirection.LeftToRight;
@@ -15,82 +15,82 @@
 
         public ControlFlowDirection FlowDirection
         {
-            get => this.flowDirection;
-            set => this.SetProperty(ref this.flowDirection, value, true);
+            get => flowDirection;
+            set => SetProperty(ref flowDirection, value, true);
         }
 
         public Vector2 ControlPadding
         {
-            get => this.controlPadding;
-            set => this.SetProperty(ref this.controlPadding, value, true);
+            get => controlPadding;
+            set => SetProperty(ref controlPadding, value, true);
         }
 
         public Vector2 OuterControlPadding
         {
-            get => this.outerControlPadding;
-            set => this.SetProperty(ref this.outerControlPadding, value, true);
+            get => outerControlPadding;
+            set => SetProperty(ref outerControlPadding, value, true);
         }
 
         public override void RecalculateLayout()
         {
             base.RecalculateLayout();
-            this.ReflowChildLayout(this._children.ToArray());
+            ReflowChildLayout(_children.ToArray());
         }
 
         private void ReflowChildLayout(IEnumerable<Control> allChildren)
         {
-            var filteredChildren = allChildren.Where(c => c.GetType() != typeof(Scrollbar) && c.Visible);
+            IEnumerable<Control> filteredChildren = allChildren.Where(c => c.GetType() != typeof(Scrollbar) && c.Visible);
 
-            switch (this.flowDirection)
+            switch (flowDirection)
             {
                 case ControlFlowDirection.LeftToRight:
-                    this.ReflowChildLayoutLeftToRight(filteredChildren);
+                    ReflowChildLayoutLeftToRight(filteredChildren);
                     break;
                 case ControlFlowDirection.RightToLeft:
-                    this.ReflowChildLayoutRightToLeft(filteredChildren);
+                    ReflowChildLayoutRightToLeft(filteredChildren);
                     break;
                 case ControlFlowDirection.TopToBottom:
-                    this.ReflowChildLayoutTopToBottom(filteredChildren);
+                    ReflowChildLayoutTopToBottom(filteredChildren);
                     break;
                 case ControlFlowDirection.BottomToTop:
-                    this.ReflowChildLayoutBottomToTop(filteredChildren);
+                    ReflowChildLayoutBottomToTop(filteredChildren);
                     break;
                 case ControlFlowDirection.SingleLeftToRight:
-                    this.ReflowChildLayoutSingleLeftToRight(filteredChildren);
+                    ReflowChildLayoutSingleLeftToRight(filteredChildren);
                     break;
                 case ControlFlowDirection.SingleRightToLeft:
-                    this.ReflowChildLayoutSingleRightToLeft(filteredChildren);
+                    ReflowChildLayoutSingleRightToLeft(filteredChildren);
                     break;
                 case ControlFlowDirection.SingleTopToBottom:
-                    this.ReflowChildLayoutSingleTopToBottom(filteredChildren);
+                    ReflowChildLayoutSingleTopToBottom(filteredChildren);
                     break;
                 case ControlFlowDirection.SingleBottomToTop:
-                    this.ReflowChildLayoutSingleBottomToTop(filteredChildren);
+                    ReflowChildLayoutSingleBottomToTop(filteredChildren);
                     break;
             }
         }
 
         private void ReflowChildLayoutLeftToRight(IEnumerable<Control> allChildren)
         {
-            float outerPadX = this.outerControlPadding.X;
-            float outerPadY = this.outerControlPadding.Y;
+            float outerPadX = outerControlPadding.X;
+            float outerPadY = outerControlPadding.Y;
 
             float nextBottom = outerPadY;
             float currentBottom = outerPadY;
             float lastRight = outerPadX;
 
-            foreach (var child in allChildren.Where(c => c.Visible))
+            foreach (Control child in allChildren.Where(c => c.Visible))
             {
                 // Need to flow over to the next row
-                if (child.Width >= this.ContentRegion.Width - lastRight)
+                if (child.Width >= ContentRegion.Width - lastRight)
                 {
-                    currentBottom = nextBottom + this.controlPadding.Y;
+                    currentBottom = nextBottom + controlPadding.Y;
                     lastRight = outerPadX;
                 }
 
                 child.Location = new Point((int)lastRight, (int)currentBottom);
 
-                lastRight = child.Right + this.controlPadding.X;
+                lastRight = child.Right + controlPadding.X;
 
                 // Ensure rows don't overlap
                 nextBottom = Math.Max(nextBottom, child.Bottom);
@@ -99,25 +99,25 @@
 
         private void ReflowChildLayoutRightToLeft(IEnumerable<Control> allChildren)
         {
-            float outerPadX = this.outerControlPadding.X;
-            float outerPadY = this.outerControlPadding.Y;
+            float outerPadX = outerControlPadding.X;
+            float outerPadY = outerControlPadding.Y;
 
             float nextBottom = outerPadY;
             float currentBottom = outerPadY;
-            float lastLeft = this.ContentRegion.Width - outerPadX;
+            float lastLeft = ContentRegion.Width - outerPadX;
 
-            foreach (var child in allChildren.Where(c => c.Visible))
+            foreach (Control child in allChildren.Where(c => c.Visible))
             {
                 // Need to flow over to the next row
                 if (outerPadX > lastLeft - child.Width)
                 {
-                    currentBottom = nextBottom + this.controlPadding.Y;
-                    lastLeft = this.ContentRegion.Width - outerPadX;
+                    currentBottom = nextBottom + controlPadding.Y;
+                    lastLeft = ContentRegion.Width - outerPadX;
                 }
 
                 child.Location = new Point((int)(lastLeft - child.Width), (int)currentBottom);
 
-                lastLeft = child.Left - this.controlPadding.X;
+                lastLeft = child.Left - controlPadding.X;
 
                 // Ensure rows don't overlap
                 nextBottom = Math.Max(nextBottom, child.Bottom);
@@ -126,25 +126,25 @@
 
         private void ReflowChildLayoutTopToBottom(IEnumerable<Control> allChildren)
         {
-            float outerPadX = this.outerControlPadding.X;
-            float outerPadY = this.outerControlPadding.Y;
+            float outerPadX = outerControlPadding.X;
+            float outerPadY = outerControlPadding.Y;
 
             float nextRight = outerPadX;
             float currentRight = outerPadX;
             float lastBottom = outerPadY;
 
-            foreach (var child in allChildren.Where(c => c.Visible))
+            foreach (Control child in allChildren.Where(c => c.Visible))
             {
                 // Need to flow over to the next column
-                if (child.Height >= this.Height - lastBottom)
+                if (child.Height >= Height - lastBottom)
                 {
-                    currentRight = nextRight + this.controlPadding.X;
+                    currentRight = nextRight + controlPadding.X;
                     lastBottom = outerPadY;
                 }
 
                 child.Location = new Point((int)currentRight, (int)lastBottom);
 
-                lastBottom = child.Bottom + this.controlPadding.Y;
+                lastBottom = child.Bottom + controlPadding.Y;
 
                 // Ensure columns don't overlap
                 nextRight = Math.Max(nextRight, child.Right);
@@ -153,25 +153,25 @@
 
         private void ReflowChildLayoutBottomToTop(IEnumerable<Control> allChildren)
         {
-            float outerPadX = this.outerControlPadding.X;
-            float outerPadY = this.outerControlPadding.Y;
+            float outerPadX = outerControlPadding.X;
+            float outerPadY = outerControlPadding.Y;
 
             float nextRight = outerPadX;
             float currentRight = outerPadX;
-            float lastTop = this.Height - outerPadY;
+            float lastTop = Height - outerPadY;
 
-            foreach (var child in allChildren.Where(c => c.Visible))
+            foreach (Control child in allChildren.Where(c => c.Visible))
             {
                 // Need to flow over to the next column
                 if (outerPadY > lastTop - child.Height)
                 {
-                    currentRight = nextRight + this.controlPadding.X;
-                    lastTop = this.Height - outerPadY;
+                    currentRight = nextRight + controlPadding.X;
+                    lastTop = Height - outerPadY;
                 }
 
                 child.Location = new Point((int)currentRight, (int)(lastTop - child.Height));
 
-                lastTop = child.Top - this.controlPadding.Y;
+                lastTop = child.Top - controlPadding.Y;
 
                 // Ensure columns don't overlap
                 nextRight = Math.Max(nextRight, child.Right);
@@ -180,61 +180,61 @@
 
         private void ReflowChildLayoutSingleLeftToRight(IEnumerable<Control> allChildren)
         {
-            float outerPadX = this.outerControlPadding.X;
-            float outerPadY = this.outerControlPadding.Y;
+            float outerPadX = outerControlPadding.X;
+            float outerPadY = outerControlPadding.Y;
 
-            var lastLeft = outerPadX;
+            float lastLeft = outerPadX;
 
-            foreach (var child in allChildren)
+            foreach (Control child in allChildren)
             {
                 child.Location = new Point((int)lastLeft, (int)outerPadY);
 
-                lastLeft = child.Right + this.controlPadding.X;
+                lastLeft = child.Right + controlPadding.X;
             }
         }
 
         private void ReflowChildLayoutSingleRightToLeft(IEnumerable<Control> allChildren)
         {
-            float outerPadX = this.outerControlPadding.X;
-            float outerPadY = this.outerControlPadding.Y;
+            float outerPadX = outerControlPadding.X;
+            float outerPadY = outerControlPadding.Y;
 
-            var lastLeft = this.ContentRegion.Width - outerPadX;
+            float lastLeft = ContentRegion.Width - outerPadX;
 
-            foreach (var child in allChildren)
+            foreach (Control child in allChildren)
             {
                 child.Location = new Point((int)(lastLeft - child.Width), (int)outerPadY);
 
-                lastLeft = child.Left - this.controlPadding.X;
+                lastLeft = child.Left - controlPadding.X;
             }
         }
 
         private void ReflowChildLayoutSingleTopToBottom(IEnumerable<Control> allChildren)
         {
-            float outerPadX = this.outerControlPadding.X;
-            float outerPadY = this.outerControlPadding.Y;
+            float outerPadX = outerControlPadding.X;
+            float outerPadY = outerControlPadding.Y;
 
-            var lastBottom = outerPadY;
+            float lastBottom = outerPadY;
 
-            foreach (var child in allChildren)
+            foreach (Control child in allChildren)
             {
                 child.Location = new Point((int)outerPadX, (int)lastBottom);
 
-                lastBottom = child.Bottom + this.controlPadding.Y;
+                lastBottom = child.Bottom + controlPadding.Y;
             }
         }
 
         private void ReflowChildLayoutSingleBottomToTop(IEnumerable<Control> allChildren)
         {
-            float outerPadX = this.outerControlPadding.X;
-            float outerPadY = this.outerControlPadding.Y;
+            float outerPadX = outerControlPadding.X;
+            float outerPadY = outerControlPadding.Y;
 
-            var lastTop = this.Height - outerPadY;
+            float lastTop = Height - outerPadY;
 
-            foreach (var child in allChildren)
+            foreach (Control child in allChildren)
             {
                 child.Location = new Point((int)outerPadX, (int)(lastTop - child.Height));
 
-                lastTop = child.Top - this.controlPadding.Y;
+                lastTop = child.Top - controlPadding.Y;
             }
         }
     }

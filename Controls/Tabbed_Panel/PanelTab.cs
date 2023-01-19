@@ -1,10 +1,10 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using System;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using System;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class PanelTab : Panel
     {
         private AsyncTexture2D icon;
@@ -15,9 +15,9 @@
 
         public PanelTab()
         {
-            this.tabButton = new TabButton()
+            tabButton = new TabButton()
             {
-                BasicTooltipText = this.Name,
+                BasicTooltipText = Name,
             };
         }
 
@@ -31,79 +31,79 @@
 
         public TabButton TabButton
         {
-            get => this.tabButton;
-            private set => this.tabButton = value;
+            get => tabButton;
+            private set => tabButton = value;
         }
 
         public AsyncTexture2D Icon
         {
-            get => this.icon;
+            get => icon;
             set
             {
-                this.icon = value;
-                this.tabButton.Icon = this.Icon;
-                this.IconChanged?.Invoke(this, EventArgs.Empty);
+                icon = value;
+                tabButton.Icon = Icon;
+                IconChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         public Rectangle TextureRectangle
         {
-            get => this.textureRectangle;
+            get => textureRectangle;
             set
             {
-                this.textureRectangle = value;
-                this.tabButton.TextureRectangle = value;
-                this.TextureRectangleChanged?.Invoke(this, EventArgs.Empty);
+                textureRectangle = value;
+                tabButton.TextureRectangle = value;
+                TextureRectangleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         public string Name
         {
-            get => this.name;
+            get => name;
             set
             {
-                this.name = value;
-                this.tabButton.BasicTooltipText = value;
+                name = value;
+                tabButton.BasicTooltipText = value;
             }
         }
 
         public bool Active
         {
-            get => this.active;
+            get => active;
             set
             {
-                this.active = value;
-                this.TabButton.Active = value;
+                active = value;
+                TabButton.Active = value;
 
                 if (value)
                 {
-                    this.OnActivated();
+                    OnActivated();
                 }
                 else
                 {
-                    this.OnDeactivated();
+                    OnDeactivated();
                 }
             }
         }
 
         protected void OnActivated()
         {
-            this.Show();
-            this.Activated?.Invoke(this, EventArgs.Empty);
+            Show();
+            Activated?.Invoke(this, EventArgs.Empty);
         }
 
         protected void OnDeactivated()
         {
-            this.Hide();
-            this.Deactivated?.Invoke(this, EventArgs.Empty);
+            Hide();
+            Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
         protected override void DisposeControl()
         {
             base.DisposeControl();
 
-            this.tabButton?.Dispose();
-            this.icon = null;
+            tabButton?.Dispose();
+            icon = null;
         }
     }
 }

@@ -1,15 +1,15 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using System;
-    using Blish_HUD;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Input;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Controls;
+using Blish_HUD.Input;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class SettingsSideMenu : TabbedPanel
     {
         private double opacityTick = 0;
@@ -17,7 +17,7 @@
 
         public SettingsSideMenu()
         {
-            var width = 0;
+            int width = 0;
             switch (GameService.Overlay.UserLocale.Value)
             {
                 case Gw2Sharp.WebApi.Locale.French:
@@ -31,36 +31,36 @@
                     break;
             }
 
-            this.Size = new Point(width, 100);
-            this.Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
+            Size = new Point(width, 100);
+            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
 
-            this.Parent = GameService.Graphics.SpriteScreen;
-            this.ZIndex = 999;
-            this.Visible = false;
-            this.HeightSizingMode = SizingMode.AutoSize;
+            Parent = GameService.Graphics.SpriteScreen;
+            ZIndex = 999;
+            Visible = false;
+            HeightSizingMode = SizingMode.AutoSize;
 
-            this.AddTab(new OrderSettings(width - 10)
+            AddTab(new OrderSettings(width - 10)
             {
                 Name = string.Format(Strings.common.ItemSettings, Strings.common.Order),
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156909),
                 Active = true,
             });
 
-            this.AddTab(new FilterSettings(width - 10)
+            AddTab(new FilterSettings(width - 10)
             {
                 Name = string.Format(Strings.common.ItemSettings, Strings.common.Filter),
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(784371),
                 Active = false,
             });
 
-            this.AddTab(new DisplaySettings(width - 10)
+            AddTab(new DisplaySettings(width - 10)
             {
                 Name = string.Format(Strings.common.ItemSettings, Strings.common.Display),
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(528726),
                 Active = false,
             });
 
-            this.AddTab(new SettingsAndShortcuts()
+            AddTab(new SettingsAndShortcuts()
             {
                 Name = Strings.common.GeneralAndWindows,
                 Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(440021),
@@ -72,16 +72,16 @@
         {
             base.UpdateContainer(gameTime);
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - this.opacityTick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - opacityTick > 50)
             {
-                this.opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
+                opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (!this.MouseOver && DateTime.Now.Subtract(this.lastMouseOver).TotalMilliseconds >= 2500)
+                if (!MouseOver && DateTime.Now.Subtract(lastMouseOver).TotalMilliseconds >= 2500)
                 {
-                    this.Opacity = this.Opacity - 0.05F;
-                    if (this.Opacity <= 0F)
+                    Opacity = Opacity - 0.05F;
+                    if (Opacity <= 0F)
                     {
-                        this.Hide();
+                        Hide();
                     }
                 }
             }
@@ -91,7 +91,7 @@
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
 
-            var color = Color.Black;
+            Color color = Color.Black;
 
             // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
@@ -110,24 +110,21 @@
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Right - 1, bounds.Top, 1, bounds.Height), Rectangle.Empty, color * 0.6f);
         }
 
-        protected override void DisposeControl()
-        {
-            base.DisposeControl();
-        }
+        protected override void DisposeControl() => base.DisposeControl();
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            this.lastMouseOver = DateTime.Now;
-            this.Opacity = 1f;
-            this.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            lastMouseOver = DateTime.Now;
+            Opacity = 1f;
+            Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
         }
 
         protected override void OnMouseMoved(MouseEventArgs e)
         {
             base.OnMouseMoved(e);
-            this.lastMouseOver = DateTime.Now;
-            this.Opacity = 1f;
+            lastMouseOver = DateTime.Now;
+            Opacity = 1f;
         }
     }
 }

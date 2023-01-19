@@ -1,29 +1,29 @@
-﻿namespace Kenedia.Modules.Characters.Services
-{
-    using System;
-    using System.IO;
-    using System.Linq;
-    using Blish_HUD.Controls;
-    using Gw2Sharp.Models;
-    using Gw2Sharp.WebApi.V2.Models;
-    using Kenedia.Modules.Characters.Enums;
-    using Kenedia.Modules.Characters.Models;
+﻿using Blish_HUD.Controls;
+using Gw2Sharp.Models;
+using Gw2Sharp.WebApi.V2.Models;
+using Kenedia.Modules.Characters.Enums;
+using Kenedia.Modules.Characters.Models;
+using System;
+using System.IO;
+using System.Linq;
 
+namespace Kenedia.Modules.Characters.Services
+{
     public class GW2API_Handler
     {
         private Account account;
 
         public Account Account
         {
-            get => this.account;
+            get => account;
             set
             {
-                if (value != null && (this.account == null || this.account.Name != value.Name))
+                if (value != null && (account == null || account.Name != value.Name))
                 {
-                    this.UpdateFolderPaths(value.Name);
+                    UpdateFolderPaths(value.Name);
                 }
 
-                this.account = value;
+                account = value;
             }
         }
 
@@ -33,22 +33,22 @@
 
             try
             {
-                var gw2ApiManager = Characters.ModuleInstance.Gw2ApiManager;
+                Blish_HUD.Modules.Managers.Gw2ApiManager gw2ApiManager = Characters.ModuleInstance.Gw2ApiManager;
 
                 if (gw2ApiManager.HasPermissions(new[] { TokenPermission.Account, TokenPermission.Characters }))
                 {
-                    var account = await gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
-                    this.Account = account;
+                    Account account = await gw2ApiManager.Gw2ApiClient.V2.Account.GetAsync();
+                    Account = account;
 
-                    var characters = await gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
-                    var character_Models = Characters.ModuleInstance.CharacterModels;
-                    var pos = 0;
+                    Gw2Sharp.WebApi.V2.IApiV2ObjectList<Character> characters = await gw2ApiManager.Gw2ApiClient.V2.Characters.AllAsync();
+                    System.Collections.Generic.List<Character_Model> character_Models = Characters.ModuleInstance.CharacterModels;
+                    int pos = 0;
 
                     // Cleanup
                     for (int i = character_Models.Count - 1; i >= 0; i--)
                     {
-                        var c = character_Models[i];
-                        var character = characters.ToList().Find(e => e.Name == c.Name);
+                        Character_Model c = character_Models[i];
+                        Character character = characters.ToList().Find(e => e.Name == c.Name);
                         if (character == null || character.Created != c.Created)
                         {
                             character_Models[i].Delete();
@@ -67,7 +67,7 @@
                             }
 
                             // Create New Entry
-                            var cModel = new Character_Model()
+                            Character_Model cModel = new()
                             {
                                 Name = c.Name,
                                 Level = c.Level,
@@ -122,8 +122,8 @@
 
         private void UpdateFolderPaths(string accountName)
         {
-            var mIns = Characters.ModuleInstance;
-            var b = mIns.BasePath;
+            Characters mIns = Characters.ModuleInstance;
+            string b = mIns.BasePath;
 
             mIns.AccountPath = b + @"\" + accountName;
             mIns.CharactersPath = b + @"\" + accountName + @"\characters.json";
@@ -132,17 +132,17 @@
 
             if (!Directory.Exists(mIns.AccountPath))
             {
-                Directory.CreateDirectory(mIns.AccountPath);
+                _ = Directory.CreateDirectory(mIns.AccountPath);
             }
 
             if (!Directory.Exists(mIns.AccountImagesPath))
             {
-                Directory.CreateDirectory(mIns.AccountImagesPath);
+                _ = Directory.CreateDirectory(mIns.AccountImagesPath);
             }
 
             if (Characters.ModuleInstance.CharacterModels.Count == 0)
             {
-                Characters.ModuleInstance.LoadCharacterList();
+                _ = Characters.ModuleInstance.LoadCharacterList();
             }
         }
     }

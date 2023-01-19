@@ -1,20 +1,19 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using Blish_HUD;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Input;
-    using Kenedia.Modules.Characters.Extensions;
-    using Microsoft.Xna.Framework;
-    using static Kenedia.Modules.Characters.Services.TextureManager;
-    using static Kenedia.Modules.Characters.Utility.WindowsUtil.WindowsUtil;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Controls;
+using Blish_HUD.Input;
+using Kenedia.Modules.Characters.Extensions;
+using Microsoft.Xna.Framework;
+using System;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using static Kenedia.Modules.Characters.Utility.WindowsUtil.WindowsUtil;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class CharacterPotraitCapture : Container
     {
         private readonly Checkbox windowedCheckbox;
@@ -37,14 +36,14 @@
 
         public CharacterPotraitCapture()
         {
-            var res = GameService.Graphics.Resolution;
-            this.Size = new Point(100, 100);
-            this.WidthSizingMode = SizingMode.AutoSize;
-            this.HeightSizingMode = SizingMode.AutoSize;
+            Point res = GameService.Graphics.Resolution;
+            Size = new Point(100, 100);
+            WidthSizingMode = SizingMode.AutoSize;
+            HeightSizingMode = SizingMode.AutoSize;
 
-            this.Location = new Point((res.X - this.Size.X) / 2, res.Y - 125 - this.Size.Y);
-            var tM = Characters.ModuleInstance.TextureManager;
-            this.addButton = new ImageButton()
+            Location = new Point((res.X - Size.X) / 2, res.Y - 125 - Size.Y);
+            Services.TextureManager tM = Characters.ModuleInstance.TextureManager;
+            addButton = new ImageButton()
             {
                 Parent = this,
                 Texture = tM.GetControlTexture(Controls.Plus_Button),
@@ -53,9 +52,9 @@
                 Location = new Point((32 + 5) * 1, 0),
                 BasicTooltipText = string.Format(Strings.common.AddItem, Strings.common.PotraitFrame),
             };
-            this.addButton.Click += this.AddButton_Click;
+            addButton.Click += AddButton_Click;
 
-            this.removeButton = new ImageButton()
+            removeButton = new ImageButton()
             {
                 Parent = this,
                 Texture = tM.GetControlTexture(Controls.Minus_Button),
@@ -64,9 +63,9 @@
                 Location = new Point((32 + 5) * 2, 0),
                 BasicTooltipText = string.Format(Strings.common.RemoveItem, Strings.common.PotraitFrame),
             };
-            this.removeButton.Click += this.RemoveButton_Click;
+            removeButton.Click += RemoveButton_Click;
 
-            this.dragButton = new ImageButton()
+            dragButton = new ImageButton()
             {
                 Parent = this,
                 Texture = tM.GetControlTexture(Controls.Drag_Button),
@@ -75,10 +74,10 @@
                 Location = new Point((32 + 5) * 0, 0),
                 BasicTooltipText = Strings.common.DragOverCharacter_Instructions,
             };
-            this.dragButton.LeftMouseButtonPressed += this.DragButton_LeftMouseButtonPressed;
-            this.dragButton.LeftMouseButtonReleased += this.DragButton_LeftMouseButtonReleased;
+            dragButton.LeftMouseButtonPressed += DragButton_LeftMouseButtonPressed;
+            dragButton.LeftMouseButtonReleased += DragButton_LeftMouseButtonReleased;
 
-            this.captureButton = new ImageButton()
+            captureButton = new ImageButton()
             {
                 Parent = this,
                 Texture = tM.GetControlTexture(Controls.Potrait_Button),
@@ -87,9 +86,9 @@
                 Location = new Point((32 + 5) * 3, 0),
                 BasicTooltipText = Strings.common.CapturePotraits,
             };
-            this.captureButton.Click += this.CaptureButton_Click;
+            captureButton.Click += CaptureButton_Click;
 
-            this.disclaimerBackground = new BasicFrameContainer()
+            disclaimerBackground = new BasicFrameContainer()
             {
                 Parent = this,
                 Location = new Point((32 + 5) * 4, 0),
@@ -101,22 +100,22 @@
                 Height = 32,
             };
 
-            this.windowedCheckbox = new Checkbox()
+            windowedCheckbox = new Checkbox()
             {
-                Parent = this.disclaimerBackground,
+                Parent = disclaimerBackground,
                 Text = Strings.common.WindowedMode,
                 BasicTooltipText = Strings.common.WindowedMode_Tooltip,
                 Checked = Characters.ModuleInstance.Settings.WindowedMode.Value,
                 Location = new Point(5, 0),
                 Height = 32,
             };
-            this.windowedCheckbox.CheckedChanged += this.WindowedCheckbox_CheckedChanged;
-            Characters.ModuleInstance.Settings.WindowedMode.SettingChanged += (s, e) => { this.windowedCheckbox.Checked = Characters.ModuleInstance.Settings.WindowedMode.Value; };
+            windowedCheckbox.CheckedChanged += WindowedCheckbox_CheckedChanged;
+            Characters.ModuleInstance.Settings.WindowedMode.SettingChanged += (s, e) => { windowedCheckbox.Checked = Characters.ModuleInstance.Settings.WindowedMode.Value; };
 
-            this.disclaimer = new Label()
+            disclaimer = new Label()
             {
-                Parent = this.disclaimerBackground,
-                Location = new Point(this.windowedCheckbox.Right + 5, 0),
+                Parent = disclaimerBackground,
+                Location = new Point(windowedCheckbox.Right + 5, 0),
                 TextColor = ContentService.Colors.ColonialWhite,
                 AutoSizeWidth = true,
                 Height = 32,
@@ -124,29 +123,29 @@
                 Text = Strings.common.BestResultLargerDisclaimer,
                 Padding = new Thickness(0f, 0f),
             };
-            this.disclaimer.Resized += this.Disclaimer_Resized;
+            disclaimer.Resized += Disclaimer_Resized;
 
             // _disclaimerBackground.Size = (_disclaimer.Size).Add(new Point(_windowedCheckbox.Width + 15, 0));
-            this.sizeBox = new TextBox()
+            sizeBox = new TextBox()
             {
                 Parent = this,
                 Location = new Point(0, 35),
                 Size = new Point(50, 25),
-                Text = this.characterPotraitSize.ToString(),
+                Text = characterPotraitSize.ToString(),
                 BasicTooltipText = Strings.common.PotraitSize,
             };
-            this.sizeBox.TextChanged += this.SizeBox_TextChanged;
-            this.gapBox = new TextBox()
+            sizeBox.TextChanged += SizeBox_TextChanged;
+            gapBox = new TextBox()
             {
                 Parent = this,
                 Location = new Point(0, 65),
                 Size = new Point(50, 25),
-                Text = this.gap.ToString(),
+                Text = gap.ToString(),
                 BasicTooltipText = Strings.common.PotraitGap,
             };
-            this.gapBox.TextChanged += this.GapBox_TextChanged;
+            gapBox.TextChanged += GapBox_TextChanged;
 
-            this.portraitsPanel = new FlowPanel()
+            portraitsPanel = new FlowPanel()
             {
                 Parent = this,
                 Location = new Point(55, 35),
@@ -154,66 +153,54 @@
                 FlowDirection = ControlFlowDirection.SingleLeftToRight,
                 WidthSizingMode = SizingMode.AutoSize,
                 HeightSizingMode = SizingMode.AutoSize,
-                ControlPadding = new Vector2(this.gap, 0),
+                ControlPadding = new Vector2(gap, 0),
             };
 
-            this.AddPotrait();
-            this.AddPotrait();
+            AddPotrait();
+            AddPotrait();
         }
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            this.dragging = this.dragging && this.MouseOver;
+            dragging = dragging && MouseOver;
 
-            if (this.dragging)
+            if (dragging)
             {
-                this.Location = Input.Mouse.Position.Add(new Point(-this.draggingStart.X, -this.draggingStart.Y));
+                Location = Input.Mouse.Position.Add(new Point(-draggingStart.X, -draggingStart.Y));
             }
 
-            if (this.capturePotraits > DateTime.MinValue && DateTime.Now.Subtract(this.capturePotraits).TotalMilliseconds >= 5)
+            if (capturePotraits > DateTime.MinValue && DateTime.Now.Subtract(capturePotraits).TotalMilliseconds >= 5)
             {
-                foreach (Control c in this.portraitsPanel.Children)
+                foreach (Control c in portraitsPanel.Children)
                 {
-                    this.CapturePotrait(c.AbsoluteBounds);
+                    CapturePotrait(c.AbsoluteBounds);
                 }
 
-                foreach (Control c in this.portraitsPanel.Children)
+                foreach (Control c in portraitsPanel.Children)
                 {
                     c.Show();
                 }
 
-                this.capturePotraits = DateTime.MinValue;
+                capturePotraits = DateTime.MinValue;
                 Characters.ModuleInstance.MainWindow.CharacterEdit.LoadImages(null, null);
             }
         }
 
-        protected override void OnResized(ResizedEventArgs e)
-        {
-            base.OnResized(e);
-        }
+        protected override void OnResized(ResizedEventArgs e) => base.OnResized(e);
 
-        protected override void OnClick(MouseEventArgs e)
-        {
-            base.OnClick(e);
-        }
+        protected override void OnClick(MouseEventArgs e) => base.OnClick(e);
 
-        private void WindowedCheckbox_CheckedChanged(object sender, CheckChangedEvent e)
-        {
-            Characters.ModuleInstance.Settings.WindowedMode.Value = this.windowedCheckbox.Checked;
-        }
+        private void WindowedCheckbox_CheckedChanged(object sender, CheckChangedEvent e) => Characters.ModuleInstance.Settings.WindowedMode.Value = windowedCheckbox.Checked;
 
-        private void Disclaimer_Resized(object sender, ResizedEventArgs e)
-        {
-            this.disclaimerBackground.Size = this.disclaimer.Size.Add(new Point(10, 0));
-        }
+        private void Disclaimer_Resized(object sender, ResizedEventArgs e) => disclaimerBackground.Size = disclaimer.Size.Add(new Point(10, 0));
 
         private void CaptureButton_Click(object sender, MouseEventArgs e)
         {
-            this.capturePotraits = DateTime.Now;
+            capturePotraits = DateTime.Now;
 
-            foreach (Control c in this.portraitsPanel.Children)
+            foreach (Control c in portraitsPanel.Children)
             {
                 c.Hide();
             }
@@ -222,11 +209,11 @@
         private void SizeBox_TextChanged(object sender, EventArgs e)
         {
             int s;
-            if (int.TryParse(this.sizeBox.Text, out s))
+            if (int.TryParse(sizeBox.Text, out s))
             {
-                this.characterPotraitSize = s;
-                var p = new Point(s, s);
-                foreach (Control c in this.portraitsPanel.Children)
+                characterPotraitSize = s;
+                Point p = new(s, s);
+                foreach (Control c in portraitsPanel.Children)
                 {
                     c.Size = p;
                 }
@@ -236,76 +223,67 @@
         private void GapBox_TextChanged(object sender, EventArgs e)
         {
             int s;
-            if (int.TryParse(this.gapBox.Text, out s))
+            if (int.TryParse(gapBox.Text, out s))
             {
-                this.gap = s;
-                this.portraitsPanel.ControlPadding = new Vector2(s, 0);
+                gap = s;
+                portraitsPanel.ControlPadding = new Vector2(s, 0);
             }
         }
 
         private void RemoveButton_Click(object sender, MouseEventArgs e)
         {
-            if (this.portraitsPanel.Children.Count > 1)
+            if (portraitsPanel.Children.Count > 1)
             {
-                this.portraitsPanel.Children.RemoveAt(this.portraitsPanel.Children.Count - 1);
+                portraitsPanel.Children.RemoveAt(portraitsPanel.Children.Count - 1);
             }
         }
 
-        private void AddButton_Click(object sender, MouseEventArgs e)
-        {
-            this.AddPotrait();
-        }
+        private void AddButton_Click(object sender, MouseEventArgs e) => AddPotrait();
 
-        private void AddPotrait()
+        private void AddPotrait() => _ = new BasicFrameContainer()
         {
-            new BasicFrameContainer()
-            {
-                Parent = this.portraitsPanel,
-                Size = new Point(this.characterPotraitSize, this.characterPotraitSize),
-            };
-        }
+            Parent = portraitsPanel,
+            Size = new Point(characterPotraitSize, characterPotraitSize),
+        };
 
-        private void DragButton_LeftMouseButtonReleased(object sender, MouseEventArgs e)
-        {
-            this.dragging = false;
-        }
+        private void DragButton_LeftMouseButtonReleased(object sender, MouseEventArgs e) => dragging = false;
 
         private void DragButton_LeftMouseButtonPressed(object sender, MouseEventArgs e)
         {
-            this.dragging = true;
-            this.draggingStart = this.dragging ? this.RelativeMousePosition : Point.Zero;
+            dragging = true;
+            draggingStart = dragging ? RelativeMousePosition : Point.Zero;
         }
 
         private void CapturePotrait(Rectangle bounds)
         {
-            var path = Characters.ModuleInstance.AccountImagesPath;
+            string path = Characters.ModuleInstance.AccountImagesPath;
 
-            Regex regex = new Regex("Image.*[0-9].png");
-            var images = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories).Where(path => regex.IsMatch(path)).ToList();
+            Regex regex = new("Image.*[0-9].png");
+            System.Collections.Generic.List<string> images = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories).Where(path => regex.IsMatch(path)).ToList();
 
-            var hWnd = GameService.GameIntegration.Gw2Instance.Gw2WindowHandle;
+            IntPtr hWnd = GameService.GameIntegration.Gw2Instance.Gw2WindowHandle;
 
-            var wndBounds = default(RECT);
-            var clientRectangle = default(RECT);
-            GetWindowRect(hWnd, ref wndBounds);
-            GetClientRect(hWnd, out clientRectangle);
+            RECT wndBounds = default(RECT);
+            RECT clientRectangle = default(RECT);
+            _ = GetWindowRect(hWnd, ref wndBounds);
+            _ = GetClientRect(hWnd, out clientRectangle);
 
-            var fullscreen = !Characters.ModuleInstance.Settings.WindowedMode.Value;
+            bool fullscreen = !Characters.ModuleInstance.Settings.WindowedMode.Value;
 
-            var titleBarHeight = fullscreen ? 0 : wndBounds.Bottom - wndBounds.Top - (clientRectangle.Bottom - clientRectangle.Top) - 6;
-            var sideBarWidth = fullscreen ? 0 : wndBounds.Right - wndBounds.Left - (clientRectangle.Right - clientRectangle.Left) - 7;
+            int titleBarHeight = fullscreen ? 0 : wndBounds.Bottom - wndBounds.Top - (clientRectangle.Bottom - clientRectangle.Top) - 6;
+            int sideBarWidth = fullscreen ? 0 : wndBounds.Right - wndBounds.Left - (clientRectangle.Right - clientRectangle.Left) - 7;
 
-            var cPos = bounds;
+            Rectangle cPos = bounds;
             double factor = GameService.Graphics.UIScaleMultiplier;
 
-            using (System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap((int)((this.characterPotraitSize - 2) * factor), (int)((this.characterPotraitSize - 2) * factor)))
+            using (System.Drawing.Bitmap bitmap = new((int)((characterPotraitSize - 2) * factor), (int)((characterPotraitSize - 2) * factor)))
             {
                 using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
                 {
-                    var x = (int)(bounds.X * factor);
-                    var y = (int)(bounds.Y * factor);
+                    int x = (int)(bounds.X * factor);
+                    int y = (int)(bounds.Y * factor);
 
-                    g.CopyFromScreen(new System.Drawing.Point(wndBounds.Left + x + sideBarWidth, clientRectangle.Top + y + titleBarHeight), System.Drawing.Point.Empty, new System.Drawing.Size(this.characterPotraitSize - 2, this.characterPotraitSize));
+                    g.CopyFromScreen(new System.Drawing.Point(wndBounds.Left + x + sideBarWidth, clientRectangle.Top + y + titleBarHeight), System.Drawing.Point.Empty, new System.Drawing.Size(characterPotraitSize - 2, characterPotraitSize));
                 }
 
                 bitmap.Save(path + "Image " + (images.Count + 1) + ".png", System.Drawing.Imaging.ImageFormat.Png);

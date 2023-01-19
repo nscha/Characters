@@ -1,23 +1,23 @@
-﻿namespace Kenedia.Modules.Characters.Views
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Kenedia.Modules.Characters.Controls;
-    using Kenedia.Modules.Characters.Enums;
-    using Kenedia.Modules.Characters.Extensions;
-    using Kenedia.Modules.Characters.Models;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using static Kenedia.Modules.Characters.Services.SettingsModel;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Kenedia.Modules.Characters.Controls;
+using Kenedia.Modules.Characters.Enums;
+using Kenedia.Modules.Characters.Extensions;
+using Kenedia.Modules.Characters.Models;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using static Kenedia.Modules.Characters.Services.SettingsModel;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Views
+{
     public class MainWindow : StandardWindow
     {
         private readonly AsyncTexture2D windowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
@@ -36,18 +36,18 @@
         public MainWindow(Texture2D background, Rectangle windowRegion, Rectangle contentRegion)
             : base(background, windowRegion, contentRegion)
         {
-            this.ContentPanel = new FlowPanel()
+            ContentPanel = new FlowPanel()
             {
                 Parent = this,
                 Location = new Point(0, 38),
-                Size = this.Size,
+                Size = Size,
                 ControlPadding = new Vector2(2, 4),
                 CanScroll = true,
             };
 
-            this.DraggingControl.LeftMouseButtonReleased += this.DraggingControl_LeftMouseButtonReleased;
+            DraggingControl.LeftMouseButtonReleased += DraggingControl_LeftMouseButtonReleased;
 
-            this.dropdownPanel = new FlowPanel()
+            dropdownPanel = new FlowPanel()
             {
                 Parent = this,
                 Location = new Point(0, 2),
@@ -56,18 +56,18 @@
                 ControlPadding = new Vector2(6, 0),
             };
 
-            this.displaySettingsButton = new Image()
+            displaySettingsButton = new Image()
             {
-                Parent = this.dropdownPanel,
+                Parent = dropdownPanel,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052),
                 Size = new Point(25, 25),
                 BasicTooltipText = string.Format(Strings.common.ShowItem, string.Format(Strings.common.ItemSettings, Strings.common.Display)),
             };
-            this.displaySettingsButton.MouseEntered += this.DisplaySettingsButton_MouseEntered;
-            this.displaySettingsButton.MouseLeft += this.DisplaySettingsButton_MouseLeft;
-            this.displaySettingsButton.Click += this.DisplaySettingsButton_Click;
+            displaySettingsButton.MouseEntered += DisplaySettingsButton_MouseEntered;
+            displaySettingsButton.MouseLeft += DisplaySettingsButton_MouseLeft;
+            displaySettingsButton.Click += DisplaySettingsButton_Click;
 
-            this.clearButton = new ImageButton()
+            clearButton = new ImageButton()
             {
                 Parent = this,
                 Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175783),
@@ -77,39 +77,39 @@
                 BasicTooltipText = Strings.common.ClearFilters,
                 Visible = false,
             };
-            this.clearButton.Click += this.ClearButton_Click;
+            clearButton.Click += ClearButton_Click;
 
-            this.FilterBox = new TextBox()
+            FilterBox = new TextBox()
             {
-                Parent = this.dropdownPanel,
+                Parent = dropdownPanel,
                 PlaceholderText = Strings.common.Search,
-                Width = this.dropdownPanel.Width - this.displaySettingsButton.Width - 5,
+                Width = dropdownPanel.Width - displaySettingsButton.Width - 5,
             };
-            this.FilterBox.TextChanged += this.FilterCharacters;
-            this.FilterBox.Click += this.FilterBox_Click;
-            this.FilterBox.EnterPressed += this.FilterBox_EnterPressed;
+            FilterBox.TextChanged += FilterCharacters;
+            FilterBox.Click += FilterBox_Click;
+            FilterBox.EnterPressed += FilterBox_EnterPressed;
 
-            this.settingsSideMenu = new SettingsSideMenu()
+            settingsSideMenu = new SettingsSideMenu()
             {
                 TextureOffset = new Point(25, 25),
                 Visible = false,
             };
 
-            this.filterSideMenu = new FilterSideMenu()
+            filterSideMenu = new FilterSideMenu()
             {
                 TextureOffset = new Point(25, 25),
                 Visible = false,
             };
 
-            this.CharacterEdit = new CharacterEdit()
+            CharacterEdit = new CharacterEdit()
             {
                 TextureOffset = new Point(25, 25),
                 Visible = false,
             };
-            this.CharacterEdit.Shown += this.CharacterEdit_Shown;
+            CharacterEdit.Shown += CharacterEdit_Shown;
 
-            this.clearButton.Location = new Point(this.FilterBox.LocalBounds.Right - 25, this.FilterBox.LocalBounds.Top + 5);
-            Characters.ModuleInstance.LanguageChanged += this.ModuleInstance_LanguageChanged;
+            clearButton.Location = new Point(FilterBox.LocalBounds.Right - 25, FilterBox.LocalBounds.Top + 5);
+            Characters.ModuleInstance.LanguageChanged += ModuleInstance_LanguageChanged;
         }
 
         public Dictionary<object, List<object>> CategoryFilters { get; set; } = new Dictionary<object, List<object>>()
@@ -160,37 +160,34 @@
 
         public FlowPanel ContentPanel { get; private set; }
 
-        public void FilterCharacters(object sender = null, EventArgs e = null)
-        {
-            this.filterCharacters = true;
-        }
+        public void FilterCharacters(object sender = null, EventArgs e = null) => filterCharacters = true;
 
         public void PerformFiltering()
         {
-            var any = Characters.ModuleInstance.Settings.FilterMatching.Value == MatchingBehavior.MatchAny;
-            var all = Characters.ModuleInstance.Settings.FilterMatching.Value == MatchingBehavior.MatchAll;
+            bool any = Characters.ModuleInstance.Settings.FilterMatching.Value == MatchingBehavior.MatchAny;
+            bool all = Characters.ModuleInstance.Settings.FilterMatching.Value == MatchingBehavior.MatchAll;
 
-            var textStrings = this.FilterBox.Text.Trim().ToLower().Split(' ').ToList();
-            var matchAny = this.FilterBox.Text.Trim().Length == 0;
-            var s = Characters.ModuleInstance.Settings;
-            var data = Characters.ModuleInstance.Data;
+            List<string> textStrings = FilterBox.Text.Trim().ToLower().Split(' ').ToList();
+            bool matchAny = FilterBox.Text.Trim().Length == 0;
+            Services.SettingsModel s = Characters.ModuleInstance.Settings;
+            Services.Data data = Characters.ModuleInstance.Data;
 
-            var activeTags = this.filterSideMenu.Tags.Where(e => e.Active);
+            IEnumerable<Tag> activeTags = filterSideMenu.Tags.Where(e => e.Active);
 
-            var anyTag = activeTags.Count() == 0;
-            var raceAny = this.CategoryFilters[FilterCategory.Race].Count == 0;
-            var craftAny = this.CategoryFilters[FilterCategory.Crafting].Count == 0;
-            var profAny = this.CategoryFilters[FilterCategory.Profession].Count == 0;
-            var specProfAny = this.CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 0;
-            var specAny = this.CategoryFilters[FilterCategory.Specialization].Count == 0;
-            var birthAny = this.CategoryFilters[FilterCategory.Birthday].Count == 0;
-            var anyCategory = raceAny && craftAny && profAny && specProfAny && specAny && birthAny;
-            var includeHidden = this.CategoryFilters[FilterCategory.Hidden].Count == 1;
+            bool anyTag = activeTags.Count() == 0;
+            bool raceAny = CategoryFilters[FilterCategory.Race].Count == 0;
+            bool craftAny = CategoryFilters[FilterCategory.Crafting].Count == 0;
+            bool profAny = CategoryFilters[FilterCategory.Profession].Count == 0;
+            bool specProfAny = CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 0;
+            bool specAny = CategoryFilters[FilterCategory.Specialization].Count == 0;
+            bool birthAny = CategoryFilters[FilterCategory.Birthday].Count == 0;
+            bool anyCategory = raceAny && craftAny && profAny && specProfAny && specAny && birthAny;
+            bool includeHidden = CategoryFilters[FilterCategory.Hidden].Count == 1;
 
-            foreach (CharacterControl c in this.ContentPanel.Children)
+            foreach (CharacterControl c in ContentPanel.Children)
             {
-                var crafting_Any = c.Character.Crafting.Select(e => e.Id).Any(e => this.CategoryFilters[FilterCategory.Crafting].Contains(e) && (!s.CheckOnlyMaxCrafting.Value || c.Character.Crafting.Find(a => a.Id == e).Rating == data.CrafingProfessions[e].MaxRating));
-                var crafting_All = this.CategoryFilters[FilterCategory.Crafting].Select(e => (int)e).All(e => c.Character.Crafting.Find(a => a.Id == e && (!s.CheckOnlyMaxCrafting.Value || a.Rating == data.CrafingProfessions[e].MaxRating)) != null);
+                bool crafting_Any = c.Character.Crafting.Select(e => e.Id).Any(e => CategoryFilters[FilterCategory.Crafting].Contains(e) && (!s.CheckOnlyMaxCrafting.Value || c.Character.Crafting.Find(a => a.Id == e).Rating == data.CrafingProfessions[e].MaxRating));
+                bool crafting_All = CategoryFilters[FilterCategory.Crafting].Select(e => (int)e).All(e => c.Character.Crafting.Find(a => a.Id == e && (!s.CheckOnlyMaxCrafting.Value || a.Rating == data.CrafingProfessions[e].MaxRating)) != null);
 
                 if (matchAny && anyCategory && anyTag)
                 {
@@ -198,11 +195,11 @@
                     continue;
                 }
 
-                List<FilterTag> filterCategories = new List<FilterTag>()
+                List<FilterTag> filterCategories = new()
                 {
                     new FilterTag()
                     {
-                        Result = raceAny || this.CategoryFilters[FilterCategory.Race].Contains(c.Character.Race),
+                        Result = raceAny || CategoryFilters[FilterCategory.Race].Contains(c.Character.Race),
                     },
                     new FilterTag()
                     {
@@ -210,7 +207,7 @@
                     },
                     new FilterTag()
                     {
-                        Result = profAny || ((any || this.CategoryFilters[FilterCategory.Profession].Count == 1) && this.CategoryFilters[FilterCategory.Profession].Contains(c.Character.Profession)),
+                        Result = profAny || ((any || CategoryFilters[FilterCategory.Profession].Count == 1) && CategoryFilters[FilterCategory.Profession].Contains(c.Character.Profession)),
                     },
                     new FilterTag()
                     {
@@ -218,11 +215,11 @@
                     },
                     new FilterTag()
                     {
-                        Result = (specProfAny && specAny) || ((any || this.CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 1) && c.Character.Specialization == SpecializationType.None && this.CategoryFilters[FilterCategory.ProfessionSpecialization].Contains(c.Character.Profession)) || this.CategoryFilters[FilterCategory.Specialization].Contains(c.Character.Specialization),
+                        Result = (specProfAny && specAny) || ((any || CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 1) && c.Character.Specialization == SpecializationType.None && CategoryFilters[FilterCategory.ProfessionSpecialization].Contains(c.Character.Profession)) || CategoryFilters[FilterCategory.Specialization].Contains(c.Character.Specialization),
                     },
                 };
 
-                List<FilterTag> filterTags = this.filterSideMenu.Tags.Where(e => e.Active).Select(e => e.Text).ToList().CreateFilterTagList();
+                List<FilterTag> filterTags = filterSideMenu.Tags.Where(e => e.Active).Select(e => e.Text).ToList().CreateFilterTagList();
                 List<FilterTag> filterStrings = textStrings.CreateFilterTagList();
 
                 if (!anyTag)
@@ -234,7 +231,7 @@
                 {
                     if (s.CheckName.Value)
                     {
-                        var value = c.Character.Name.ToString();
+                        string value = c.Character.Name.ToString();
 
                         if (value != null)
                         {
@@ -252,7 +249,7 @@
 
                     if (s.CheckLevel.Value)
                     {
-                        var value = c.Character.Level.ToString();
+                        string value = c.Character.Level.ToString();
 
                         if (value != null)
                         {
@@ -270,7 +267,7 @@
 
                     if (s.CheckRace.Value)
                     {
-                        var value = c.Character.Race.GetData();
+                        Services.Data.Race value = c.Character.Race.GetData();
 
                         if (value != null)
                         {
@@ -292,7 +289,7 @@
 
                     if (s.CheckProfession.Value)
                     {
-                        var value = c.Character.Profession.GetData();
+                        Services.Data.Profession value = c.Character.Profession.GetData();
 
                         if (value != null)
                         {
@@ -305,7 +302,7 @@
                             }
                         }
 
-                        var value2 = c.Character.Specialization.GetData();
+                        Services.Data.Specialization value2 = c.Character.Specialization.GetData();
 
                         if (value2 != null)
                         {
@@ -333,7 +330,7 @@
 
                     if (s.CheckMap.Value)
                     {
-                        var value = Characters.ModuleInstance.Data.GetMapById(c.Character.Map);
+                        Map value = Characters.ModuleInstance.Data.GetMapById(c.Character.Map);
 
                         if (value != null)
                         {
@@ -357,7 +354,7 @@
                     {
                         foreach (CharacterCrafting crafting in c.Character.Crafting)
                         {
-                            var value = crafting.Id.GetData();
+                            Services.Data.CrafingProfession value = crafting.Id.GetData();
 
                             if (value != null)
                             {
@@ -379,7 +376,7 @@
 
                     if (s.CheckTags.Value)
                     {
-                        var tags = c.Character.Tags.ToList().ConvertAll(d => d.ToLower());
+                        List<string> tags = c.Character.Tags.ToList().ConvertAll(d => d.ToLower());
 
                         if (tags != null)
                         {
@@ -396,28 +393,28 @@
                     }
                 }
 
-                var matched = matchAny || (any ? filterStrings.Where(r => r.Result == true).Count() > 0 : filterStrings.Where(r => r.Result == true).Count() == filterStrings.Count);
-                var catMatched = anyCategory || filterCategories.Where(r => r.Result == true).Count() == filterCategories.Count;
-                var tagMatched = anyTag || (any ? filterTags.Where(r => r.Result == true).Count() > 0 : filterTags.Where(r => r.Result == true).Count() == filterTags.Count);
+                bool matched = matchAny || (any ? filterStrings.Where(r => r.Result == true).Count() > 0 : filterStrings.Where(r => r.Result == true).Count() == filterStrings.Count);
+                bool catMatched = anyCategory || filterCategories.Where(r => r.Result == true).Count() == filterCategories.Count;
+                bool tagMatched = anyTag || (any ? filterTags.Where(r => r.Result == true).Count() > 0 : filterTags.Where(r => r.Result == true).Count() == filterTags.Count);
 
                 c.Visible = (c.Character.Show || includeHidden) && (s.FilterDirection.Value == FilterBehavior.Include ? matched && catMatched && tagMatched : !matched && !catMatched && !tagMatched);
             }
 
-            this.clearButton.Visible = !anyCategory || !matchAny || !anyTag;
-            this.SortCharacters();
-            this.ContentPanel.Invalidate();
+            clearButton.Visible = !anyCategory || !matchAny || !anyTag;
+            SortCharacters();
+            ContentPanel.Invalidate();
         }
 
         public void UpdateLayout()
         {
-            this.updateLayout = false;
-            var panelLayout = Characters.ModuleInstance.Settings.PanelLayout.Value;
-            var panelSize = Characters.ModuleInstance.Settings.PanelSize.Value;
+            updateLayout = false;
+            CharacterPanelLayout panelLayout = Characters.ModuleInstance.Settings.PanelLayout.Value;
+            PanelSizes panelSize = Characters.ModuleInstance.Settings.PanelSize.Value;
 
-            var size = Point.Zero;
-            var nameFont = GameService.Content.DefaultFont14;
-            var font = GameService.Content.DefaultFont12;
-            var testString = Characters.ModuleInstance.CharacterModels.Aggregate(string.Empty, (max, cur) => max.Length > cur.Name.Length ? max : cur.Name);
+            Point size = Point.Zero;
+            MonoGame.Extended.BitmapFonts.BitmapFont nameFont = GameService.Content.DefaultFont14;
+            MonoGame.Extended.BitmapFonts.BitmapFont font = GameService.Content.DefaultFont12;
+            string testString = Characters.ModuleInstance.CharacterModels.Aggregate(string.Empty, (max, cur) => max.Length > cur.Name.Length ? max : cur.Name);
 
             switch (panelSize)
             {
@@ -458,8 +455,8 @@
             {
                 case CharacterPanelLayout.OnlyIcons:
                     {
-                        var newSize = new Point(Math.Min(size.X, size.Y), Math.Min(size.X, size.Y));
-                        foreach (CharacterControl c in this.ContentPanel.Children)
+                        Point newSize = new(Math.Min(size.X, size.Y), Math.Min(size.X, size.Y));
+                        foreach (CharacterControl c in ContentPanel.Children)
                         {
                             c.Size = newSize;
                             c.Font = font;
@@ -472,8 +469,8 @@
 
                 case CharacterPanelLayout.OnlyText:
                     {
-                        var newSize = size;
-                        foreach (CharacterControl c in this.ContentPanel.Children)
+                        Point newSize = size;
+                        foreach (CharacterControl c in ContentPanel.Children)
                         {
                             c.Size = newSize;
                             c.Font = font;
@@ -486,8 +483,8 @@
 
                 case CharacterPanelLayout.IconAndText:
                     {
-                        var newSize = size;
-                        foreach (CharacterControl c in this.ContentPanel.Children)
+                        Point newSize = size;
+                        foreach (CharacterControl c in ContentPanel.Children)
                         {
                             c.Size = newSize;
                             c.Font = font;
@@ -499,9 +496,9 @@
                     }
             }
 
-            var maxWidth = this.ContentPanel.Children.Count > 0 ? this.ContentPanel.Children.Cast<CharacterControl>().Max(t => t.TotalWidth) : this.Width;
+            int maxWidth = ContentPanel.Children.Count > 0 ? ContentPanel.Children.Cast<CharacterControl>().Max(t => t.TotalWidth) : Width;
 
-            foreach (CharacterControl c in this.ContentPanel.Children)
+            foreach (CharacterControl c in ContentPanel.Children)
             {
                 c.Width = maxWidth;
             }
@@ -509,8 +506,8 @@
 
         public void SortCharacters()
         {
-            var order = Characters.ModuleInstance.Settings.SortOrder.Value;
-            var sort = Characters.ModuleInstance.Settings.SortType.Value;
+            ESortOrder order = Characters.ModuleInstance.Settings.SortOrder.Value;
+            ESortType sort = Characters.ModuleInstance.Settings.SortType.Value;
 
             switch (sort)
             {
@@ -519,11 +516,11 @@
                         switch (order)
                         {
                             case ESortOrder.Ascending:
-                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Name.CompareTo(b.Character.Name));
+                                ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Name.CompareTo(b.Character.Name));
                                 break;
 
                             case ESortOrder.Descending:
-                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Name.CompareTo(a.Character.Name));
+                                ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Name.CompareTo(a.Character.Name));
                                 break;
                         }
 
@@ -535,11 +532,11 @@
                         switch (order)
                         {
                             case ESortOrder.Ascending:
-                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.LastLogin.CompareTo(a.Character.LastLogin));
+                                ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.LastLogin.CompareTo(a.Character.LastLogin));
                                 break;
 
                             case ESortOrder.Descending:
-                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.LastLogin.CompareTo(b.Character.LastLogin));
+                                ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.LastLogin.CompareTo(b.Character.LastLogin));
                                 break;
                         }
 
@@ -551,11 +548,11 @@
                         switch (order)
                         {
                             case ESortOrder.Ascending:
-                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Map.CompareTo(b.Character.Map));
+                                ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Map.CompareTo(b.Character.Map));
                                 break;
 
                             case ESortOrder.Descending:
-                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Map.CompareTo(a.Character.Map));
+                                ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Map.CompareTo(a.Character.Map));
                                 break;
                         }
 
@@ -567,11 +564,11 @@
                         switch (order)
                         {
                             case ESortOrder.Ascending:
-                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Profession.CompareTo(b.Character.Profession));
+                                ContentPanel.SortChildren<CharacterControl>((a, b) => a.Character.Profession.CompareTo(b.Character.Profession));
                                 break;
 
                             case ESortOrder.Descending:
-                                this.ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Profession.CompareTo(a.Character.Profession));
+                                ContentPanel.SortChildren<CharacterControl>((a, b) => b.Character.Profession.CompareTo(a.Character.Profession));
                                 break;
                         }
 
@@ -585,10 +582,10 @@
 
                 case ESortType.Custom:
                     {
-                        this.ContentPanel.SortChildren<CharacterControl>((a, b) => a.Index.CompareTo(b.Index));
+                        ContentPanel.SortChildren<CharacterControl>((a, b) => a.Index.CompareTo(b.Index));
 
-                        var i = 0;
-                        foreach (CharacterControl c in this.ContentPanel.Children)
+                        int i = 0;
+                        foreach (CharacterControl c in ContentPanel.Children)
                         {
                             c.Index = i;
                             i++;
@@ -608,17 +605,17 @@
 
         public double GetHoveredIndex(CharacterControl characterControl)
         {
-            var m = Input.Mouse;
+            Blish_HUD.Input.MouseHandler m = Input.Mouse;
             CharacterControl lastControl = characterControl;
 
-            var i = 0;
-            foreach (CharacterControl c in this.ContentPanel.Children)
+            int i = 0;
+            foreach (CharacterControl c in ContentPanel.Children)
             {
                 c.Index = i;
                 i++;
             }
 
-            foreach (CharacterControl c in this.ContentPanel.Children)
+            foreach (CharacterControl c in ContentPanel.Children)
             {
                 if (c.AbsoluteBounds.Contains(m.Position))
                 {
@@ -630,7 +627,7 @@
 
             if (lastControl.AbsoluteBounds.Bottom < m.Position.Y || (lastControl.AbsoluteBounds.Top < m.Position.Y && lastControl.AbsoluteBounds.Right < m.Position.X))
             {
-                return this.CharacterControls.Count + 1;
+                return CharacterControls.Count + 1;
             }
 
             return characterControl.Index;
@@ -640,20 +637,20 @@
         {
             base.UpdateContainer(gameTime);
 
-            if (this.filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - this.filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
+            if (filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
             {
-                this.filterTick = gameTime.TotalGameTime.TotalMilliseconds;
-                this.PerformFiltering();
-                this.filterCharacters = false;
+                filterTick = gameTime.TotalGameTime.TotalMilliseconds;
+                PerformFiltering();
+                filterCharacters = false;
             }
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - this.tick > 50)
+            if (gameTime.TotalGameTime.TotalMilliseconds - tick > 50)
             {
-                this.tick = gameTime.TotalGameTime.TotalMilliseconds;
+                tick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (this.updateLayout)
+                if (updateLayout)
                 {
-                    this.UpdateLayout();
+                    UpdateLayout();
                 }
             }
         }
@@ -664,9 +661,9 @@
 
             spriteBatch.DrawOnCtrl(
                 this,
-                this.windowEmblem,
+                windowEmblem,
                 new Rectangle(-43, -58, 128, 128),
-                this.windowEmblem.Bounds,
+                windowEmblem.Bounds,
                 Color.White,
                 0f,
                 default);
@@ -689,45 +686,45 @@
         {
             base.OnHidden(e);
 
-            this.filterSideMenu?.Hide();
-            this.settingsSideMenu?.Hide();
-            this.CharacterEdit?.Hide();
+            filterSideMenu?.Hide();
+            settingsSideMenu?.Hide();
+            CharacterEdit?.Hide();
         }
 
         protected override void OnResized(ResizedEventArgs e)
         {
             base.OnResized(e);
 
-            if (this.ContentPanel != null)
+            if (ContentPanel != null)
             {
-                this.ContentPanel.Size = new Point(this.ContentRegion.Size.X, this.ContentRegion.Size.Y - 35);
+                ContentPanel.Size = new Point(ContentRegion.Size.X, ContentRegion.Size.Y - 35);
             }
 
-            if (this.dropdownPanel != null)
+            if (dropdownPanel != null)
             {
-                this.dropdownPanel.Size = new Point(this.ContentRegion.Size.X, 31);
-                this.FilterBox.Width = this.dropdownPanel.Width - this.displaySettingsButton.Width - 5;
-                this.clearButton.Location = new Point(this.FilterBox.LocalBounds.Right - 23, this.FilterBox.LocalBounds.Top + 6);
+                dropdownPanel.Size = new Point(ContentRegion.Size.X, 31);
+                FilterBox.Width = dropdownPanel.Width - displaySettingsButton.Width - 5;
+                clearButton.Location = new Point(FilterBox.LocalBounds.Right - 23, FilterBox.LocalBounds.Top + 6);
             }
 
             if (e.CurrentSize.Y < 135)
             {
-                this.Size = new Point(this.Size.X, 135);
+                Size = new Point(Size.X, 135);
             }
 
-            if (this.settingsSideMenu != null && this.settingsSideMenu.Visible)
+            if (settingsSideMenu != null && settingsSideMenu.Visible)
             {
-                this.settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
 
-            if (this.filterSideMenu != null && this.filterSideMenu.Visible)
+            if (filterSideMenu != null && filterSideMenu.Visible)
             {
-                this.filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
 
-            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
+            if (CharacterEdit != null && CharacterEdit.Visible)
             {
-                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
         }
 
@@ -735,19 +732,19 @@
         {
             base.OnMoved(e);
 
-            if (this.settingsSideMenu != null && this.settingsSideMenu.Visible)
+            if (settingsSideMenu != null && settingsSideMenu.Visible)
             {
-                this.settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
 
-            if (this.filterSideMenu != null && this.filterSideMenu.Visible)
+            if (filterSideMenu != null && filterSideMenu.Visible)
             {
-                this.filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
 
-            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
+            if (CharacterEdit != null && CharacterEdit.Visible)
             {
-                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
         }
 
@@ -755,25 +752,25 @@
         {
             base.DisposeControl();
 
-            this.CharacterControls?.DisposeAll();
+            CharacterControls?.DisposeAll();
 
-            this.ContentPanel?.Dispose();
-            this.DraggingControl?.Dispose();
-            this.settingsSideMenu?.Dispose();
-            this.filterSideMenu?.Dispose();
-            this.CharacterEdit?.Dispose();
+            ContentPanel?.Dispose();
+            DraggingControl?.Dispose();
+            settingsSideMenu?.Dispose();
+            filterSideMenu?.Dispose();
+            CharacterEdit?.Dispose();
 
-            this.dropdownPanel?.Dispose();
-            this.displaySettingsButton?.Dispose();
-            this.FilterBox?.Dispose();
+            dropdownPanel?.Dispose();
+            displaySettingsButton?.Dispose();
+            FilterBox?.Dispose();
         }
 
         private void FilterBox_EnterPressed(object sender, EventArgs e)
         {
             if (Characters.ModuleInstance.Settings.EnterToLogin.Value)
             {
-                this.PerformFiltering();
-                var c = (CharacterControl)this.ContentPanel.Children.Where(e => e.Visible).FirstOrDefault();
+                PerformFiltering();
+                CharacterControl c = (CharacterControl)ContentPanel.Children.Where(e => e.Visible).FirstOrDefault();
 
                 if (c != null)
                 {
@@ -785,72 +782,63 @@
 
         private void CharacterEdit_Shown(object sender, EventArgs e)
         {
-            this.filterSideMenu?.Hide();
-            this.settingsSideMenu?.Hide();
+            filterSideMenu?.Hide();
+            settingsSideMenu?.Hide();
 
-            if (this.CharacterEdit != null && this.CharacterEdit.Visible)
+            if (CharacterEdit != null && CharacterEdit.Visible)
             {
-                this.CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
         }
 
         private void ModuleInstance_LanguageChanged(object sender, EventArgs e)
         {
-            this.tick = this.tick + 10;
-            this.updateLayout = true;
+            tick = tick + 10;
+            updateLayout = true;
         }
 
-        private void ClearButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            this.ResetFilters();
-        }
+        private void ClearButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e) => ResetFilters();
 
         private void ResetFilters()
         {
-            this.CategoryFilters[FilterCategory.Race].Clear();
-            this.CategoryFilters[FilterCategory.Crafting].Clear();
-            this.CategoryFilters[FilterCategory.Profession].Clear();
-            this.CategoryFilters[FilterCategory.ProfessionSpecialization].Clear();
-            this.CategoryFilters[FilterCategory.Specialization].Clear();
-            this.CategoryFilters[FilterCategory.Hidden].Clear();
-            this.CategoryFilters[FilterCategory.Birthday].Clear();
+            CategoryFilters[FilterCategory.Race].Clear();
+            CategoryFilters[FilterCategory.Crafting].Clear();
+            CategoryFilters[FilterCategory.Profession].Clear();
+            CategoryFilters[FilterCategory.ProfessionSpecialization].Clear();
+            CategoryFilters[FilterCategory.Specialization].Clear();
+            CategoryFilters[FilterCategory.Hidden].Clear();
+            CategoryFilters[FilterCategory.Birthday].Clear();
 
-            this.filterSideMenu.ResetToggles();
-            this.FilterBox.Text = null;
-            this.filterCharacters = true;
-            this.filterSideMenu.Tags.ForEach(t => t.Active = false);
+            filterSideMenu.ResetToggles();
+            FilterBox.Text = null;
+            filterCharacters = true;
+            filterSideMenu.Tags.ForEach(t => t.Active = false);
         }
 
         private void FilterBox_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            this.settingsSideMenu.Hide();
-            this.filterSideMenu.Show();
-            this.CharacterEdit.Hide();
+            settingsSideMenu.Hide();
+            filterSideMenu.Show();
+            CharacterEdit.Hide();
         }
 
         private void DisplaySettingsButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            this.filterSideMenu.Hide();
-            this.settingsSideMenu.Show();
-            this.settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            this.settingsSideMenu.Opacity = 1f;
-            this.CharacterEdit.Hide();
+            filterSideMenu.Hide();
+            settingsSideMenu.Show();
+            settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+            settingsSideMenu.Opacity = 1f;
+            CharacterEdit.Hide();
         }
 
-        private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            this.displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052);
-        }
+        private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e) => displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052);
 
-        private void DisplaySettingsButton_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e)
-        {
-            this.displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157110);
-        }
+        private void DisplaySettingsButton_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e) => displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157110);
 
         private void DraggingControl_LeftMouseButtonReleased(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            this.SetNewIndex(this.DraggingControl.CharacterControl);
-            this.DraggingControl.CharacterControl = null;
+            SetNewIndex(DraggingControl.CharacterControl);
+            DraggingControl.CharacterControl = null;
         }
     }
 }

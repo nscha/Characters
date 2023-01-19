@@ -1,16 +1,16 @@
-﻿namespace Kenedia.Modules.Characters.Controls
-{
-    using Blish_HUD;
-    using Blish_HUD.Content;
-    using Blish_HUD.Controls;
-    using Blish_HUD.Input;
-    using Kenedia.Modules.Characters.Extensions;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Color = Microsoft.Xna.Framework.Color;
-    using Point = Microsoft.Xna.Framework.Point;
-    using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Controls;
+using Blish_HUD.Input;
+using Kenedia.Modules.Characters.Extensions;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+namespace Kenedia.Modules.Characters.Controls
+{
     public class SizeablePanel : Container
     {
         private const int RESIZEHANDLESIZE = 16;
@@ -42,32 +42,29 @@
 
         private Rectangle ResizeCorner
         {
-            get => new Rectangle(this.LocalBounds.Right - 15, this.LocalBounds.Bottom - 15, 15, 15);
+            get => new(LocalBounds.Right - 15, LocalBounds.Bottom - 15, 15, 15);
         }
 
-        public void ToggleVisibility()
-        {
-            this.Visible = !this.Visible;
-        }
+        public void ToggleVisibility() => Visible = !Visible;
 
         public override void UpdateContainer(GameTime gameTime)
         {
             base.UpdateContainer(gameTime);
 
-            this.dragging = this.dragging && this.MouseOver;
-            this.resizing = this.resizing && this.MouseOver;
-            this.mouseOverResizeHandle = this.mouseOverResizeHandle && this.MouseOver;
+            dragging = dragging && MouseOver;
+            resizing = resizing && MouseOver;
+            mouseOverResizeHandle = mouseOverResizeHandle && MouseOver;
 
-            if (this.dragging)
+            if (dragging)
             {
-                this.Location = Input.Mouse.Position.Add(new Point(-this.draggingStart.X, -this.draggingStart.Y));
+                Location = Input.Mouse.Position.Add(new Point(-draggingStart.X, -draggingStart.Y));
             }
 
-            if (this.resizing)
+            if (resizing)
             {
-                var nOffset = Input.Mouse.Position - this.dragStart;
-                var newSize = this.resizeStart + nOffset;
-                this.Size = new Point(MathHelper.Clamp(newSize.X, 50, this.MaxSize.X), MathHelper.Clamp(newSize.Y, 25, this.MaxSize.Y));
+                Point nOffset = Input.Mouse.Position - dragStart;
+                Point newSize = resizeStart + nOffset;
+                Size = new Point(MathHelper.Clamp(newSize.X, 50, MaxSize.X), MathHelper.Clamp(newSize.Y, 25, MaxSize.Y));
             }
         }
 
@@ -75,43 +72,43 @@
         {
             base.RecalculateLayout();
 
-            this.resizeHandleBounds = new Rectangle(
-                this.Width - this.resizeTexture.Width,
-                this.Height - this.resizeTexture.Height,
-                this.resizeTexture.Width,
-                this.resizeTexture.Height);
+            resizeHandleBounds = new Rectangle(
+                Width - resizeTexture.Width,
+                Height - resizeTexture.Height,
+                resizeTexture.Width,
+                resizeTexture.Height);
         }
 
         public override void PaintBeforeChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
             base.PaintBeforeChildren(spriteBatch, bounds);
 
-            if (this.TintOnHover && this.MouseOver)
+            if (TintOnHover && MouseOver)
             {
                 spriteBatch.DrawOnCtrl(
                     this,
                     ContentService.Textures.Pixel,
                     bounds,
                     Rectangle.Empty,
-                    this.TintColor,
+                    TintColor,
                     0f,
                     default);
             }
 
-            if (this.resizeTexture != null && (!this.ShowResizeOnlyOnMouseOver || this.MouseOver))
+            if (resizeTexture != null && (!ShowResizeOnlyOnMouseOver || MouseOver))
             {
                 spriteBatch.DrawOnCtrl(
                     this,
-                    this.resizing || this.mouseOverResizeHandle ? this.resizeTextureHovered : this.resizeTexture,
-                    new Rectangle(bounds.Right - this.resizeTexture.Width - 1, bounds.Bottom - this.resizeTexture.Height - 1, this.resizeTexture.Width, this.resizeTexture.Height),
-                    this.resizeTexture.Bounds,
+                    resizing || mouseOverResizeHandle ? resizeTextureHovered : resizeTexture,
+                    new Rectangle(bounds.Right - resizeTexture.Width - 1, bounds.Bottom - resizeTexture.Height - 1, resizeTexture.Width, resizeTexture.Height),
+                    resizeTexture.Bounds,
                     Color.White,
                     0f,
                     default);
             }
 
             // var color = MouseOver ? ContentService.Colors.ColonialWhite : Color.Transparent;
-            var color = ContentService.Colors.ColonialWhite;
+            Color color = ContentService.Colors.ColonialWhite;
 
             // Top
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 2), Rectangle.Empty, color * 0.5f);
@@ -133,46 +130,40 @@
         protected override void OnLeftMouseButtonReleased(MouseEventArgs e)
         {
             base.OnLeftMouseButtonReleased(e);
-            this.dragging = false;
-            this.resizing = false;
+            dragging = false;
+            resizing = false;
         }
 
         protected override void OnLeftMouseButtonPressed(MouseEventArgs e)
         {
             base.OnLeftMouseButtonPressed(e);
 
-            this.resizing = this.ResizeCorner.Contains(e.MousePosition);
-            this.resizeStart = this.Size;
-            this.dragStart = Input.Mouse.Position;
+            resizing = ResizeCorner.Contains(e.MousePosition);
+            resizeStart = Size;
+            dragStart = Input.Mouse.Position;
 
-            this.dragging = !this.resizing;
-            this.draggingStart = this.dragging ? this.RelativeMousePosition : Point.Zero;
+            dragging = !resizing;
+            draggingStart = dragging ? RelativeMousePosition : Point.Zero;
         }
 
-        protected virtual Point HandleWindowResize(Point newSize)
-        {
-            return new Point(
-                MathHelper.Clamp(newSize.X, this.ContentRegion.X, 1024),
-                MathHelper.Clamp(newSize.Y, this.ContentRegion.Y, 1024));
-        }
+        protected virtual Point HandleWindowResize(Point newSize) => new Point(
+                MathHelper.Clamp(newSize.X, ContentRegion.X, 1024),
+                MathHelper.Clamp(newSize.Y, ContentRegion.Y, 1024));
 
         protected override void OnMouseMoved(MouseEventArgs e)
         {
-            this.ResetMouseRegionStates();
+            ResetMouseRegionStates();
 
-            if (this.resizeHandleBounds.Contains(this.RelativeMousePosition)
-                  && this.RelativeMousePosition.X > this.resizeHandleBounds.Right - RESIZEHANDLESIZE
-                  && this.RelativeMousePosition.Y > this.resizeHandleBounds.Bottom - RESIZEHANDLESIZE)
+            if (resizeHandleBounds.Contains(RelativeMousePosition)
+                  && RelativeMousePosition.X > resizeHandleBounds.Right - RESIZEHANDLESIZE
+                  && RelativeMousePosition.Y > resizeHandleBounds.Bottom - RESIZEHANDLESIZE)
             {
-                this.mouseOverResizeHandle = true;
+                mouseOverResizeHandle = true;
             }
 
             base.OnMouseMoved(e);
         }
 
-        private void ResetMouseRegionStates()
-        {
-            this.mouseOverResizeHandle = false;
-        }
+        private void ResetMouseRegionStates() => mouseOverResizeHandle = false;
     }
 }

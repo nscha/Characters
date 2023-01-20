@@ -106,7 +106,6 @@ namespace Kenedia.Modules.Characters.Services
                         s_state = SwappingState.LoggedOut;
                     }
 
-                    await Delay(cancellationToken, Characters.ModuleInstance.Settings.SwapDelay.Value);
                     await Delay(cancellationToken);
                     break;
 
@@ -276,6 +275,8 @@ namespace Kenedia.Modules.Characters.Services
 
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
                 await Delay(cancellationToken);
+
+                await Delay(cancellationToken, Characters.ModuleInstance.Settings.SwapDelay.Value);
             }
 
             return !GameService.GameIntegration.Gw2Instance.IsInGame;

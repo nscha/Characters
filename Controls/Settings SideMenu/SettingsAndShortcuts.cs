@@ -3,6 +3,7 @@ using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Kenedia.Modules.Characters.Extensions;
+using Kenedia.Modules.Characters.Services;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using static Kenedia.Modules.Characters.Services.TextureManager;
@@ -208,7 +209,7 @@ namespace Kenedia.Modules.Characters.Controls
         {
             if (!GameService.GameIntegration.Gw2Instance.IsInGame)
             {
-                Characters.ModuleInstance.FixCharacterOrder();
+                CharacterSorting.Start(Characters.ModuleInstance.CharacterModels);
             }
         }
 

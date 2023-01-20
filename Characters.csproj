@@ -91,14 +91,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\FilterTag.cs" />
+    <Compile Include="Controls\RunIndicator.cs" />
     <Compile Include="Enums\SpecializationType.cs" />
+    <Compile Include="Models\RectangleOffset.cs" />
     <Compile Include="Services\CharacterSorting.cs" />
     <Compile Include="Services\CharacterSwapping.cs" />
     <Compile Include="Models\Crafting_Model.cs" />
     <Compile Include="Models\Character_Model.cs" />
     <Compile Include="Services\GW2API_Handler.cs" />
-    <Compile Include="Models\JsonCharacter_Model.cs" />
-    <Compile Include="Models\JsonMap.cs" />
     <Compile Include="Models\Names.cs" />
     <Compile Include="Services\Data.cs" />
     <Compile Include="Models\Map.cs" />
@@ -134,6 +134,11 @@
     <Compile Include="Controls\Dummy.cs" />
     <Compile Include="Controls\Settings SideMenu\FilterSettings.cs" />
     <Compile Include="Controls\IconLabel.cs" />
+    <Compile Include="Strings\common1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>common.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.cs" />
     <Compile Include="Services\Settings.cs" />
     <Compile Include="Services\TextureManager.cs" />
@@ -345,6 +350,7 @@
     <Reference Include="System.Runtime.Extensions" />
     <Reference Include="System.Runtime.InteropServices" />
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Security.Cryptography.Algorithms" />
     <Reference Include="System.Security.Cryptography.Encoding" />

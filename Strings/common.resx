@@ -616,4 +616,10 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="Years" xml:space="preserve">
     <value>Years</value>
   </data>
+  <data name="KeyDelay_Description" xml:space="preserve">
+    <value>Adds a delay between key presses. This slows down the character swapping and should only be used if your PC is stressed that much so it isn't able to switch without a delay!</value>
+  </data>
+  <data name="KeyDelay_DisplayName" xml:space="preserve">
+    <value>Key Delay {0} ms</value>
+  </data>
 </root>

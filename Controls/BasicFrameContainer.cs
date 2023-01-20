@@ -11,6 +11,8 @@ namespace Kenedia.Modules.Characters.Controls
     {
         public Color FrameColor { get; set; } = Color.Honeydew;
 
+        public Color BackgroundImageColor { get; set; } = Color.White;
+
         public AsyncTexture2D Background { get; set; }
 
         public Rectangle TextureRectangle { get; set; } = Rectangle.Empty;
@@ -26,7 +28,7 @@ namespace Kenedia.Modules.Characters.Controls
                     Background,
                     bounds,
                     TextureRectangle != Rectangle.Empty ? TextureRectangle : Background.Bounds,
-                    Color.Black * 0.9f,
+                    BackgroundImageColor,
                     0f,
                     default);
             }

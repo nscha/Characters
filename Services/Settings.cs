@@ -1,5 +1,6 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Settings;
+using Kenedia.Modules.Characters.Models;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Point = Microsoft.Xna.Framework.Point;
@@ -54,6 +55,13 @@ namespace Kenedia.Modules.Characters.Services
                 () => Strings.common.SwapDelay_Description);
             SwapDelay.SetRange(0, 5000);
 
+            KeyDelay = settings.DefineSetting(
+                nameof(KeyDelay),
+                0,
+                () => string.Format(Strings.common.KeyDelay_DisplayName, KeyDelay.Value),
+                () => Strings.common.KeyDelay_Description);
+            KeyDelay.SetRange(0, 500);
+
             FilterDelay = settings.DefineSetting(
                 nameof(FilterDelay),
                 0,
@@ -71,7 +79,7 @@ namespace Kenedia.Modules.Characters.Services
             AutoSortCharacters = internalSettings.DefineSetting(nameof(AutoSortCharacters), false);
             OCRRegion = internalSettings.DefineSetting(nameof(ActiveOCRRegion), new Rectangle((res.X - 200) / 2, res.Y - 250, 200, 200));
             OCRRegions = internalSettings.DefineSetting(nameof(OCRRegions), new Dictionary<string, Rectangle>());
-            OCRCustomOffset = internalSettings.DefineSetting(nameof(OCRCustomOffset), new Rectangle(3, 3, 5, 5));
+            OCRCustomOffset = internalSettings.DefineSetting(nameof(OCRCustomOffset), new RectangleOffset(3, 3, 5, 5));
             OCRNoPixelColumns = internalSettings.DefineSetting(nameof(OCRNoPixelColumns), 20);
 
             PanelSize = internalSettings.DefineSetting(nameof(PanelSize), PanelSizes.Normal);
@@ -173,7 +181,7 @@ namespace Kenedia.Modules.Characters.Services
 
         public SettingEntry<Dictionary<string, Rectangle>> OCRRegions { get; set; }
 
-        public SettingEntry<Rectangle> OCRCustomOffset { get; set; }
+        public SettingEntry<RectangleOffset> OCRCustomOffset { get; set; }
 
         public SettingEntry<int> OCRNoPixelColumns { get; set; }
 
@@ -236,6 +244,8 @@ namespace Kenedia.Modules.Characters.Services
         public SettingEntry<bool> EnterToLogin { get; set; }
 
         public SettingEntry<int> SwapDelay { get; set; }
+
+        public SettingEntry<int> KeyDelay { get; set; }
 
         public SettingEntry<int> FilterDelay { get; set; }
     }

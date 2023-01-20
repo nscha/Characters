@@ -616,4 +616,10 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   <data name="ItemSettings" xml:space="preserve">
     <value>{0} Einstellungen</value>
   </data>
+  <data name="KeyDelay_Description" xml:space="preserve">
+    <value>Fügt eine Verzögerung zwischen den Tastendrucken hinzu. Dies verlangsamt den Charakterwechsel und sollte nur verwendet werden, wenn Ihr PC so stark belastet ist, dass er nicht ohne Verzögerung umschalten kann!</value>
+  </data>
+  <data name="KeyDelay_DisplayName" xml:space="preserve">
+    <value>Tastenverzögerung {0} ms</value>
+  </data>
 </root>

@@ -616,4 +616,11 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="ItemSettings" xml:space="preserve">
     <value>{0} Ajustes</value>
   </data>
+  <data name="KeyDelay_Description" xml:space="preserve">
+    <value>Añade un retardo entre las pulsaciones de las teclas. Esto ralentiza el intercambio de caracteres y sólo se debe utilizar si su PC está tan estresado que no es capaz de cambiar sin un retraso!</value>
+    
+  </data>
+  <data name="KeyDelay_DisplayName" xml:space="preserve">
+    <value>Retardo de tecla {0} ms</value>
+  </data>
 </root>

@@ -616,4 +616,10 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="ItemSettings" xml:space="preserve">
     <value>Paramètres {0}</value>
   </data>
+  <data name="KeyDelay_Description" xml:space="preserve">
+    <value>Ajoute un délai entre les pressions de touches. Cela ralentit le changement de caractère et ne devrait être utilisé que si votre PC est stressé au point de ne pas pouvoir changer sans délai !</value>
+  </data>
+  <data name="KeyDelay_DisplayName" xml:space="preserve">
+    <value>Retard de touche {0} ms</value>
+  </data>
 </root>

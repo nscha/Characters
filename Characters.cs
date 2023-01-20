@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using static Kenedia.Modules.Characters.Services.TextureManager;
 using static Kenedia.Modules.Characters.Utility.WindowsUtil.WindowsUtil;
+using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -60,6 +61,8 @@ namespace Kenedia.Modules.Characters
 
         public TagList Tags { get; set; } = new TagList();
 
+        public RunIndicator RunIndicator { get; private set; }
+
         public MainWindow MainWindow { get; private set; }
 
         public CharacterPotraitCapture PotraitCapture { get; private set; }
@@ -75,10 +78,6 @@ namespace Kenedia.Modules.Characters
         public List<Character_Model> CharacterModels { get; set; } = new List<Character_Model>();
 
         public Character_Model CurrentCharacterModel { get; set; }
-
-        public CharacterSwapping CharacterSwapping { get; set; }
-
-        public CharacterSorting CharacterSorting { get; set; }
 
         public string BasePath { get; set; }
 
@@ -164,46 +163,14 @@ namespace Kenedia.Modules.Characters
             }
         }
 
-        public void FixCharacterOrder()
-        {
-            if (CharacterSorting == null)
-            {
-                CharacterSorting = new CharacterSorting(CharacterModels);
-                if (Settings.AutoSortCharacters.Value)
-                {
-                    CharacterSwapping?.Reset();
-                }
-                else
-                {
-                    CharacterSwapping = null;
-                }
-
-                CharacterSorting.Finished += (sender, e) =>
-                {
-                    CharacterSorting = null;
-                    MainWindow.SortCharacters();
-                };
-            }
-        }
-
         public void SwapTo(Character_Model character)
         {
             Blish_HUD.Gw2Mumble.PlayerCharacter player = GameService.Gw2Mumble.PlayerCharacter;
 
             if (character.Name != player.Name || !GameService.GameIntegration.Gw2Instance.IsInGame)
             {
-                if (CharacterSwapping != null)
-                {
-                }
 
-                CharacterSwapping = new CharacterSwapping(character);
-                CharacterSwapping.Succeeded += (sender, e) =>
-                {
-                    CharacterSwapping = null;
-                    ForceUpdate(null, null);
-                    MainWindow.SortCharacters();
-                };
-                CharacterSwapping.Failed += CharacterSwapping_Failed;
+                CharacterSwapping.Start(character);
             }
         }
 
@@ -218,7 +185,7 @@ namespace Kenedia.Modules.Characters
                         MainWindow.CharacterControls.Add(new CharacterControl()
                         {
                             Character = c,
-                            Parent = MainWindow.ContentPanel,
+                            Parent = MainWindow.CharactersPanel,
                             ZIndex = MainWindow.ZIndex + 1,
                         });
                     }
@@ -276,20 +243,13 @@ namespace Kenedia.Modules.Characters
         public void SaveCharacterList()
         {
             Logger.Debug("Saving Character List.");
-            List<JsonCharacter_Model> data = new();
-
-            foreach (Character_Model c in CharacterModels)
-            {
-                data.Add(new JsonCharacter_Model(c));
-            }
-
             JsonSerializerSettings settings = new()
             {
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore
             };
 
-            string json = JsonConvert.SerializeObject(data.ToArray(), Formatting.Indented, settings);
+            string json = JsonConvert.SerializeObject(CharacterModels.ToArray(), Formatting.Indented, settings);
 
             // write string to file
             System.IO.File.WriteAllText(CharactersPath, json);
@@ -307,15 +267,6 @@ namespace Kenedia.Modules.Characters
             {
                 _clientRes = GameService.Graphics.Resolution;
                 OnResolutionChanged();
-            }
-
-            if (CharacterSorting != null)
-            {
-                CharacterSorting.Run(gameTime);
-            }
-            else
-            {
-                CharacterSwapping?.Run(gameTime);
             }
 
             if (_ticks.Global > 15000)
@@ -427,6 +378,16 @@ namespace Kenedia.Modules.Characters
 
             Settings.ShortcutKey.Value.Enabled = true;
             Settings.ShortcutKey.Value.Activated += ShortcutWindowToggle;
+
+            GameService.Input.Keyboard.KeyPressed += CancelEverything;
+            GameService.Input.Mouse.LeftMouseButtonPressed += CancelEverything;
+            GameService.Input.Mouse.RightMouseButtonPressed += CancelEverything;
+        }
+
+        private void CancelEverything(object sender, EventArgs e)
+        {
+            CharacterSwapping.Cancel();
+            CharacterSorting.Cancel();
         }
 
         protected override async Task LoadAsync()
@@ -488,6 +449,10 @@ namespace Kenedia.Modules.Characters
 
             GameService.GameIntegration.Gw2Instance.IsInGameChanged -= ForceUpdate;
 
+            GameService.Input.Keyboard.KeyPressed -= CancelEverything;
+            GameService.Input.Mouse.LeftMouseButtonPressed -= CancelEverything;
+            GameService.Input.Mouse.RightMouseButtonPressed -= CancelEverything;
+
             ModuleInstance = null;
         }
 
@@ -533,6 +498,7 @@ namespace Kenedia.Modules.Characters
                 MainWindow?.Dispose();
                 PotraitCapture?.Dispose();
                 OCR?.Dispose();
+                RunIndicator?.Dispose();
                 CreateUI(true);
 
                 if (shown)
@@ -644,18 +610,6 @@ namespace Kenedia.Modules.Characters
             }
         }
 
-        private void CharacterSwapping_Failed(object sender, EventArgs e)
-        {
-            ScreenNotification.ShowNotification("Failed to swap to " + CharacterSwapping.Character.Name + "!");
-            if (Settings.AutoSortCharacters.Value)
-            {
-                ScreenNotification.ShowNotification("Fixing Characters!");
-                FixCharacterOrder();
-            }
-
-            CharacterSwapping.Failed -= CharacterSwapping_Failed;
-        }
-
         private void UserLocale_SettingChanged(object sender, ValueChangedEventArgs<Gw2Sharp.WebApi.Locale> e)
         {
             _cornerIcon.BasicTooltipText = string.Format(Strings.common.Toggle, $"{Name}");
@@ -689,7 +643,8 @@ namespace Kenedia.Modules.Characters
                 CreateCharacterControls();
 
                 PotraitCapture = new CharacterPotraitCapture() { Parent = GameService.Graphics.SpriteScreen, Visible = false, ZIndex = 999 };
-                OCR = new OCR();
+                OCR = new();
+                RunIndicator = new();
             }
         }
 

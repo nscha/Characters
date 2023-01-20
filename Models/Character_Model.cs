@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace Kenedia.Modules.Characters.Models
-{
+{    
+    [DataContract]
     public class Character_Model
     {
         private string _name;
@@ -35,50 +37,59 @@ namespace Kenedia.Modules.Characters.Models
 
         public event EventHandler Deleted;
 
+        [DataMember]
         public string Name
         {
             get => _name;
             set => SetProperty(ref _name, value);
         }
 
+        [DataMember]
         public int Level
         {
             get => _level;
             set => SetProperty(ref _level, value);
         }
 
+        [DataMember]
         public int Map
         {
             get => _map;
             set => SetProperty(ref _map, value);
         }
 
+        [DataMember]
         public List<CharacterCrafting> Crafting { get; set; } = new List<CharacterCrafting>();
 
+        [DataMember]
         public Gw2Sharp.Models.RaceType Race
         {
             get => _race;
             set => SetProperty(ref _race, value);
         }
 
+        [DataMember]
         public Gw2Sharp.Models.ProfessionType Profession
         {
             get => _profession;
             set => SetProperty(ref _profession, value);
         }
 
+        [DataMember]
         public SpecializationType Specialization
         {
             get => _specialization;
             set => SetProperty(ref _specialization, value);
         }
 
+        [DataMember]
         public DateTimeOffset Created
         {
             get => _created;
             set => SetProperty(ref _created, value);
         }
 
+        [DataMember]
         public DateTime LastModified
         {
             get => _lastModified;
@@ -89,12 +100,14 @@ namespace Kenedia.Modules.Characters.Models
 
         public int OrderOffset { get; set; } = 0;
 
+        [DataMember]
         public DateTime LastLogin
         {
             get => _lastLogin.AddMilliseconds(-OrderOffset);
             set => SetProperty(ref _lastLogin, value);
         }
 
+        [DataMember]
         public string IconPath
         {
             get => _iconPath;
@@ -147,14 +160,17 @@ namespace Kenedia.Modules.Characters.Models
 
         public bool HasDefaultIcon => Icon == SpecializationIcon;
 
+        [DataMember]
         public bool Show
         {
             get => _show;
             set => SetProperty(ref _show, value);
         }
 
+        [DataMember]
         public TagList Tags { get; set; } = new TagList();
 
+        [DataMember]
         public int Position
         {
             get => _position;
@@ -165,6 +181,7 @@ namespace Kenedia.Modules.Characters.Models
             }
         }
 
+        [DataMember]
         public int Index
         {
             get => _index;

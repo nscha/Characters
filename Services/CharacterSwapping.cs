@@ -1,10 +1,17 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Controls;
 using Blish_HUD.Controls.Extern;
+using Gw2Sharp.WebApi.V2.Models;
 using Kenedia.Modules.Characters.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Kenedia.Modules.Characters.Services
 {
@@ -24,155 +31,227 @@ namespace Kenedia.Modules.Characters.Services
         CharacterFullyLost,
         LoggingIn,
         Done,
+        Canceled,
     }
 
-    public class CharacterSwapping
+    public static class CharacterSwapping
     {
-        private double _tick;
+        private static CancellationTokenSource s_cancellationTokenSource;
 
-        public CharacterSwapping(Character_Model character_Model)
+        private static int s_movedLeft;
+
+        public static event EventHandler Succeeded;
+        public static event EventHandler Failed;
+
+        public static event EventHandler Started;
+        public static event EventHandler Finished;
+
+        public static event EventHandler StatusChanged;
+
+        private static string s_status;
+
+        private static SwappingState s_state = SwappingState.None;
+
+        public static string Status
         {
-            Character = character_Model;
+            set
+            {
+                s_status = value;
+                StatusChanged?.Invoke(null, EventArgs.Empty);
+            }
+            get => s_status;
         }
 
-        public event EventHandler Succeeded;
+        public static Character_Model Character { get; set; }
 
-        public event EventHandler Failed;
-
-        public SwappingState State { get; set; } = SwappingState.None;
-
-        public SwappingState SubState { get; set; } = SwappingState.None;
-
-        public Character_Model Character { get; set; }
-
-        public void Run(GameTime gameTime)
+        private static bool IsTaskCanceled(CancellationToken cancellationToken)
         {
-            _tick += gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (_tick < 0)
+            if (cancellationToken.IsCancellationRequested)
             {
-                return;
+                if (s_state is not SwappingState.LoggedOut) { s_movedLeft = 0; };
+                if (s_state is SwappingState.MovedToStart) { s_movedLeft = Characters.ModuleInstance.CharacterModels.Count; };
+
+                s_state = SwappingState.Canceled;
+                return true;
             }
 
-            switch (State)
+            return false;
+        }
+
+        public static async Task MoveRight(CancellationToken cancellationToken)
+        {
+            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
+            await Delay(cancellationToken);
+            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
+            await Delay(cancellationToken);
+        }
+
+        public static async Task MoveLeft(CancellationToken cancellationToken)
+        {
+            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
+            await Delay(cancellationToken);
+        }
+
+        public static async Task Run(CancellationToken cancellationToken)
+        {
+            if (IsTaskCanceled(cancellationToken)) { return; }
+
+            Debug.WriteLine($"s_state: {s_state}");
+
+            switch (s_state)
             {
                 case SwappingState.None:
-                    if (LoggingOut())
+                    if (await LoggingOut(cancellationToken))
                     {
-                        State = SwappingState.LoggedOut;
-                        _tick = -Characters.ModuleInstance.Settings.SwapDelay.Value;
-                    }
-                    else
-                    {
-                        _tick = -1000;
+                        s_state = SwappingState.LoggedOut;
                     }
 
+                    await Delay(cancellationToken, Characters.ModuleInstance.Settings.SwapDelay.Value);
+                    await Delay(cancellationToken);
                     break;
 
                 case SwappingState.LoggedOut:
-                    if (MoveToFirstCharacter())
-                    {
-                        State = SwappingState.MovedToStart;
-                    }
-
+                    await MoveToFirstCharacter(cancellationToken);
+                    s_state = SwappingState.MovedToStart;
+                    s_movedLeft = 0;
+                    await Delay(cancellationToken, 250);
                     break;
 
                 case SwappingState.MovedToStart:
-                    if (MoveToCharacter())
-                    {
-                        State = SwappingState.MovedToCharacter;
-                        _tick = -750;
-                    }
+                    await MoveToCharacter(cancellationToken);
+                    s_state = SwappingState.MovedToCharacter;
+                    await Delay(cancellationToken, 250);
 
                     break;
 
                 case SwappingState.MovedToCharacter:
-                    State = ConfirmName() ? SwappingState.CharacterFound : SwappingState.CharacterLost;
-                    break;
+                    if (ConfirmName())
+                    {
+                        s_state = SwappingState.CharacterFound;
+                    }
+                    else
+                    {
+                        s_state = SwappingState.CharacterLost;
 
-                case SwappingState.CharacterRead:
+                        await MoveLeft(cancellationToken);
+                        await Delay(cancellationToken, 250);
+                        if (ConfirmName())
+                        {
+                            s_state = SwappingState.CharacterFound;
+                            return;
+                        }
+
+                        await MoveRight(cancellationToken);
+                        await Delay(cancellationToken, 250);
+                        if (ConfirmName())
+                        {
+                            s_state = SwappingState.CharacterFound;
+                            return;
+                        }
+
+                        s_state = SwappingState.CharacterFullyLost;
+                    }
+
                     break;
 
                 case SwappingState.CharacterFound:
-                    if (Login())
-                    {
-                        State = SwappingState.LoggingIn;
-                        _tick = -1000;
-                    }
-
+                    await Login(cancellationToken);
+                    s_state = SwappingState.LoggingIn;
                     break;
 
-                case SwappingState.CharacterLost:
-                    switch (SubState)
-                    {
-                        case SwappingState.None:
-                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
-                            SubState = SwappingState.MovedLeft;
-                            _tick = -750;
-                            break;
-
-                        case SwappingState.MovedLeft:
-                            if (ConfirmName())
-                            {
-                                State = SwappingState.CharacterFound;
-                            }
-                            else
-                            {
-                                SubState = SwappingState.CheckedLeft;
-                            }
-
-                            break;
-
-                        case SwappingState.CheckedLeft:
-                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-                            Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-                            _tick = -750;
-                            SubState = SwappingState.MovedRight;
-                            break;
-
-                        case SwappingState.MovedRight:
-                            if (ConfirmName())
-                            {
-                                State = SwappingState.CharacterFound;
-                            }
-                            else
-                            {
-                                SubState = SwappingState.CheckedRight;
-                                State = SwappingState.CharacterFullyLost;
-                            }
-
-                            break;
-                    }
-
-                    break;
-
-                case SwappingState.CharacterFullyLost:
-                    Failed?.Invoke(null, null);
-                    break;
                 case SwappingState.LoggingIn:
                     if (IsLoaded())
                     {
-                        State = SwappingState.Done;
+                        s_state = SwappingState.Done;
                     }
 
-                    break;
-                case SwappingState.Done:
-                    Character.LastLogin = DateTime.UtcNow;
-                    Succeeded?.Invoke(null, null);
                     break;
             }
         }
 
-        public void Reset()
+        public static void Reset()
         {
-            State = SwappingState.None;
-            _tick = 0;
+            s_state = SwappingState.None;
         }
 
-        private bool LoggingOut()
+        public static void Cancel()
         {
+            ScreenNotification.ShowNotification("CHARACTER SWAP CANCEL");
+            s_cancellationTokenSource?.Cancel();
+            s_state = SwappingState.None;
+        }
+
+        public static async void Start(Character_Model character)
+        {
+            s_cancellationTokenSource?.Cancel();
+            s_cancellationTokenSource = new();
+
+            Character = character;
+            s_state = GameService.GameIntegration.Gw2Instance.IsInGame ? SwappingState.None : SwappingState.LoggedOut;
+            int i = 0;
+
+            Started?.Invoke(null, null);
+            Status = $"Switching to {character.Name}";
+            while (s_state is not SwappingState.Done and not SwappingState.CharacterFullyLost and not SwappingState.Canceled)
+            {
+                i++;
+
+                try
+                {
+                    await Run(s_cancellationTokenSource.Token);
+
+                    switch (s_state)
+                    {
+                        case SwappingState.Done:
+                            Status = $"Done!";
+                            Succeeded?.Invoke(null, null);
+                            break;
+
+                        case SwappingState.CharacterFullyLost:
+                            Status = $"Failed to swap to {Character.Name}!";
+                            ScreenNotification.ShowNotification(Status);
+                            Failed?.Invoke(null, null);
+
+                            if (Characters.ModuleInstance.Settings.AutoSortCharacters.Value)
+                            {
+                                ScreenNotification.ShowNotification("Fixing Characters!");
+                                CharacterSorting.Start(Characters.ModuleInstance.CharacterModels);
+                            }
+
+                            break;
+                    }
+                }
+                catch (TaskCanceledException)
+                {
+
+                }
+
+                if (i >= 10)
+                {
+                    return;
+                }
+            }
+
+            Finished?.Invoke(null, null);
+        }
+
+        private static async Task Delay(CancellationToken cancellationToken, int? delay = null)
+        {
+            delay ??= Characters.ModuleInstance.Settings.KeyDelay.Value;
+
+            if (delay > 0)
+            {
+                await Task.Delay(delay.Value, cancellationToken);
+            }
+        }
+
+        private static async Task<bool> LoggingOut(CancellationToken cancellationToken)
+        {
+            if (IsTaskCanceled(cancellationToken)) { return false; }
+
             if (GameService.GameIntegration.Gw2Instance.IsInGame)
             {
+                Status = $"Logging out ...";
                 ModifierKeys mods = ModifierKeys.None;
                 VirtualKeyShort primary = (VirtualKeyShort)Characters.ModuleInstance.Settings.LogoutKey.Value.PrimaryKey;
 
@@ -181,10 +260,12 @@ namespace Kenedia.Modules.Characters.Services
                     if (mod != ModifierKeys.None && mods.HasFlag(mod))
                     {
                         Blish_HUD.Controls.Intern.Keyboard.Press(Characters.ModKeyMapping[(int)mod], false);
+                        if (IsTaskCanceled(cancellationToken)) { return false; }
                     }
                 }
 
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(primary, false);
+                await Delay(cancellationToken);
 
                 // Trigger other Modules such as GatherTools
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(primary, true);
@@ -194,63 +275,88 @@ namespace Kenedia.Modules.Characters.Services
                     if (mod != ModifierKeys.None && mods.HasFlag(mod))
                     {
                         Blish_HUD.Controls.Intern.Keyboard.Release(Characters.ModKeyMapping[(int)mod], false);
+                        if (IsTaskCanceled(cancellationToken)) { return false; }
                     }
                 }
 
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
+                await Delay(cancellationToken);
             }
 
             return !GameService.GameIntegration.Gw2Instance.IsInGame;
         }
 
-        private bool MoveToFirstCharacter()
+        private static async Task MoveToFirstCharacter(CancellationToken cancellationToken)
         {
-            Characters.ModuleInstance.CharacterModels.ForEach(x => Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false));
-            return true;
+            Status = $"Move to first character ...";
+            if (IsTaskCanceled(cancellationToken)) { return; }
+
+            int moves = Characters.ModuleInstance.CharacterModels.Count - s_movedLeft;
+            for (int i = 0; i < moves; i++)
+            {
+                Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
+                s_movedLeft++;
+                await Delay(cancellationToken);
+                if (IsTaskCanceled(cancellationToken)) { return; }
+            }
+
+            return;
         }
 
-        private bool MoveToCharacter()
+        private static async Task MoveToCharacter(CancellationToken cancellationToken)
         {
-            IOrderedEnumerable<Character_Model> order = Characters.ModuleInstance.CharacterModels.OrderByDescending(e => e.LastLogin);
+            Status = $"Try to move to {Character.Name}";
+            if (IsTaskCanceled(cancellationToken)) { return; }
 
-            order.ToList().ForEach(x =>
+            List<Character_Model> order = Characters.ModuleInstance.CharacterModels.OrderByDescending(e => e.LastLogin).ToList();
+
+            foreach (Character_Model character in order)
             {
-                if (x == Character)
+                if (character == Character)
                 {
-                    return;
+                    break;
                 }
 
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
-            });
+                await Delay(cancellationToken);
+                if (IsTaskCanceled(cancellationToken)) { return; }
+            }
 
-            return true;
+            return;
         }
 
-        private bool ConfirmName()
+        private static bool ConfirmName()
         {
             string ocr_result = Characters.ModuleInstance.Settings.UseOCR.Value ? Characters.ModuleInstance.OCR.Read() : "No OCR";
 
             if (Characters.ModuleInstance.Settings.UseOCR.Value)
             {
+                Status = $"Confirm name ..." + Environment.NewLine + $"{ocr_result}";
                 Characters.Logger.Debug($"OCR Result: {ocr_result}.");
             }
 
             return !Characters.ModuleInstance.Settings.UseOCR.Value || Character.Name.ToLower() == ocr_result.ToLower();
         }
 
-        private bool Login()
+        private static async Task Login(CancellationToken cancellationToken)
         {
+            if (IsTaskCanceled(cancellationToken)) { return; }
+
             if (Characters.ModuleInstance.Settings.EnterOnSwap.Value)
             {
+                Status = $"Login to {Character.Name}";
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
+                await Delay(cancellationToken);
+                await Delay(cancellationToken, 1000);
             }
 
-            return true;
+            return;
         }
 
-        private bool IsLoaded()
+        private static bool IsLoaded()
         {
-            return GameService.GameIntegration.Gw2Instance.IsInGame;
+            Status = $"Done!";
+            return !Characters.ModuleInstance.Settings.EnterOnSwap.Value || GameService.GameIntegration.Gw2Instance.IsInGame;
         }
     }
 }

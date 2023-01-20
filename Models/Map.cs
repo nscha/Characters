@@ -1,6 +1,10 @@
-﻿namespace Kenedia.Modules.Characters.Models
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+
+namespace Kenedia.Modules.Characters.Models
 {
-    public class Map : JsonMap
+    [DataContract]
+    public class Map
     {
         public string Name
         {
@@ -34,5 +38,23 @@
                 }
             }
         }
+
+        [DataMember]
+        public Names Names { get; set; } = new Names();
+
+        [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
+        public int APIId { get; set; }
+
+        [DataMember]
+        public IReadOnlyList<int> Floors { get; set; }
+
+        [DataMember]
+        public int DefaultFloor { get; set; }
+
+        [DataMember]
+        public int ContinentId { get; set; }
     }
 }

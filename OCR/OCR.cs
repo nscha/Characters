@@ -3,9 +3,11 @@ using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Kenedia.Modules.Characters.Controls;
 using Kenedia.Modules.Characters.Extensions;
+using Kenedia.Modules.Characters.Models;
 using Microsoft.Xna.Framework;
 using Patagames.Ocr;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
@@ -33,6 +35,7 @@ namespace Kenedia.Modules.Characters
         private readonly SizeablePanel _container;
         private readonly OcrApi _ocrApi;
         private bool _disposed = false;
+        private readonly bool _initialized = false;
 
         public OCR()
         {
@@ -240,9 +243,10 @@ namespace Kenedia.Modules.Characters
 
             int height = Characters.ModuleInstance.Settings.ActiveOCRRegion.Size.Y;
             _contentContainer.Location = new Point(_container.Left, _container.Top - (height * 3) - 115);
+            _initialized = true;
         }
 
-        private Rectangle CustomOffset
+        private RectangleOffset CustomOffset
         {
             get => Characters.ModuleInstance.Settings.OCRCustomOffset.Value;
             set => Characters.ModuleInstance.Settings.OCRCustomOffset.Value = value;
@@ -443,13 +447,20 @@ namespace Kenedia.Modules.Characters
 
         private void OffsetChanged(object sender, EventArgs e)
         {
-            int left = int.TryParse(_leftBox.Text, out int leftParse) ? leftParse : CustomOffset.Left;
-            int top = int.TryParse(_leftBox.Text, out int topParse) ? topParse : CustomOffset.Top;
-            int right = int.TryParse(_leftBox.Text, out int rightParse) ? rightParse : CustomOffset.Right;
-            int bottom = int.TryParse(_leftBox.Text, out int bottomParse) ? bottomParse : CustomOffset.Bottom;
+            if (_initialized)
+            {
+                int left = int.TryParse(_leftBox.Text, out int leftParse) ? leftParse : CustomOffset.Left;
+                int top = int.TryParse(_topBox.Text, out int topParse) ? topParse : CustomOffset.Top;
+                int right = int.TryParse(_rightBox.Text, out int rightParse) ? rightParse : CustomOffset.Right;
+                int bottom = int.TryParse(_bottomBox.Text, out int bottomParse) ? bottomParse : CustomOffset.Bottom;
 
-            CustomOffset = new Rectangle(left, top, right, bottom);
-            _ = Read(true);
+                CustomOffset = new RectangleOffset(left, top, right, bottom);
+                Debug.WriteLine(CustomOffset);
+                if (_container.Visible)
+                {
+                    _ = Read(true);
+                }
+            }
         }
 
         private void Container_Changed(object sender, EventArgs e)

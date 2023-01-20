@@ -31,11 +31,11 @@ namespace Kenedia.Modules.Characters.Services
 
             if (jsonString != null && jsonString != string.Empty)
             {
-                List<JsonMap> localData = JsonConvert.DeserializeObject<List<JsonMap>>(jsonString);
-                JsonMap biggest = localData.Aggregate((i1, i2) => i1.Id > i2.Id ? i1 : i2);
+                List<Map> localData = JsonConvert.DeserializeObject<List<Map>>(jsonString);
+                Map biggest = localData.Aggregate((i1, i2) => i1.Id > i2.Id ? i1 : i2);
                 maps = new Map[biggest.Id + 1];
 
-                foreach (JsonMap entry in localData)
+                foreach (Map entry in localData)
                 {
                     maps[entry.Id] = new Map() { Names = entry.Names, APIId = entry.Id, Id = entry.Id };
                 }

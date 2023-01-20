@@ -96,8 +96,6 @@ namespace Kenedia.Modules.Characters.Services
         {
             if (IsTaskCanceled(cancellationToken)) { return; }
 
-            Debug.WriteLine($"s_state: {s_state}");
-
             switch (s_state)
             {
                 case SwappingState.None:

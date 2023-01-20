@@ -120,8 +120,6 @@ namespace Kenedia.Modules.Characters.Services
         public static async Task Run(CancellationToken cancellationToken)
         {
             string name;
-            Debug.WriteLine($"s_state: {s_state}");
-            Debug.WriteLine($"NoNameChange: {NoNameChange}");
 
             if (cancellationToken.IsCancellationRequested) return;
 

@@ -435,13 +435,6 @@ namespace Kenedia.Modules.Characters.Views
                     tagMatched = anyTag || (any ? filterTags.Where(r => r.Result == true).Count() > 0 : filterTags.Where(r => r.Result == true).Count() == filterTags.Count);
                 }
 
-                Debug.WriteLine($"(c.Character.Show || includeHidden) : {(c.Character.Show || includeHidden)}");
-                Debug.WriteLine($"s.ResultFilterBehavior.Value : {s.ResultFilterBehavior.Value}");
-
-                Debug.WriteLine($"matched : {matched}");
-                Debug.WriteLine($"catMatched : {catMatched}");
-                Debug.WriteLine($"tagMatched : {tagMatched}");
-
                 c.Visible = (c.Character.Show || includeHidden) && (s.ResultFilterBehavior.Value == FilterBehavior.Include ? matched && catMatched && tagMatched : !matched && !catMatched && !tagMatched);
             }
 
@@ -818,7 +811,6 @@ namespace Kenedia.Modules.Characters.Views
 
                 if (c != null)
                 {
-                    Debug.WriteLine(c.Character.Name);
                     Characters.ModuleInstance.SwapTo(c.Character);
                 }
             }

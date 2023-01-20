@@ -455,7 +455,6 @@ namespace Kenedia.Modules.Characters
                 int bottom = int.TryParse(_bottomBox.Text, out int bottomParse) ? bottomParse : CustomOffset.Bottom;
 
                 CustomOffset = new RectangleOffset(left, top, right, bottom);
-                Debug.WriteLine(CustomOffset);
                 if (_container.Visible)
                 {
                     _ = Read(true);

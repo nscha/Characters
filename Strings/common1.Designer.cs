@@ -810,6 +810,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large.
+        /// </summary>
+        internal static string Large {
+            get {
+                return ResourceManager.GetString("Large", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Login.
         /// </summary>
         internal static string LastLogin {
@@ -837,7 +846,7 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level {0}.
+        ///   Looks up a localized string similar to Level.
         /// </summary>
         internal static string Level {
             get {
@@ -846,11 +855,11 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the game automatically after selecting the character in the character selection.
+        ///   Looks up a localized string similar to Level {0}.
         /// </summary>
-        internal static string LoginAfterSelect {
+        internal static string LevelAmount {
             get {
-                return ResourceManager.GetString("LoginAfterSelect", resourceCulture);
+                return ResourceManager.GetString("LevelAmount", resourceCulture);
             }
         }
         
@@ -946,6 +955,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        internal static string Normal {
+            get {
+                return ResourceManager.GetString("Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move and Size the yellow frame to contain only the character name row in the character selection!.
         /// </summary>
         internal static string OCR_Instructions {
@@ -973,6 +991,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only Icons.
+        /// </summary>
+        internal static string OnlyIcons {
+            get {
+                return ResourceManager.GetString("OnlyIcons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show only crafts that are at a 500 rank (Jeweler &amp; Scribe at 400)..
         /// </summary>
         internal static string OnlyMaxCrafting_Description {
@@ -987,6 +1014,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string OnlyMaxCrafting_DisplayName {
             get {
                 return ResourceManager.GetString("OnlyMaxCrafting_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only Text.
+        /// </summary>
+        internal static string OnlyText {
+            get {
+                return ResourceManager.GetString("OnlyText", resourceCulture);
             }
         }
         
@@ -1267,6 +1303,33 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Displays a popup while any automated actions are performed.
+        /// </summary>
+        internal static string ShowStatusWindow_Description {
+            get {
+                return ResourceManager.GetString("ShowStatusWindow_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Status Popup.
+        /// </summary>
+        internal static string ShowStatusWindow_Name {
+            get {
+                return ResourceManager.GetString("ShowStatusWindow_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Small.
+        /// </summary>
+        internal static string Small {
+            get {
+                return ResourceManager.GetString("Small", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sort By {0}.
         /// </summary>
         internal static string SortBy {
@@ -1372,6 +1435,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string Tailor {
             get {
                 return ResourceManager.GetString("Tailor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text and Icons.
+        /// </summary>
+        internal static string TextAndIcon {
+            get {
+                return ResourceManager.GetString("TextAndIcon", resourceCulture);
             }
         }
         

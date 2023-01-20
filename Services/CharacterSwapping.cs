@@ -163,8 +163,10 @@ namespace Kenedia.Modules.Characters.Services
                     if (IsLoaded())
                     {
                         s_state = SwappingState.Done;
+                        return;
                     }
 
+                    await Delay(cancellationToken, 500);
                     break;
             }
         }
@@ -176,26 +178,24 @@ namespace Kenedia.Modules.Characters.Services
 
         public static void Cancel()
         {
-            ScreenNotification.ShowNotification("CHARACTER SWAP CANCEL");
+            s_state = SwappingState.Canceled;
             s_cancellationTokenSource?.Cancel();
-            s_state = SwappingState.None;
+            s_cancellationTokenSource = null;
         }
 
         public static async void Start(Character_Model character)
         {
             s_cancellationTokenSource?.Cancel();
             s_cancellationTokenSource = new();
+            s_cancellationTokenSource.CancelAfter(60000);
 
             Character = character;
             s_state = GameService.GameIntegration.Gw2Instance.IsInGame ? SwappingState.None : SwappingState.LoggedOut;
-            int i = 0;
 
             Started?.Invoke(null, null);
             Status = $"Switching to {character.Name}";
-            while (s_state is not SwappingState.Done and not SwappingState.CharacterFullyLost and not SwappingState.Canceled)
+            while (s_state is not SwappingState.Done and not SwappingState.CharacterFullyLost and not SwappingState.Canceled && !s_cancellationTokenSource.Token.IsCancellationRequested)
             {
-                i++;
-
                 try
                 {
                     await Run(s_cancellationTokenSource.Token);
@@ -224,11 +224,6 @@ namespace Kenedia.Modules.Characters.Services
                 catch (TaskCanceledException)
                 {
 
-                }
-
-                if (i >= 10)
-                {
-                    return;
                 }
             }
 
@@ -291,9 +286,16 @@ namespace Kenedia.Modules.Characters.Services
             Status = $"Move to first character ...";
             if (IsTaskCanceled(cancellationToken)) { return; }
 
+            Stopwatch stopwatch = Stopwatch.StartNew();
             int moves = Characters.ModuleInstance.CharacterModels.Count - s_movedLeft;
             for (int i = 0; i < moves; i++)
             {
+                if (stopwatch.ElapsedMilliseconds > 5000)
+                {
+                    InputService.MouseWiggle();
+                    stopwatch.Restart();
+                }
+
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
                 s_movedLeft++;
                 await Delay(cancellationToken);
@@ -310,11 +312,18 @@ namespace Kenedia.Modules.Characters.Services
 
             List<Character_Model> order = Characters.ModuleInstance.CharacterModels.OrderByDescending(e => e.LastLogin).ToList();
 
+            Stopwatch stopwatch = Stopwatch.StartNew();
             foreach (Character_Model character in order)
             {
                 if (character == Character)
                 {
                     break;
+                }
+
+                if (stopwatch.ElapsedMilliseconds > 5000)
+                {
+                    InputService.MouseWiggle();
+                    stopwatch.Restart();
                 }
 
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
@@ -355,7 +364,6 @@ namespace Kenedia.Modules.Characters.Services
 
         private static bool IsLoaded()
         {
-            Status = $"Done!";
             return !Characters.ModuleInstance.Settings.EnterOnSwap.Value || GameService.GameIntegration.Gw2Instance.IsInGame;
         }
     }

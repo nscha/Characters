@@ -230,12 +230,6 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   <data name="Leatherworker" xml:space="preserve">
     <value>Lederer</value>
   </data>
-  <data name="Level" xml:space="preserve">
-    <value>Level {0}</value>
-  </data>
-  <data name="LoginAfterSelect" xml:space="preserve">
-    <value>Automatischer Spieleinstieg nach Auswahl des Charakters in der Charakterauswahl</value>
-  </data>
   <data name="LoginCharacter" xml:space="preserve">
     <value>login Character</value>
   </data>
@@ -262,7 +256,7 @@ Dies erfordert einen API-Schlüssel mit Berechtigungen zumindest für den Endpun
     <value>Zeige nur maximale Handwerksberufe</value>
   </data>
   <data name="Profession" xml:space="preserve">
-    <value>Beruf</value>
+    <value>Klasse</value>
   </data>
   <data name="Race" xml:space="preserve">
     <value>Rasse</value>
@@ -493,6 +487,9 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   <data name="LeftOffset" xml:space="preserve">
     <value>Linker Versatz</value>
   </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
   <data name="LastLogin" xml:space="preserve">
     <value>Letzte Anmeldung</value>
   </data>
@@ -621,5 +618,32 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   </data>
   <data name="KeyDelay_DisplayName" xml:space="preserve">
     <value>Tastenverzögerung {0} ms</value>
+  </data>
+  <data name="ShowStatusWindow_Description" xml:space="preserve">
+    <value>Zeigt ein Popup-Fenster an, während automatisierte Aktionen ausgeführt werden</value>
+  </data>
+  <data name="LevelAmount" xml:space="preserve">
+    <value>Level {0}</value>
+  </data>
+  <data name="ShowStatusWindow_Name" xml:space="preserve">
+    <value>Status-Popup anzeigen</value>
+  </data>
+  <data name="Large" xml:space="preserve">
+    <value>Groß</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="OnlyIcons" xml:space="preserve">
+    <value>Nur Icons</value>
+  </data>
+  <data name="OnlyText" xml:space="preserve">
+    <value>Nur Text</value>
+  </data>
+  <data name="Small" xml:space="preserve">
+    <value>Klein</value>
+  </data>
+  <data name="TextAndIcon" xml:space="preserve">
+    <value>Text und Icons</value>
   </data>
 </root>

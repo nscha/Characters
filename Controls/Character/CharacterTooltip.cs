@@ -329,7 +329,7 @@ namespace Kenedia.Modules.Characters.Controls
             _nameLabel.Text = Character.Name;
             _nameLabel.TextColor = new Microsoft.Xna.Framework.Color(168 + 15 + 25, 143 + 20 + 25, 102 + 15 + 25, 255);
 
-            _levelLabel.Text = string.Format(Strings.common.Level, Character.Level);
+            _levelLabel.Text = string.Format(Strings.common.LevelAmount, Character.Level);
             _levelLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
             _levelLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(157085);
 

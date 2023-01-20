@@ -37,16 +37,9 @@ namespace Kenedia.Modules.Characters.Controls
                 Width = width,
             };
 
-            foreach (string s in Enum.GetNames(typeof(MatchingBehavior)))
-            {
-                string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
-                string entry = string.Join(" ", split);
-                _matchingDropdown.Items.Add(entry);
-            }
-
-            // this.matchingDropdown.Items.Add(Strings.common.MatchAnyFilter);
-            // this.matchingDropdown.Items.Add(Strings.common.MatchAllFilter);
-            _matchingDropdown.SelectedItem = Characters.ModuleInstance.Settings.FilterMatching.Value.GetMatchingBehavior();
+            _matchingDropdown.Items.Add(Strings.common.MatchAnyFilter);
+            _matchingDropdown.Items.Add(Strings.common.MatchAllFilter);
+            _matchingDropdown.SelectedItem = Characters.ModuleInstance.Settings.ResultMatchingBehavior.Value.GetMatchingBehavior();
             _matchingDropdown.ValueChanged += Matching_Dropdown_ValueChanged;
 
             _filterBehaviorDropdown = new Dropdown()
@@ -55,16 +48,9 @@ namespace Kenedia.Modules.Characters.Controls
                 Width = width,
             };
 
-            foreach (string s in Enum.GetNames(typeof(FilterBehavior)))
-            {
-                string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
-                string entry = string.Join(" ", split);
-                _filterBehaviorDropdown.Items.Add(entry);
-            }
-
-            // this.filterBehaviorDropdown.Items.Add(Strings.common.IncludeMatches);
-            // this.filterBehaviorDropdown.Items.Add(Strings.common.ExcludeMatches);
-            _filterBehaviorDropdown.SelectedItem = Characters.ModuleInstance.Settings.FilterDirection.Value.GetFilterBehavior();
+             _filterBehaviorDropdown.Items.Add(Strings.common.IncludeMatches);
+             _filterBehaviorDropdown.Items.Add(Strings.common.ExcludeMatches);
+            _filterBehaviorDropdown.SelectedItem = Characters.ModuleInstance.Settings.ResultFilterBehavior.Value.GetFilterBehavior();
             _filterBehaviorDropdown.ValueChanged += FilterBehavior_Dropdown_ValueChanged;
 
             _nameCheckbox = new Checkbox()
@@ -133,13 +119,13 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void Matching_Dropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            Characters.ModuleInstance.Settings.FilterMatching.Value = e.CurrentValue.GetMatchingBehavior();
+            Characters.ModuleInstance.Settings.ResultMatchingBehavior.Value = e.CurrentValue.GetMatchingBehavior();
             Characters.ModuleInstance.MainWindow?.UpdateLayout();
         }
 
         private void FilterBehavior_Dropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            Characters.ModuleInstance.Settings.FilterDirection.Value = e.CurrentValue.GetFilterBehavior();
+            Characters.ModuleInstance.Settings.ResultFilterBehavior.Value = e.CurrentValue.GetFilterBehavior();
             Characters.ModuleInstance.MainWindow?.UpdateLayout();
         }
 

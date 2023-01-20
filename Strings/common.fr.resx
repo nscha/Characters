@@ -230,12 +230,6 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="Leatherworker" xml:space="preserve">
     <value>Travailleur du cuir</value>
   </data>
-  <data name="Level" xml:space="preserve">
-    <value>Niveau {0}</value>
-  </data>
-  <data name="LoginAfterSelect" xml:space="preserve">
-    <value>Entrer dans le jeu automatiquement après avoir sélectionné le personnage dans la sélection des personnages</value>
-  </data>
   <data name="LoginCharacter" xml:space="preserve">
     <value>Personnage de connexion</value>
   </data>
@@ -493,6 +487,9 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="LeftOffset" xml:space="preserve">
     <value>Décalage à gauche</value>
   </data>
+  <data name="Level" xml:space="preserve">
+    <value>Niveau</value>
+  </data>
   <data name="LastLogin" xml:space="preserve">
     <value>Dernière connexion</value>
   </data>
@@ -621,5 +618,32 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   </data>
   <data name="KeyDelay_DisplayName" xml:space="preserve">
     <value>Retard de touche {0} ms</value>
+  </data>
+  <data name="ShowStatusWindow_Description" xml:space="preserve">
+    <value>Affiche une fenêtre contextuelle pendant l'exécution de toute action automatisée</value>
+  </data>
+  <data name="LevelAmount" xml:space="preserve">
+    <value>Niveau {0}</value>
+  </data>
+  <data name="ShowStatusWindow_Name" xml:space="preserve">
+    <value>Afficher la fenêtre popup d'état</value>
+  </data>
+  <data name="Large" xml:space="preserve">
+    <value>Large</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="OnlyIcons" xml:space="preserve">
+    <value>Icônes uniquement</value>
+  </data>
+  <data name="OnlyText" xml:space="preserve">
+    <value>Seulement le texte</value>
+  </data>
+  <data name="Small" xml:space="preserve">
+    <value>Petit</value>
+  </data>
+  <data name="TextAndIcon" xml:space="preserve">
+    <value>Texte et icônes</value>
   </data>
 </root>

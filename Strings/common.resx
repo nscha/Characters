@@ -372,10 +372,7 @@ To get the current value you will have to swap module tabs once to update the se
     <value>Left Offset</value>
   </data>
   <data name="Level" xml:space="preserve">
-    <value>Level {0}</value>
-  </data>
-  <data name="LoginAfterSelect" xml:space="preserve">
-    <value>Enter the game automatically after selecting the character in the character selection</value>
+    <value>Level</value>
   </data>
   <data name="LoginCharacter" xml:space="preserve">
     <value>Log in character</value>
@@ -621,5 +618,32 @@ To get the current value you will have to swap module tabs once to update the se
   </data>
   <data name="KeyDelay_DisplayName" xml:space="preserve">
     <value>Key Delay {0} ms</value>
+  </data>
+  <data name="ShowStatusWindow_Name" xml:space="preserve">
+    <value>Show Status Popup</value>
+  </data>
+  <data name="ShowStatusWindow_Description" xml:space="preserve">
+    <value>Displays a popup while any automated actions are performed</value>
+  </data>
+  <data name="LevelAmount" xml:space="preserve">
+    <value>Level {0}</value>
+  </data>
+  <data name="OnlyIcons" xml:space="preserve">
+    <value>Only Icons</value>
+  </data>
+  <data name="OnlyText" xml:space="preserve">
+    <value>Only Text</value>
+  </data>
+  <data name="TextAndIcon" xml:space="preserve">
+    <value>Text and Icons</value>
+  </data>
+  <data name="Small" xml:space="preserve">
+    <value>Small</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Large" xml:space="preserve">
+    <value>Large</value>
   </data>
 </root>

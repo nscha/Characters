@@ -29,19 +29,12 @@ namespace Kenedia.Modules.Characters.Controls
                 Width = width,
             };
 
-            foreach (string s in Enum.GetNames(typeof(ESortType)))
-            {
-                string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
-                string entry = string.Join(" ", split);
-                _orderDropdown.Items.Add(entry);
-            }
-
-            // this.orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Name));
-            // this.orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Tags));
-            // this.orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Profession));
-            // this.orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.LastLogin));
-            // this.orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Map));
-            // this.orderDropdown.Items.Add(Strings.common.Custom);
+            _orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Name));
+            _orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Tags));
+            _orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Profession));
+            _orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.LastLogin));
+            _orderDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Map));
+            _orderDropdown.Items.Add(Strings.common.Custom);
             _orderDropdown.SelectedItem = Characters.ModuleInstance.Settings.SortType.Value.GetSortType();
             _orderDropdown.ValueChanged += OrderDropdown_ValueChanged;
 
@@ -51,15 +44,8 @@ namespace Kenedia.Modules.Characters.Controls
                 Width = width,
             };
 
-            foreach (string s in Enum.GetNames(typeof(ESortOrder)))
-            {
-                string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
-                string entry = string.Join(" ", split);
-                _flowDropdown.Items.Add(entry);
-            }
-
-            // this.flowDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Ascending));
-            // this.flowDropdown.Items.Add(string.Format(Strings.common.SortBy, Strings.common.Descending));
+            _flowDropdown.Items.Add(Strings.common.Ascending);
+            _flowDropdown.Items.Add(Strings.common.Descending);
             _flowDropdown.SelectedItem = Characters.ModuleInstance.Settings.SortOrder.Value.GetSortOrder();
             _flowDropdown.ValueChanged += FlowDropdown_ValueChanged;
         }

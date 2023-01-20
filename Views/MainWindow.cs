@@ -189,13 +189,13 @@ namespace Kenedia.Modules.Characters.Views
 
         public void PerformFiltering()
         {
-            bool any = Characters.ModuleInstance.Settings.FilterMatching.Value == MatchingBehavior.MatchAny;
-            bool all = Characters.ModuleInstance.Settings.FilterMatching.Value == MatchingBehavior.MatchAll;
+            bool any = Characters.ModuleInstance.Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAny;
+            bool all = Characters.ModuleInstance.Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAll;
 
             List<string> textStrings = FilterBox.Text.Trim().ToLower().Split(' ').ToList();
             bool matchAny = FilterBox.Text.Trim().Length == 0;
-            Services.SettingsModel s = Characters.ModuleInstance.Settings;
-            Services.Data data = Characters.ModuleInstance.Data;
+            SettingsModel s = Characters.ModuleInstance.Settings;
+            Data data = Characters.ModuleInstance.Data;
 
             IEnumerable<Tag> activeTags = _filterSideMenu.Tags.Where(e => e.Active);
 
@@ -418,11 +418,31 @@ namespace Kenedia.Modules.Characters.Views
                     }
                 }
 
-                bool matched = matchAny || (any ? filterStrings.Where(r => r.Result == true).Count() > 0 : filterStrings.Where(r => r.Result == true).Count() == filterStrings.Count);
-                bool catMatched = anyCategory || filterCategories.Where(r => r.Result == true).Count() == filterCategories.Count;
-                bool tagMatched = anyTag || (any ? filterTags.Where(r => r.Result == true).Count() > 0 : filterTags.Where(r => r.Result == true).Count() == filterTags.Count);
+                bool matched = false;
+                bool catMatched = false;
+                bool tagMatched = false;
 
-                c.Visible = (c.Character.Show || includeHidden) && (s.FilterDirection.Value == FilterBehavior.Include ? matched && catMatched && tagMatched : !matched && !catMatched && !tagMatched);
+                if (s.ResultFilterBehavior.Value == FilterBehavior.Exclude)
+                {
+                    matched = !matchAny && (any ? filterStrings.Where(r => r.Result == true).Count() > 0 : filterStrings.Where(r => r.Result == true).Count() == filterStrings.Count);
+                    tagMatched = !anyTag && (any ? filterTags.Where(r => r.Result == true).Count() > 0 : filterTags.Where(r => r.Result == true).Count() == filterTags.Count);
+                    catMatched = !anyCategory && filterCategories.Where(r => r.Result == true).Count() == filterCategories.Count;
+                }
+                else
+                {
+                    matched = matchAny || (any ? filterStrings.Where(r => r.Result == true).Count() > 0 : filterStrings.Where(r => r.Result == true).Count() == filterStrings.Count);
+                    catMatched = anyCategory || filterCategories.Where(r => r.Result == true).Count() == filterCategories.Count;
+                    tagMatched = anyTag || (any ? filterTags.Where(r => r.Result == true).Count() > 0 : filterTags.Where(r => r.Result == true).Count() == filterTags.Count);
+                }
+
+                Debug.WriteLine($"(c.Character.Show || includeHidden) : {(c.Character.Show || includeHidden)}");
+                Debug.WriteLine($"s.ResultFilterBehavior.Value : {s.ResultFilterBehavior.Value}");
+
+                Debug.WriteLine($"matched : {matched}");
+                Debug.WriteLine($"catMatched : {catMatched}");
+                Debug.WriteLine($"tagMatched : {tagMatched}");
+
+                c.Visible = (c.Character.Show || includeHidden) && (s.ResultFilterBehavior.Value == FilterBehavior.Include ? matched && catMatched && tagMatched : !matched && !catMatched && !tagMatched);
             }
 
             _clearButton.Visible = !anyCategory || !matchAny || !anyTag;
@@ -711,7 +731,7 @@ namespace Kenedia.Modules.Characters.Views
             _filterSideMenu?.Hide();
             _settingsSideMenu?.Hide();
             CharacterEdit?.Hide();
-            
+
         }
 
         protected override void OnResized(ResizedEventArgs e)
@@ -776,7 +796,7 @@ namespace Kenedia.Modules.Characters.Views
             base.DisposeControl();
 
             CharacterSorting.Completed -= CharacterSorting_Finished;
-           // if(CharacterControls.Count >0) CharacterControls?.DisposeAll();
+            // if(CharacterControls.Count >0) CharacterControls?.DisposeAll();
             //ContentPanel?.DisposeAll();
             //CharactersPanel?.Dispose();
             DraggingControl?.Dispose();

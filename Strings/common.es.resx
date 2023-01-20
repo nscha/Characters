@@ -230,12 +230,6 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="Leatherworker" xml:space="preserve">
     <value>Peletero</value>
   </data>
-  <data name="Level" xml:space="preserve">
-    <value>Nivel {0}</value>
-  </data>
-  <data name="LoginAfterSelect" xml:space="preserve">
-    <value>Entrar en el juego automáticamente después de seleccionar el personaje en la selección de personajes</value>
-  </data>
   <data name="LoginCharacter" xml:space="preserve">
     <value>Carácter de inicio de sesión</value>
   </data>
@@ -493,6 +487,9 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="LeftOffset" xml:space="preserve">
     <value>Desplazamiento a la izquierda</value>
   </data>
+  <data name="Level" xml:space="preserve">
+    <value>Nivel</value>
+  </data>
   <data name="LastLogin" xml:space="preserve">
     <value>Última conexión</value>
   </data>
@@ -622,5 +619,32 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="KeyDelay_DisplayName" xml:space="preserve">
     <value>Retardo de tecla {0} ms</value>
+  </data>
+  <data name="ShowStatusWindow_Description" xml:space="preserve">
+    <value>Muestra una ventana emergente mientras se realiza cualquier acción automatizada</value>
+  </data>
+  <data name="LevelAmount" xml:space="preserve">
+    <value>Nivel {0}</value>
+  </data>
+  <data name="ShowStatusWindow_Name" xml:space="preserve">
+    <value>Mostrar ventana emergente de estado</value>
+  </data>
+  <data name="Large" xml:space="preserve">
+    <value>Grande</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="OnlyIcons" xml:space="preserve">
+    <value>Sólo iconos</value>
+  </data>
+  <data name="OnlyText" xml:space="preserve">
+    <value>Sólo texto</value>
+  </data>
+  <data name="Small" xml:space="preserve">
+    <value>Pequeño</value>
+  </data>
+  <data name="TextAndIcon" xml:space="preserve">
+    <value>Texto e iconos</value>
   </data>
 </root>

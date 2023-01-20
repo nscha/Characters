@@ -1,4 +1,5 @@
 ﻿using Blish_HUD.Controls;
+using Kenedia.Modules.Characters.Extensions;
 using Microsoft.Xna.Framework;
 using System;
 using System.Text.RegularExpressions;
@@ -38,17 +39,10 @@ namespace Kenedia.Modules.Characters.Controls
                 Width = width,
             };
 
-            foreach (string s in Enum.GetNames(typeof(PanelSizes)))
-            {
-                string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
-                string entry = string.Join(" ", split);
-                _panelSizeDropdown.Items.Add(entry);
-                if (s == Characters.ModuleInstance.Settings.PanelSize.Value.ToString())
-                {
-                    _panelSizeDropdown.SelectedItem = entry;
-                }
-            }
-
+            _panelSizeDropdown.Items.Add(Strings.common.Small);
+            _panelSizeDropdown.Items.Add(Strings.common.Normal);
+            _panelSizeDropdown.Items.Add(Strings.common.Large);
+            _panelSizeDropdown.SelectedItem = Characters.ModuleInstance.Settings.PanelSize.Value.GetPanelSize();
             _panelSizeDropdown.ValueChanged += PanelSizeDropdown_ValueChanged;
 
             _layoutDropdown = new Dropdown()
@@ -56,18 +50,11 @@ namespace Kenedia.Modules.Characters.Controls
                 Parent = this,
                 Width = width,
             };
-            foreach (string s in Enum.GetNames(typeof(CharacterPanelLayout)))
-            {
-                string[] split = Regex.Split(s, @"(?<!^)(?=[A-Z])");
-                string entry = string.Join(" ", split);
-                _layoutDropdown.Items.Add(entry);
 
-                if (s == Characters.ModuleInstance.Settings.PanelLayout.Value.ToString())
-                {
-                    _layoutDropdown.SelectedItem = entry;
-                }
-            }
-
+            _layoutDropdown.Items.Add(Strings.common.OnlyIcons);
+            _layoutDropdown.Items.Add(Strings.common.OnlyText);
+            _layoutDropdown.Items.Add(Strings.common.TextAndIcon);
+            _layoutDropdown.SelectedItem = Characters.ModuleInstance.Settings.PanelLayout.Value.GetPanelLayout();
             _layoutDropdown.ValueChanged += LayoutDropdown_ValueChanged;
 
             _nameCheckbox = new Checkbox()
@@ -207,24 +194,14 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void LayoutDropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            string layout = Regex.Replace(_layoutDropdown.SelectedItem, @"\s+", string.Empty);
-
-            if (Enum.TryParse(layout, out CharacterPanelLayout result))
-            {
-                Characters.ModuleInstance.Settings.PanelLayout.Value = result;
-                Characters.ModuleInstance.MainWindow?.UpdateLayout();
-            }
+            Characters.ModuleInstance.Settings.PanelLayout.Value = _layoutDropdown.SelectedItem.GetPanelLayout();
+            Characters.ModuleInstance.MainWindow?.UpdateLayout();
         }
 
         private void PanelSizeDropdown_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            string layout = Regex.Replace(_panelSizeDropdown.SelectedItem, @"\s+", string.Empty);
-
-            if (Enum.TryParse(layout, out PanelSizes result))
-            {
-                Characters.ModuleInstance.Settings.PanelSize.Value = result;
-                Characters.ModuleInstance.MainWindow?.UpdateLayout();
-            }
+            Characters.ModuleInstance.Settings.PanelSize.Value = _panelSizeDropdown.SelectedItem.GetPanelSize();
+            Characters.ModuleInstance.MainWindow?.UpdateLayout();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Kenedia.Modules.Characters.Services
         private static string s_lastName;
         private static int s_noNameChange = 0;
 
-        private static int NoNameChange 
+        private static int NoNameChange
         {
             get => s_noNameChange;
             set
@@ -40,9 +40,9 @@ namespace Kenedia.Modules.Characters.Services
                     Status = $"Character name did not change {s_noNameChange}/2 ...";
                 }
 
-                if (s_noNameChange >= 2) 
+                if (s_noNameChange >= 2)
                 {
-                    s_state= SortingState.Done;
+                    s_state = SortingState.Done;
                     Status = "Done!";
                     AdjustCharacterLogins();
                     Completed?.Invoke(null, null);
@@ -70,15 +70,17 @@ namespace Kenedia.Modules.Characters.Services
 
         public static void Cancel()
         {
-            ScreenNotification.ShowNotification("CHARACTER SORT CANCEL");
-            s_cancellationTokenSource?.Cancel();
             s_state = SortingState.Canceled;
+            s_cancellationTokenSource?.Cancel();
+            s_cancellationTokenSource = null;
         }
 
         public static async void Start(List<Character_Model> models)
         {
+            s_state = SortingState.Canceled;
             s_cancellationTokenSource?.Cancel();
             s_cancellationTokenSource = new();
+            s_cancellationTokenSource.CancelAfter(180000);
 
             s_models = models.OrderByDescending(e => e.LastLogin).ToList();
             s_lastName = string.Empty;
@@ -87,7 +89,7 @@ namespace Kenedia.Modules.Characters.Services
             Started?.Invoke(null, null);
             Status = "Fixing characters ...";
             int i = 0;
-            while (s_state is not SortingState.Done and not SortingState.Canceled)
+            while (s_state is not SortingState.Done and not SortingState.Canceled && !s_cancellationTokenSource.Token.IsCancellationRequested)
             {
                 i++;
 
@@ -103,6 +105,7 @@ namespace Kenedia.Modules.Characters.Services
 
             Finished?.Invoke(null, null);
         }
+
 
         private static async Task Delay(CancellationToken cancellationToken, int? delay = null)
         {
@@ -120,6 +123,8 @@ namespace Kenedia.Modules.Characters.Services
             Debug.WriteLine($"s_state: {s_state}");
             Debug.WriteLine($"NoNameChange: {NoNameChange}");
 
+            if (cancellationToken.IsCancellationRequested) return;
+
             switch (s_state)
             {
                 case SortingState.None:
@@ -128,7 +133,7 @@ namespace Kenedia.Modules.Characters.Services
 
                 case SortingState.MovedToFirst:
                     name = await FetchName(cancellationToken);
-                    if(name == s_lastName)
+                    if (name == s_lastName)
                     {
                         NoNameChange++;
                     }
@@ -165,12 +170,19 @@ namespace Kenedia.Modules.Characters.Services
             Status = "Move to first character ...";
             if (IsTaskCanceled(cancellationToken)) { return; }
 
+            Stopwatch stopwatch = Stopwatch.StartNew();
             for (int i = 0; i < s_models.Count; i++)
             {
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
                 await Delay(cancellationToken);
 
                 if (IsTaskCanceled(cancellationToken)) { return; }
+
+                if (stopwatch.ElapsedMilliseconds > 5000)
+                {
+                    InputService.MouseWiggle();
+                    stopwatch.Restart();
+                }
             }
 
             s_state = SortingState.MovedToFirst;
@@ -180,6 +192,7 @@ namespace Kenedia.Modules.Characters.Services
         private static async Task MoveNext(CancellationToken cancellationToken)
         {
             Status = "Move to next character ...";
+            InputService.MouseWiggle();
             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
             await Delay(cancellationToken);
             s_currentIndex++;

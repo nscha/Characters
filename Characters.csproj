@@ -134,6 +134,7 @@
     <Compile Include="Controls\Dummy.cs" />
     <Compile Include="Controls\Settings SideMenu\FilterSettings.cs" />
     <Compile Include="Controls\IconLabel.cs" />
+    <Compile Include="Services\InputService.cs" />
     <Compile Include="Strings\common1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -395,12 +396,19 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Strings\common.de.resx" />
-    <EmbeddedResource Include="Strings\common.es.resx" />
-    <EmbeddedResource Include="Strings\common.fr.resx" />
+    <EmbeddedResource Include="Strings\common.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Strings\common.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Strings\common.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Strings\common.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>common1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

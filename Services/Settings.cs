@@ -30,6 +30,12 @@ namespace Kenedia.Modules.Characters.Services
                 () => Strings.common.ShowCorner_Name,
                 () => string.Format(Strings.common.ShowCorner_Tooltip, Characters.ModuleInstance.Name));
 
+            ShowStatusWindow = settings.DefineSetting(
+                nameof(ShowStatusWindow),
+                true,
+                () => Strings.common.ShowStatusWindow_Name,
+                () => Strings.common.ShowStatusWindow_Description);
+
             EnterOnSwap = settings.DefineSetting(
                 nameof(EnterOnSwap),
                 true,
@@ -96,8 +102,8 @@ namespace Kenedia.Modules.Characters.Services
             ShowDetailedTooltip = internalSettings.DefineSetting(nameof(ShowDetailedTooltip), true);
             ShowTags = internalSettings.DefineSetting(nameof(ShowTags), true);
 
-            FilterMatching = internalSettings.DefineSetting(nameof(FilterMatching), MatchingBehavior.MatchAny);
-            FilterDirection = internalSettings.DefineSetting(nameof(FilterDirection), FilterBehavior.Include);
+            ResultMatchingBehavior = internalSettings.DefineSetting(nameof(ResultMatchingBehavior), MatchingBehavior.MatchAny);
+            ResultFilterBehavior = internalSettings.DefineSetting(nameof(ResultFilterBehavior), FilterBehavior.Include);
             CheckName = internalSettings.DefineSetting(nameof(CheckName), true);
             CheckLevel = internalSettings.DefineSetting(nameof(CheckLevel), true);
             CheckRace = internalSettings.DefineSetting(nameof(CheckRace), true);
@@ -160,6 +166,8 @@ namespace Kenedia.Modules.Characters.Services
 
         public SettingEntry<Point> WindowSize { get; set; }
 
+        public SettingEntry<bool> ShowStatusWindow { get; set; }
+
         public SettingEntry<bool> AutoSortCharacters { get; set; }
 
         public SettingEntry<bool> UseOCR { get; set; }
@@ -209,9 +217,9 @@ namespace Kenedia.Modules.Characters.Services
 
         public SettingEntry<bool> ShowTags { get; set; }
 
-        public SettingEntry<MatchingBehavior> FilterMatching { get; set; }
+        public SettingEntry<MatchingBehavior> ResultMatchingBehavior { get; set; }
 
-        public SettingEntry<FilterBehavior> FilterDirection { get; set; }
+        public SettingEntry<FilterBehavior> ResultFilterBehavior { get; set; }
 
         public SettingEntry<bool> CheckName { get; set; }
 

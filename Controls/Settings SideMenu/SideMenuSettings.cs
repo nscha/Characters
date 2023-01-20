@@ -21,6 +21,7 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 Gw2Sharp.WebApi.Locale.French => 300,
                 Gw2Sharp.WebApi.Locale.Spanish => 235,
+                Gw2Sharp.WebApi.Locale.German => 235,
                 _ => 200,
             };
 

@@ -263,6 +263,12 @@ namespace Kenedia.Modules.Characters
             _ticks.Tags += gameTime.ElapsedGameTime.TotalMilliseconds;
             _ticks.OCR += gameTime.ElapsedGameTime.TotalMilliseconds;
 
+            MouseState mouse = GameService.Input.Mouse.State;
+            if (mouse.LeftButton == ButtonState.Pressed || mouse.RightButton == ButtonState.Pressed || GameService.Input.Keyboard.KeysDown.Count > 0)
+            {
+                CancelEverything();
+            }
+
             if (_clientRes != GameService.Graphics.Resolution)
             {
                 _clientRes = GameService.Graphics.Resolution;
@@ -377,14 +383,10 @@ namespace Kenedia.Modules.Characters
             Gw2ApiManager.SubtokenUpdated += Gw2ApiManager_SubtokenUpdated;
 
             Settings.ShortcutKey.Value.Enabled = true;
-            Settings.ShortcutKey.Value.Activated += ShortcutWindowToggle;
-
-            GameService.Input.Keyboard.KeyPressed += CancelEverything;
-            GameService.Input.Mouse.LeftMouseButtonPressed += CancelEverything;
-            GameService.Input.Mouse.RightMouseButtonPressed += CancelEverything;
+            Settings.ShortcutKey.Value.Activated += ShortcutWindowToggle;            
         }
 
-        private void CancelEverything(object sender, EventArgs e)
+        private void CancelEverything()
         {
             CharacterSwapping.Cancel();
             CharacterSorting.Cancel();
@@ -448,11 +450,7 @@ namespace Kenedia.Modules.Characters
             map.MapChanged -= ForceUpdate;
 
             GameService.GameIntegration.Gw2Instance.IsInGameChanged -= ForceUpdate;
-
-            GameService.Input.Keyboard.KeyPressed -= CancelEverything;
-            GameService.Input.Mouse.LeftMouseButtonPressed -= CancelEverything;
-            GameService.Input.Mouse.RightMouseButtonPressed -= CancelEverything;
-
+            
             ModuleInstance = null;
         }
 

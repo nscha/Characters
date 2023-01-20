@@ -92,7 +92,7 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void ShowIndicator(object sender, EventArgs e)
         {
-            Show();
+            if(Characters.ModuleInstance.Settings.ShowStatusWindow.Value) Show();
         }
 
         protected override void DisposeControl()

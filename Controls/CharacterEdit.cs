@@ -128,7 +128,7 @@ namespace Kenedia.Modules.Characters.Controls
                 HoveredTexture = tM.GetControlTexture(ControlTextures.Plus_Button_Hovered),
                 Location = new Point(Right - 24 - 5, _image.Bottom + 5 + 2),
                 Size = new Point(24, 24),
-                BasicTooltipText = string.Format(Strings.common.OpenItem, Strings.common.Tag),
+                BasicTooltipText = string.Format(Strings.common.AddItem, Strings.common.Tag),
             };
             _addTag.Click += AddTag_Click;
 

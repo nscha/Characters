@@ -2,6 +2,7 @@
 using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
+using Gw2Sharp.WebApi.V2.Models;
 using Kenedia.Modules.Characters.Extensions;
 using Kenedia.Modules.Characters.Services;
 using Microsoft.Xna.Framework;
@@ -20,6 +21,7 @@ namespace Kenedia.Modules.Characters.Controls
         private readonly StandardButton _potraitFolderButton;
         private readonly StandardButton _fixCharacterOrder;
         private readonly StandardButton _refreshAPI;
+        private readonly Checkbox _fadeSideMenus;
         private readonly Checkbox _ocrCheckbox;
         private readonly Checkbox _autoFix;
         private readonly Checkbox _windowMode;
@@ -64,6 +66,16 @@ namespace Kenedia.Modules.Characters.Controls
                 HeightSizingMode = SizingMode.AutoSize,
                 ControlPadding = new Vector2(2, 2),
             };
+
+            _fadeSideMenus = new Checkbox()
+            {
+                Parent = _checkboxPanel,
+                Text = Strings.common.FadeOut_DisplayName,
+                BasicTooltipText = Strings.common.FadeOut_Description,
+                Checked = Characters.ModuleInstance.Settings.FadeOut.Value,
+                Width = 200,
+            };
+            _fadeSideMenus.Click += FadeSideMenus_Click;
 
             _windowMode = new Checkbox()
             {
@@ -143,6 +155,11 @@ namespace Kenedia.Modules.Characters.Controls
                 Icon = AsyncTexture2D.FromAssetId(156749),
             };
             _refreshAPI.Click += RefreshAPI_Click;
+        }
+
+        private void FadeSideMenus_Click(object sender, MouseEventArgs e)
+        {
+            Characters.ModuleInstance.Settings.FadeOut.Value = _fadeSideMenus.Checked;
         }
 
         protected override void OnResized(ResizedEventArgs e)

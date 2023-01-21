@@ -4,6 +4,7 @@ using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Kenedia.Modules.Characters.Extensions;
 using Kenedia.Modules.Characters.Models;
+using Kenedia.Modules.Characters.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -534,6 +535,15 @@ namespace Kenedia.Modules.Characters.Controls
             }
 
             // CharacterTooltip.Visible = MouseOver;
+        }
+
+        protected override void OnRightMouseButtonPressed(MouseEventArgs e)
+        {
+            base.OnRightMouseButtonPressed(e);
+
+            var mainWindow = Characters.ModuleInstance.MainWindow;            
+            mainWindow.ShowAttachedWindow(mainWindow.CharacterEdit.Character != Character || !mainWindow.CharacterEdit.Visible  ? mainWindow.CharacterEdit : null);
+            Characters.ModuleInstance.MainWindow.CharacterEdit.Character = Character;
         }
 
         protected override void OnClick(MouseEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Content;
 using Blish_HUD.Controls;
+using Gw2Sharp.WebApi.V2.Models;
 using Kenedia.Modules.Characters.Controls;
 using Kenedia.Modules.Characters.Enums;
 using Kenedia.Modules.Characters.Extensions;
@@ -14,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using static Kenedia.Modules.Characters.Services.SettingsModel;
 using Color = Microsoft.Xna.Framework.Color;
@@ -33,6 +35,8 @@ namespace Kenedia.Modules.Characters.Views
         private readonly SettingsSideMenu _settingsSideMenu;
         private readonly FilterSideMenu _filterSideMenu;
         private readonly FlowPanel _buttonPanel;
+
+        private readonly List<Control> _attachedWindows = new();
 
         private bool _filterCharacters;
         private bool _updateLayout;
@@ -119,10 +123,10 @@ namespace Kenedia.Modules.Characters.Views
                 BasicTooltipText = Strings.common.RandomButton_Tooltip,
                 Texture = Characters.ModuleInstance.TextureManager.GetIcon(TextureManager.Icons.Dice),
                 HoveredTexture = Characters.ModuleInstance.TextureManager.GetIcon(TextureManager.Icons.Dice_Hovered),
-                Visible = Characters.ModuleInstance.Settings.ShowRandomButton.Value,
+                Visible = Settings.ShowRandomButton.Value,
             };
             _randomButton.Click += RandomButton_Click;
-            Characters.ModuleInstance.Settings.ShowRandomButton.SettingChanged += ShowRandomButton_SettingChanged;
+            Settings.ShowRandomButton.SettingChanged += ShowRandomButton_SettingChanged;
 
             _displaySettingsButton = new()
             {
@@ -152,14 +156,19 @@ namespace Kenedia.Modules.Characters.Views
                 TextureOffset = new Point(25, 25),
                 Visible = false,
             };
-            CharacterEdit.Shown += CharacterEdit_Shown;
 
             Characters.ModuleInstance.LanguageChanged += ModuleInstance_LanguageChanged;
+
+            _attachedWindows.Add(CharacterEdit);
+            _attachedWindows.Add(_filterSideMenu);
+            _attachedWindows.Add(_settingsSideMenu);
         }
+
+        private SettingsModel Settings => Characters.ModuleInstance.Settings;
 
         private void ShowRandomButton_SettingChanged(object sender, ValueChangedEventArgs<bool> e)
         {
-            _randomButton.Visible = Characters.ModuleInstance.Settings.ShowRandomButton.Value;
+            _randomButton.Visible = Settings.ShowRandomButton.Value;
             _buttonPanel.Invalidate();
         }
 
@@ -243,17 +252,24 @@ namespace Kenedia.Modules.Characters.Views
 
         public void PerformFiltering()
         {
-            bool any = Characters.ModuleInstance.Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAny;
-            bool all = Characters.ModuleInstance.Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAll;
+            bool any = Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAny;
+            bool all = Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAll;
 
+            Regex Diacritics = new(@"\p{M}");
             Regex regex = new(@"\w+|""[\w\s]*""");
             var x = regex.Matches(FilterBox.Text.Trim().ToLower()).Cast<Match>().ToList();
 
-            List<string> textStrings = new();
-            foreach (Match match in x) { Debug.WriteLine(match.ToString()); textStrings.Add(match.ToString().Replace("\"", "")); }
+        List<string> textStrings = new();
+            foreach (Match match in x) 
+            {
+                string string_text = match.ToString().Replace("\"", "");
+                string_text = Settings.FilterDiacriticsInsensitive.Value ? string_text.RemoveDiacritics() : string_text;
+
+                textStrings.Add(string_text); 
+            }
 
             bool matchAny = FilterBox.Text.Trim().Length == 0;
-            SettingsModel s = Characters.ModuleInstance.Settings;
+            SettingsModel s = Settings;
             Data data = Characters.ModuleInstance.Data;
 
             IEnumerable<Tag> activeTags = _filterSideMenu.Tags.Where(e => e.Active);
@@ -316,6 +332,7 @@ namespace Kenedia.Modules.Characters.Views
                     if (s.CheckName.Value)
                     {
                         string value = c.Character.Name.ToString();
+                        value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
 
                         if (value != null)
                         {
@@ -334,6 +351,7 @@ namespace Kenedia.Modules.Characters.Views
                     if (s.CheckLevel.Value)
                     {
                         string value = c.Character.Level.ToString();
+                        value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
 
                         if (value != null)
                         {
@@ -351,13 +369,16 @@ namespace Kenedia.Modules.Characters.Views
 
                     if (s.CheckRace.Value)
                     {
-                        Services.Data.Race value = c.Character.Race.GetData();
+                        Data.Race race = c.Character.Race.GetData();
 
-                        if (value != null)
+                        if (race != null)
                         {
+                            string value = race.Name;
+                            value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
+
                             foreach (FilterTag ex in filterStrings)
                             {
-                                if (value.Name.ToLower().Contains(ex))
+                                if (value.ToLower().Contains(ex))
                                 {
                                     ex.Result = true;
                                 }
@@ -373,26 +394,32 @@ namespace Kenedia.Modules.Characters.Views
 
                     if (s.CheckProfession.Value)
                     {
-                        Services.Data.Profession value = c.Character.Profession.GetData();
+                        Data.Profession profession = c.Character.Profession.GetData();
 
-                        if (value != null)
+                        if (profession != null)
                         {
+                            string value = profession.Name;
+                            value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
+
                             foreach (FilterTag ex in filterStrings)
                             {
-                                if (value.Name.ToLower().Contains(ex))
+                                if (value.ToLower().Contains(ex))
                                 {
                                     ex.Result = true;
                                 }
                             }
                         }
 
-                        Services.Data.Specialization value2 = c.Character.Specialization.GetData();
+                        Data.Specialization specialization = c.Character.Specialization.GetData();
 
-                        if (value2 != null)
+                        if (specialization != null)
                         {
+                            string value = specialization.Name;
+                            value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
+
                             foreach (FilterTag ex in filterStrings)
                             {
-                                if (value2.Name.ToLower().Contains(ex))
+                                if (value.ToLower().Contains(ex))
                                 {
                                     ex.Result = true;
                                 }
@@ -414,13 +441,16 @@ namespace Kenedia.Modules.Characters.Views
 
                     if (s.CheckMap.Value)
                     {
-                        Map value = Characters.ModuleInstance.Data.GetMapById(c.Character.Map);
+                        Models.Map map = Characters.ModuleInstance.Data.GetMapById(c.Character.Map);
 
-                        if (value != null)
+                        if (map != null)
                         {
+                            string value = map.Name;
+                            value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
+
                             foreach (FilterTag ex in filterStrings)
                             {
-                                if (value.Name.ToLower().Contains(ex))
+                                if (value.ToLower().Contains(ex))
                                 {
                                     ex.Result = true;
                                 }
@@ -438,13 +468,16 @@ namespace Kenedia.Modules.Characters.Views
                     {
                         foreach (CharacterCrafting crafting in c.Character.Crafting)
                         {
-                            Services.Data.CrafingProfession value = crafting.Id.GetData();
+                            Data.CrafingProfession crafingProfession = crafting.Id.GetData();
 
-                            if (value != null)
+                            if (crafingProfession != null)
                             {
+                                string value = crafingProfession.Name;
+                                value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
+
                                 foreach (FilterTag ex in filterStrings)
                                 {
-                                    if (value.Name.ToLower().Contains(ex) && (!s.CheckOnlyMaxCrafting.Value || value.MaxRating == crafting.Rating))
+                                    if (value.ToLower().Contains(ex) && (!s.CheckOnlyMaxCrafting.Value || crafingProfession.MaxRating == crafting.Rating))
                                     {
                                         ex.Result = true;
                                     }
@@ -505,8 +538,8 @@ namespace Kenedia.Modules.Characters.Views
         public void UpdateLayout()
         {
             _updateLayout = false;
-            CharacterPanelLayout panelLayout = Characters.ModuleInstance.Settings.PanelLayout.Value;
-            PanelSizes panelSize = Characters.ModuleInstance.Settings.PanelSize.Value;
+            CharacterPanelLayout panelLayout = Settings.PanelLayout.Value;
+            PanelSizes panelSize = Settings.PanelSize.Value;
 
             Point size = Point.Zero;
             MonoGame.Extended.BitmapFonts.BitmapFont nameFont = GameService.Content.DefaultFont14;
@@ -603,8 +636,8 @@ namespace Kenedia.Modules.Characters.Views
 
         public void SortCharacters()
         {
-            ESortOrder order = Characters.ModuleInstance.Settings.SortOrder.Value;
-            ESortType sort = Characters.ModuleInstance.Settings.SortType.Value;
+            ESortOrder order = Settings.SortOrder.Value;
+            ESortType sort = Settings.SortType.Value;
 
             switch (sort)
             {
@@ -734,7 +767,7 @@ namespace Kenedia.Modules.Characters.Views
             string versionText = $"v. {Characters.ModuleInstance.Version}";
             BasicTooltipText = MouseOverTitleBar ? versionText : null;
 
-            if (_filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - _filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
+            if (_filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - _filterTick > Settings.FilterDelay.Value)
             {
                 _filterTick = gameTime.TotalGameTime.TotalMilliseconds;
                 PerformFiltering();
@@ -801,9 +834,7 @@ namespace Kenedia.Modules.Characters.Views
         {
             base.OnHidden(e);
 
-            _filterSideMenu?.Hide();
-            _settingsSideMenu?.Hide();
-            CharacterEdit?.Hide();
+            ShowAttachedWindow();
         }
 
         protected override void OnResized(ResizedEventArgs e)
@@ -827,40 +858,33 @@ namespace Kenedia.Modules.Characters.Views
                 Size = new Point(Size.X, 135);
             }
 
-            if (_settingsSideMenu != null && _settingsSideMenu.Visible)
-            {
-                _settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
+            SetSideMenuPosition();
+        }
 
-            if (_filterSideMenu != null && _filterSideMenu.Visible)
+        public void ShowAttachedWindow(Control window = null)
+        {
+            foreach (var c in _attachedWindows)
             {
-                _filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                c.Visible = window != null && c == window;
+                c.Opacity = 1f;
             }
+        }
 
-            if (CharacterEdit != null && CharacterEdit.Visible)
+        private void SetSideMenuPosition()
+        {
+            var mainBounds = AbsoluteBounds;
+            bool left = mainBounds.Right - (mainBounds.Width / 2) > GameService.Graphics.SpriteScreen.Right / 2;
+
+            foreach(var c in _attachedWindows)
             {
-                CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
+                c.Location = left ? new(mainBounds.Left - c.Width - 5, mainBounds.Top + 45) : new(mainBounds.Right, mainBounds.Top + 45);
             }
         }
 
         protected override void OnMoved(MovedEventArgs e)
         {
             base.OnMoved(e);
-
-            if (_settingsSideMenu != null && _settingsSideMenu.Visible)
-            {
-                _settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
-
-            if (_filterSideMenu != null && _filterSideMenu.Visible)
-            {
-                _filterSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
-
-            if (CharacterEdit != null && CharacterEdit.Visible)
-            {
-                CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            }
+            SetSideMenuPosition();
         }
 
         protected override void DisposeControl()
@@ -883,7 +907,7 @@ namespace Kenedia.Modules.Characters.Views
 
         private void FilterBox_EnterPressed(object sender, EventArgs e)
         {
-            if (Characters.ModuleInstance.Settings.EnterToLogin.Value)
+            if (Settings.EnterToLogin.Value)
             {
                 PerformFiltering();
                 var c = (CharacterControl)CharactersPanel.Children.Where(e => e.Visible).FirstOrDefault();
@@ -892,17 +916,6 @@ namespace Kenedia.Modules.Characters.Views
                 {
                     Characters.ModuleInstance.SwapTo(c.Character);
                 }
-            }
-        }
-
-        private void CharacterEdit_Shown(object sender, EventArgs e)
-        {
-            _filterSideMenu?.Hide();
-            _settingsSideMenu?.Hide();
-
-            if (CharacterEdit != null && CharacterEdit.Visible)
-            {
-                CharacterEdit.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
             }
         }
 
@@ -935,18 +948,12 @@ namespace Kenedia.Modules.Characters.Views
 
         private void FilterBox_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            _settingsSideMenu.Hide();
-            _filterSideMenu.Show();
-            CharacterEdit.Hide();
+            ShowAttachedWindow(_filterSideMenu);
         }
 
         private void DisplaySettingsButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            _filterSideMenu.Hide();
-            _settingsSideMenu.Show();
-            _settingsSideMenu.Location = new Point(Characters.ModuleInstance.MainWindow.AbsoluteBounds.Right, Characters.ModuleInstance.MainWindow.AbsoluteBounds.Top + 45);
-            _settingsSideMenu.Opacity = 1f;
-            CharacterEdit.Hide();
+            ShowAttachedWindow(_settingsSideMenu);
         }
 
         private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)

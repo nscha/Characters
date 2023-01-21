@@ -205,9 +205,6 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
   <data name="FadeOut_Description" xml:space="preserve">
     <value>Le filtre et la fenêtre de personnages s'effacent automatiquement après 2500 ms</value>
   </data>
-  <data name="FadeOut_DisplayName" xml:space="preserve">
-    <value>Estomper la fenêtre supplémentaire</value>
-  </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Temps moyen, en millisecondes, d'attente entre le filtrage du panneau de vos personnages.
 Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois pour mettre à jour la page de paramètres !</value>

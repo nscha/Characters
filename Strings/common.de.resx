@@ -205,9 +205,6 @@ Sobald es vollständig geladen ist, wechselt es zu dem Charakter, der als "Login
   <data name="FadeOut_Description" xml:space="preserve">
     <value>Filter und Charakterfenster automatisch nach 2500 ms ausblenden</value>
   </data>
-  <data name="FadeOut_DisplayName" xml:space="preserve">
-    <value>Verblasse extra Fenster</value>
-  </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Durchschnittliche Zeit in Millisekunden, die zwischen dem Filtern des Panels Ihrer Charaktere gewartet wird.
 Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, um die Einstellungsseite zu aktualisieren!</value>

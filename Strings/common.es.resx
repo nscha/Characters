@@ -205,9 +205,6 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
   <data name="FadeOut_Description" xml:space="preserve">
     <value>Desvanecer el filtro y la ventana de caracteres automáticamente después de 2500 ms</value>
   </data>
-  <data name="FadeOut_DisplayName" xml:space="preserve">
-    <value>desvanecer la ventana extra</value>
-  </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Tiempo medio en milisegundos de espera entre el filtrado del panel de tus personajes.
 Para obtener el valor actual tendrás que cambiar las pestañas del módulo una vez para actualizar la página de configuración!</value>

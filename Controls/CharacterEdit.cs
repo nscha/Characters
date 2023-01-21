@@ -271,7 +271,7 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 _opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (!MouseOver && DateTime.Now.Subtract(_lastMouseOver).TotalMilliseconds >= 5000 && !Characters.ModuleInstance.PotraitCapture.Visible)
+                if (!MouseOver && Characters.ModuleInstance.Settings.FadeOut.Value && DateTime.Now.Subtract(_lastMouseOver).TotalMilliseconds >= 5000 && !Characters.ModuleInstance.PotraitCapture.Visible)
                 {
                     Opacity -= 0.05F;
                     if (Opacity <= 0F)

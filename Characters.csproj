@@ -93,6 +93,7 @@
     <Compile Include="Controls\FilterTag.cs" />
     <Compile Include="Controls\RunIndicator.cs" />
     <Compile Include="Enums\SpecializationType.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Models\RectangleOffset.cs" />
     <Compile Include="Services\CharacterSorting.cs" />
     <Compile Include="Services\CharacterSwapping.cs" />

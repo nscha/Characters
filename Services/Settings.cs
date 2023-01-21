@@ -2,6 +2,7 @@
 using Blish_HUD.Settings;
 using Kenedia.Modules.Characters.Models;
 using Microsoft.Xna.Framework.Input;
+using System.Collections;
 using System.Collections.Generic;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -29,6 +30,18 @@ namespace Kenedia.Modules.Characters.Services
                 true,
                 () => Strings.common.ShowCorner_Name,
                 () => string.Format(Strings.common.ShowCorner_Tooltip, Characters.ModuleInstance.Name));
+
+            CloseWindowOnSwap = settings.DefineSetting(
+                nameof(CloseWindowOnSwap),
+                false,
+                () => Strings.common.CloseWindowOnSwap_DisplayName,
+                () => Strings.common.CloseWindowOnSwap_Description);
+
+            FilterDiacriticsInsensitive = settings.DefineSetting(
+                nameof(FilterDiacriticsInsensitive),
+                false,
+                () => Strings.common.FilterDiacriticsInsensitive_DisplayName,
+                () => Strings.common.FilterDiacriticsInsensitive_Description);
 
             ShowRandomButton = settings.DefineSetting(
                 nameof(ShowRandomButton),
@@ -87,9 +100,10 @@ namespace Kenedia.Modules.Characters.Services
 
             Point res = GameService.Graphics.Resolution;
             WindowedMode = internalSettings.DefineSetting(nameof(WindowedMode), false);
+            FadeOut = internalSettings.DefineSetting(nameof(FadeOut), true);
             UseOCR = internalSettings.DefineSetting(nameof(UseOCR), false);
             AutoSortCharacters = internalSettings.DefineSetting(nameof(AutoSortCharacters), false);
-            OCRRegion = internalSettings.DefineSetting(nameof(ActiveOCRRegion), new Rectangle((res.X - 200) / 2, res.Y - 250, 200, 200));
+            OCRRegion = internalSettings.DefineSetting(nameof(ActiveOCRRegion), new Rectangle(50, 550, 530, 50));
             OCRRegions = internalSettings.DefineSetting(nameof(OCRRegions), new Dictionary<string, Rectangle>());
             OCRCustomOffset = internalSettings.DefineSetting(nameof(OCRCustomOffset), new RectangleOffset(3, 3, 5, 5));
             OCRNoPixelColumns = internalSettings.DefineSetting(nameof(OCRNoPixelColumns), 20);
@@ -165,6 +179,12 @@ namespace Kenedia.Modules.Characters.Services
             Large,
             Custom,
         }
+
+        public SettingEntry<bool> FadeOut { get; set; }
+
+        public SettingEntry<bool> CloseWindowOnSwap{ get; set; }
+
+        public SettingEntry<bool> FilterDiacriticsInsensitive { get; set; }
 
         public SettingEntry<bool> ShowRandomButton{ get; set; }
 

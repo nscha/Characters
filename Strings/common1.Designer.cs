@@ -413,6 +413,24 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closes the module window when logging in to a character..
+        /// </summary>
+        internal static string CloseWindowOnSwap_Description {
+            get {
+                return ResourceManager.GetString("CloseWindowOnSwap_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Window on Character Swap.
+        /// </summary>
+        internal static string CloseWindowOnSwap_DisplayName {
+            get {
+                return ResourceManager.GetString("CloseWindowOnSwap_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Core {0}.
         /// </summary>
         internal static string CoreProfession {
@@ -692,7 +710,7 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fade the filter and character window automatically after 2500 ms.
+        ///   Looks up a localized string similar to Fade the side menus automatically after 2.5 seconds.
         /// </summary>
         internal static string FadeOut_Description {
             get {
@@ -701,7 +719,7 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fade extra window.
+        ///   Looks up a localized string similar to Fade side menu.
         /// </summary>
         internal static string FadeOut_DisplayName {
             get {
@@ -734,6 +752,24 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string FilterDelay_DisplayName {
             get {
                 return ResourceManager.GetString("FilterDelay_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore any type of diacritics.
+        /// </summary>
+        internal static string FilterDiacriticsInsensitive_Description {
+            get {
+                return ResourceManager.GetString("FilterDiacriticsInsensitive_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore diacritics.
+        /// </summary>
+        internal static string FilterDiacriticsInsensitive_DisplayName {
+            get {
+                return ResourceManager.GetString("FilterDiacriticsInsensitive_DisplayName", resourceCulture);
             }
         }
         

@@ -212,6 +212,10 @@ namespace Kenedia.Modules.Characters.Services
                             Succeeded?.Invoke(null, null);
                             if (GameService.GameIntegration.Gw2Instance.IsInGame)
                             {
+                                if (Characters.ModuleInstance.Settings.CloseWindowOnSwap.Value)
+                                {
+                                    Characters.ModuleInstance.MainWindow.Hide();
+                                } 
                                 Character.LastLogin = DateTime.UtcNow;
                             }
 

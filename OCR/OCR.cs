@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -32,6 +33,7 @@ namespace Kenedia.Modules.Characters
         private readonly Label _result;
         private readonly Image _ocrResultImage;
         private readonly Image _ocrResultImageBlackWhite;
+        private readonly ImageButton _closeButton;
         private readonly SizeablePanel _container;
         private readonly OcrApi _ocrApi;
         private bool _disposed = false;
@@ -52,8 +54,8 @@ namespace Kenedia.Modules.Characters
                 FrameColor = Color.Black, // new Color(32, 32 , 32),
                 Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003),
                 TextureRectangle = new Rectangle(50, 50, 500, 500),
-                WidthSizingMode = SizingMode.AutoSize,
-                HeightSizingMode = SizingMode.AutoSize,
+                Height = 260,
+                Width = 530,
                 ZIndex = 999,
                 Visible = false,
             };
@@ -63,19 +65,39 @@ namespace Kenedia.Modules.Characters
                 Parent = _contentContainer,
                 WidthSizingMode = SizingMode.AutoSize,
                 HeightSizingMode = SizingMode.AutoSize,
-                AutoSizePadding = new Point(5, 5),
-                OuterControlPadding = new Vector2(5, 5),
+                AutoSizePadding = new Point(3, 3),
+                OuterControlPadding = new(3, 3),
                 FlowDirection = ControlFlowDirection.SingleTopToBottom,
+            };
+
+            var headerPanel = new FlowPanel()
+            {
+                FlowDirection = ControlFlowDirection.SingleLeftToRight,
+                Parent = contentFlowPanel,
+                Width = 525,
+                HeightSizingMode = SizingMode.AutoSize,
+                ControlPadding = new Vector2(5, 5),
             };
 
             _instructions = new Label()
             {
                 Text = Strings.common.OCR_Instructions,
-                Parent = contentFlowPanel,
+                Parent = headerPanel,
                 AutoSizeHeight = true,
-                AutoSizeWidth = true,
+                Width = 495,
+                WrapText = true,
                 TextColor = ContentService.Colors.ColonialWhite,
             };
+
+            _closeButton = new()
+            {
+                Parent = headerPanel,
+                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156012),
+                HoveredTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156011),
+                Size = new Point(25, 25),
+                TextureRectangle = new Rectangle(7, 7, 20, 20),
+            };
+            _closeButton.Click += _closeButton_Click;
 
             FlowPanel offsetPanel = new()
             {
@@ -156,14 +178,28 @@ namespace Kenedia.Modules.Characters
                 Font = GameService.Content.DefaultFont32,
             };
 
-            _ocrResultImage = new Image()
+            var resultImagePanel = new Panel()
             {
                 Parent = contentFlowPanel,
+                Height = 50,
+                WidthSizingMode = SizingMode.Fill,
+            };
+
+            _ocrResultImage = new Image()
+            {
+                Parent = resultImagePanel,
+            };
+
+            var blackWhiteResultImagePanel = new Panel()
+            {
+                Parent = contentFlowPanel,
+                Height = 50,
+                WidthSizingMode = SizingMode.Fill,
             };
 
             _ocrResultImageBlackWhite = new Image()
             {
-                Parent = contentFlowPanel,
+                Parent = blackWhiteResultImagePanel,
             };
 
             FlowPanel thresholdPanel = new()
@@ -235,6 +271,7 @@ namespace Kenedia.Modules.Characters
                 Size = Characters.ModuleInstance.Settings.ActiveOCRRegion.Size,
                 TintOnHover = false,
                 ShowResizeOnlyOnMouseOver = true,
+                MaxSize = new(530, 50)
             };
             _container.Resized += Container_Changed;
             _container.Moved += Container_Changed;
@@ -242,8 +279,13 @@ namespace Kenedia.Modules.Characters
             _container.MouseLeft += Container_LeftMouseButtonReleased;
 
             int height = Characters.ModuleInstance.Settings.ActiveOCRRegion.Size.Y;
-            _contentContainer.Location = new Point(_container.Left, _container.Top - (height * 3) - 115);
+            _contentContainer.Location = new Point(_container.Left, _container.Top - _contentContainer.Height - 5);
             _initialized = true;
+        }
+
+        private void _closeButton_Click(object sender, MouseEventArgs e)
+        {
+            ToggleContainer();
         }
 
         private RectangleOffset CustomOffset

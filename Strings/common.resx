@@ -305,10 +305,10 @@ Once fully loaded it will switch to the character which is set to be the "Login 
     <value>Exclude matches</value>
   </data>
   <data name="FadeOut_Description" xml:space="preserve">
-    <value>Fade the filter and character window automatically after 2500 ms</value>
+    <value>Fade the side menus automatically after 2.5 seconds</value>
   </data>
   <data name="FadeOut_DisplayName" xml:space="preserve">
-    <value>Fade extra window</value>
+    <value>Fade side menu</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
@@ -693,5 +693,17 @@ To get the current value you will have to swap module tabs once to update the se
   </data>
   <data name="FixCharacter_NoChange" xml:space="preserve">
     <value>Character name did not change {0}/2 ...</value>
+  </data>
+  <data name="CloseWindowOnSwap_DisplayName" xml:space="preserve">
+    <value>Close Window on Character Swap</value>
+  </data>
+  <data name="CloseWindowOnSwap_Description" xml:space="preserve">
+    <value>Closes the module window when logging in to a character.</value>
+  </data>
+  <data name="FilterDiacriticsInsensitive_DisplayName" xml:space="preserve">
+    <value>Ignore diacritics</value>
+  </data>
+  <data name="FilterDiacriticsInsensitive_Description" xml:space="preserve">
+    <value>Ignore any type of diacritics</value>
   </data>
 </root>

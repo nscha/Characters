@@ -117,8 +117,8 @@ namespace Kenedia.Modules.Characters.Views
                 Parent = _buttonPanel,
                 Size = new Point(25, 25),
                 BasicTooltipText = Strings.common.RandomButton_Tooltip,
-                Texture = Characters.ModuleInstance.TextureManager.GetIcon(TextureManager.Icons.Pin),
-                HoveredTexture = Characters.ModuleInstance.TextureManager.GetIcon(TextureManager.Icons.Pin_Hovered),
+                Texture = Characters.ModuleInstance.TextureManager.GetIcon(TextureManager.Icons.Dice),
+                HoveredTexture = Characters.ModuleInstance.TextureManager.GetIcon(TextureManager.Icons.Dice_Hovered),
                 Visible = Characters.ModuleInstance.Settings.ShowRandomButton.Value,
             };
             _randomButton.Click += RandomButton_Click;

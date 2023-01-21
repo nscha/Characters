@@ -131,7 +131,7 @@ namespace Kenedia.Modules.Characters
 
         public int SideBarWidth { get; private set; }
 
-        internal static Characters ModuleInstance { get; set; }
+        internal static Characters ModuleInstance { get; private set; }
 
         internal SettingsManager SettingsManager => ModuleParameters.SettingsManager;
 

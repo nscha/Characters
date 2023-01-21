@@ -161,7 +161,7 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
     <value>Fermer</value>
   </data>
   <data name="CraftingProfession" xml:space="preserve">
-    <value>Profession de l'artisanat</value>
+    <value>Profession d'artisanat</value>
   </data>
   <data name="CreateImages" xml:space="preserve">
     <value>Créer des images</value>
@@ -176,7 +176,7 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
     <value>désactivé</value>
   </data>
   <data name="DoubleClickToEnter_Description" xml:space="preserve">
-    <value>Permet de double-cliquer sur le personnage dans la liste des personnages pour se connecter à ce personnage.</value>
+    <value>Permet de double-cliquer sur le personnage dans la liste des personnages pour s'y connecter</value>
   </data>
   <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
     <value>Double-cliquez pour échanger</value>
@@ -191,7 +191,7 @@ Une fois le chargement terminé, il basculera vers le personnage qui est défini
     <value>Connexion après avoir choisi le personnage</value>
   </data>
   <data name="EnterToLogin_Description" xml:space="preserve">
-    <value>Si le champ de recherche est focalisé, appuyer sur retour 'RETOUR' connecte au premier personnage de la liste.</value>
+    <value>Si le champ de recherche est focalisé, appuyer sur Entrée connecte au premier personnage de la liste.</value>
   </data>
   <data name="EnterToLogin_DisplayName" xml:space="preserve">
     <value>Appuie sur Entrée pour changer</value>
@@ -278,9 +278,9 @@ Cela nécessitera une clé API avec des permissions, au moins pour le point de t
 -p Profession/Spécialisation
 -r Race
 -b Anniversaire
--m MapName
+-m Carte
 -t CustomTag
--c Chef ; -p Warrior affiche tous les guerriers et tous les chefs</value>
+-c Chef ; -p Warrior affiche tous les guerriers et tous les cuisiniers</value>
   </data>
   <data name="SelectImage" xml:space="preserve">
     <value>Choisis une image</value>
@@ -335,10 +335,10 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Afficher/masquer les personnages cachés</value>
   </data>
   <data name="UIScale_Error" xml:space="preserve">
-    <value>Veuillez régler le jeu sur 'FENETRE' {0} et l'échelle de l'interface utilisateur sur 'PLUS GRAND' !</value>
+    <value>Veuillez régler le jeu sur 'Fenêtre' {0} et l'échelle de l'interface utilisateur sur 'Plus grande' !</value>
   </data>
   <data name="UISizeDisclaimer" xml:space="preserve">
-    <value>Vous devez régler la taille de l'interface de jeu sur 'Plus grand' pour obtenir les bonnes découpes !</value>
+    <value>Vous devez régler la taille de l'interface de jeu sur 'Plus grande' pour obtenir les bonnes découpes !</value>
   </data>
   <data name="Unkown" xml:space="preserve">
     <value>Inconnu</value>
@@ -374,34 +374,34 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Lorsque vous ne parvenez pas à passer à un personnage, passez automatiquement en revue les personnages pour corriger leur ordre.</value>
   </data>
   <data name="UseOCR_Tooltip" xml:space="preserve">
-    <value>Utilisez la "reconnaissance optique de caractères" (ROC) pour confirmer le nom du caractère.</value>
+    <value>Utilisez la "reconnaissance optique de caractères" (ROC) pour confirmer le nom du personnage.</value>
   </data>
   <data name="UseOCR" xml:space="preserve">
     <value>Utiliser l'OCR</value>
   </data>
   <data name="TopOffset" xml:space="preserve">
-    <value>Décalage supérieur</value>
+    <value>Décalage en haut</value>
   </data>
   <data name="TogglePortraitCapture_Tooltip" xml:space="preserve">
-    <value>Activez la commande de capture de portrait</value>
+    <value>Ouvrir/fermer la fenêtre de capture de portrait</value>
   </data>
   <data name="EditOCR_Tooltip" xml:space="preserve">
-    <value>Basculer le contrôle de l'édition de la région OCR</value>
+    <value>Ouvrir/fermer la fenêtre d'édition de la région OCR</value>
   </data>
   <data name="TogglePortraitCapture" xml:space="preserve">
-    <value>Basculer la capture de portrait</value>
+    <value>Afficher la capture de portrait</value>
   </data>
   <data name="EmptyColumns_Tooltip" xml:space="preserve">
     <value>Seuil du nombre de colonnes de pixels qui peuvent ne pas contenir de contenu</value>
   </data>
   <data name="Offset_Tooltip" xml:space="preserve">
-    <value>Les numéros de décalage correspondent à la région de la boîte ci-dessous qui est capturée pour l'OCR. Dans l'ordre : Gauche, Haut, Droite, Bas. Plus les chiffres sont élevés, plus la zone de capture est petite. Idéalement, vous devez définir les valeurs de manière à ce que vous ne puissiez pas voir de boîte jaune dans l'aperçu ci-dessus.</value>
+    <value>Les numéros de décalage correspondent à la région de la boîte ci-dessous qui est capturée pour l'OCR. Dans l'ordre : Gauche, Haut, Droite, Bas. Plus les chiffres sont élevés, plus la zone de capture est petite. Idéalement, vous devez définir les valeurs de manière à ce que vous ne puissiez pas voir de boîte jaune dans l'aperçu ci-dessous.</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>Balises</value>
+    <value>Etiquettes personnalisées</value>
   </data>
   <data name="Tag" xml:space="preserve">
-    <value>Balise</value>
+    <value>Etiquette personnalisée</value>
   </data>
   <data name="SortBy" xml:space="preserve">
     <value>Trier par {0}</value>
@@ -437,7 +437,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Rafraîchir l'API</value>
   </data>
   <data name="Tag_Placeholder" xml:space="preserve">
-    <value>PvE, WvW, Principal, ERP ...</value>
+    <value>PvE, McM, Principal, ERP ...</value>
   </data>
   <data name="PotraitSize" xml:space="preserve">
     <value>Taille du portrait</value>
@@ -446,7 +446,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Espace du portrait</value>
   </data>
   <data name="PotraitFrame" xml:space="preserve">
-    <value>Cadre du portrait</value>
+    <value>Portrait</value>
   </data>
   <data name="EmptyColumn_Tooltip" xml:space="preserve">
     <value>Colonne de pixels qui ne contient aucun pixel "blanc"</value>
@@ -455,10 +455,10 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Effectuez une reconnaissance optique de vos personnages afin de mettre à jour leur ordre actuel pour qu'il corresponde à la sélection de personnages</value>
   </data>
   <data name="Order" xml:space="preserve">
-    <value>Ordonner</value>
+    <value>Ordre</value>
   </data>
   <data name="OpenPortraitFolder" xml:space="preserve">
-    <value>Ouvrir le dossier du portrait</value>
+    <value>Ouvrir le dossier des portraits</value>
   </data>
   <data name="OpenItem" xml:space="preserve">
     <value>Ouvrir {0}</value>
@@ -521,7 +521,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Corriger les personnages</value>
   </data>
   <data name="FilterToggles" xml:space="preserve">
-    <value>Toggles de filtre</value>
+    <value>Filtres</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtrer</value>
@@ -545,13 +545,13 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Faites glisser ce contrôle pour que les cadres jaunes contiennent les portraits de vos personnages</value>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Afficher</value>
+    <value>Affichage</value>
   </data>
   <data name="DetailedTooltip" xml:space="preserve">
     <value>Info-bulle détaillée</value>
   </data>
   <data name="Descending" xml:space="preserve">
-    <value>Descendre</value>
+    <value>Décroissant</value>
   </data>
   <data name="DeleteItem" xml:space="preserve">
     <value>Supprimer {0}</value>
@@ -590,16 +590,16 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Capture d'images</value>
   </data>
   <data name="BottomOffset" xml:space="preserve">
-    <value>Décalage du fond</value>
+    <value>Décalage en bas</value>
   </data>
   <data name="BestResultLargerDisclaimer" xml:space="preserve">
-    <value>Les meilleurs résultats sont obtenus avec l'interface réglée sur "plus grand" !</value>
+    <value>Les meilleurs résultats sont obtenus avec l'interface réglée sur "plus grande" !</value>
   </data>
   <data name="AutoFix" xml:space="preserve">
     <value>Correction automatique</value>
   </data>
   <data name="Ascending" xml:space="preserve">
-    <value>Ascendant</value>
+    <value>Croissant</value>
   </data>
   <data name="AnyProfession" xml:space="preserve">
     <value>Tout {0}</value>
@@ -614,7 +614,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Paramètres {0}</value>
   </data>
   <data name="KeyDelay_Description" xml:space="preserve">
-    <value>Ajoute un délai entre les pressions de touches. Cela ralentit le changement de caractère et ne devrait être utilisé que si votre PC est stressé au point de ne pas pouvoir changer sans délai !</value>
+    <value>Ajoute un délai entre les pressions de touches. Cela ralentit le changement de personnage et ne devrait être utilisé que si votre PC est ralenti au point de ne pas pouvoir changer sans délai !</value>
   </data>
   <data name="KeyDelay_DisplayName" xml:space="preserve">
     <value>Retard de touche {0} ms</value>
@@ -626,7 +626,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Niveau {0}</value>
   </data>
   <data name="ShowStatusWindow_Name" xml:space="preserve">
-    <value>Afficher la fenêtre popup d'état</value>
+    <value>Afficher la popup d'état</value>
   </data>
   <data name="Large" xml:space="preserve">
     <value>Large</value>
@@ -635,7 +635,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Normal</value>
   </data>
   <data name="OnlyIcons" xml:space="preserve">
-    <value>Icônes uniquement</value>
+    <value>Icône uniquement</value>
   </data>
   <data name="OnlyText" xml:space="preserve">
     <value>Seulement le texte</value>
@@ -644,10 +644,10 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Petit</value>
   </data>
   <data name="TextAndIcon" xml:space="preserve">
-    <value>Texte et icônes</value>
+    <value>Texte et icône</value>
   </data>
   <data name="CharacterSwap_FailedSwap" xml:space="preserve">
-    <value>Échec de l'échange avec {0}</value>
+    <value>Échec de la bascule vers {0}</value>
   </data>
   <data name="CharacterSwap_Left" xml:space="preserve">
     <value>Vérifier à gauche ...</value>
@@ -659,7 +659,7 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Déconnexion ...</value>
   </data>
   <data name="CharacterSwap_MoveFirst" xml:space="preserve">
-    <value>Déplacement vers le premier caractère ...</value>
+    <value>Déplacement vers le premier personnage ...</value>
   </data>
   <data name="CharacterSwap_MoveTo" xml:space="preserve">
     <value>Essayer de se déplacer vers {0}</value>
@@ -671,27 +671,27 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Passer à {0}</value>
   </data>
   <data name="FixCharacter_FetchName" xml:space="preserve">
-    <value>Récupérer le nom du caractère ...{0}{1}</value>
+    <value>Récupérer le nom du personnage ...{0}{1}</value>
   </data>
   <data name="FixCharacter_MoveNext" xml:space="preserve">
-    <value>Aller au caractère suivant ...</value>
+    <value>Aller au personnage suivant ...</value>
   </data>
   <data name="FixCharacter_NoChange" xml:space="preserve">
-    <value>Le nom du caractère n'a pas changé {0}/2 ...</value>
+    <value>Le nom du personnage n'a pas changé {0}/2 ...</value>
   </data>
   <data name="FixCharacter_Start" xml:space="preserve">
-    <value>Fixer les caractères ...</value>
+    <value>Correction des personnages ...</value>
   </data>
   <data name="RandomButton_Tooltip" xml:space="preserve">
-    <value>Passer à un caractère aléatoire dans votre liste actuelle</value>
+    <value>Passer à un personnage aléatoire dans votre liste actuelle</value>
   </data>
   <data name="ShowRandomButton_Description" xml:space="preserve">
-    <value>Affiche un bouton à côté du champ de recherche pour passer à un caractère aléatoire de votre liste</value>
+    <value>Affiche un bouton à côté du champ de recherche pour passer à un personnage aléatoire de votre liste</value>
   </data>
   <data name="ShowRandomButton_Name" xml:space="preserve">
     <value>Afficher le bouton aléatoire</value>
   </data>
   <data name="Status_Done" xml:space="preserve">
-    <value>C'est fait!</value>
+    <value>Fini !</value>
   </data>
 </root>

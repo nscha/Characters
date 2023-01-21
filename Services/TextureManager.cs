@@ -78,6 +78,8 @@ namespace Kenedia.Modules.Characters.Services
             Potrait_Button_Hovered,
             Delete_Button,
             Delete_Button_Hovered,
+            Random_Button,
+            Random_Button_Hovered,
         }
 
         public enum Icons

@@ -135,6 +135,7 @@
     <Compile Include="Controls\Settings SideMenu\FilterSettings.cs" />
     <Compile Include="Controls\IconLabel.cs" />
     <Compile Include="Services\InputService.cs" />
+    <Compile Include="Services\RandomService.cs" />
     <Compile Include="Strings\common1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -430,6 +431,8 @@
     <Content Include="ref\textures\controls\7.png" />
     <Content Include="ref\textures\controls\8.png" />
     <Content Include="ref\textures\controls\9.png" />
+    <Content Include="ref\textures\controls\15.png" />
+    <Content Include="ref\textures\controls\16.png" />
     <Content Include="ref\textures\icons\0.png" />
     <Content Include="ref\textures\icons\1.png" />
     <Content Include="ref\textures\icons\2.png" />

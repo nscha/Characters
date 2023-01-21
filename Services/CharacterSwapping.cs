@@ -80,6 +80,7 @@ namespace Kenedia.Modules.Characters.Services
 
         public static async Task MoveRight(CancellationToken cancellationToken)
         {
+            Status = Strings.common.CharacterSwap_Right;
             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
             await Delay(cancellationToken);
             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
@@ -88,6 +89,7 @@ namespace Kenedia.Modules.Characters.Services
 
         public static async Task MoveLeft(CancellationToken cancellationToken)
         {
+            Status = Strings.common.CharacterSwap_Left;
             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
             await Delay(cancellationToken);
         }
@@ -164,6 +166,11 @@ namespace Kenedia.Modules.Characters.Services
                     }
 
                     await Delay(cancellationToken, 500);
+
+                    if (GameService.GameIntegration.Gw2Instance.IsInGame)
+                    {
+                        Character.LastLogin = DateTime.UtcNow;
+                    }
                     break;
             }
         }
@@ -190,7 +197,7 @@ namespace Kenedia.Modules.Characters.Services
             s_state = GameService.GameIntegration.Gw2Instance.IsInGame ? SwappingState.None : SwappingState.LoggedOut;
 
             Started?.Invoke(null, null);
-            Status = $"Switching to {character.Name}";
+            Status = string.Format(Strings.common.CharacterSwap_SwitchTo, Character.Name);
             while (s_state is not SwappingState.Done and not SwappingState.CharacterFullyLost and not SwappingState.Canceled && !s_cancellationTokenSource.Token.IsCancellationRequested)
             {
                 try
@@ -200,18 +207,23 @@ namespace Kenedia.Modules.Characters.Services
                     switch (s_state)
                     {
                         case SwappingState.Done:
-                            Status = $"Done!";
+                            Status = Strings.common.Status_Done;
                             Succeeded?.Invoke(null, null);
+                            if (GameService.GameIntegration.Gw2Instance.IsInGame)
+                            {
+                                Character.LastLogin = DateTime.UtcNow;
+                            }
+
                             break;
 
                         case SwappingState.CharacterFullyLost:
-                            Status = $"Failed to swap to {Character.Name}!";
+                            Status = string.Format(Strings.common.CharacterSwap_FailedSwap, Character.Name);
                             ScreenNotification.ShowNotification(Status);
                             Failed?.Invoke(null, null);
 
                             if (Characters.ModuleInstance.Settings.AutoSortCharacters.Value)
                             {
-                                ScreenNotification.ShowNotification("Fixing Characters!");
+                                ScreenNotification.ShowNotification(Strings.common.FixCharacter_Start);
                                 CharacterSorting.Start(Characters.ModuleInstance.CharacterModels);
                             }
 
@@ -243,7 +255,7 @@ namespace Kenedia.Modules.Characters.Services
 
             if (GameService.GameIntegration.Gw2Instance.IsInGame)
             {
-                Status = $"Logging out ...";
+                Status = Strings.common.CharacterSwap_Logout;
                 ModifierKeys mods = ModifierKeys.None;
                 VirtualKeyShort primary = (VirtualKeyShort)Characters.ModuleInstance.Settings.LogoutKey.Value.PrimaryKey;
 
@@ -282,7 +294,7 @@ namespace Kenedia.Modules.Characters.Services
 
         private static async Task MoveToFirstCharacter(CancellationToken cancellationToken)
         {
-            Status = $"Move to first character ...";
+            Status = Strings.common.CharacterSwap_MoveFirst;
             if (IsTaskCanceled(cancellationToken)) { return; }
 
             Stopwatch stopwatch = Stopwatch.StartNew();
@@ -306,7 +318,7 @@ namespace Kenedia.Modules.Characters.Services
 
         private static async Task MoveToCharacter(CancellationToken cancellationToken)
         {
-            Status = $"Try to move to {Character.Name}";
+            Status = string.Format(Strings.common.CharacterSwap_MoveTo, Character.Name);
             if (IsTaskCanceled(cancellationToken)) { return; }
 
             List<Character_Model> order = Characters.ModuleInstance.CharacterModels.OrderByDescending(e => e.LastLogin).ToList();
@@ -352,7 +364,7 @@ namespace Kenedia.Modules.Characters.Services
 
             if (Characters.ModuleInstance.Settings.EnterOnSwap.Value)
             {
-                Status = $"Login to {Character.Name}";
+                Status = string.Format(Strings.common.CharacterSwap_LoginTo, Character.Name);
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RETURN, false);
                 await Delay(cancellationToken);
                 await Delay(cancellationToken, 1000);

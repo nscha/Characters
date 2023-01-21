@@ -30,6 +30,12 @@ namespace Kenedia.Modules.Characters.Services
                 () => Strings.common.ShowCorner_Name,
                 () => string.Format(Strings.common.ShowCorner_Tooltip, Characters.ModuleInstance.Name));
 
+            ShowRandomButton = settings.DefineSetting(
+                nameof(ShowRandomButton),
+                false,
+                () => Strings.common.ShowRandomButton_Name,
+                () => Strings.common.ShowRandomButton_Description);
+
             ShowStatusWindow = settings.DefineSetting(
                 nameof(ShowStatusWindow),
                 true,
@@ -159,6 +165,8 @@ namespace Kenedia.Modules.Characters.Services
             Large,
             Custom,
         }
+
+        public SettingEntry<bool> ShowRandomButton{ get; set; }
 
         public SettingEntry<bool> ShowCornerIcon { get; set; }
 

@@ -287,6 +287,78 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to swap to {0}.
+        /// </summary>
+        internal static string CharacterSwap_FailedSwap {
+            get {
+                return ResourceManager.GetString("CharacterSwap_FailedSwap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check left ....
+        /// </summary>
+        internal static string CharacterSwap_Left {
+            get {
+                return ResourceManager.GetString("CharacterSwap_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login to {0}.
+        /// </summary>
+        internal static string CharacterSwap_LoginTo {
+            get {
+                return ResourceManager.GetString("CharacterSwap_LoginTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logging out ....
+        /// </summary>
+        internal static string CharacterSwap_Logout {
+            get {
+                return ResourceManager.GetString("CharacterSwap_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to first character ....
+        /// </summary>
+        internal static string CharacterSwap_MoveFirst {
+            get {
+                return ResourceManager.GetString("CharacterSwap_MoveFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try to move to {0}.
+        /// </summary>
+        internal static string CharacterSwap_MoveTo {
+            get {
+                return ResourceManager.GetString("CharacterSwap_MoveTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check right ....
+        /// </summary>
+        internal static string CharacterSwap_Right {
+            get {
+                return ResourceManager.GetString("CharacterSwap_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switching to {0}.
+        /// </summary>
+        internal static string CharacterSwap_SwitchTo {
+            get {
+                return ResourceManager.GetString("CharacterSwap_SwitchTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check {0}.
         /// </summary>
         internal static string CheckItem {
@@ -671,6 +743,42 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string FilterToggles {
             get {
                 return ResourceManager.GetString("FilterToggles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fetch the character name ...{0}{1}.
+        /// </summary>
+        internal static string FixCharacter_FetchName {
+            get {
+                return ResourceManager.GetString("FixCharacter_FetchName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to next character ....
+        /// </summary>
+        internal static string FixCharacter_MoveNext {
+            get {
+                return ResourceManager.GetString("FixCharacter_MoveNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character name did not change {0}/2 ....
+        /// </summary>
+        internal static string FixCharacter_NoChange {
+            get {
+                return ResourceManager.GetString("FixCharacter_NoChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fixing characters ....
+        /// </summary>
+        internal static string FixCharacter_Start {
+            get {
+                return ResourceManager.GetString("FixCharacter_Start", resourceCulture);
             }
         }
         
@@ -1099,6 +1207,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Switch to a random character in your current list.
+        /// </summary>
+        internal static string RandomButton_Tooltip {
+            get {
+                return ResourceManager.GetString("RandomButton_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refresh API.
         /// </summary>
         internal static string RefreshAPI {
@@ -1303,6 +1420,24 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shows a button next to the search field to switch to a random character of your list.
+        /// </summary>
+        internal static string ShowRandomButton_Description {
+            get {
+                return ResourceManager.GetString("ShowRandomButton_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Random Button.
+        /// </summary>
+        internal static string ShowRandomButton_Name {
+            get {
+                return ResourceManager.GetString("ShowRandomButton_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Displays a popup while any automated actions are performed.
         /// </summary>
         internal static string ShowStatusWindow_Description {
@@ -1353,6 +1488,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string Specialization {
             get {
                 return ResourceManager.GetString("Specialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done!.
+        /// </summary>
+        internal static string Status_Done {
+            get {
+                return ResourceManager.GetString("Status_Done", resourceCulture);
             }
         }
         

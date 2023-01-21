@@ -646,4 +646,52 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="Large" xml:space="preserve">
     <value>Large</value>
   </data>
+  <data name="ShowRandomButton_Name" xml:space="preserve">
+    <value>Show Random Button</value>
+  </data>
+  <data name="ShowRandomButton_Description" xml:space="preserve">
+    <value>Shows a button next to the search field to switch to a random character of your list</value>
+  </data>
+  <data name="RandomButton_Tooltip" xml:space="preserve">
+    <value>Switch to a random character in your current list</value>
+  </data>
+  <data name="CharacterSwap_SwitchTo" xml:space="preserve">
+    <value>Switching to {0}</value>
+  </data>
+  <data name="CharacterSwap_FailedSwap" xml:space="preserve">
+    <value>Failed to swap to {0}</value>
+  </data>
+  <data name="CharacterSwap_Logout" xml:space="preserve">
+    <value>Logging out ...</value>
+  </data>
+  <data name="CharacterSwap_MoveTo" xml:space="preserve">
+    <value>Try to move to {0}</value>
+  </data>
+  <data name="CharacterSwap_LoginTo" xml:space="preserve">
+    <value>Login to {0}</value>
+  </data>
+  <data name="CharacterSwap_Right" xml:space="preserve">
+    <value>Check right ...</value>
+  </data>
+  <data name="CharacterSwap_Left" xml:space="preserve">
+    <value>Check left ...</value>
+  </data>
+  <data name="CharacterSwap_MoveFirst" xml:space="preserve">
+    <value>Move to first character ...</value>
+  </data>
+  <data name="Status_Done" xml:space="preserve">
+    <value>Done!</value>
+  </data>
+  <data name="FixCharacter_Start" xml:space="preserve">
+    <value>Fixing characters ...</value>
+  </data>
+  <data name="FixCharacter_MoveNext" xml:space="preserve">
+    <value>Move to next character ...</value>
+  </data>
+  <data name="FixCharacter_FetchName" xml:space="preserve">
+    <value>Fetch the character name ...{0}{1}</value>
+  </data>
+  <data name="FixCharacter_NoChange" xml:space="preserve">
+    <value>Character name did not change {0}/2 ...</value>
+  </data>
 </root>

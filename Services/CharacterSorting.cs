@@ -37,13 +37,13 @@ namespace Kenedia.Modules.Characters.Services
                 s_noNameChange = value;
                 if (s_noNameChange > 0)
                 {
-                    Status = $"Character name did not change {s_noNameChange}/2 ...";
+                    Status = string.Format(Strings.common.FixCharacter_NoChange, s_noNameChange);
                 }
 
                 if (s_noNameChange >= 2)
                 {
                     s_state = SortingState.Done;
-                    Status = "Done!";
+                    Status = Strings.common.Status_Done;
                     AdjustCharacterLogins();
                     Completed?.Invoke(null, null);
                 }
@@ -87,7 +87,7 @@ namespace Kenedia.Modules.Characters.Services
             s_state = SortingState.None;
 
             Started?.Invoke(null, null);
-            Status = "Fixing characters ...";
+            Status = Strings.common.FixCharacter_Start;
             int i = 0;
             while (s_state is not SortingState.Done and not SortingState.Canceled && !s_cancellationTokenSource.Token.IsCancellationRequested)
             {
@@ -165,7 +165,7 @@ namespace Kenedia.Modules.Characters.Services
 
         private static async Task MoveFirst(CancellationToken cancellationToken)
         {
-            Status = "Move to first character ...";
+            Status = Strings.common.CharacterSwap_MoveFirst;
             if (IsTaskCanceled(cancellationToken)) { return; }
 
             Stopwatch stopwatch = Stopwatch.StartNew();
@@ -189,7 +189,7 @@ namespace Kenedia.Modules.Characters.Services
 
         private static async Task MoveNext(CancellationToken cancellationToken)
         {
-            Status = "Move to next character ...";
+            Status = Strings.common.FixCharacter_MoveNext;
             InputService.MouseWiggle();
             Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.RIGHT, false);
             await Delay(cancellationToken);
@@ -200,7 +200,7 @@ namespace Kenedia.Modules.Characters.Services
         {
             string name = Characters.ModuleInstance.OCR.Read();
 
-            Status = "Fetch the character name ..." + Environment.NewLine + $"{name}";
+            Status = string.Format(Strings.common.FixCharacter_FetchName, Environment.NewLine, name);
 
             if (name != null)
             {

@@ -498,14 +498,21 @@ namespace Kenedia.Modules.Characters.Controls
         {
             base.UpdateContainer(gameTime);
 
-            if (Character != null && _lastLoginLabel.Visible && Characters.ModuleInstance.CurrentCharacterModel != Character)
+            if (Character != null && _lastLoginLabel.Visible)
             {
-                TimeSpan ts = DateTimeOffset.UtcNow.Subtract(Character.LastLogin);
-                _lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, Math.Floor(ts.TotalDays), ts.Hours, ts.Minutes, ts.Seconds);
-
-                if (Character.HasBirthdayPresent)
+                if (Characters.ModuleInstance.CurrentCharacterModel != Character)
                 {
-                    // ScreenNotification.ShowNotification(String.Format("It is {0}'s birthday! They are now {1} years old!", Character.Name, Character.Age));
+                    TimeSpan ts = DateTimeOffset.UtcNow.Subtract(Character.LastLogin);
+                    _lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, Math.Floor(ts.TotalDays), ts.Hours, ts.Minutes, ts.Seconds);
+
+                    if (Character.HasBirthdayPresent)
+                    {
+                        // ScreenNotification.ShowNotification(String.Format("It is {0}'s birthday! They are now {1} years old!", Character.Name, Character.Age));
+                    }
+                }
+                else
+                {
+                    _lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, 0, 0, 0, 0);
                 }
             }
 
@@ -664,9 +671,10 @@ namespace Kenedia.Modules.Characters.Controls
             _mapLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
             _mapLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(358406); // 358406 //517180 //157122;
 
-            _lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(841721);
+            //_lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(841721);
+            _lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(155035);
+            _lastLoginLabel.TextureRectangle = new Rectangle(10, 10, 44, 44);
             _lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, 0, 0, 0, 0);
-            _lastLoginLabel.TextureRectangle = Rectangle.Empty;
 
             _tagPanel.ClearChildren();
             foreach (string tagText in Character.Tags)

@@ -647,4 +647,52 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="TextAndIcon" xml:space="preserve">
     <value>Texto e iconos</value>
   </data>
+  <data name="CharacterSwap_FailedSwap" xml:space="preserve">
+    <value>Error al cambiar a {0}</value>
+  </data>
+  <data name="CharacterSwap_Left" xml:space="preserve">
+    <value>Comprobar izquierda ...</value>
+  </data>
+  <data name="CharacterSwap_LoginTo" xml:space="preserve">
+    <value>Iniciar sesión en {0}</value>
+  </data>
+  <data name="CharacterSwap_Logout" xml:space="preserve">
+    <value>Cerrando sesión ...</value>
+  </data>
+  <data name="CharacterSwap_MoveFirst" xml:space="preserve">
+    <value>Mover a primer carácter ...</value>
+  </data>
+  <data name="CharacterSwap_MoveTo" xml:space="preserve">
+    <value>Intentar pasar a {0}</value>
+  </data>
+  <data name="CharacterSwap_Right" xml:space="preserve">
+    <value>Comprobar derecha ...</value>
+  </data>
+  <data name="CharacterSwap_SwitchTo" xml:space="preserve">
+    <value>Pasar a {0}</value>
+  </data>
+  <data name="FixCharacter_FetchName" xml:space="preserve">
+    <value>Obtener el nombre del personaje ...{0}{1}</value>
+  </data>
+  <data name="FixCharacter_MoveNext" xml:space="preserve">
+    <value>Mover al siguiente carácter ...</value>
+  </data>
+  <data name="FixCharacter_NoChange" xml:space="preserve">
+    <value>Nombre de carácter no cambió {0}/2 ...</value>
+  </data>
+  <data name="FixCharacter_Start" xml:space="preserve">
+    <value>Fijar caracteres ...</value>
+  </data>
+  <data name="RandomButton_Tooltip" xml:space="preserve">
+    <value>Cambiar a un carácter aleatorio de la lista actual</value>
+  </data>
+  <data name="ShowRandomButton_Description" xml:space="preserve">
+    <value>Muestra un botón junto al campo de búsqueda para cambiar a un carácter aleatorio de su lista</value>
+  </data>
+  <data name="ShowRandomButton_Name" xml:space="preserve">
+    <value>Mostrar botón aleatorio</value>
+  </data>
+  <data name="Status_Done" xml:space="preserve">
+    <value>Listo</value>
+  </data>
 </root>

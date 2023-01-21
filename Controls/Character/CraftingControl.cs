@@ -13,6 +13,7 @@ namespace Kenedia.Modules.Characters.Controls
     public class CraftingControl : Control
     {
         private readonly AsyncTexture2D _craftingIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156711);
+        //private readonly AsyncTexture2D _craftingIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(866130);
 
         private BitmapFont _font = GameService.Content.DefaultFont14;
 
@@ -41,7 +42,8 @@ namespace Kenedia.Modules.Characters.Controls
             spriteBatch.DrawOnCtrl(
                 this,
                 _craftingIcon,
-                new Rectangle(4, 2, bounds.Height - 4, bounds.Height - 4),
+                new Rectangle(4, 4, bounds.Height - 7, bounds.Height - 7),
+                //new Rectangle(18, 18, 30, 30),
                 new Rectangle(6, 6, 20, 20),
                 Color.White,
                 0f,

@@ -24,10 +24,12 @@ namespace Kenedia.Modules.Characters.Views
         private readonly AsyncTexture2D _windowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
 
         private readonly Image _displaySettingsButton;
+        private readonly ImageButton _randomButton;
         private readonly ImageButton _clearButton;
         private readonly FlowPanel _dropdownPanel;
         private readonly SettingsSideMenu _settingsSideMenu;
         private readonly FilterSideMenu _filterSideMenu;
+        private readonly FlowPanel _buttonPanel;
 
         private bool _filterCharacters;
         private bool _updateLayout;
@@ -66,21 +68,21 @@ namespace Kenedia.Modules.Characters.Views
             {
                 Parent = this,
                 Location = new Point(0, 2),
-                FlowDirection = ControlFlowDirection.SingleRightToLeft,
-                OuterControlPadding = new Vector2(0, 2),
-                ControlPadding = new Vector2(6, 0),
+                FlowDirection = ControlFlowDirection.SingleLeftToRight,
+                WidthSizingMode = SizingMode.Fill,
+                HeightSizingMode = SizingMode.AutoSize,
+                ControlPadding = new Vector2(5, 0),
             };
 
-            _displaySettingsButton = new Image()
+            FilterBox = new TextBox()
             {
                 Parent = _dropdownPanel,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052),
-                Size = new Point(25, 25),
-                BasicTooltipText = string.Format(Strings.common.ShowItem, string.Format(Strings.common.ItemSettings, Strings.common.Display)),
+                PlaceholderText = Strings.common.Search,
+                Width = 100,
             };
-            _displaySettingsButton.MouseEntered += DisplaySettingsButton_MouseEntered;
-            _displaySettingsButton.MouseLeft += DisplaySettingsButton_MouseLeft;
-            _displaySettingsButton.Click += DisplaySettingsButton_Click;
+            FilterBox.TextChanged += FilterCharacters;
+            FilterBox.Click += FilterBox_Click;
+            FilterBox.EnterPressed += FilterBox_EnterPressed;
 
             _clearButton = new ImageButton()
             {
@@ -94,15 +96,37 @@ namespace Kenedia.Modules.Characters.Views
             };
             _clearButton.Click += ClearButton_Click;
 
-            FilterBox = new TextBox()
+            _buttonPanel = new FlowPanel()
             {
                 Parent = _dropdownPanel,
-                PlaceholderText = Strings.common.Search,
-                Width = _dropdownPanel.Width - _displaySettingsButton.Width - 5,
+                FlowDirection = ControlFlowDirection.SingleLeftToRight,
+                WidthSizingMode = SizingMode.AutoSize,
+                HeightSizingMode = SizingMode.AutoSize,
+                Padding = new(15),
             };
-            FilterBox.TextChanged += FilterCharacters;
-            FilterBox.Click += FilterBox_Click;
-            FilterBox.EnterPressed += FilterBox_EnterPressed;
+            _buttonPanel.Resized += ButtonPanel_Resized;
+            _randomButton = new()
+            {
+                Parent = _buttonPanel,
+                Size = new Point(25, 25),
+                BasicTooltipText = Strings.common.RandomButton_Tooltip,
+                Texture = Characters.ModuleInstance.TextureManager.GetControlTexture(TextureManager.ControlTextures.Random_Button),
+                HoveredTexture = Characters.ModuleInstance.TextureManager.GetControlTexture(TextureManager.ControlTextures.Random_Button_Hovered),
+                Visible = Characters.ModuleInstance.Settings.ShowRandomButton.Value,
+            };
+            _randomButton.Click += RandomButton_Click;
+            Characters.ModuleInstance.Settings.ShowRandomButton.SettingChanged += ShowRandomButton_SettingChanged;
+
+            _displaySettingsButton = new()
+            {
+                Parent = _buttonPanel,
+                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052),
+                Size = new Point(25, 25),
+                BasicTooltipText = string.Format(Strings.common.ShowItem, string.Format(Strings.common.ItemSettings, Strings.common.Display)),
+            };
+            _displaySettingsButton.MouseEntered += DisplaySettingsButton_MouseEntered;
+            _displaySettingsButton.MouseLeft += DisplaySettingsButton_MouseLeft;
+            _displaySettingsButton.Click += DisplaySettingsButton_Click;
 
             _settingsSideMenu = new SettingsSideMenu()
             {
@@ -123,8 +147,31 @@ namespace Kenedia.Modules.Characters.Views
             };
             CharacterEdit.Shown += CharacterEdit_Shown;
 
-            _clearButton.Location = new Point(FilterBox.LocalBounds.Right - 25, FilterBox.LocalBounds.Top + 5);
             Characters.ModuleInstance.LanguageChanged += ModuleInstance_LanguageChanged;
+        }
+
+        private void ShowRandomButton_SettingChanged(object sender, ValueChangedEventArgs<bool> e)
+        {
+            _randomButton.Visible = Characters.ModuleInstance.Settings.ShowRandomButton.Value;
+            _buttonPanel.Invalidate();
+        }
+
+        private void RandomButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            List<Control> selection = CharactersPanel.Children.Where(e => e.Visible).ToList();
+            int r = RandomService.Rnd.Next(selection.Count);
+            CharacterControl entry = (CharacterControl) selection[r];
+
+            if (entry != null)
+            {
+                CharacterSwapping.Start(entry.Character);
+            }
+        }
+
+        private void ButtonPanel_Resized(object sender, ResizedEventArgs e)
+        {
+            FilterBox.Width = _dropdownPanel.Width - _buttonPanel.Width - 2;
+            _clearButton.Location = new Point(FilterBox.LocalBounds.Right - 25, FilterBox.LocalBounds.Top + 5);
         }
 
         private void CharacterSorting_Finished(object sender, EventArgs e)
@@ -738,8 +785,8 @@ namespace Kenedia.Modules.Characters.Views
 
             if (_dropdownPanel != null)
             {
-                _dropdownPanel.Size = new Point(ContentRegion.Size.X, 31);
-                FilterBox.Width = _dropdownPanel.Width - _displaySettingsButton.Width - 5;
+                //_dropdownPanel.Size = new Point(ContentRegion.Size.X, 31);
+                FilterBox.Width = _dropdownPanel.Width - _buttonPanel.Width - 2;
                 _clearButton.Location = new Point(FilterBox.LocalBounds.Right - 23, FilterBox.LocalBounds.Top + 6);
             }
 

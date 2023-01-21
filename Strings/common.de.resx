@@ -646,4 +646,52 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   <data name="TextAndIcon" xml:space="preserve">
     <value>Text und Icons</value>
   </data>
+  <data name="CharacterSwap_FailedSwap" xml:space="preserve">
+    <value>Wechsel zu {0} fehlgeschlagen</value>
+  </data>
+  <data name="CharacterSwap_Left" xml:space="preserve">
+    <value>Links prüfen ...</value>
+  </data>
+  <data name="CharacterSwap_LoginTo" xml:space="preserve">
+    <value>Anmeldung bei {0}</value>
+  </data>
+  <data name="CharacterSwap_Logout" xml:space="preserve">
+    <value>Abmelden ...</value>
+  </data>
+  <data name="CharacterSwap_MoveFirst" xml:space="preserve">
+    <value>Wechseln zum ersten Charakter ...</value>
+  </data>
+  <data name="CharacterSwap_MoveTo" xml:space="preserve">
+    <value>Versuch, nach {0} zu wechseln</value>
+  </data>
+  <data name="CharacterSwap_Right" xml:space="preserve">
+    <value>Nach rechts schauen ...</value>
+  </data>
+  <data name="CharacterSwap_SwitchTo" xml:space="preserve">
+    <value>Wechseln zu {0}</value>
+  </data>
+  <data name="FixCharacter_FetchName" xml:space="preserve">
+    <value>Holen Sie den Charakternamen ...{0}{1}</value>
+  </data>
+  <data name="FixCharacter_MoveNext" xml:space="preserve">
+    <value>Gehe zum nächsten Charakter ...</value>
+  </data>
+  <data name="FixCharacter_NoChange" xml:space="preserve">
+    <value>Charaktername hat sich nicht geändert {0}/2 ...</value>
+  </data>
+  <data name="FixCharacter_Start" xml:space="preserve">
+    <value>Charaktere fixen ...</value>
+  </data>
+  <data name="RandomButton_Tooltip" xml:space="preserve">
+    <value>Wechseln zu einem zufälligen Charakter in Ihrer aktuellen Liste</value>
+  </data>
+  <data name="ShowRandomButton_Description" xml:space="preserve">
+    <value>Zeigt eine Schaltfläche neben dem Suchfeld an, um zu einem zufälligen Charakter in Ihrer Liste zu wechseln</value>
+  </data>
+  <data name="ShowRandomButton_Name" xml:space="preserve">
+    <value>Schaltfläche "Zufällig" anzeigen</value>
+  </data>
+  <data name="Status_Done" xml:space="preserve">
+    <value>Erledigt!</value>
+  </data>
 </root>

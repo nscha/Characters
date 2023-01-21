@@ -646,4 +646,52 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="TextAndIcon" xml:space="preserve">
     <value>Texte et icônes</value>
   </data>
+  <data name="CharacterSwap_FailedSwap" xml:space="preserve">
+    <value>Échec de l'échange avec {0}</value>
+  </data>
+  <data name="CharacterSwap_Left" xml:space="preserve">
+    <value>Vérifier à gauche ...</value>
+  </data>
+  <data name="CharacterSwap_LoginTo" xml:space="preserve">
+    <value>Connexion à {0}</value>
+  </data>
+  <data name="CharacterSwap_Logout" xml:space="preserve">
+    <value>Déconnexion ...</value>
+  </data>
+  <data name="CharacterSwap_MoveFirst" xml:space="preserve">
+    <value>Déplacement vers le premier caractère ...</value>
+  </data>
+  <data name="CharacterSwap_MoveTo" xml:space="preserve">
+    <value>Essayer de se déplacer vers {0}</value>
+  </data>
+  <data name="CharacterSwap_Right" xml:space="preserve">
+    <value>Vérifier à droite ...</value>
+  </data>
+  <data name="CharacterSwap_SwitchTo" xml:space="preserve">
+    <value>Passer à {0}</value>
+  </data>
+  <data name="FixCharacter_FetchName" xml:space="preserve">
+    <value>Récupérer le nom du caractère ...{0}{1}</value>
+  </data>
+  <data name="FixCharacter_MoveNext" xml:space="preserve">
+    <value>Aller au caractère suivant ...</value>
+  </data>
+  <data name="FixCharacter_NoChange" xml:space="preserve">
+    <value>Le nom du caractère n'a pas changé {0}/2 ...</value>
+  </data>
+  <data name="FixCharacter_Start" xml:space="preserve">
+    <value>Fixer les caractères ...</value>
+  </data>
+  <data name="RandomButton_Tooltip" xml:space="preserve">
+    <value>Passer à un caractère aléatoire dans votre liste actuelle</value>
+  </data>
+  <data name="ShowRandomButton_Description" xml:space="preserve">
+    <value>Affiche un bouton à côté du champ de recherche pour passer à un caractère aléatoire de votre liste</value>
+  </data>
+  <data name="ShowRandomButton_Name" xml:space="preserve">
+    <value>Afficher le bouton aléatoire</value>
+  </data>
+  <data name="Status_Done" xml:space="preserve">
+    <value>C'est fait !</value>
+  </data>
 </root>

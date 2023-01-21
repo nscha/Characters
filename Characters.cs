@@ -290,6 +290,7 @@ namespace Kenedia.Modules.Characters
                         CurrentCharacterModel.Specialization = (SpecializationType)player.Specialization;
                         CurrentCharacterModel.Map = GameService.Gw2Mumble.CurrentMap.Id;
                         CurrentCharacterModel.LastLogin = DateTime.UtcNow;
+
                         MainWindow?.SortCharacters();
                     }
                 }

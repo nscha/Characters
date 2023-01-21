@@ -165,6 +165,13 @@ namespace Kenedia.Modules.Characters.Controls
             };
 
             Characters.ModuleInstance.LanguageChanged += ApplyCharacter;
+            Characters.ModuleInstance.MainWindow.Hidden += MainWindow_Hidden;
+        }
+
+        private void MainWindow_Hidden(object sender, EventArgs e)
+        {
+            _textTooltip.Hide();
+            _characterTooltip.Hide();
         }
 
         private enum InfoControls
@@ -599,6 +606,8 @@ namespace Kenedia.Modules.Characters.Controls
             base.DisposeControl();
 
             _ = Characters.ModuleInstance.MainWindow.CharacterControls.Remove(this);
+            Characters.ModuleInstance.MainWindow.Hidden -= MainWindow_Hidden;
+            Characters.ModuleInstance.LanguageChanged -= ApplyCharacter;
             _dataControls?.DisposeAll();
             _contentPanel?.Dispose();
             _textTooltip?.Dispose();

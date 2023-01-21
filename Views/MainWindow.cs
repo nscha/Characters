@@ -8,10 +8,13 @@ using Kenedia.Modules.Characters.Models;
 using Kenedia.Modules.Characters.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
+using MonoGame.Extended.BitmapFonts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using static Kenedia.Modules.Characters.Services.SettingsModel;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
@@ -35,6 +38,10 @@ namespace Kenedia.Modules.Characters.Views
         private bool _updateLayout;
         private double _tick = 0;
         private double _filterTick = 0;
+
+        private Rectangle _emblemRectangle;
+        private Rectangle _titleRectangle;
+        private BitmapFont _titleFont;
 
         public MainWindow(Texture2D background, Rectangle windowRegion, Rectangle contentRegion)
             : base(background, windowRegion, contentRegion)
@@ -158,9 +165,9 @@ namespace Kenedia.Modules.Characters.Views
 
         private void RandomButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            List<Control> selection = CharactersPanel.Children.Where(e => e.Visible).ToList();
+            var selection = CharactersPanel.Children.Where(e => e.Visible).ToList();
             int r = RandomService.Rnd.Next(selection.Count);
-            CharacterControl entry = (CharacterControl) selection[r];
+            var entry = (CharacterControl)selection[r];
 
             if (entry != null)
             {
@@ -239,7 +246,12 @@ namespace Kenedia.Modules.Characters.Views
             bool any = Characters.ModuleInstance.Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAny;
             bool all = Characters.ModuleInstance.Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAll;
 
-            List<string> textStrings = FilterBox.Text.Trim().ToLower().Split(' ').ToList();
+            Regex regex = new(@"\w+|""[\w\s]*""");
+            var x = regex.Matches(FilterBox.Text.Trim().ToLower()).Cast<Match>().ToList();
+
+            List<string> textStrings = new();
+            foreach (Match match in x) { Debug.WriteLine(match.ToString()); textStrings.Add(match.ToString().Replace("\"", "")); }
+
             bool matchAny = FilterBox.Text.Trim().Length == 0;
             SettingsModel s = Characters.ModuleInstance.Settings;
             Data data = Characters.ModuleInstance.Data;
@@ -719,6 +731,9 @@ namespace Kenedia.Modules.Characters.Views
         {
             base.UpdateContainer(gameTime);
 
+            string versionText = $"v. {Characters.ModuleInstance.Version}";
+            BasicTooltipText = MouseOverTitleBar ? versionText : null;
+
             if (_filterCharacters && gameTime.TotalGameTime.TotalMilliseconds - _filterTick > Characters.ModuleInstance.Settings.FilterDelay.Value)
             {
                 _filterTick = gameTime.TotalGameTime.TotalMilliseconds;
@@ -737,6 +752,24 @@ namespace Kenedia.Modules.Characters.Views
             }
         }
 
+        public override void RecalculateLayout()
+        {
+            base.RecalculateLayout();
+
+            _emblemRectangle = new(-43, -58, 128, 128);
+
+            _titleFont = GameService.Content.DefaultFont32;
+            var titleBounds = _titleFont.GetStringRectangle(Characters.ModuleInstance.Name);
+
+            if (titleBounds.Width > LocalBounds.Width - (_emblemRectangle.Width - 15))
+            {
+                _titleFont = GameService.Content.DefaultFont18;
+                titleBounds = _titleFont.GetStringRectangle(Characters.ModuleInstance.Name);
+            }
+
+             _titleRectangle = new(65, 5, (int)titleBounds.Width, Math.Max(30, (int)titleBounds.Height));
+        }
+
         public override void PaintAfterChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
             base.PaintAfterChildren(spriteBatch, bounds);
@@ -744,23 +777,23 @@ namespace Kenedia.Modules.Characters.Views
             spriteBatch.DrawOnCtrl(
                 this,
                 _windowEmblem,
-                new Rectangle(-43, -58, 128, 128),
+                _emblemRectangle,
                 _windowEmblem.Bounds,
                 Color.White,
                 0f,
                 default);
 
-            if (bounds.Width >= 190)
+            if (_titleRectangle.Width < bounds.Width - (_emblemRectangle.Width - 20))
             {
                 spriteBatch.DrawStringOnCtrl(
                     this,
                     $"{Characters.ModuleInstance.Name}",
-                    bounds.Width >= 245 ? GameService.Content.DefaultFont32 : GameService.Content.DefaultFont18,
-                    new Rectangle(65, 5, bounds.Width - (128 - 43 + 15), 30),
+                    _titleFont,
+                    _titleRectangle,
                     ContentService.Colors.ColonialWhite, // new Color(247, 231, 182, 97),
                     false,
                     HorizontalAlignment.Left,
-                    VerticalAlignment.Middle);
+                    VerticalAlignment.Bottom);
             }
         }
 
@@ -771,7 +804,6 @@ namespace Kenedia.Modules.Characters.Views
             _filterSideMenu?.Hide();
             _settingsSideMenu?.Hide();
             CharacterEdit?.Hide();
-
         }
 
         protected override void OnResized(ResizedEventArgs e)
@@ -854,7 +886,7 @@ namespace Kenedia.Modules.Characters.Views
             if (Characters.ModuleInstance.Settings.EnterToLogin.Value)
             {
                 PerformFiltering();
-                CharacterControl c = (CharacterControl)CharactersPanel.Children.Where(e => e.Visible).FirstOrDefault();
+                var c = (CharacterControl)CharactersPanel.Children.Where(e => e.Visible).FirstOrDefault();
 
                 if (c != null)
                 {

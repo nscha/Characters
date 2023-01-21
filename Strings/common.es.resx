@@ -693,6 +693,6 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Mostrar botón aleatorio</value>
   </data>
   <data name="Status_Done" xml:space="preserve">
-    <value>Listo</value>
+    <value>Listo!</value>
   </data>
 </root>

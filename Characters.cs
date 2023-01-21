@@ -13,6 +13,7 @@ using Kenedia.Modules.Characters.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
+using SemVer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +26,7 @@ using static Kenedia.Modules.Characters.Utility.WindowsUtil.WindowsUtil;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using Version = SemVer.Version;
 
 namespace Kenedia.Modules.Characters
 {
@@ -35,6 +37,7 @@ namespace Kenedia.Modules.Characters
         public const uint WMPASTE = 0x0302;
 
         public static readonly Logger Logger = Logger.GetLogger<Characters>();
+        public readonly Version BaseVersion;
 
         private readonly Ticks _ticks = new();
 
@@ -49,6 +52,8 @@ namespace Kenedia.Modules.Characters
             : base(moduleParameters)
         {
             ModuleInstance = this;
+
+            BaseVersion = Version.BaseVersion();
         }
 
         public event EventHandler LanguageChanged;
@@ -353,7 +358,7 @@ namespace Kenedia.Modules.Characters
 
         protected override void Initialize()
         {
-            Logger.Info($"Starting  {Name} v." + Version.BaseVersion());
+            Logger.Info($"Starting  {Name} v." + BaseVersion);
 
             ModKeyMapping = new VirtualKeyShort[5];
             ModKeyMapping[(int)ModifierKeys.Ctrl] = VirtualKeyShort.CONTROL;

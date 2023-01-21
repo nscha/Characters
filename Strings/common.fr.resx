@@ -692,6 +692,6 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
     <value>Afficher le bouton aléatoire</value>
   </data>
   <data name="Status_Done" xml:space="preserve">
-    <value>C'est fait !</value>
+    <value>C'est fait!</value>
   </data>
 </root>

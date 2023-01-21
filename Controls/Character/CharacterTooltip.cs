@@ -127,13 +127,6 @@ namespace Kenedia.Modules.Characters.Controls
                 _craftingControl,
                 _tagPanel,
             };
-
-            Characters.ModuleInstance.MainWindow.Hidden += MainWindow_Hidden;
-        }
-
-        private void MainWindow_Hidden(object sender, EventArgs e)
-        {
-            Hide();
         }
 
         public Rectangle TextureRectangle { get; set; } = new Rectangle(40, 25, 250, 250);

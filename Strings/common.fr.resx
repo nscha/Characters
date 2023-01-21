@@ -691,4 +691,19 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="Status_Done" xml:space="preserve">
     <value>Fini !</value>
   </data>
+  <data name="FadeOut_DisplayName" xml:space="preserve">
+    <value>Fade side menu</value>
+  </data>
+  <data name="CloseWindowOnSwap_DisplayName" xml:space="preserve">
+    <value>Fermer la fenêtre lors du changement de personnage</value>
+  </data>
+  <data name="CloseWindowOnSwap_Description" xml:space="preserve">
+    <value>Ferme la fenêtre du module lors de la connexion à un personnage.</value>
+  </data>
+  <data name="FilterDiacriticsInsensitive_DisplayName" xml:space="preserve">
+    <value>Ignorer les diacritiques</value>
+  </data>
+  <data name="FilterDiacriticsInsensitive_Description" xml:space="preserve">
+    <value>Ignore tout type de diacritiques</value>
+  </data>
 </root>

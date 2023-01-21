@@ -692,4 +692,19 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="Status_Done" xml:space="preserve">
     <value>Listo!</value>
   </data>
+  <data name="FadeOut_DisplayName" xml:space="preserve">
+    <value>Desvanecer menú lateral</value>
+  </data>
+  <data name="CloseWindowOnSwap_DisplayName" xml:space="preserve">
+    <value>Cerrar ventana al cambiar de personaje</value>
+  </data>
+  <data name="CloseWindowOnSwap_Description" xml:space="preserve">
+    <value>Cierra la ventana del módulo al entrar en un personaje.</value>
+  </data>
+  <data name="FilterDiacriticsInsensitive_DisplayName" xml:space="preserve">
+    <value>Ignorar diacríticos</value>
+  </data>
+  <data name="FilterDiacriticsInsensitive_Description" xml:space="preserve">
+    <value>Ignora cualquier tipo de diacríticos</value>
+  </data>
 </root>

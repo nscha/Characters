@@ -67,7 +67,7 @@ namespace Kenedia.Modules.Characters.Controls
                 },
             };
 
-            Dictionary<Gw2Sharp.Models.ProfessionType, Data.Profession> profs = Characters.ModuleInstance.Data.Professions.ToDictionary(entry => entry.Key, entry => entry.Value);
+            var profs = Characters.ModuleInstance.Data.Professions.ToDictionary(entry => entry.Key, entry => entry.Value);
             profs = profs.OrderBy(e => e.Value.WeightClass).ThenBy(e => e.Value.APIId).ToDictionary(e => e.Key, e => e.Value);
 
             // Profession All Specs

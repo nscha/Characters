@@ -171,6 +171,7 @@ namespace Kenedia.Modules.Characters.Services
                     {
                         Character.LastLogin = DateTime.UtcNow;
                     }
+
                     break;
             }
         }
@@ -184,14 +185,14 @@ namespace Kenedia.Modules.Characters.Services
         {
             s_state = SwappingState.Canceled;
             s_cancellationTokenSource?.Cancel();
-            s_cancellationTokenSource = null;
+            //s_cancellationTokenSource = null;
         }
 
         public static async void Start(Character_Model character)
         {
             s_cancellationTokenSource?.Cancel();
             s_cancellationTokenSource = new();
-            s_cancellationTokenSource.CancelAfter(60000);
+            s_cancellationTokenSource.CancelAfter(90000);
 
             Character = character;
             s_state = GameService.GameIntegration.Gw2Instance.IsInGame ? SwappingState.None : SwappingState.LoggedOut;
@@ -239,12 +240,17 @@ namespace Kenedia.Modules.Characters.Services
             Finished?.Invoke(null, null);
         }
 
-        private static async Task Delay(CancellationToken cancellationToken, int? delay = null)
+        private static async Task Delay(CancellationToken cancellationToken, int? delay = null, double? partial = null)
         {
             delay ??= Characters.ModuleInstance.Settings.KeyDelay.Value;
 
             if (delay > 0)
             {
+                if (partial != null)
+                {
+                    delay = delay / 100 * (int)(partial * 100);
+                }
+
                 await Task.Delay(delay.Value, cancellationToken);
             }
         }
@@ -257,7 +263,7 @@ namespace Kenedia.Modules.Characters.Services
             {
                 Status = Strings.common.CharacterSwap_Logout;
                 ModifierKeys mods = ModifierKeys.None;
-                VirtualKeyShort primary = (VirtualKeyShort)Characters.ModuleInstance.Settings.LogoutKey.Value.PrimaryKey;
+                var primary = (VirtualKeyShort)Characters.ModuleInstance.Settings.LogoutKey.Value.PrimaryKey;
 
                 foreach (ModifierKeys mod in Enum.GetValues(typeof(ModifierKeys)))
                 {
@@ -297,7 +303,7 @@ namespace Kenedia.Modules.Characters.Services
             Status = Strings.common.CharacterSwap_MoveFirst;
             if (IsTaskCanceled(cancellationToken)) { return; }
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            var stopwatch = Stopwatch.StartNew();
             int moves = Characters.ModuleInstance.CharacterModels.Count - s_movedLeft;
             for (int i = 0; i < moves; i++)
             {
@@ -309,7 +315,7 @@ namespace Kenedia.Modules.Characters.Services
 
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
                 s_movedLeft++;
-                await Delay(cancellationToken);
+                await Delay(cancellationToken, null, 0.05);
                 if (IsTaskCanceled(cancellationToken)) { return; }
             }
 
@@ -321,9 +327,9 @@ namespace Kenedia.Modules.Characters.Services
             Status = string.Format(Strings.common.CharacterSwap_MoveTo, Character.Name);
             if (IsTaskCanceled(cancellationToken)) { return; }
 
-            List<Character_Model> order = Characters.ModuleInstance.CharacterModels.OrderByDescending(e => e.LastLogin).ToList();
+            var order = Characters.ModuleInstance.CharacterModels.OrderByDescending(e => e.LastLogin).ToList();
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            var stopwatch = Stopwatch.StartNew();
             foreach (Character_Model character in order)
             {
                 if (character == Character)
@@ -355,7 +361,7 @@ namespace Kenedia.Modules.Characters.Services
                 Characters.Logger.Debug($"OCR Result: {ocr_result}.");
             }
 
-            return !Characters.ModuleInstance.Settings.UseOCR.Value || Character.Name.ToLower() == ocr_result.ToLower();
+            return !Characters.ModuleInstance.Settings.UseOCR.Value || (ocr_result != null && Character != null && Character.Name?.ToLower() == ocr_result?.ToLower());
         }
 
         private static async Task Login(CancellationToken cancellationToken)

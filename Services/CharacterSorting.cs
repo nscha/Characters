@@ -72,7 +72,7 @@ namespace Kenedia.Modules.Characters.Services
         {
             s_state = SortingState.Canceled;
             s_cancellationTokenSource?.Cancel();
-            s_cancellationTokenSource = null;
+            //s_cancellationTokenSource = null;
         }
 
         public static async void Start(List<Character_Model> models)
@@ -106,13 +106,17 @@ namespace Kenedia.Modules.Characters.Services
             Finished?.Invoke(null, null);
         }
 
-
-        private static async Task Delay(CancellationToken cancellationToken, int? delay = null)
+        private static async Task Delay(CancellationToken cancellationToken, int? delay = null, double? partial = null)
         {
             delay ??= Characters.ModuleInstance.Settings.KeyDelay.Value;
 
             if (delay > 0)
             {
+                if(partial != null)
+                {
+                    delay = delay / 100 * (int)(partial * 100);
+                }
+
                 await Task.Delay(delay.Value, cancellationToken);
             }
         }
@@ -127,6 +131,7 @@ namespace Kenedia.Modules.Characters.Services
             {
                 case SortingState.None:
                     await MoveFirst(cancellationToken);
+                    await Delay(cancellationToken, 125);
                     break;
 
                 case SortingState.MovedToFirst:
@@ -168,11 +173,11 @@ namespace Kenedia.Modules.Characters.Services
             Status = Strings.common.CharacterSwap_MoveFirst;
             if (IsTaskCanceled(cancellationToken)) { return; }
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            var stopwatch = Stopwatch.StartNew();
             for (int i = 0; i < s_models.Count; i++)
             {
                 Blish_HUD.Controls.Intern.Keyboard.Stroke(VirtualKeyShort.LEFT, false);
-                await Delay(cancellationToken);
+                await Delay(cancellationToken, null, 0.05);
 
                 if (IsTaskCanceled(cancellationToken)) { return; }
 

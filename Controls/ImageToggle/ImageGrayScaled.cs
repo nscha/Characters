@@ -60,9 +60,9 @@ namespace Kenedia.Modules.Characters.Controls
         public Texture2D ToGrayScaledPalettable(Texture2D original)
         {
             // make an empty bitmap the same size as original
-            Color[] colors = new Color[original.Width * original.Height];
+            var colors = new Color[original.Width * original.Height];
             original.GetData<Color>(colors);
-            Color[] destColors = new Color[original.Width * original.Height];
+            var destColors = new Color[original.Width * original.Height];
             Texture2D newTexture;
 
             using (Blish_HUD.Graphics.GraphicsDeviceContext device = GameService.Graphics.LendGraphicsDeviceContext())

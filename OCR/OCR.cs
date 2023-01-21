@@ -308,7 +308,7 @@ namespace Kenedia.Modules.Characters
             {
                 System.Drawing.Bitmap spacingVisibleBitmap = new(size.X, size.Y);
 
-                using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
+                using (var g = System.Drawing.Graphics.FromImage(bitmap))
                 {
                     int left = (int)(wndBounds.Left + sideBarWidth);
                     int top = (int)(wndBounds.Top + titleBarHeight);
@@ -327,8 +327,8 @@ namespace Kenedia.Modules.Characters
                         _ocrResultImage.Texture = s.CreateTexture2D();
                     }
 
-                    System.Drawing.Color black = System.Drawing.Color.FromArgb(255, 0, 0, 0);
-                    System.Drawing.Color white = System.Drawing.Color.FromArgb(255, 255, 255, 255);
+                    var black = System.Drawing.Color.FromArgb(255, 0, 0, 0);
+                    var white = System.Drawing.Color.FromArgb(255, 255, 255, 255);
 
                     int emptyPixelRow = 0;
                     for (int i = 0; i < bitmap.Width; i++)

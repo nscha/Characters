@@ -279,7 +279,7 @@ namespace Kenedia.Modules.Characters.Controls
             string path = Characters.ModuleInstance.AccountImagesPath;
 
             Regex regex = new("Image.*[0-9].png");
-            System.Collections.Generic.List<string> images = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories).Where(path => regex.IsMatch(path)).ToList();
+            var images = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories).Where(path => regex.IsMatch(path)).ToList();
 
             IntPtr hWnd = GameService.GameIntegration.Gw2Instance.Gw2WindowHandle;
 
@@ -296,7 +296,7 @@ namespace Kenedia.Modules.Characters.Controls
             double factor = GameService.Graphics.UIScaleMultiplier;
 
             using System.Drawing.Bitmap bitmap = new((int)((_characterPotraitSize - 2) * factor), (int)((_characterPotraitSize - 2) * factor));
-            using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
+            using (var g = System.Drawing.Graphics.FromImage(bitmap))
             {
                 int x = (int)(bounds.X * factor);
                 int y = (int)(bounds.Y * factor);

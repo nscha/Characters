@@ -91,6 +91,10 @@ namespace Kenedia.Modules.Characters.Services
             Folder,
             FolderGray,
             Camera,
+            Dice,
+            Dice_Hovered,
+            Pin,
+            Pin_Hovered,
         }
 
         public enum Backgrounds

@@ -25,7 +25,7 @@ namespace Kenedia.Modules.Characters.Services
         public Data()
         {
             string path = @"data\maps.json";
-            Map[] maps = new Map[1];
+            var maps = new Map[1];
 
             string jsonString = new StreamReader(Characters.ModuleInstance.ContentsManager.GetFileStream(path)).ReadToEnd();
 

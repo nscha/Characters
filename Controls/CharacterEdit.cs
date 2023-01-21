@@ -370,7 +370,7 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void Tag_Deleted(object sender, EventArgs e)
         {
-            Tag tag = (Tag)sender;
+            var tag = (Tag)sender;
             _ = _tags.Remove(tag);
             _ = Characters.ModuleInstance.Tags.Remove(tag.Text);
 
@@ -392,7 +392,7 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 AsyncTexture2D noImgTexture = Character.SpecializationIcon;
 
-                Image noImg = (Image)_imagePanel.Children[0];
+                var noImg = (Image)_imagePanel.Children[0];
                 noImg.Texture = noImgTexture;
             }
         }
@@ -465,7 +465,7 @@ namespace Kenedia.Modules.Characters.Controls
 
         private void Tag_Click(object sender, MouseEventArgs e)
         {
-            Tag tag = (Tag)sender;
+            var tag = (Tag)sender;
 
             if (tag.Active)
             {

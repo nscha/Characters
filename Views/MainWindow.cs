@@ -1,21 +1,19 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Content;
 using Blish_HUD.Controls;
-using Gw2Sharp.WebApi.V2.Models;
 using Kenedia.Modules.Characters.Controls;
+using Kenedia.Modules.Characters.Controls.SideMenu;
 using Kenedia.Modules.Characters.Enums;
 using Kenedia.Modules.Characters.Extensions;
 using Kenedia.Modules.Characters.Models;
 using Kenedia.Modules.Characters.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using static Kenedia.Modules.Characters.Services.SettingsModel;
 using Color = Microsoft.Xna.Framework.Color;
@@ -26,14 +24,13 @@ namespace Kenedia.Modules.Characters.Views
 {
     public class MainWindow : StandardWindow
     {
-        private readonly AsyncTexture2D _windowEmblem = GameService.Content.DatAssetCache.GetTextureFromAssetId(156015);
+        private readonly AsyncTexture2D _windowEmblem = AsyncTexture2D.FromAssetId(156015);
 
         private readonly Image _displaySettingsButton;
         private readonly ImageButton _randomButton;
         private readonly ImageButton _clearButton;
         private readonly FlowPanel _dropdownPanel;
-        private readonly SettingsSideMenu _settingsSideMenu;
-        private readonly FilterSideMenu _filterSideMenu;
+        private readonly SideMenu _sideMenu;
         private readonly FlowPanel _buttonPanel;
 
         private readonly List<Control> _attachedWindows = new();
@@ -98,9 +95,9 @@ namespace Kenedia.Modules.Characters.Views
             _clearButton = new ImageButton()
             {
                 Parent = this,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175783),
-                HoveredTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175782),
-                ClickedTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(2175784),
+                Texture = AsyncTexture2D.FromAssetId(2175783),
+                HoveredTexture = AsyncTexture2D.FromAssetId(2175782),
+                ClickedTexture = AsyncTexture2D.FromAssetId(2175784),
                 Size = new Point(20, 20),
                 BasicTooltipText = Strings.common.ClearFilters,
                 Visible = false,
@@ -131,7 +128,7 @@ namespace Kenedia.Modules.Characters.Views
             _displaySettingsButton = new()
             {
                 Parent = _buttonPanel,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052),
+                Texture = AsyncTexture2D.FromAssetId(155052),
                 Size = new Point(25, 25),
                 BasicTooltipText = string.Format(Strings.common.ShowItem, string.Format(Strings.common.ItemSettings, Strings.common.Display)),
             };
@@ -139,29 +136,18 @@ namespace Kenedia.Modules.Characters.Views
             _displaySettingsButton.MouseLeft += DisplaySettingsButton_MouseLeft;
             _displaySettingsButton.Click += DisplaySettingsButton_Click;
 
-            _settingsSideMenu = new SettingsSideMenu()
-            {
-                TextureOffset = new Point(25, 25),
-                Visible = false,
-            };
-
-            _filterSideMenu = new FilterSideMenu()
-            {
-                TextureOffset = new Point(25, 25),
-                Visible = false,
-            };
-
             CharacterEdit = new CharacterEdit()
             {
                 TextureOffset = new Point(25, 25),
                 Visible = false,
             };
 
+            _sideMenu = new();
+
             Characters.ModuleInstance.LanguageChanged += ModuleInstance_LanguageChanged;
 
             _attachedWindows.Add(CharacterEdit);
-            _attachedWindows.Add(_filterSideMenu);
-            _attachedWindows.Add(_settingsSideMenu);
+            _attachedWindows.Add(_sideMenu);
         }
 
         private SettingsModel Settings => Characters.ModuleInstance.Settings;
@@ -248,289 +234,116 @@ namespace Kenedia.Modules.Characters.Views
         public void FilterCharacters(object sender = null, EventArgs e = null)
         {
             _filterCharacters = true;
+            _clearButton.Visible = FilterBox.Text.Length > 0;
         }
 
         public void PerformFiltering()
         {
-            bool any = Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAny;
-            bool all = Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAll;
-
-            Regex Diacritics = new(@"\p{M}");
             Regex regex = new(@"\w+|""[\w\s]*""");
-            var x = regex.Matches(FilterBox.Text.Trim().ToLower()).Cast<Match>().ToList();
+            var strings = regex.Matches(FilterBox.Text.Trim().ToLower()).Cast<Match>().ToList();
 
-        List<string> textStrings = new();
-            foreach (Match match in x) 
+            List<string> textStrings = new();
+
+            var stringFilters = new List<KeyValuePair<string, SearchFilter<Character_Model>>>();
+
+            string SearchableString(string s)
             {
-                string string_text = match.ToString().Replace("\"", "");
-                string_text = Settings.FilterDiacriticsInsensitive.Value ? string_text.RemoveDiacritics() : string_text;
-
-                textStrings.Add(string_text); 
+                return (Settings.FilterDiacriticsInsensitive.Value ? s.RemoveDiacritics() : s).ToLower();
             }
 
-            bool matchAny = FilterBox.Text.Trim().Length == 0;
-            SettingsModel s = Settings;
-            Data data = Characters.ModuleInstance.Data;
-
-            IEnumerable<Tag> activeTags = _filterSideMenu.Tags.Where(e => e.Active);
-
-            bool anyTag = activeTags.Count() == 0;
-            bool raceAny = CategoryFilters[FilterCategory.Race].Count == 0;
-            bool craftAny = CategoryFilters[FilterCategory.Crafting].Count == 0;
-            bool profAny = CategoryFilters[FilterCategory.Profession].Count == 0;
-            bool specProfAny = CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 0;
-            bool specAny = CategoryFilters[FilterCategory.Specialization].Count == 0;
-            bool birthAny = CategoryFilters[FilterCategory.Birthday].Count == 0;
-            bool anyCategory = raceAny && craftAny && profAny && specProfAny && specAny && birthAny;
-            bool includeHidden = CategoryFilters[FilterCategory.Hidden].Count == 1;
-
-            foreach (CharacterControl c in CharactersPanel.Children)
+            foreach (Match match in strings)
             {
-                bool crafting_Any = c.Character.Crafting.Select(e => e.Id).Any(e => CategoryFilters[FilterCategory.Crafting].Contains(e) && (!s.CheckOnlyMaxCrafting.Value || c.Character.Crafting.Find(a => a.Id == e).Rating == data.CrafingProfessions[e].MaxRating));
-                bool crafting_All = CategoryFilters[FilterCategory.Crafting].Select(e => (int)e).All(e => c.Character.Crafting.Find(a => a.Id == e && (!s.CheckOnlyMaxCrafting.Value || a.Rating == data.CrafingProfessions[e].MaxRating)) != null);
+                string string_text = SearchableString(match.ToString().Replace("\"", ""));
 
-                if (matchAny && anyCategory && anyTag)
+                if (Settings.DisplayToggles.Value["Name"].Check) stringFilters.Add(new("Name", new((c) => SearchableString(c.Name).Contains(string_text), true)));
+                if (Settings.DisplayToggles.Value["Profession"].Check) stringFilters.Add(new("Specialization", new((c) => SearchableString(c.SpecializationName).Contains(string_text), true)));
+                if (Settings.DisplayToggles.Value["Profession"].Check) stringFilters.Add(new("Profession", new((c) => SearchableString(c.ProfessionName).Contains(string_text), true)));
+                if (Settings.DisplayToggles.Value["Level"].Check) stringFilters.Add(new("Level", new((c) => SearchableString(c.Level.ToString()).Contains(string_text), true)));
+                if (Settings.DisplayToggles.Value["Race"].Check) stringFilters.Add(new("Race", new((c) => SearchableString(c.RaceName).Contains(string_text), true)));
+                if (Settings.DisplayToggles.Value["Map"].Check) stringFilters.Add(new("Map", new((c) => SearchableString(c.MapName).Contains(string_text), true)));
+                if (Settings.DisplayToggles.Value["CraftingProfession"].Check)
                 {
-                    c.Visible = c.Character.Show || includeHidden;
-                    continue;
+                    stringFilters.Add(new("CraftingProfession", new((c) =>
+                    {
+                        foreach (var craft in c.CraftingDisciplines)
+                        {
+                            if (!Settings.DisplayToggles.Value["OnlyMaxCrafting"].Check || craft.Key == craft.Value.MaxRating)
+                            {
+                                if (SearchableString(craft.Value.Name).Contains(string_text)) return true;
+                            }
+                        }
+
+                        return false;
+                    }, true)));
                 }
 
-                List<FilterTag> filterCategories = new()
+                if (Settings.DisplayToggles.Value["Tags"].Check)
                 {
-                    new FilterTag()
-                    {
-                        Result = raceAny || CategoryFilters[FilterCategory.Race].Contains(c.Character.Race),
-                    },
-                    new FilterTag()
-                    {
-                        Result = craftAny || (any ? crafting_Any : crafting_All),
-                    },
-                    new FilterTag()
-                    {
-                        Result = profAny || ((any || CategoryFilters[FilterCategory.Profession].Count == 1) && CategoryFilters[FilterCategory.Profession].Contains(c.Character.Profession)),
-                    },
-                    new FilterTag()
-                    {
-                        Result = birthAny || c.Character.HasBirthdayPresent,
-                    },
-                    new FilterTag()
-                    {
-                        Result = (specProfAny && specAny) || ((any || CategoryFilters[FilterCategory.ProfessionSpecialization].Count == 1) && c.Character.Specialization == SpecializationType.None && CategoryFilters[FilterCategory.ProfessionSpecialization].Contains(c.Character.Profession)) || CategoryFilters[FilterCategory.Specialization].Contains(c.Character.Specialization),
-                    },
-                };
-
-                List<FilterTag> filterTags = _filterSideMenu.Tags.Where(e => e.Active).Select(e => e.Text).ToList().CreateFilterTagList();
-                List<FilterTag> filterStrings = textStrings.CreateFilterTagList();
-
-                if (!anyTag)
-                {
-                    filterTags.ForEach(ft => ft.Result = c.Character.Tags.Contains(ft.Tag));
+                    stringFilters.Add(new("Tags", new((c) => { foreach (string tag in c.Tags) { if (SearchableString(tag).Contains(string_text)) return true; } return false; }, true)));
                 }
-
-                if (!matchAny)
-                {
-                    if (s.CheckName.Value)
-                    {
-                        string value = c.Character.Name.ToString();
-                        value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
-
-                        if (value != null)
-                        {
-                            foreach (FilterTag ex in filterStrings)
-                            {
-                                if (value.ToLower().Contains(ex))
-                                {
-                                    ex.Result = true;
-                                }
-                            }
-                        }
-
-                        // visible = tag != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
-                    }
-
-                    if (s.CheckLevel.Value)
-                    {
-                        string value = c.Character.Level.ToString();
-                        value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
-
-                        if (value != null)
-                        {
-                            foreach (FilterTag ex in filterStrings)
-                            {
-                                if (value.ToLower().Contains(ex))
-                                {
-                                    ex.Result = true;
-                                }
-                            }
-                        }
-
-                        // visible = tag != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
-                    }
-
-                    if (s.CheckRace.Value)
-                    {
-                        Data.Race race = c.Character.Race.GetData();
-
-                        if (race != null)
-                        {
-                            string value = race.Name;
-                            value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
-
-                            foreach (FilterTag ex in filterStrings)
-                            {
-                                if (value.ToLower().Contains(ex))
-                                {
-                                    ex.Result = true;
-                                }
-                            }
-                        }
-
-                        // visible = filterStrings.Find(ex =>
-                        // {
-                        //    var value = c.Character.Race.GetData();
-                        //    return value != null && value.Name.ToLower().Contains(ex);
-                        // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
-                    }
-
-                    if (s.CheckProfession.Value)
-                    {
-                        Data.Profession profession = c.Character.Profession.GetData();
-
-                        if (profession != null)
-                        {
-                            string value = profession.Name;
-                            value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
-
-                            foreach (FilterTag ex in filterStrings)
-                            {
-                                if (value.ToLower().Contains(ex))
-                                {
-                                    ex.Result = true;
-                                }
-                            }
-                        }
-
-                        Data.Specialization specialization = c.Character.Specialization.GetData();
-
-                        if (specialization != null)
-                        {
-                            string value = specialization.Name;
-                            value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
-
-                            foreach (FilterTag ex in filterStrings)
-                            {
-                                if (value.ToLower().Contains(ex))
-                                {
-                                    ex.Result = true;
-                                }
-                            }
-                        }
-
-                        // visible = filterStrings.Find(ex =>
-                        // {
-                        //    var value = c.Character.Profession.GetData();
-                        //    return value != null && value.Name.ToLower().Contains(ex);
-                        // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
-
-                        // visible = filterStrings.Find(ex =>
-                        // {
-                        //    var value = c.Character.Specialization.GetData();
-                        //    return value != null && value.Name.ToLower().Contains(ex);
-                        // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
-                    }
-
-                    if (s.CheckMap.Value)
-                    {
-                        Models.Map map = Characters.ModuleInstance.Data.GetMapById(c.Character.Map);
-
-                        if (map != null)
-                        {
-                            string value = map.Name;
-                            value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
-
-                            foreach (FilterTag ex in filterStrings)
-                            {
-                                if (value.ToLower().Contains(ex))
-                                {
-                                    ex.Result = true;
-                                }
-                            }
-                        }
-
-                        // visible = filterStrings.Find(ex =>
-                        // {
-                        //    var value = Characters.ModuleInstance.Data.GetMapById(c.Character.Map);
-                        //    return value != null && value.Name.ToLower().Contains(ex);
-                        // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
-                    }
-
-                    if (s.CheckCrafting.Value)
-                    {
-                        foreach (CharacterCrafting crafting in c.Character.Crafting)
-                        {
-                            Data.CrafingProfession crafingProfession = crafting.Id.GetData();
-
-                            if (crafingProfession != null)
-                            {
-                                string value = crafingProfession.Name;
-                                value = Settings.FilterDiacriticsInsensitive.Value ? value.RemoveDiacritics() : value;
-
-                                foreach (FilterTag ex in filterStrings)
-                                {
-                                    if (value.ToLower().Contains(ex) && (!s.CheckOnlyMaxCrafting.Value || crafingProfession.MaxRating == crafting.Rating))
-                                    {
-                                        ex.Result = true;
-                                    }
-                                }
-                            }
-
-                            // visible = value != null && (!s.Check_OnlyMaxCrafting.Value || crafting.Rating == value.MaxRating) && filterStrings.Find(ex =>
-                            // {
-                            //    return value != null && value.Name.ToLower().Contains(ex);
-                            // }) != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
-                        }
-                    }
-
-                    if (s.CheckTags.Value)
-                    {
-                        List<string> tags = c.Character.Tags.ToList().ConvertAll(d => d.ToLower());
-
-                        if (tags != null)
-                        {
-                            foreach (FilterTag ex in filterStrings)
-                            {
-                                if (tags.Find(t => t.Contains(ex)) != null)
-                                {
-                                    ex.Result = true;
-                                }
-                            }
-                        }
-
-                        // visible = tag != null ? s.FilterDirection.Value == FilterBehavior.Include : visible;
-                    }
-                }
-
-                bool matched = false;
-                bool catMatched = false;
-                bool tagMatched = false;
-
-                if (s.ResultFilterBehavior.Value == FilterBehavior.Exclude)
-                {
-                    matched = !matchAny && (any ? filterStrings.Where(r => r.Result == true).Count() > 0 : filterStrings.Where(r => r.Result == true).Count() == filterStrings.Count);
-                    tagMatched = !anyTag && (any ? filterTags.Where(r => r.Result == true).Count() > 0 : filterTags.Where(r => r.Result == true).Count() == filterTags.Count);
-                    catMatched = !anyCategory && filterCategories.Where(r => r.Result == true).Count() == filterCategories.Count;
-                }
-                else
-                {
-                    matched = matchAny || (any ? filterStrings.Where(r => r.Result == true).Count() > 0 : filterStrings.Where(r => r.Result == true).Count() == filterStrings.Count);
-                    catMatched = anyCategory || filterCategories.Where(r => r.Result == true).Count() == filterCategories.Count;
-                    tagMatched = anyTag || (any ? filterTags.Where(r => r.Result == true).Count() > 0 : filterTags.Where(r => r.Result == true).Count() == filterTags.Count);
-                }
-
-                c.Visible = (c.Character.Show || includeHidden) && (s.ResultFilterBehavior.Value == FilterBehavior.Include ? matched && catMatched && tagMatched : !matched && !catMatched && !tagMatched);
             }
 
-            _clearButton.Visible = !anyCategory || !matchAny || !anyTag;
+            bool matchAny = Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAny;
+            bool matchAll = Settings.ResultMatchingBehavior.Value == MatchingBehavior.MatchAll;
+
+            bool include = Settings.ResultFilterBehavior.Value == FilterBehavior.Include;
+
+            var toggleFilters = Characters.ModuleInstance.SearchFilters.Where(e => e.Value.IsEnabled).ToList();
+
+            bool FilterResult(Character_Model c)
+            {
+                var results = new List<bool>();
+                foreach (var filter in toggleFilters)
+                {
+                    bool result = filter.Value.CheckForMatch(c);
+                    results.Add(result);
+
+                    if (result)
+                    {
+                        if (matchAny)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return matchAll && results.Count(e => e == true) == toggleFilters.Count;
+            }
+
+            bool StringFilterResult(Character_Model c)
+            {
+                var results = new List<bool>();
+
+                foreach (var filter in stringFilters)
+                {
+                    bool matched = filter.Value.CheckForMatch(c);
+
+                    if (matched)
+                    {
+                        if (matchAny)
+                        {
+                            return true;
+                        }
+                    }
+
+                    if (matched) results.Add(matched);
+                }
+
+                return matchAll && results.Count(e => e == true) >= strings.Count;
+            }
+
+            foreach (CharacterControl ctrl in CharactersPanel.Children)
+            {
+                var c = ctrl.Character;
+
+                if (c != null)
+                {
+                    bool toggleResult = toggleFilters.Count == 0 || (include == FilterResult(c));
+                    bool stringsResult = stringFilters.Count == 0 || (include == StringFilterResult(c));
+                    ctrl.Visible = toggleResult && stringsResult;
+                }
+            }
+
             SortCharacters();
             CharactersPanel.Invalidate();
         }
@@ -800,7 +613,7 @@ namespace Kenedia.Modules.Characters.Views
                 titleBounds = _titleFont.GetStringRectangle(Characters.ModuleInstance.Name);
             }
 
-             _titleRectangle = new(65, 5, (int)titleBounds.Width, Math.Max(30, (int)titleBounds.Height));
+            _titleRectangle = new(65, 5, (int)titleBounds.Width, Math.Max(30, (int)titleBounds.Height));
         }
 
         public override void PaintAfterChildren(SpriteBatch spriteBatch, Rectangle bounds)
@@ -875,7 +688,7 @@ namespace Kenedia.Modules.Characters.Views
             var mainBounds = AbsoluteBounds;
             bool left = mainBounds.Right - (mainBounds.Width / 2) > GameService.Graphics.SpriteScreen.Right / 2;
 
-            foreach(var c in _attachedWindows)
+            foreach (var c in _attachedWindows)
             {
                 c.Location = left ? new(mainBounds.Left - c.Width - 5, mainBounds.Top + 45) : new(mainBounds.Right, mainBounds.Top + 45);
             }
@@ -896,13 +709,12 @@ namespace Kenedia.Modules.Characters.Views
             //ContentPanel?.DisposeAll();
             //CharactersPanel?.Dispose();
             DraggingControl?.Dispose();
-            _settingsSideMenu?.Dispose();
-            _filterSideMenu?.Dispose();
             CharacterEdit?.Dispose();
 
             _dropdownPanel?.Dispose();
             _displaySettingsButton?.Dispose();
             FilterBox?.Dispose();
+            _sideMenu?.Dispose();
         }
 
         private void FilterBox_EnterPressed(object sender, EventArgs e)
@@ -940,30 +752,30 @@ namespace Kenedia.Modules.Characters.Views
             CategoryFilters[FilterCategory.Hidden].Clear();
             CategoryFilters[FilterCategory.Birthday].Clear();
 
-            _filterSideMenu.ResetToggles();
             FilterBox.Text = null;
             _filterCharacters = true;
-            _filterSideMenu.Tags.ForEach(t => t.Active = false);
         }
 
         private void FilterBox_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            ShowAttachedWindow(_filterSideMenu);
+            //ShowAttachedWindow(_filterSideMenu);
+            ShowAttachedWindow(_sideMenu);
         }
 
         private void DisplaySettingsButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            ShowAttachedWindow(_settingsSideMenu);
+            /// TODO implement settings window
+            ShowAttachedWindow();
         }
 
         private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            _displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(155052);
+            _displaySettingsButton.Texture = AsyncTexture2D.FromAssetId(155052);
         }
 
         private void DisplaySettingsButton_MouseEntered(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            _displaySettingsButton.Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157110);
+            _displaySettingsButton.Texture = AsyncTexture2D.FromAssetId(157110);
         }
 
         private void DraggingControl_LeftMouseButtonReleased(object sender, Blish_HUD.Input.MouseEventArgs e)

@@ -100,7 +100,7 @@ namespace Kenedia.Modules.Characters.Controls
                     UseGrayScale && !Active && !MouseOver ? _grayScaleTexture : _texture,
                     SizeRectangle != Rectangle.Empty ? SizeRectangle : bounds,
                     _textureRectangle == Rectangle.Empty ? _texture.Bounds : _textureRectangle,
-                    MouseOver ? ColorHovered : Active ? ColorActive : ColorInActive * (UseGrayScale ? 0.5f : Alpha),
+                    Active ? ColorActive : MouseOver ? ColorHovered : ColorInActive * (UseGrayScale ? 0.5f : Alpha),
                     0f,
                     default);
             }

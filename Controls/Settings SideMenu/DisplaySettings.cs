@@ -1,9 +1,6 @@
 ﻿using Blish_HUD.Controls;
 using Kenedia.Modules.Characters.Extensions;
 using Microsoft.Xna.Framework;
-using System;
-using System.Text.RegularExpressions;
-using static Kenedia.Modules.Characters.Services.SettingsModel;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace Kenedia.Modules.Characters.Controls

@@ -1,4 +1,5 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Kenedia.Modules.Characters.Extensions;
@@ -94,7 +95,7 @@ namespace Kenedia.Modules.Characters.Controls
                 Parent = this,
                 Location = new Point((32 + 5) * 4, 0),
                 FrameColor = Color.Black, // new Color(32, 32 , 32),
-                Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003),
+                Background = AsyncTexture2D.FromAssetId(156003),
                 TextureRectangle = new Rectangle(50, 50, 500, 500),
                 WidthSizingMode = SizingMode.AutoSize,
                 AutoSizePadding = new Point(15, 0),

@@ -1,7 +1,6 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Content;
 using Blish_HUD.Controls;
-using Blish_HUD.Input;
 using Kenedia.Modules.Characters.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,7 +31,7 @@ namespace Kenedia.Modules.Characters.Controls
 
             HeightSizingMode = SizingMode.AutoSize;
 
-            // Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
+            // Background = AsyncTexture2D.FromAssetId(156003);
             Parent = GameService.Graphics.SpriteScreen;
             ZIndex = 999;
             Visible = true;
@@ -87,6 +86,8 @@ namespace Kenedia.Modules.Characters.Controls
 
         public override void RecalculateLayout()
         {
+            base.RecalculateLayout();
+
             int button_amount = Math.Max(1, _tabsButtonPanel.Children.Count);
             int width = (_tabsButtonPanel.Width - ((button_amount - 1) * (int)_tabsButtonPanel.ControlPadding.X)) / button_amount;
             foreach (Control c in _tabsButtonPanel.Children)
@@ -143,7 +144,7 @@ namespace Kenedia.Modules.Characters.Controls
             base.OnResized(e);
         }
 
-        protected void SwitchTab(PanelTab tab = null)
+        protected virtual void SwitchTab(PanelTab tab = null)
         {
             foreach (PanelTab t in Tabs)
             {

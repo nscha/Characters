@@ -706,4 +706,10 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   <data name="FilterDiacriticsInsensitive_Description" xml:space="preserve">
     <value>Ignoriert alle Arten von diakritischen Zeichen</value>
   </data>
+  <data name="ToggleAllItem" xml:space="preserve">
+    <value>Alle {0} umschalten</value>
+  </data>
+  <data name="OnlyMaxCrafting" xml:space="preserve">
+    <value>Nur max. Handwerksberufe</value>
+  </data>
 </root>

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
 using System;
+using System.Diagnostics;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -25,8 +26,7 @@ namespace Kenedia.Modules.Characters.Controls
 
         public Tag()
         {
-            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(1620622);
-            WidthSizingMode = SizingMode.AutoSize;
+            Background = AsyncTexture2D.FromAssetId(1620622);
             FlowDirection = ControlFlowDirection.SingleLeftToRight;
             OuterControlPadding = new Vector2(3, 3);
             ControlPadding = new Vector2(2, 0);
@@ -36,8 +36,8 @@ namespace Kenedia.Modules.Characters.Controls
             _delete = new ImageButton()
             {
                 Parent = this,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156012),
-                HoveredTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156011),
+                Texture = AsyncTexture2D.FromAssetId(156012),
+                HoveredTexture = AsyncTexture2D.FromAssetId(156011),
                 TextureRectangle = new Rectangle(4, 4, 24, 24),
                 Size = new Point(20, 20),
                 BasicTooltipText = string.Format(Strings.common.DeleteItem, Strings.common.Tag),
@@ -47,7 +47,7 @@ namespace Kenedia.Modules.Characters.Controls
             _dummy = new ImageButton()
             {
                 Parent = this,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156025),
+                Texture = AsyncTexture2D.FromAssetId(156025),
                 TextureRectangle = new Rectangle(44, 48, 43, 46),
                 Size = new Point(20, 20),
                 Visible = false,
@@ -63,13 +63,28 @@ namespace Kenedia.Modules.Characters.Controls
 
         public event EventHandler Deleted;
 
+        public event EventHandler ActiveChanged;
+
         public BitmapFont Font
         {
             get => _text.Font;
             set => _text.Font = value;
         }
 
-        public bool Active { get; set; } = true;
+        private bool _active;
+
+        public bool Active
+        {
+            get => _active;
+            set
+            {
+                if (_active != value)
+                {
+                    _active = value;
+                    ActiveChanged?.Invoke(this, null);
+                }
+            }
+        }
 
         public bool CanInteract { get; set; } = true;
 
@@ -96,6 +111,7 @@ namespace Kenedia.Modules.Characters.Controls
                 {
                     _delete.Visible = value;
                     _dummy.Visible = !value;
+                    Invalidate();
                 }
             }
         }
@@ -108,6 +124,7 @@ namespace Kenedia.Modules.Characters.Controls
                 if (_text != null)
                 {
                     _text.Text = value;
+                    Width = (int)_text.Font.MeasureString(value).Width + 30;
                 }
             }
         }
@@ -144,8 +161,8 @@ namespace Kenedia.Modules.Characters.Controls
         {
             if (CanInteract)
             {
-                base.OnClick(e);
                 Active = !Active;
+                base.OnClick(e);
             }
         }
 

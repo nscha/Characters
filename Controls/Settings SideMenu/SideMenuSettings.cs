@@ -1,4 +1,5 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Microsoft.Xna.Framework;
@@ -26,7 +27,7 @@ namespace Kenedia.Modules.Characters.Controls
             };
 
             Size = new Point(width, 100);
-            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
+            Background = AsyncTexture2D.FromAssetId(156003);
 
             Parent = GameService.Graphics.SpriteScreen;
             ZIndex = 999;
@@ -36,28 +37,28 @@ namespace Kenedia.Modules.Characters.Controls
             AddTab(new OrderSettings(width - 10)
             {
                 Name = string.Format(Strings.common.ItemSettings, Strings.common.Order),
-                Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156909),
+                Icon = AsyncTexture2D.FromAssetId(156909),
                 Active = true,
             });
 
             AddTab(new FilterSettings(width - 10)
             {
                 Name = string.Format(Strings.common.ItemSettings, Strings.common.Filter),
-                Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(784371),
+                Icon = AsyncTexture2D.FromAssetId(784371),
                 Active = false,
             });
 
             AddTab(new DisplaySettings(width - 10)
             {
                 Name = string.Format(Strings.common.ItemSettings, Strings.common.Display),
-                Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(528726),
+                Icon = AsyncTexture2D.FromAssetId(528726),
                 Active = false,
             });
 
             AddTab(new SettingsAndShortcuts()
             {
                 Name = Strings.common.GeneralAndWindows,
-                Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(440021),
+                Icon = AsyncTexture2D.FromAssetId(440021),
                 Active = false,
             });
         }

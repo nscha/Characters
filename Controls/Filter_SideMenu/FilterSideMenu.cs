@@ -1,4 +1,5 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Microsoft.Xna.Framework;
@@ -20,7 +21,7 @@ namespace Kenedia.Modules.Characters.Controls
         public FilterSideMenu()
         {
             Size = new Point(200, 100);
-            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003); // 155985
+            Background = AsyncTexture2D.FromAssetId(156003); // 155985
             ColorBackground = Color.Black * 0.75f;
             BackgroundTint = new Color(200, 200, 200, 255);
 

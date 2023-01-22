@@ -706,4 +706,13 @@ To get the current value you will have to swap module tabs once to update the se
   <data name="FilterDiacriticsInsensitive_Description" xml:space="preserve">
     <value>Ignore any type of diacritics</value>
   </data>
+  <data name="AppearanceAndBehaviour" xml:space="preserve">
+    <value>Appearance &amp; Behaviour</value>
+  </data>
+  <data name="OnlyMaxCrafting" xml:space="preserve">
+    <value>Only max. Crafting</value>
+  </data>
+  <data name="ToggleAllItem" xml:space="preserve">
+    <value>Toggle All {0}</value>
+  </data>
 </root>

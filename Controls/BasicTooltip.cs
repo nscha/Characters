@@ -19,7 +19,7 @@ namespace Kenedia.Modules.Characters.Controls
 
         public Rectangle TextureRectangle { get; set; } = new Rectangle(40, 25, 250, 250);
 
-        public AsyncTexture2D Background { get; set; } = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
+        public AsyncTexture2D Background { get; set; } = AsyncTexture2D.FromAssetId(156003);
 
         public BitmapFont Font
         {

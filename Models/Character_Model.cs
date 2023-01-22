@@ -1,11 +1,14 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Content;
 using Kenedia.Modules.Characters.Enums;
+using Kenedia.Modules.Characters.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using static Kenedia.Modules.Characters.Services.Data;
 
 namespace Kenedia.Modules.Characters.Models
 {    
@@ -60,6 +63,25 @@ namespace Kenedia.Modules.Characters.Models
 
         [DataMember]
         public List<CharacterCrafting> Crafting { get; set; } = new List<CharacterCrafting>();
+
+        public List<KeyValuePair<int, CrafingProfession>> CraftingDisciplines
+        {
+            get
+            {
+                var list = new List<KeyValuePair<int, CrafingProfession>>();
+                foreach(var crafting in Crafting)
+                {
+                    var craftingProf = Characters.ModuleInstance.Data.CrafingProfessions.Where(e => e.Value.Id == crafting.Id)?.FirstOrDefault().Value;
+
+                    if(craftingProf != null)
+                    {
+                        list.Add(new(crafting.Rating, craftingProf));
+                    }
+                }
+
+                return list;
+            }
+        }
 
         [DataMember]
         public Gw2Sharp.Models.RaceType Race
@@ -119,6 +141,10 @@ namespace Kenedia.Modules.Characters.Models
                 OnUpdated();
             }
         }
+
+        public string MapName => Characters.ModuleInstance.Data.Maps[Map].Name;
+
+        public string RaceName => Characters.ModuleInstance.Data.Races[Race].Name;
 
         public string ProfessionName => Characters.ModuleInstance.Data.Professions[Profession].Name;
 

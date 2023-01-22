@@ -707,4 +707,10 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   <data name="FilterDiacriticsInsensitive_Description" xml:space="preserve">
     <value>Ignora cualquier tipo de diacríticos</value>
   </data>
+  <data name="ToggleAllItem" xml:space="preserve">
+    <value>{0} de alternancia todo</value>
+  </data>
+  <data name="OnlyMaxCrafting" xml:space="preserve">
+    <value>Sólo artesanía máx</value>
+  </data>
 </root>

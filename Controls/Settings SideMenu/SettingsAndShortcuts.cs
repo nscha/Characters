@@ -2,7 +2,6 @@
 using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
-using Gw2Sharp.WebApi.V2.Models;
 using Kenedia.Modules.Characters.Extensions;
 using Kenedia.Modules.Characters.Services;
 using Microsoft.Xna.Framework;

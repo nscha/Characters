@@ -2,7 +2,6 @@
 using Blish_HUD.Settings;
 using Kenedia.Modules.Characters.Models;
 using Microsoft.Xna.Framework.Input;
-using System.Collections;
 using System.Collections.Generic;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -98,6 +97,8 @@ namespace Kenedia.Modules.Characters.Services
             SettingCollection internalSettings = settings.AddSubCollection("Internal", false, false);
             WindowSize = internalSettings.DefineSetting(nameof(CurrentWindowSize), new Point(385, 920));
 
+            DisplayToggles = internalSettings.DefineSetting(nameof(DisplayToggles), new Dictionary<string, ShowCheckPair>());
+
             Point res = GameService.Graphics.Resolution;
             WindowedMode = internalSettings.DefineSetting(nameof(WindowedMode), false);
             FadeOut = internalSettings.DefineSetting(nameof(FadeOut), true);
@@ -179,6 +180,8 @@ namespace Kenedia.Modules.Characters.Services
             Large,
             Custom,
         }
+
+        public SettingEntry<Dictionary<string, ShowCheckPair>> DisplayToggles { get; set; }
 
         public SettingEntry<bool> FadeOut { get; set; }
 

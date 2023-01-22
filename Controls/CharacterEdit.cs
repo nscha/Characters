@@ -53,15 +53,15 @@ namespace Kenedia.Modules.Characters.Controls
             AutoSizePadding = new Point(5, 5);
             ZIndex = 999;
 
-            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003); // 155985
+            Background = AsyncTexture2D.FromAssetId(156003); // 155985
 
             Services.TextureManager tM = Characters.ModuleInstance.TextureManager;
 
             _image = new ImageButton()
             {
                 Parent = this,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(358353),
-                HoveredTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(358353),
+                Texture = AsyncTexture2D.FromAssetId(358353),
+                HoveredTexture = AsyncTexture2D.FromAssetId(358353),
                 Location = new Point(5 + 2, 5 + 2),
                 Size = new Point(64, 64),
             };
@@ -455,23 +455,25 @@ namespace Kenedia.Modules.Characters.Controls
                 Text = txt,
                 Parent = _tagPanel,
                 Active = active,
+                CanInteract = true,
             };
 
             tag.Deleted += Tag_Deleted;
-            tag.Click += Tag_Click;
+            tag.ActiveChanged += Tag_ActiveChanged; ;
 
             return tag;
         }
 
-        private void Tag_Click(object sender, MouseEventArgs e)
+        private void Tag_ActiveChanged(object sender, EventArgs e)
         {
             var tag = (Tag)sender;
 
+            Debug.WriteLine($"Tag_Click Active: {tag.Active}");
             if (tag.Active)
             {
                 _ = _character.Tags.Remove(tag.Text);
             }
-            else
+            else if (!_character.Tags.Contains(tag.Text))
             {
                 _character.Tags.Add(tag.Text);
             }

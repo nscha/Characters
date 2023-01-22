@@ -1,9 +1,6 @@
 ﻿using Blish_HUD.Controls;
 using Kenedia.Modules.Characters.Extensions;
 using Microsoft.Xna.Framework;
-using System;
-using System.Text.RegularExpressions;
-using static Kenedia.Modules.Characters.Services.SettingsModel;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace Kenedia.Modules.Characters.Controls
@@ -103,7 +100,7 @@ namespace Kenedia.Modules.Characters.Controls
             _onlyMaxCraftingCheckbox = new Checkbox()
             {
                 Parent = this,
-                Checked = Characters.ModuleInstance.Settings.CheckOnlyMaxCrafting.Value,
+                Checked = Characters.ModuleInstance.Settings.DisplayToggles.Value["OnlyMaxCrafting"].Check,
                 Text = Strings.common.CheckOnlyMaxCrafting,
             };
             _onlyMaxCraftingCheckbox.CheckedChanged += CheckedChanged;
@@ -157,7 +154,7 @@ namespace Kenedia.Modules.Characters.Controls
             }
             else if (sender == _onlyMaxCraftingCheckbox)
             {
-                Characters.ModuleInstance.Settings.CheckOnlyMaxCrafting.Value = e.Checked;
+                Characters.ModuleInstance.Settings.DisplayToggles.Value["OnlyMaxCrafting"].Check = e.Checked;
             }
             else if (sender == _tagsCheckbox)
             {

@@ -1,4 +1,5 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Kenedia.Modules.Characters.Enums;
 using Kenedia.Modules.Characters.Services;
@@ -16,7 +17,7 @@ namespace Kenedia.Modules.Characters.Controls
 
         public FiltersPanel()
         {
-            Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(440021);
+            Icon = AsyncTexture2D.FromAssetId(440021);
             Name = Strings.common.FilterToggles;
             FlowDirection = ControlFlowDirection.TopToBottom;
             WidthSizingMode = SizingMode.Fill;
@@ -149,7 +150,7 @@ namespace Kenedia.Modules.Characters.Controls
             _toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(605021),
+                Texture = AsyncTexture2D.FromAssetId(605021),
                 UseGrayScale = true,
                 TextureRectangle = new Rectangle(4, 4, 24, 24),
                 FilterObject = Strings.common.Hidden,
@@ -160,7 +161,7 @@ namespace Kenedia.Modules.Characters.Controls
             _toggles.Add(new ImageColorToggle()
             {
                 Size = new Point(23, 23),
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(593864),
+                Texture = AsyncTexture2D.FromAssetId(593864),
                 UseGrayScale = true,
                 TextureRectangle = new Rectangle(1, 0, 30, 32),
                 FilterCategory = FilterCategory.Birthday,

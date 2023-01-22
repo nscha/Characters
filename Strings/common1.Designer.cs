@@ -97,6 +97,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appearance &amp; Behaviour.
+        /// </summary>
+        internal static string AppearanceAndBehaviour {
+            get {
+                return ResourceManager.GetString("AppearanceAndBehaviour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Armorsmith.
         /// </summary>
         internal static string Armorsmith {
@@ -1144,6 +1153,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only max. Crafting.
+        /// </summary>
+        internal static string OnlyMaxCrafting {
+            get {
+                return ResourceManager.GetString("OnlyMaxCrafting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show only crafts that are at a 500 rank (Jeweler &amp; Scribe at 400)..
         /// </summary>
         internal static string OnlyMaxCrafting_Description {
@@ -1642,6 +1660,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string ToggleAll {
             get {
                 return ResourceManager.GetString("ToggleAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle All {0}.
+        /// </summary>
+        internal static string ToggleAllItem {
+            get {
+                return ResourceManager.GetString("ToggleAllItem", resourceCulture);
             }
         }
         

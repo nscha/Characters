@@ -1,4 +1,5 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Microsoft.Xna.Framework;
@@ -15,7 +16,7 @@ namespace Kenedia.Modules.Characters.Controls
 
         public TagsPanel()
         {
-            Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156025);
+            Icon = AsyncTexture2D.FromAssetId(156025);
             TextureRectangle = new Rectangle(48, 48, 46, 46);
             Name = Strings.common.CustomTags;
 

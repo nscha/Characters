@@ -90,11 +90,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\FilterEntry.cs" />
     <Compile Include="Controls\FilterTag.cs" />
     <Compile Include="Controls\RunIndicator.cs" />
+    <Compile Include="Controls\SideMenu\DisplayCheckToggle.cs" />
+    <Compile Include="Controls\ImageToggle.cs" />
+    <Compile Include="Controls\SideMenu\SideMenu.cs" />
+    <Compile Include="Controls\SideMenu\SideMenuBehaviours.cs" />
+    <Compile Include="Controls\SideMenu\SideMenuToggles.cs" />
     <Compile Include="Enums\SpecializationType.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Interfaces\ILocalizable.cs" />
     <Compile Include="Models\RectangleOffset.cs" />
+    <Compile Include="Models\ShowCheckPair.cs" />
     <Compile Include="Services\CharacterSorting.cs" />
     <Compile Include="Services\CharacterSwapping.cs" />
     <Compile Include="Models\Crafting_Model.cs" />

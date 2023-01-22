@@ -121,7 +121,7 @@
     <value>activado</value>
   </data>
   <data name="Armorsmith" xml:space="preserve">
-    <value>Forjador de armaduras</value>
+    <value>Armero</value>
   </data>
   <data name="Artificer" xml:space="preserve">
     <value>Artificiero</value>
@@ -149,7 +149,7 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
     <value>Guardado como {0}!</value>
   </data>
   <data name="Characters" xml:space="preserve">
-    <value>Caracteres</value>
+    <value>Personaje</value>
   </data>
   <data name="Chef" xml:space="preserve">
     <value>Cocinero</value>
@@ -161,7 +161,7 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
     <value>Cerrar</value>
   </data>
   <data name="CraftingProfession" xml:space="preserve">
-    <value>Profesión de artesano</value>
+    <value>Disciplina de Artesanía</value>
   </data>
   <data name="CreateImages" xml:space="preserve">
     <value>Crear imágenes</value>
@@ -203,7 +203,7 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
     <value>Esta clave API no tiene los permisos necesarios.</value>
   </data>
   <data name="FadeOut_Description" xml:space="preserve">
-    <value>Desvanecer el filtro y la ventana de caracteres automáticamente después de 2500 ms</value>
+    <value>Desvanecer el filtro y la ventana de personajes automáticamente después de 2500 ms</value>
   </data>
   <data name="FilterDelay_Description" xml:space="preserve">
     <value>Tiempo medio en milisegundos de espera entre el filtrado del panel de tus personajes.
@@ -228,7 +228,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Peletero</value>
   </data>
   <data name="LoginCharacter" xml:space="preserve">
-    <value>Carácter de inicio de sesión</value>
+    <value>Personaje de inicio de sesión</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Cerrar sesión</value>
@@ -240,17 +240,17 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Mapa</value>
   </data>
   <data name="ModuleDescription" xml:space="preserve">
-    <value>¡Una herramienta para cambiar fácilmente los caracteres, incluso con un montón de ellos!
+    <value>¡Una herramienta para cambiar fácilmente los personajes, incluso con un montón de ellos!
 ¡Esto requerirá una API-Key con permisos al menos para el endpoint 'characters'!</value>
   </data>
   <data name="NoCraftingProfession" xml:space="preserve">
-    <value>Sin profesión de artesano</value>
+    <value>Sin disciplina de artesanía</value>
   </data>
   <data name="OnlyMaxCrafting_Description" xml:space="preserve">
-    <value>Mostrar sólo los oficios que están en un rango de 500 (joyero y escriba en 400).</value>
+    <value>Mostrar sólo las disciplinas que están en un rango de 500 (joyero y escriba en 400).</value>
   </data>
   <data name="OnlyMaxCrafting_DisplayName" xml:space="preserve">
-    <value>Mostrar sólo las artesanías máximas</value>
+    <value>Mostrar sólo las disciplinas de artesanía maximizadas</value>
   </data>
   <data name="Profession" xml:space="preserve">
     <value>Profesión</value>
@@ -271,7 +271,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Escriba</value>
   </data>
   <data name="SearchGuide" xml:space="preserve">
-    <value>-c Profesión de artesano
+    <value>-c Disciplina de artesanía
 -p Profesión/Especialización
 -r Raza
 -b Cumpleaños
@@ -283,7 +283,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Seleccione una imagen</value>
   </data>
   <data name="ShortcutToggle_Description" xml:space="preserve">
-    <value>para acceder al menú de caracteres.</value>
+    <value>para acceder al menú de personajes.</value>
   </data>
   <data name="ShortcutToggle_DisplayName" xml:space="preserve">
     <value>Menú alternativo</value>
@@ -301,7 +301,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Mostrar / Ocultar el icono de la esquina de {0}.</value>
   </data>
   <data name="ShowHide_Tooltip" xml:space="preserve">
-    <value>Muestra/oculta {0} en la lista de caracteres.</value>
+    <value>Muestra/oculta {0} en la lista de personajes.</value>
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Especialización</value>
@@ -311,10 +311,10 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
 Para obtener el valor actual tendrás que cambiar las pestañas del módulo una vez para actualizar la página de configuración!</value>
   </data>
   <data name="SwapDelay_DisplayName" xml:space="preserve">
-    <value>Délai de chargement ({0} ms)</value>
+    <value>Demora de carga ({0} ms)</value>
   </data>
   <data name="SwapModifier_Description" xml:space="preserve">
-    <value>Sólo cuando se pulsa el modificador se desencadena el cambio de carácter. Así se evita el intercambio accidental!</value>
+    <value>Sólo cuando se pulsa el modificador se desencadena el cambio de personaje. Así se evita el intercambio accidental!</value>
   </data>
   <data name="SwapModifier_DisplayName" xml:space="preserve">
     <value>Modificador necesario para cambiar</value>
@@ -332,7 +332,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Cambiar todo</value>
   </data>
   <data name="ToggleVisible" xml:space="preserve">
-    <value>Mostrar/ocultar caracteres ocultos</value>
+    <value>Mostrar/ocultar personajes ocultos</value>
   </data>
   <data name="UIScale_Error" xml:space="preserve">
     <value>Por favor, pon el juego en 'WINDOWED' {0} y la escala de la interfaz de usuario en 'Larger'!</value>
@@ -368,10 +368,10 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Modo Ventana</value>
   </data>
   <data name="AutoFix_Tooltip" xml:space="preserve">
-    <value>Cuando no consiga cambiar a un carácter, repase automáticamente los caracteres para fijar su orden.</value>
+    <value>Cuando no consiga cambiar a un personaje, repase automáticamente los personajes para fijar su orden.</value>
   </data>
   <data name="UseOCR_Tooltip" xml:space="preserve">
-    <value>Utilice el "Reconocimiento óptico de caracteres" (OCR) para confirmar el nombre del carácter.</value>
+    <value>Utilice el "Reconocimiento óptico de personajes" (OCR) para confirmar el nombre del personaje.</value>
   </data>
   <data name="UseOCR" xml:space="preserve">
     <value>Utilizar OCR</value>
@@ -515,7 +515,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Carpeta</value>
   </data>
   <data name="FixCharacters" xml:space="preserve">
-    <value>Corregir caracteres</value>
+    <value>Corregir personajes</value>
   </data>
   <data name="FilterToggles" xml:space="preserve">
     <value>Filtrar Toggles</value>
@@ -524,7 +524,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Filtrar</value>
   </data>
   <data name="Error_FailedAPIFetch" xml:space="preserve">
-    <value>Error al obtener caracteres de la API.</value>
+    <value>Error al obtener personajes de la API.</value>
   </data>
   <data name="ExcludeMatches" xml:space="preserve">
     <value>Excluir coincidencias</value>
@@ -611,7 +611,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>{0} Ajustes</value>
   </data>
   <data name="KeyDelay_Description" xml:space="preserve">
-    <value>Añade un retardo entre las pulsaciones de las teclas. Esto ralentiza el intercambio de caracteres y sólo se debe utilizar si su PC está tan estresado que no es capaz de cambiar sin un retraso!</value>
+    <value>Añade un retardo entre las pulsaciones de las teclas. Esto ralentiza el intercambio de personajes y sólo se debe utilizar si su PC está tan estresado que no es capaz de cambiar sin un retraso!</value>
     
   </data>
   <data name="KeyDelay_DisplayName" xml:space="preserve">
@@ -657,7 +657,7 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Cerrando sesión ...</value>
   </data>
   <data name="CharacterSwap_MoveFirst" xml:space="preserve">
-    <value>Mover a primer carácter ...</value>
+    <value>Mover a primer personaje ...</value>
   </data>
   <data name="CharacterSwap_MoveTo" xml:space="preserve">
     <value>Intentar pasar a {0}</value>
@@ -672,19 +672,19 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
     <value>Obtener el nombre del personaje ...{0}{1}</value>
   </data>
   <data name="FixCharacter_MoveNext" xml:space="preserve">
-    <value>Mover al siguiente carácter ...</value>
+    <value>Mover al siguiente personaje ...</value>
   </data>
   <data name="FixCharacter_NoChange" xml:space="preserve">
-    <value>Nombre de carácter no cambió {0}/2 ...</value>
+    <value>Nombre de personaje no cambió {0}/2 ...</value>
   </data>
   <data name="FixCharacter_Start" xml:space="preserve">
-    <value>Fijar caracteres ...</value>
+    <value>Fijar personaje ...</value>
   </data>
   <data name="RandomButton_Tooltip" xml:space="preserve">
-    <value>Cambiar a un carácter aleatorio de la lista actual</value>
+    <value>Cambiar a un personaje aleatorio de la lista actual</value>
   </data>
   <data name="ShowRandomButton_Description" xml:space="preserve">
-    <value>Muestra un botón junto al campo de búsqueda para cambiar a un carácter aleatorio de su lista</value>
+    <value>Muestra un botón junto al campo de búsqueda para cambiar a un personaje aleatorio de su lista</value>
   </data>
   <data name="ShowRandomButton_Name" xml:space="preserve">
     <value>Mostrar botón aleatorio</value>

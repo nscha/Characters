@@ -14,7 +14,7 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class TabbedPanel : Panel
     {
-        private readonly FlowPanel _tabsButtonPanel = new()
+        protected readonly FlowPanel _tabsButtonPanel = new()
         {
             FlowDirection = ControlFlowDirection.SingleLeftToRight,
             WidthSizingMode = SizingMode.Fill,
@@ -66,6 +66,7 @@ namespace Kenedia.Modules.Characters.Controls
             tab.Disposed += OnTabDisposed;
             tab.TabButton.Parent = _tabsButtonPanel;
             tab.TabButton.Click += (s, m) => TabButton_Click(tab);
+            tab.Location = new(0, _tabsButtonPanel.Bottom);
             Tabs.Add(tab);
             TabAdded?.Invoke(this, EventArgs.Empty);
             ActiveTab ??= tab;
@@ -144,7 +145,7 @@ namespace Kenedia.Modules.Characters.Controls
             base.OnResized(e);
         }
 
-        protected virtual void SwitchTab(PanelTab tab = null)
+        protected virtual bool SwitchTab(PanelTab tab = null)
         {
             foreach (PanelTab t in Tabs)
             {
@@ -160,6 +161,8 @@ namespace Kenedia.Modules.Characters.Controls
             }
 
             _activeTab = tab;
+
+            return false;
         }
 
         protected override void DisposeControl()

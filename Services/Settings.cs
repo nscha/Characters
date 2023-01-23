@@ -12,96 +12,26 @@ namespace Kenedia.Modules.Characters.Services
     {
         public SettingsModel(SettingCollection settings)
         {
-            LogoutKey = settings.DefineSetting(
-                nameof(LogoutKey),
-                new Blish_HUD.Input.KeyBinding(Keys.F12),
-                () => Strings.common.Logout,
-                () => Strings.common.LogoutDescription);
-
-            ShortcutKey = settings.DefineSetting(
-                nameof(ShortcutKey),
-                new Blish_HUD.Input.KeyBinding(ModifierKeys.Shift, Keys.C),
-                () => Strings.common.ShortcutToggle_DisplayName,
-                () => Strings.common.ShortcutToggle_Description);
-
-            ShowCornerIcon = settings.DefineSetting(
-                nameof(ShowCornerIcon),
-                true,
-                () => Strings.common.ShowCorner_Name,
-                () => string.Format(Strings.common.ShowCorner_Tooltip, Characters.ModuleInstance.Name));
-
-            CloseWindowOnSwap = settings.DefineSetting(
-                nameof(CloseWindowOnSwap),
-                false,
-                () => Strings.common.CloseWindowOnSwap_DisplayName,
-                () => Strings.common.CloseWindowOnSwap_Description);
-
-            FilterDiacriticsInsensitive = settings.DefineSetting(
-                nameof(FilterDiacriticsInsensitive),
-                false,
-                () => Strings.common.FilterDiacriticsInsensitive_DisplayName,
-                () => Strings.common.FilterDiacriticsInsensitive_Description);
-
-            ShowRandomButton = settings.DefineSetting(
-                nameof(ShowRandomButton),
-                false,
-                () => Strings.common.ShowRandomButton_Name,
-                () => Strings.common.ShowRandomButton_Description);
-
-            ShowStatusWindow = settings.DefineSetting(
-                nameof(ShowStatusWindow),
-                true,
-                () => Strings.common.ShowStatusWindow_Name,
-                () => Strings.common.ShowStatusWindow_Description);
-
-            EnterOnSwap = settings.DefineSetting(
-                nameof(EnterOnSwap),
-                true,
-                () => Strings.common.EnterOnSwap_DisplayName,
-                () => Strings.common.EnterOnSwap_Description);
-
-            DoubleClickToEnter = settings.DefineSetting(
-                nameof(DoubleClickToEnter),
-                false,
-                () => Strings.common.DoubleClickToEnter_DisplayName,
-                () => Strings.common.DoubleClickToEnter_Description);
-
-            EnterToLogin = settings.DefineSetting(
-                nameof(EnterToLogin),
-                false,
-                () => Strings.common.EnterToLogin_DisplayName,
-                () => Strings.common.EnterToLogin_Description);
-
-            SwapDelay = settings.DefineSetting(
-                nameof(SwapDelay),
-                500,
-                () => string.Format(Strings.common.SwapDelay_DisplayName, SwapDelay.Value),
-                () => Strings.common.SwapDelay_Description);
-            SwapDelay.SetRange(0, 5000);
-
-            KeyDelay = settings.DefineSetting(
-                nameof(KeyDelay),
-                0,
-                () => string.Format(Strings.common.KeyDelay_DisplayName, KeyDelay.Value),
-                () => Strings.common.KeyDelay_Description);
-            KeyDelay.SetRange(0, 500);
-
-            FilterDelay = settings.DefineSetting(
-                nameof(FilterDelay),
-                0,
-                () => string.Format(Strings.common.FilterDelay_DisplayName, FilterDelay.Value),
-                () => Strings.common.FilterDelay_Description);
-
-            FilterDelay.SetRange(0, 500);
-
             SettingCollection internalSettings = settings.AddSubCollection("Internal", false, false);
-            WindowSize = internalSettings.DefineSetting(nameof(CurrentWindowSize), new Point(385, 920));
-
+            LogoutKey = internalSettings.DefineSetting(nameof(LogoutKey), new Blish_HUD.Input.KeyBinding(Keys.F12));
+            ShortcutKey = internalSettings.DefineSetting(nameof(ShortcutKey), new Blish_HUD.Input.KeyBinding(ModifierKeys.Shift, Keys.C));
+            ShowCornerIcon = internalSettings.DefineSetting(nameof(ShowCornerIcon), true);
+            CloseWindowOnSwap = internalSettings.DefineSetting(nameof(CloseWindowOnSwap), false);
+            FilterDiacriticsInsensitive = internalSettings.DefineSetting(nameof(FilterDiacriticsInsensitive), false);
+            ShowRandomButton = internalSettings.DefineSetting(nameof(ShowRandomButton), false);
+            ShowStatusWindow = internalSettings.DefineSetting(nameof(ShowStatusWindow), true);
+            EnterOnSwap = internalSettings.DefineSetting(nameof(EnterOnSwap), true);
+            DoubleClickToEnter = internalSettings.DefineSetting(nameof(DoubleClickToEnter), false);
+            EnterToLogin = internalSettings.DefineSetting(nameof(EnterToLogin), false);
+            SwapDelay = internalSettings.DefineSetting(nameof(SwapDelay), 250);
+            KeyDelay = internalSettings.DefineSetting(nameof(KeyDelay), 0);
+            FilterDelay = internalSettings.DefineSetting(nameof(FilterDelay), 0);
+            WindowSize = internalSettings.DefineSetting(nameof(CurrentWindowSize), new Point(385, 920));            
             DisplayToggles = internalSettings.DefineSetting(nameof(DisplayToggles), new Dictionary<string, ShowCheckPair>());
 
             Point res = GameService.Graphics.Resolution;
             WindowedMode = internalSettings.DefineSetting(nameof(WindowedMode), false);
-            FadeOut = internalSettings.DefineSetting(nameof(FadeOut), true);
+            PinSideMenus = internalSettings.DefineSetting(nameof(PinSideMenus), true);
             UseOCR = internalSettings.DefineSetting(nameof(UseOCR), false);
             AutoSortCharacters = internalSettings.DefineSetting(nameof(AutoSortCharacters), false);
             OCRRegion = internalSettings.DefineSetting(nameof(ActiveOCRRegion), new Rectangle(50, 550, 530, 50));
@@ -183,7 +113,7 @@ namespace Kenedia.Modules.Characters.Services
 
         public SettingEntry<Dictionary<string, ShowCheckPair>> DisplayToggles { get; set; }
 
-        public SettingEntry<bool> FadeOut { get; set; }
+        public SettingEntry<bool> PinSideMenus { get; set; }
 
         public SettingEntry<bool> CloseWindowOnSwap{ get; set; }
 

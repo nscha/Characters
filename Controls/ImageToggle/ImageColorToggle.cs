@@ -5,10 +5,6 @@ namespace Kenedia.Modules.Characters.Controls
 {
     internal class ImageColorToggle : ImageGrayScaled
     {
-        public object FilterObject { get; set; }
-
-        public FilterCategory FilterCategory { get; set; }
-
         public Gw2Sharp.Models.ProfessionType Profession { get; set; }
 
         private readonly Action<bool> _onChanged;

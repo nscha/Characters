@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Resources;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Kenedia.Modules.Characters.Controls.SideMenu
 {
@@ -64,7 +65,7 @@ namespace Kenedia.Modules.Characters.Controls.SideMenu
             _separator = new Panel()
             {
                 BackgroundColor = Color.White * 0.6f,
-                Height = 1,
+                Height = 2,
                 Parent = this,
             };
 

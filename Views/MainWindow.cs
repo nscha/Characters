@@ -32,6 +32,7 @@ namespace Kenedia.Modules.Characters.Views
         private readonly FlowPanel _dropdownPanel;
         private readonly SideMenu _sideMenu;
         private readonly FlowPanel _buttonPanel;
+        private readonly TextBox _filterBox;
 
         private readonly List<Control> _attachedWindows = new();
 
@@ -82,15 +83,15 @@ namespace Kenedia.Modules.Characters.Views
                 ControlPadding = new Vector2(5, 0),
             };
 
-            FilterBox = new TextBox()
+            _filterBox = new TextBox()
             {
                 Parent = _dropdownPanel,
                 PlaceholderText = Strings.common.Search,
                 Width = 100,
             };
-            FilterBox.TextChanged += FilterCharacters;
-            FilterBox.Click += FilterBox_Click;
-            FilterBox.EnterPressed += FilterBox_EnterPressed;
+            _filterBox.TextChanged += FilterCharacters;
+            _filterBox.Click += FilterBox_Click;
+            _filterBox.EnterPressed += FilterBox_EnterPressed;
 
             _clearButton = new ImageButton()
             {
@@ -142,12 +143,19 @@ namespace Kenedia.Modules.Characters.Views
                 Visible = false,
             };
 
-            _sideMenu = new();
-
-            Characters.ModuleInstance.LanguageChanged += ModuleInstance_LanguageChanged;
+            _sideMenu = new() { Visible = false, };
 
             _attachedWindows.Add(CharacterEdit);
             _attachedWindows.Add(_sideMenu);
+
+            Characters.ModuleInstance.LanguageChanged += ModuleInstance_LanguageChanged;
+            Characters.ModuleInstance.Settings.PanelLayout.SettingChanged += DisplayOptionChanged;
+            Characters.ModuleInstance.Settings.PanelSize.SettingChanged += DisplayOptionChanged;
+        }
+
+        private void DisplayOptionChanged(object sender, EventArgs e)
+        {
+            UpdateLayout();
         }
 
         private SettingsModel Settings => Characters.ModuleInstance.Settings;
@@ -172,8 +180,8 @@ namespace Kenedia.Modules.Characters.Views
 
         private void ButtonPanel_Resized(object sender, ResizedEventArgs e)
         {
-            FilterBox.Width = _dropdownPanel.Width - _buttonPanel.Width - 2;
-            _clearButton.Location = new Point(FilterBox.LocalBounds.Right - 25, FilterBox.LocalBounds.Top + 5);
+            _filterBox.Width = _dropdownPanel.Width - _buttonPanel.Width - 2;
+            _clearButton.Location = new Point(_filterBox.LocalBounds.Right - 25, _filterBox.LocalBounds.Top + 5);
         }
 
         private void CharacterSorting_Finished(object sender, EventArgs e)
@@ -181,43 +189,13 @@ namespace Kenedia.Modules.Characters.Views
             SortCharacters();
         }
 
-        public Dictionary<object, List<object>> CategoryFilters { get; set; } = new Dictionary<object, List<object>>()
-        {
-            {
-                FilterCategory.Race,
-                new List<object>()
-            },
-            {
-                FilterCategory.Crafting,
-                new List<object>()
-            },
-            {
-                FilterCategory.Profession,
-                new List<object>()
-            },
-            {
-                FilterCategory.ProfessionSpecialization,
-                new List<object>()
-            },
-            {
-                FilterCategory.Specialization,
-                new List<object>()
-            },
-            {
-                FilterCategory.Hidden,
-                new List<object>()
-            },
-            {
-                FilterCategory.Birthday,
-                new List<object>()
-            },
-        };
+        private Dictionary<string, SearchFilter<Character_Model>> TagFilters => Characters.ModuleInstance.TagFilters;
+
+        private Dictionary<string, SearchFilter<Character_Model>> SearchFilters => Characters.ModuleInstance.SearchFilters;
 
         public List<CharacterControl> CharacterControls { get; set; } = new List<CharacterControl>();
 
         public CharacterEdit CharacterEdit { get; set; }
-
-        public TextBox FilterBox { get; set; }
 
         public DraggingControl DraggingControl { get; set; } = new DraggingControl()
         {
@@ -234,13 +212,12 @@ namespace Kenedia.Modules.Characters.Views
         public void FilterCharacters(object sender = null, EventArgs e = null)
         {
             _filterCharacters = true;
-            _clearButton.Visible = FilterBox.Text.Length > 0;
         }
 
         public void PerformFiltering()
         {
             Regex regex = new(@"\w+|""[\w\s]*""");
-            var strings = regex.Matches(FilterBox.Text.Trim().ToLower()).Cast<Match>().ToList();
+            var strings = regex.Matches(_filterBox.Text.Trim().ToLower()).Cast<Match>().ToList();
 
             List<string> textStrings = new();
 
@@ -288,8 +265,29 @@ namespace Kenedia.Modules.Characters.Views
 
             bool include = Settings.ResultFilterBehavior.Value == FilterBehavior.Include;
 
-            var toggleFilters = Characters.ModuleInstance.SearchFilters.Where(e => e.Value.IsEnabled).ToList();
+            var toggleFilters = SearchFilters.Where(e => e.Value.IsEnabled).ToList();
+            var tagFilters = TagFilters.Where(e => e.Value.IsEnabled).ToList();
 
+            bool TagResult(Character_Model c)
+            {
+                var results = new List<bool>();
+                foreach (var filter in tagFilters)
+                {
+                    bool result = filter.Value.CheckForMatch(c);
+                    results.Add(result);
+
+                    if (result)
+                    {
+                        if (matchAny)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return matchAll && results.Count(e => e == true) == tagFilters.Count;
+            }
+            
             bool FilterResult(Character_Model c)
             {
                 var results = new List<bool>();
@@ -340,12 +338,15 @@ namespace Kenedia.Modules.Characters.Views
                 {
                     bool toggleResult = toggleFilters.Count == 0 || (include == FilterResult(c));
                     bool stringsResult = stringFilters.Count == 0 || (include == StringFilterResult(c));
-                    ctrl.Visible = toggleResult && stringsResult;
+                    bool tagsResult = tagFilters.Count == 0 || (include == TagResult(c));
+                    ctrl.Visible = toggleResult && stringsResult && tagsResult;
                 }
             }
 
             SortCharacters();
             CharactersPanel.Invalidate();
+
+            _clearButton.Visible = stringFilters.Count > 0 || toggleFilters.Count > 0 || tagFilters.Count > 0;
         }
 
         public void UpdateLayout()
@@ -355,8 +356,8 @@ namespace Kenedia.Modules.Characters.Views
             PanelSizes panelSize = Settings.PanelSize.Value;
 
             Point size = Point.Zero;
-            MonoGame.Extended.BitmapFonts.BitmapFont nameFont = GameService.Content.DefaultFont14;
-            MonoGame.Extended.BitmapFonts.BitmapFont font = GameService.Content.DefaultFont12;
+            BitmapFont nameFont = GameService.Content.DefaultFont14;
+            BitmapFont font = GameService.Content.DefaultFont12;
             string testString = Characters.ModuleInstance.CharacterModels.Aggregate(string.Empty, (max, cur) => max.Length > cur.Name.Length ? max : cur.Name);
 
             switch (panelSize)
@@ -662,8 +663,8 @@ namespace Kenedia.Modules.Characters.Views
             if (_dropdownPanel != null)
             {
                 //_dropdownPanel.Size = new Point(ContentRegion.Size.X, 31);
-                FilterBox.Width = _dropdownPanel.Width - _buttonPanel.Width - 2;
-                _clearButton.Location = new Point(FilterBox.LocalBounds.Right - 23, FilterBox.LocalBounds.Top + 6);
+                _filterBox.Width = _dropdownPanel.Width - _buttonPanel.Width - 2;
+                _clearButton.Location = new Point(_filterBox.LocalBounds.Right - 23, _filterBox.LocalBounds.Top + 6);
             }
 
             if (e.CurrentSize.Y < 135)
@@ -704,6 +705,10 @@ namespace Kenedia.Modules.Characters.Views
         {
             base.DisposeControl();
 
+            Characters.ModuleInstance.LanguageChanged -= ModuleInstance_LanguageChanged;
+            Characters.ModuleInstance.Settings.PanelLayout.SettingChanged -= DisplayOptionChanged;
+            Characters.ModuleInstance.Settings.PanelSize.SettingChanged -= DisplayOptionChanged;
+
             CharacterSorting.Completed -= CharacterSorting_Finished;
             // if(CharacterControls.Count >0) CharacterControls?.DisposeAll();
             //ContentPanel?.DisposeAll();
@@ -713,7 +718,7 @@ namespace Kenedia.Modules.Characters.Views
 
             _dropdownPanel?.Dispose();
             _displaySettingsButton?.Dispose();
-            FilterBox?.Dispose();
+            _filterBox?.Dispose();
             _sideMenu?.Dispose();
         }
 
@@ -739,33 +744,19 @@ namespace Kenedia.Modules.Characters.Views
 
         private void ClearButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            ResetFilters();
-        }
-
-        private void ResetFilters()
-        {
-            CategoryFilters[FilterCategory.Race].Clear();
-            CategoryFilters[FilterCategory.Crafting].Clear();
-            CategoryFilters[FilterCategory.Profession].Clear();
-            CategoryFilters[FilterCategory.ProfessionSpecialization].Clear();
-            CategoryFilters[FilterCategory.Specialization].Clear();
-            CategoryFilters[FilterCategory.Hidden].Clear();
-            CategoryFilters[FilterCategory.Birthday].Clear();
-
-            FilterBox.Text = null;
+            _filterBox.Text = null;
             _filterCharacters = true;
+            _sideMenu.ResetToggles();
         }
 
         private void FilterBox_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            //ShowAttachedWindow(_filterSideMenu);
             ShowAttachedWindow(_sideMenu);
         }
 
         private void DisplaySettingsButton_Click(object sender, Blish_HUD.Input.MouseEventArgs e)
         {
-            /// TODO implement settings window
-            ShowAttachedWindow();
+            Characters.ModuleInstance.SettingsWindow.ToggleWindow();
         }
 
         private void DisplaySettingsButton_MouseLeft(object sender, Blish_HUD.Input.MouseEventArgs e)

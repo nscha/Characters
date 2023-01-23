@@ -4,6 +4,7 @@ using Kenedia.Modules.Characters.Enums;
 using Kenedia.Modules.Characters.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,7 +12,7 @@ using System.Runtime.Serialization;
 using static Kenedia.Modules.Characters.Services.Data;
 
 namespace Kenedia.Modules.Characters.Models
-{    
+{
     [DataContract]
     public class Character_Model
     {
@@ -69,11 +70,11 @@ namespace Kenedia.Modules.Characters.Models
             get
             {
                 var list = new List<KeyValuePair<int, CrafingProfession>>();
-                foreach(var crafting in Crafting)
+                foreach (var crafting in Crafting)
                 {
                     var craftingProf = Characters.ModuleInstance.Data.CrafingProfessions.Where(e => e.Value.Id == crafting.Id)?.FirstOrDefault().Value;
 
-                    if(craftingProf != null)
+                    if (craftingProf != null)
                     {
                         list.Add(new(crafting.Rating, craftingProf));
                     }
@@ -194,7 +195,7 @@ namespace Kenedia.Modules.Characters.Models
         }
 
         [DataMember]
-        public TagList Tags { get; set; } = new TagList();
+        public TagList Tags { get; private set; } = new TagList();
 
         [DataMember]
         public int Position
@@ -272,7 +273,6 @@ namespace Kenedia.Modules.Characters.Models
 
         public void Initialize()
         {
-            Tags.CollectionChanged += Tags_CollectionChanged;
             _initialized = true;
         }
 
@@ -292,10 +292,28 @@ namespace Kenedia.Modules.Characters.Models
             return true;
         }
 
-        private void Tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        public void UpdateTags(TagList tags)
         {
-            Characters.Logger.Debug(nameof(this.Tags_CollectionChanged));
+            for (int i = Tags.Count - 1; i >= 0; i--)
+            {
+                if (!tags.Contains(Tags[i]))
+                {
+                    Tags.RemoveAt(i);
+                }
+            }
+
             OnUpdated();
+        }
+
+        public void AddTag(string tag)
+        {
+            Tags.Add(tag);
+            OnUpdated();
+        }
+
+        public void RemoveTag(string tag)
+        {
+            if (Tags.Remove(tag)) OnUpdated();
         }
 
         private void OnUpdated()

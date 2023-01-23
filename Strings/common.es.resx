@@ -176,7 +176,7 @@ Una vez cargado por completo, cambiará al personaje que está configurado como 
     <value>desactivado</value>
   </data>
   <data name="DoubleClickToEnter_Description" xml:space="preserve">
-    <value>Permite hacer doble clic en el personaje de la lista de personajes para acceder a ese personaje.</value>
+    <value>Permite hacer doble clic en el personaje de la lista de personajes para acceder a ese personaje</value>
   </data>
   <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
     <value>Doble clic para intercambiar</value>
@@ -712,5 +712,38 @@ Para obtener el valor actual tendrás que cambiar las pestañas del módulo una 
   </data>
   <data name="OnlyMaxCrafting" xml:space="preserve">
     <value>Sólo artesanía máx</value>
+  </data>
+  <data name="AppearanceAndBehaviour" xml:space="preserve">
+    <value>Aspecto y comportamiento</value>
+  </data>
+  <data name="PinSideMenus_DisplayName" xml:space="preserve">
+    <value>Fijar menús laterales</value>
+  </data>
+  <data name="PinSideMenus_Description" xml:space="preserve">
+    <value>Evitar que los menús laterales se desvanezcan</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Aspecto</value>
+  </data>
+  <data name="CharacterDisplayOption" xml:space="preserve">
+    <value>Opción de visualización de caracteres</value>
+  </data>
+  <data name="CharacterDisplaySize" xml:space="preserve">
+    <value>Tamaño de la pantalla de caracteres</value>
+  </data>
+  <data name="Keybinds" xml:space="preserve">
+    <value>Combinaciones de teclas</value>
+  </data>
+  <data name="SwapBehaviour" xml:space="preserve">
+    <value>Comportamiento de intercambio</value>
+  </data>
+  <data name="Delays" xml:space="preserve">
+    <value>Retrasos</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configuraciones</value>
+  </data>
+  <data name="DetailedTooltip_Description" xml:space="preserve">
+    <value>Muestra un tooltip detallado al pasar el ratón sobre un personaje de la lista de personajes. El tooltip mostrará toda la información disponible para ese personaje.</value>
   </data>
 </root>

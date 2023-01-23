@@ -176,7 +176,7 @@ Sobald es vollständig geladen ist, wechselt es zu dem Charakter, der als "Login
     <value>deaktiviert</value>
   </data>
   <data name="DoubleClickToEnter_Description" xml:space="preserve">
-    <value>Ermöglicht einen Doppelklick auf den Charakter in der Charakterliste, um sich bei diesem Charakter anzumelden.</value>
+    <value>Ermöglicht einen Doppelklick auf den Charakter in der Charakterliste, um sich bei diesem Charakter anzumelden</value>
   </data>
   <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
     <value>Doppelklick zum Wechseln</value>
@@ -458,7 +458,7 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
     <value>Potrait-Ordner öffnen</value>
   </data>
   <data name="OpenItem" xml:space="preserve">
-    <value>Öffnen {0}</value>
+    <value>{0} öffnen</value>
   </data>
   <data name="Offset" xml:space="preserve">
     <value>Versatz</value>
@@ -711,5 +711,38 @@ Um den aktuellen Wert zu erhalten, müssen Sie die Modul-Tabs einmal wechseln, u
   </data>
   <data name="OnlyMaxCrafting" xml:space="preserve">
     <value>Nur max. Handwerksberufe</value>
+  </data>
+  <data name="AppearanceAndBehaviour" xml:space="preserve">
+    <value>Erscheinungsbild und Verhalten</value>
+  </data>
+  <data name="PinSideMenus_DisplayName" xml:space="preserve">
+    <value>Seitenmenüs anheften</value>
+  </data>
+  <data name="PinSideMenus_Description" xml:space="preserve">
+    <value>Verhindern, dass die Seitenmenüs ausgeblendet werden</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Erscheinungsbild</value>
+  </data>
+  <data name="CharacterDisplayOption" xml:space="preserve">
+    <value>Charakteranzeige Option</value>
+  </data>
+  <data name="CharacterDisplaySize" xml:space="preserve">
+    <value>Größe der Charakteranzeige</value>
+  </data>
+  <data name="Keybinds" xml:space="preserve">
+    <value>Tastaturkürzel</value>
+  </data>
+  <data name="SwapBehaviour" xml:space="preserve">
+    <value>Wechselverhalten</value>
+  </data>
+  <data name="Delays" xml:space="preserve">
+    <value>Verzögerungen</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="DetailedTooltip_Description" xml:space="preserve">
+    <value>Zeigt einen detaillierten Tooltip an, wenn der Mauszeiger über einen Charakter in der Charakterliste bewegt wird. Der Tooltip zeigt alle für diesen Charakter verfügbaren Informationen an.</value>
   </data>
 </root>

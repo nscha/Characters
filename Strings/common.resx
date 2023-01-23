@@ -248,7 +248,7 @@ Once fully loaded it will switch to the character which is set to be the "Login 
     <value>Display</value>
   </data>
   <data name="DoubleClickToEnter_Description" xml:space="preserve">
-    <value>Enables double clicking the character in the character list to login to that character.</value>
+    <value>Enables double clicking the character in the character list to login to that character</value>
   </data>
   <data name="DoubleClickToEnter_DisplayName" xml:space="preserve">
     <value>Double Click to Swap</value>
@@ -714,5 +714,35 @@ To get the current value you will have to swap module tabs once to update the se
   </data>
   <data name="ToggleAllItem" xml:space="preserve">
     <value>Toggle All {0}</value>
+  </data>
+  <data name="PinSideMenus_DisplayName" xml:space="preserve">
+    <value>Pin side menus</value>
+  </data>
+  <data name="PinSideMenus_Description" xml:space="preserve">
+    <value>Prevent the side menus from fading out</value>
+  </data>
+  <data name="Keybinds" xml:space="preserve">
+    <value>Keybinds</value>
+  </data>
+  <data name="SwapBehaviour" xml:space="preserve">
+    <value>Swap Behaviour</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="CharacterDisplayOption" xml:space="preserve">
+    <value>Character Display Option</value>
+  </data>
+  <data name="CharacterDisplaySize" xml:space="preserve">
+    <value>Character Display Size</value>
+  </data>
+  <data name="Delays" xml:space="preserve">
+    <value>Delays</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="DetailedTooltip_Description" xml:space="preserve">
+    <value>Show a detailed tooltip when hovering a character in the character list. The tooltip will expose all informations available for that character.</value>
   </data>
 </root>

@@ -246,7 +246,7 @@ namespace Kenedia.Modules.Characters.Controls
         {
             bool onlyIcon = Characters.ModuleInstance.Settings.PanelLayout.Value == CharacterPanelLayout.OnlyIcons;
 
-            _iconDummy.Visible = _iconRectangle != Rectangle.Empty;
+            //_iconDummy.Visible = _iconRectangle != Rectangle.Empty;
             _iconDummy.Size = _iconRectangle.Size;
             _iconDummy.Location = _iconRectangle.Location;
 

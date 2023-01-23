@@ -97,6 +97,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        internal static string Appearance {
+            get {
+                return ResourceManager.GetString("Appearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Appearance &amp; Behaviour.
         /// </summary>
         internal static string AppearanceAndBehaviour {
@@ -265,6 +274,24 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string Character {
             get {
                 return ResourceManager.GetString("Character", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character Display Option.
+        /// </summary>
+        internal static string CharacterDisplayOption {
+            get {
+                return ResourceManager.GetString("CharacterDisplayOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character Display Size.
+        /// </summary>
+        internal static string CharacterDisplaySize {
+            get {
+                return ResourceManager.GetString("CharacterDisplaySize", resourceCulture);
             }
         }
         
@@ -512,6 +539,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delays.
+        /// </summary>
+        internal static string Delays {
+            get {
+                return ResourceManager.GetString("Delays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete {0}.
         /// </summary>
         internal static string DeleteItem {
@@ -539,6 +575,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show a detailed tooltip when hovering a character in the character list. The tooltip will expose all informations available for that character..
+        /// </summary>
+        internal static string DetailedTooltip_Description {
+            get {
+                return ResourceManager.GetString("DetailedTooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display.
         /// </summary>
         internal static string Display {
@@ -548,7 +593,7 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enables double clicking the character in the character list to login to that character..
+        ///   Looks up a localized string similar to Enables double clicking the character in the character list to login to that character.
         /// </summary>
         internal static string DoubleClickToEnter_Description {
             get {
@@ -945,6 +990,15 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keybinds.
+        /// </summary>
+        internal static string Keybinds {
+            get {
+                return ResourceManager.GetString("Keybinds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adds a delay between key presses. This slows down the character swapping and should only be used if your PC is stressed that much so it isn&apos;t able to switch without a delay!.
         /// </summary>
         internal static string KeyDelay_Description {
@@ -1216,6 +1270,24 @@ namespace Kenedia.Modules.Characters.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prevent the side menus from fading out.
+        /// </summary>
+        internal static string PinSideMenus_Description {
+            get {
+                return ResourceManager.GetString("PinSideMenus_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin side menus.
+        /// </summary>
+        internal static string PinSideMenus_DisplayName {
+            get {
+                return ResourceManager.GetString("PinSideMenus_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Potrait Frame.
         /// </summary>
         internal static string PotraitFrame {
@@ -1362,6 +1434,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string SelectImage {
             get {
                 return ResourceManager.GetString("SelectImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         
@@ -1551,6 +1632,15 @@ namespace Kenedia.Modules.Characters.Strings {
         internal static string Status_Done {
             get {
                 return ResourceManager.GetString("Status_Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swap Behaviour.
+        /// </summary>
+        internal static string SwapBehaviour {
+            get {
+                return ResourceManager.GetString("SwapBehaviour", resourceCulture);
             }
         }
         

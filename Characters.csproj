@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Controls\FilterEntry.cs" />
     <Compile Include="Controls\FilterTag.cs" />
+    <Compile Include="Controls\ImageToggle\ImageToggleButton.cs" />
     <Compile Include="Controls\RunIndicator.cs" />
     <Compile Include="Controls\SideMenu\DisplayCheckToggle.cs" />
     <Compile Include="Controls\ImageToggle.cs" />
@@ -126,9 +127,6 @@
     <Compile Include="Controls\Character\CharacterTooltip.cs" />
     <Compile Include="Controls\Character\CraftingControl.cs" />
     <Compile Include="Controls\Filter_SideMenu\FilterCategory.cs" />
-    <Compile Include="Controls\Filter_SideMenu\FiltersPanel.cs" />
-    <Compile Include="Controls\Filter_SideMenu\FilterSideMenu.cs" />
-    <Compile Include="Controls\Filter_SideMenu\TagsPanel.cs" />
     <Compile Include="Controls\HeadedPanel.cs" />
     <Compile Include="Controls\ImageSelector.cs" />
     <Compile Include="Controls\ImageToggle\ImageButton.cs" />
@@ -136,12 +134,9 @@
     <Compile Include="Controls\ImageToggle\ImageColorToggle.cs" />
     <Compile Include="Controls\CharacterPotraitCapture.cs" />
     <Compile Include="Controls\ImageToggle\ImageTextureToggle.cs" />
-    <Compile Include="Controls\Settings SideMenu\DisplaySettings.cs" />
     <Compile Include="Controls\Settings SideMenu\SettingsAndShortcuts.cs" />
-    <Compile Include="Controls\Settings SideMenu\SideMenuSettings.cs" />
     <Compile Include="Controls\DraggingControl.cs" />
     <Compile Include="Controls\Dummy.cs" />
-    <Compile Include="Controls\Settings SideMenu\FilterSettings.cs" />
     <Compile Include="Controls\IconLabel.cs" />
     <Compile Include="Services\InputService.cs" />
     <Compile Include="Services\RandomService.cs" />
@@ -155,7 +150,6 @@
     <Compile Include="Services\TextureManager.cs" />
     <Compile Include="Services\Ticks.cs" />
     <Compile Include="Characters.cs" />
-    <Compile Include="Controls\Settings SideMenu\OrderSettings.cs" />
     <Compile Include="Controls\Settings SideMenu\TabButton.cs" />
     <Compile Include="Controls\SizeablePanel.cs" />
     <Compile Include="Controls\Tabbed_Panel\TabbedPanel.cs" />
@@ -171,6 +165,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>common.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\SettingsView.cs" />
+    <Compile Include="Views\SettingsWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AsyncClipboardService, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">

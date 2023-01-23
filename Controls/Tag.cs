@@ -71,7 +71,12 @@ namespace Kenedia.Modules.Characters.Controls
             set => _text.Font = value;
         }
 
-        private bool _active;
+        private bool _active = false;
+
+        public void SetActive(bool active)
+        {
+            _active = active;
+        }
 
         public bool Active
         {
@@ -159,10 +164,11 @@ namespace Kenedia.Modules.Characters.Controls
 
         protected override void OnClick(MouseEventArgs e)
         {
+            base.OnClick(e);
+
             if (CanInteract)
             {
                 Active = !Active;
-                base.OnClick(e);
             }
         }
 

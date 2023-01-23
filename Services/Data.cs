@@ -446,8 +446,8 @@ namespace Kenedia.Modules.Characters.Services
                     {
                         { Locale.German, "Druide" },
                         { Locale.English, "Druid" },
-                        { Locale.Spanish, "Guardián" },
-                        { Locale.French, "Gardien" },
+                        { Locale.Spanish, "Druida" },
+                        { Locale.French, "Druide" },
                     },
                 }
             },

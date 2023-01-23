@@ -1,6 +1,7 @@
 ﻿using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Kenedia.Modules.Characters.Enums;
+using Kenedia.Modules.Characters.Extensions;
 using Kenedia.Modules.Characters.Interfaces;
 using Kenedia.Modules.Characters.Models;
 using Kenedia.Modules.Characters.Services;
@@ -20,7 +21,7 @@ namespace Kenedia.Modules.Characters.Controls.SideMenu
         private List<Tag> _tags = new();
         private readonly FlowPanel _toggleFlowPanel;
         private readonly FlowPanel _tagFlowPanel;
-        private readonly List<ImageColorToggle> _toggles = new();
+        private readonly List<KeyValuePair<ImageColorToggle, Action>> _toggles = new();
         private Rectangle _contentRectangle;
 
         public event EventHandler TogglesChanged;
@@ -60,6 +61,22 @@ namespace Kenedia.Modules.Characters.Controls.SideMenu
             OnLanguageChanged();
         }
 
+        public void ResetToggles()
+        {
+            _tags.ForEach(t => t.SetActive(false));
+            _toggles.ForEach(t => t.Key.Active = false);
+
+            foreach (var t in SearchFilters)
+            {
+                t.Value.IsEnabled = false;
+            }
+
+            foreach (var t in TagFilters)
+            {
+                t.Value.IsEnabled = false;
+            }
+        }
+
         private void Tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             CreateTags();
@@ -95,21 +112,38 @@ namespace Kenedia.Modules.Characters.Controls.SideMenu
 
         private void CreateTags()
         {
-            int i = 0;
+            _tags.ForEach(t => t.ActiveChanged -= Tag_ActiveChanged);
+            _tags.DisposeAll();
             _tags.Clear();
+
             _tagFlowPanel.Children.Clear();
+            TagFilters.Clear();
 
             foreach (string tag in Characters.ModuleInstance.Tags)
             {
-                i++;
                 Tag t;
                 _tags.Add(t = new Tag()
                 {
                     Parent = _tagFlowPanel,
                     Text = tag,
+                    ShowDelete = false,
                 });
+
+                TagFilters.Add(tag, new((c) => c.Tags.Contains(tag), false));
+
+                t.SetActive(false);
+                t.ActiveChanged += Tag_ActiveChanged;
             }
         }
+
+        private void Tag_ActiveChanged(object sender, EventArgs e)
+        {
+            var t = (Tag)sender;
+            TagFilters[t.Text].IsEnabled = t.Active;
+            MainWindow?.PerformFiltering();
+        }
+
+        private Dictionary<string, SearchFilter<Character_Model>> TagFilters => Characters.ModuleInstance.TagFilters;
 
         private Dictionary<string, SearchFilter<Character_Model>> SearchFilters => Characters.ModuleInstance.SearchFilters;
 
@@ -118,12 +152,6 @@ namespace Kenedia.Modules.Characters.Controls.SideMenu
             void action(bool active, string entry)
             {
                 SearchFilters[entry].IsEnabled = active;
-
-                foreach (var filter in SearchFilters)
-                {
-                    //Debug.WriteLine($"{filter.Key} is enabled: {filter.Value.IsEnabled}.");
-                }
-
                 MainWindow?.PerformFiltering();
             }
 
@@ -133,7 +161,7 @@ namespace Kenedia.Modules.Characters.Controls.SideMenu
             // Profession All Specs
             foreach (var profession in profs)
             {
-                _toggles.Add(new ImageColorToggle((b) => action(b, $"Core {profession.Value.Name}"))
+                var t = new ImageColorToggle((b) => action(b, $"Core {profession.Value.Name}"))
                 {
                     Texture = profession.Value.IconBig,
                     UseGrayScale = false,
@@ -141,36 +169,43 @@ namespace Kenedia.Modules.Characters.Controls.SideMenu
                     ColorHovered = profession.Value.Color,
                     ColorInActive = profession.Value.Color * 0.5f,
                     Active = SearchFilters[$"Core {profession.Value.Name}"].IsEnabled,
+                    BasicTooltipText = $"Core {profession.Value.Name}",
                     Alpha = 0.7f,
-                });
+                };
+
+                _toggles.Add(new(t, () => t.BasicTooltipText = $"Core {profession.Value.Name}"));
             }
 
             foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> profession in profs)
             {
-                _toggles.Add(new ImageColorToggle((b) => action(b, profession.Value.Name))
+                var t = new ImageColorToggle((b) => action(b, profession.Value.Name))
                 {
                     Texture = profession.Value.IconBig,
                     Active = SearchFilters[profession.Value.Name].IsEnabled,
-                });
+                    BasicTooltipText = profession.Value.Name,
+                };
+                _toggles.Add(new(t, () => t.BasicTooltipText = profession.Value.Name));
             }
 
-            List<ImageColorToggle> specToggles = new();
+            List<KeyValuePair<ImageColorToggle, Action>> specToggles = new();
             foreach (KeyValuePair<SpecializationType, Data.Specialization> specialization in Characters.ModuleInstance.Data.Specializations)
             {
-                specToggles.Add(new ImageColorToggle((b) => action(b, specialization.Value.Name))
+                var t = new ImageColorToggle((b) => action(b, specialization.Value.Name))
                 {
                     Texture = specialization.Value.IconBig,
                     Profession = specialization.Value.Profession,
                     Active = SearchFilters[specialization.Value.Name].IsEnabled,
-                });
+                    BasicTooltipText = specialization.Value.Name,
+                };
+                specToggles.Add(new(t, () => t.BasicTooltipText = specialization.Value.Name));
             }
 
             for (int i = 0; i < 3; i++)
             {
                 foreach (KeyValuePair<Gw2Sharp.Models.ProfessionType, Data.Profession> p in profs)
                 {
-                    ImageColorToggle t = specToggles.Find(e => p.Key == e.Profession && !_toggles.Contains(e));
-                    if (t != null)
+                    var t = specToggles.Find(e => p.Key == e.Key.Profession && !_toggles.Contains(e));
+                    if (t.Key != null)
                     {
                         _toggles.Add(t);
                     }
@@ -190,45 +225,46 @@ namespace Kenedia.Modules.Characters.Controls.SideMenu
                         TextureRectangle = crafting.Key > 0 ? new Rectangle(8, 7, 17, 19) : new Rectangle(4, 4, 24, 24),
                         SizeRectangle = new Rectangle(4, 4, 20, 20),
                         Active = SearchFilters[crafting.Value.Name].IsEnabled,
+                        BasicTooltipText = crafting.Value.Name,
                     };
-                    _toggles.Add(img);
+                    _toggles.Add(new(img, () => img.BasicTooltipText = crafting.Value.Name));
                 }
             }
 
-            _toggles.Add(new ImageColorToggle((b) => action(b, "Hidden"))
+            var hidden = new ImageColorToggle((b) => action(b, "Hidden"))
             {
                 Texture = AsyncTexture2D.FromAssetId(605021),
                 UseGrayScale = true,
                 TextureRectangle = new Rectangle(4, 4, 24, 24),
                 BasicTooltipText = Strings.common.ShowHidden_Tooltip,
-            });
+            };
+            _toggles.Add(new(hidden, () => hidden.BasicTooltipText = Strings.common.ShowHidden_Tooltip));
 
-            _toggles.Add(new ImageColorToggle((b) => action(b, "Birthday"))
+            var birthday = new ImageColorToggle((b) => action(b, "Birthday"))
             {
                 Texture = AsyncTexture2D.FromAssetId(593864),
                 UseGrayScale = true,
                 TextureRectangle = new Rectangle(1, 0, 30, 32),
-                FilterCategory = FilterCategory.Birthday,
-                FilterObject = Strings.common.Birthday,
                 BasicTooltipText = Strings.common.Show_Birthday_Tooltip,
-            });
+            };
+            _toggles.Add(new(birthday, () => birthday.BasicTooltipText = Strings.common.Show_Birthday_Tooltip));
 
             foreach (KeyValuePair<Gw2Sharp.Models.RaceType, Data.Race> race in Characters.ModuleInstance.Data.Races)
             {
-                _toggles.Add(new ImageColorToggle((b) => action(b, race.Value.Name))
+                var t = new ImageColorToggle((b) => action(b, race.Value.Name))
                 {
                     Texture = race.Value.Icon,
                     UseGrayScale = true,
-                    FilterObject = race.Key,
-                    FilterCategory = FilterCategory.Race,
-                    BasicTooltipText = race.Value.Name,
-                });
+                    BasicTooltipText = race.Value.Name 
+                };
+
+                _toggles.Add(new(t, () => t.BasicTooltipText = race.Value.Name));
             }
 
-            foreach (ImageColorToggle t in _toggles)
+            foreach (var t in _toggles)
             {
-                t.Parent = _toggleFlowPanel;
-                t.Size = new Point(29, 29);
+                t.Key.Parent = _toggleFlowPanel;
+                t.Key.Size = new Point(29, 29);
             }
         }
 
@@ -240,7 +276,7 @@ namespace Kenedia.Modules.Characters.Controls.SideMenu
 
         public void OnLanguageChanged(object s = null, EventArgs e = null)
         {
-
+            _toggles.ForEach(t => t.Value.Invoke());
         }
 
         public void OnTogglesChanged(object s = null, EventArgs e = null)

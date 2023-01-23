@@ -1,6 +1,8 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Controls.Extern;
+using Blish_HUD.Graphics.UI;
 using Blish_HUD.Modules;
 using Blish_HUD.Modules.Managers;
 using Blish_HUD.Settings;
@@ -13,17 +15,17 @@ using Kenedia.Modules.Characters.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
-using SemVer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using static Kenedia.Modules.Characters.Services.TextureManager;
 using static Kenedia.Modules.Characters.Utility.WindowsUtil.WindowsUtil;
-using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Version = SemVer.Version;
@@ -38,7 +40,9 @@ namespace Kenedia.Modules.Characters
 
         public static readonly Logger Logger = Logger.GetLogger<Characters>();
         public readonly Version BaseVersion;
+        public readonly ResourceManager RM = new("Kenedia.Modules.Characters.Strings.common", System.Reflection.Assembly.GetExecutingAssembly());
 
+        public readonly Dictionary<string, SearchFilter<Character_Model>> TagFilters = new();
         private readonly Ticks _ticks = new();
 
         private CornerIcon _cornerIcon;
@@ -55,12 +59,13 @@ namespace Kenedia.Modules.Characters
 
             BaseVersion = Version.BaseVersion();
         }
-
         public event EventHandler LanguageChanged;
 
         public event EventHandler ResolutionChanged;
 
         public event EventHandler DataLoaded_Event;
+
+        public Dictionary<string, SearchFilter<Character_Model>> SearchFilters { get; private set; }
 
         public static VirtualKeyShort[] ModKeyMapping { get; private set; }
 
@@ -69,6 +74,8 @@ namespace Kenedia.Modules.Characters
         public RunIndicator RunIndicator { get; private set; }
 
         public MainWindow MainWindow { get; private set; }
+
+        public SettingsWindow SettingsWindow { get; private set; }
 
         public CharacterPotraitCapture PotraitCapture { get; private set; }
 
@@ -101,8 +108,6 @@ namespace Kenedia.Modules.Characters
         public string AccountPath { get; set; }
 
         public bool RunOCR { get; set; }
-
-        public bool UpdateTags { get; set; }
 
         public bool SaveCharacters { get; set; }
 
@@ -149,7 +154,8 @@ namespace Kenedia.Modules.Characters
 
         public void OnLanguageChanged(object sender, EventArgs e)
         {
-            RebuildUI();
+            //RebuildUI();
+            CreateToggleCategories();
             LanguageChanged?.Invoke(this, EventArgs.Empty);
         }
 
@@ -247,7 +253,6 @@ namespace Kenedia.Modules.Characters
 
         public void SaveCharacterList()
         {
-            Logger.Debug("Saving Character List.");
             JsonSerializerSettings settings = new()
             {
                 Formatting = Formatting.Indented,
@@ -316,14 +321,6 @@ namespace Kenedia.Modules.Characters
                 SaveCharacters = false;
             }
 
-            if (_ticks.Tags >= 10 && UpdateTags)
-            {
-                _ticks.Tags = 0;
-
-                UpdateTags = false;
-                UpdateTagsCollection();
-            }
-
             if (_ticks.OCR >= 50 && RunOCR)
             {
                 _ticks.OCR = 0;
@@ -385,11 +382,13 @@ namespace Kenedia.Modules.Characters
             }
 
             Data = new Data();
+            CreateToggleCategories();
 
             Gw2ApiManager.SubtokenUpdated += Gw2ApiManager_SubtokenUpdated;
 
             Settings.ShortcutKey.Value.Enabled = true;
-            Settings.ShortcutKey.Value.Activated += ShortcutWindowToggle;            
+            Settings.ShortcutKey.Value.Activated += ShortcutWindowToggle;
+            Tags.CollectionChanged += Tags_CollectionChanged;
         }
 
         private void CancelEverything()
@@ -425,7 +424,6 @@ namespace Kenedia.Modules.Characters
             GameService.GameIntegration.Gw2Instance.IsInGameChanged += ForceUpdate;
             GameService.Overlay.UserLocale.SettingChanged += UserLocale_SettingChanged;
 
-            Tags.CollectionChanged += Tags_CollectionChanged;
             OnResolutionChanged(false);
 
             // Base handler must be called
@@ -434,6 +432,7 @@ namespace Kenedia.Modules.Characters
 
         protected override void Unload()
         {
+            SettingsWindow?.Dispose();
             MainWindow?.Dispose();
             _cornerIcon?.Dispose();
 
@@ -456,7 +455,8 @@ namespace Kenedia.Modules.Characters
             map.MapChanged -= ForceUpdate;
 
             GameService.GameIntegration.Gw2Instance.IsInGameChanged -= ForceUpdate;
-            
+            Tags.CollectionChanged -= Tags_CollectionChanged;
+
             ModuleInstance = null;
         }
 
@@ -491,6 +491,7 @@ namespace Kenedia.Modules.Characters
         {
             RebuildUI();
             MainWindow?.ToggleWindow();
+            SettingsWindow?.ToggleWindow();
         }
 
         private void RebuildUI()
@@ -498,17 +499,17 @@ namespace Kenedia.Modules.Characters
             if (MainWindow != null)
             {
                 bool shown = MainWindow.Visible;
+                bool settingsShown = SettingsWindow.Visible;
 
+                SettingsWindow?.Dispose();
                 MainWindow?.Dispose();
                 PotraitCapture?.Dispose();
                 OCR?.Dispose();
                 RunIndicator?.Dispose();
                 CreateUI(true);
 
-                if (shown)
-                {
-                    MainWindow?.Show();
-                }
+                if (shown) MainWindow?.Show();
+                if (settingsShown) SettingsWindow?.Show();
             }
         }
 
@@ -524,15 +525,7 @@ namespace Kenedia.Modules.Characters
         {
             foreach (Character_Model c in CharacterModels)
             {
-                ObservableCollection<string> tList = new(c.Tags);
-
-                foreach (string t in tList)
-                {
-                    if (!Tags.Contains(t))
-                    {
-                        _ = c.Tags.Remove(t);
-                    }
-                }
+                c.UpdateTags(Tags);
             }
         }
 
@@ -571,8 +564,8 @@ namespace Kenedia.Modules.Characters
         {
             _cornerIcon = new CornerIcon()
             {
-                Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156678),
-                HoverIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156679),
+                Icon = AsyncTexture2D.FromAssetId(156678),
+                HoverIcon = AsyncTexture2D.FromAssetId(156679),
                 BasicTooltipText = string.Format(Strings.common.Toggle, $"{Name}"),
                 Parent = GameService.Graphics.SpriteScreen,
                 Visible = Settings.ShowCornerIcon.Value,
@@ -624,9 +617,24 @@ namespace Kenedia.Modules.Characters
         {
             if (MainWindow == null || force)
             {
-                // var bg = GameService.Content.DatAssetCache.GetTextureFromAssetId(155985).Texture;
                 Microsoft.Xna.Framework.Graphics.Texture2D bg = TextureManager.GetBackground(Backgrounds.MainWindow);
                 Microsoft.Xna.Framework.Graphics.Texture2D cutBg = bg.GetRegion(25, 25, bg.Width - 100, bg.Height - 325);
+                var settingsBg = AsyncTexture2D.FromAssetId(155997);
+                var cutSettingsBg = settingsBg.Texture.GetRegion(0, 0, settingsBg.Width- 482, settingsBg.Height - 390);
+
+                SettingsWindow = new(
+                    settingsBg,
+                    new Rectangle(30, 30, cutSettingsBg.Width + 10, cutSettingsBg.Height),
+                    new Rectangle(30, 35, cutSettingsBg.Width - 5 , cutSettingsBg.Height - 15 ))
+                {
+                    Parent = GameService.Graphics.SpriteScreen,
+                    Title = "❤",
+                    Subtitle = "❤",
+                    SavesPosition = true,
+                    Id = $"CharactersSettingsWindow",
+                };
+
+                // var bg = AsyncTexture2D.FromAssetId(155985).Texture;
 
                 MainWindow = new MainWindow(
                     bg,
@@ -652,9 +660,45 @@ namespace Kenedia.Modules.Characters
             }
         }
 
+        public override IView GetSettingsView()
+        {
+            return new SettingsView();
+        }
+
         private void MainWindow_Resized(object sender, ResizedEventArgs e)
         {
             Settings.WindowSize.Value = MainWindow.Size;
+        }
+
+        private void CreateToggleCategories()
+        {
+            var filters = new List<SearchFilter<Character_Model>>();
+
+            SearchFilters = new Dictionary<string, SearchFilter<Character_Model>>();
+
+            foreach (var e in Data.Professions)
+            {
+                SearchFilters.Add(e.Value.Name, new((c) => Settings.DisplayToggles.Value["Profession"].Check && c.Profession == e.Key));
+                SearchFilters.Add($"Core {e.Value.Name}", new((c) => Settings.DisplayToggles.Value["Profession"].Check && c.Profession == e.Key));
+            }
+
+            foreach (var e in Data.Specializations)
+            {
+                SearchFilters.Add(e.Value.Name, new((c) => Settings.DisplayToggles.Value["Profession"].Check && c.Specialization == e.Key));
+            }
+
+            foreach (var e in Data.CrafingProfessions)
+            {
+                SearchFilters.Add(e.Value.Name, new((c) => c.Crafting.Find(p => Settings.DisplayToggles.Value["CraftingProfession"].Check && p.Id == e.Value.Id && (!Settings.DisplayToggles.Value["OnlyMaxCrafting"].Check || p.Rating >= e.Value.MaxRating)) != null));
+            }
+
+            foreach (var e in Data.Races)
+            {
+                SearchFilters.Add(e.Value.Name, new((c) => Settings.DisplayToggles.Value["Race"].Check && c.Race == e.Key));
+            }
+
+            SearchFilters.Add("Birthday", new((c) => c.HasBirthdayPresent));
+            SearchFilters.Add("Hidden", new((c) => !c.Show));
         }
     }
 }

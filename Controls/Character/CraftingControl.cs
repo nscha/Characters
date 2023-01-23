@@ -12,8 +12,8 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class CraftingControl : Control
     {
-        private readonly AsyncTexture2D _craftingIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(156711);
-        //private readonly AsyncTexture2D _craftingIcon = GameService.Content.DatAssetCache.GetTextureFromAssetId(866130);
+        private readonly AsyncTexture2D _craftingIcon = AsyncTexture2D.FromAssetId(156711);
+        //private readonly AsyncTexture2D _craftingIcon = AsyncTexture2D.FromAssetId(866130);
 
         private BitmapFont _font = GameService.Content.DefaultFont14;
 
@@ -60,7 +60,7 @@ namespace Kenedia.Modules.Characters.Controls
                     _ = craftingDictionary.TryGetValue(crafting.Id, out CrafingProfession craftingProfession);
                     if (craftingProfession != null)
                     {
-                        bool onlyMax = Characters.ModuleInstance.Settings.ShowOnlyMaxCrafting.Value;
+                        bool onlyMax = Characters.ModuleInstance.Settings.DisplayToggles.Value["OnlyMaxCrafting"].Show;
 
                         if (craftingProfession.Icon != null && (!onlyMax || crafting.Rating == craftingProfession.MaxRating))
                         {

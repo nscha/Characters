@@ -4,13 +4,14 @@ using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Kenedia.Modules.Characters.Extensions;
 using Kenedia.Modules.Characters.Models;
-using Kenedia.Modules.Characters.Views;
+using Kenedia.Modules.Characters.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.BitmapFonts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using static Kenedia.Modules.Characters.Services.SettingsModel;
 using Color = Microsoft.Xna.Framework.Color;
@@ -23,13 +24,13 @@ namespace Kenedia.Modules.Characters.Controls
     {
         private readonly List<Control> _dataControls = new();
 
-        private readonly AsyncTexture2D _iconFrame = GameService.Content.DatAssetCache.GetTextureFromAssetId(1414041);
-        private readonly AsyncTexture2D _loginTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157092);
-        private readonly AsyncTexture2D _loginTextureHovered = GameService.Content.DatAssetCache.GetTextureFromAssetId(157094);
-        private readonly AsyncTexture2D _cogTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(157109);
-        private readonly AsyncTexture2D _cogTextureHovered = GameService.Content.DatAssetCache.GetTextureFromAssetId(157111);
-        private readonly AsyncTexture2D _presentTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(593864);
-        private readonly AsyncTexture2D _presentTextureOpen = GameService.Content.DatAssetCache.GetTextureFromAssetId(593865);
+        private readonly AsyncTexture2D _iconFrame = AsyncTexture2D.FromAssetId(1414041);
+        private readonly AsyncTexture2D _loginTexture = AsyncTexture2D.FromAssetId(157092);
+        private readonly AsyncTexture2D _loginTextureHovered = AsyncTexture2D.FromAssetId(157094);
+        private readonly AsyncTexture2D _cogTexture = AsyncTexture2D.FromAssetId(157109);
+        private readonly AsyncTexture2D _cogTextureHovered = AsyncTexture2D.FromAssetId(157111);
+        private readonly AsyncTexture2D _presentTexture = AsyncTexture2D.FromAssetId(593864);
+        private readonly AsyncTexture2D _presentTextureOpen = AsyncTexture2D.FromAssetId(593865);
 
         private readonly IconLabel _nameLabel;
         private readonly IconLabel _levelLabel;
@@ -57,6 +58,7 @@ namespace Kenedia.Modules.Characters.Controls
         public CharacterControl()
         {
             HeightSizingMode = SizingMode.AutoSize;
+            WidthSizingMode = SizingMode.AutoSize;
 
             BackgroundColor = new Color(0, 0, 0, 75);
             AutoSizePadding = new Point(0, 2);
@@ -126,7 +128,8 @@ namespace Kenedia.Modules.Characters.Controls
             _tagPanel = new FlowPanel()
             {
                 Parent = _contentPanel,
-                WidthSizingMode = SizingMode.Fill,
+                FlowDirection = ControlFlowDirection.LeftToRight,
+                WidthSizingMode = SizingMode.AutoSize,
                 HeightSizingMode = SizingMode.AutoSize,
                 ControlPadding = new Vector2(3, 2),
                 Height = Font.LineHeight + 5,
@@ -167,6 +170,14 @@ namespace Kenedia.Modules.Characters.Controls
 
             Characters.ModuleInstance.LanguageChanged += ApplyCharacter;
             Characters.ModuleInstance.MainWindow.Hidden += MainWindow_Hidden;
+            Characters.ModuleInstance.Settings.DisplayToggles.SettingChanged += DisplayToggles_SettingChanged;
+        }
+
+        private void DisplayToggles_SettingChanged(object sender, ValueChangedEventArgs<Dictionary<string, ShowCheckPair>> e)
+        {
+            UpdateLabelLayout();
+            UpdateSize();
+            Invalidate();
         }
 
         private void MainWindow_Hidden(object sender, EventArgs e)
@@ -229,36 +240,38 @@ namespace Kenedia.Modules.Characters.Controls
             }
         }
 
+        private SettingsModel Settings => Characters.ModuleInstance.Settings;
+
         public void UpdateLabelLayout()
         {
             bool onlyIcon = Characters.ModuleInstance.Settings.PanelLayout.Value == CharacterPanelLayout.OnlyIcons;
 
-            _iconDummy.Visible = _iconRectangle != Rectangle.Empty;
+            //_iconDummy.Visible = _iconRectangle != Rectangle.Empty;
             _iconDummy.Size = _iconRectangle.Size;
             _iconDummy.Location = _iconRectangle.Location;
 
-            _nameLabel.Visible = !onlyIcon && Characters.ModuleInstance.Settings.ShowName.Value;
+            _nameLabel.Visible = !onlyIcon && Settings.DisplayToggles.Value["Name"].Show;
             _nameLabel.Font = NameFont;
 
-            _levelLabel.Visible = !onlyIcon && Characters.ModuleInstance.Settings.ShowLevel.Value;
+            _levelLabel.Visible = !onlyIcon && Settings.DisplayToggles.Value["Level"].Show;
             _levelLabel.Font = Font;
 
-            _professionLabel.Visible = !onlyIcon && Characters.ModuleInstance.Settings.ShowProfession.Value;
-            _professionLabel.Font = Font;
-
-            _raceLabel.Visible = !onlyIcon && Characters.ModuleInstance.Settings.ShowRace.Value;
+            _raceLabel.Visible = !onlyIcon && Settings.DisplayToggles.Value["Race"].Show;
             _raceLabel.Font = Font;
 
-            _mapLabel.Visible = !onlyIcon && Characters.ModuleInstance.Settings.ShowMap.Value;
-            _mapLabel.Font = Font;
+            _professionLabel.Visible = !onlyIcon && Settings.DisplayToggles.Value["Profession"].Show;
+            _professionLabel.Font = Font;
 
-            _lastLoginLabel.Visible = !onlyIcon && Characters.ModuleInstance.Settings.ShowLastLogin.Value;
+            _lastLoginLabel.Visible = !onlyIcon && Settings.DisplayToggles.Value["LastLogin"].Show;
             _lastLoginLabel.Font = Font;
 
-            _craftingControl.Visible = !onlyIcon && Characters.ModuleInstance.Settings.ShowCrafting.Value;
+            _mapLabel.Visible = !onlyIcon && Settings.DisplayToggles.Value["Map"].Show;
+            _mapLabel.Font = Font;
+
+            _craftingControl.Visible = !onlyIcon && Settings.DisplayToggles.Value["CraftingProfession"].Show;
             _craftingControl.Font = Font;
 
-            _tagPanel.Visible = !onlyIcon && Characters.ModuleInstance.Settings.ShowTags.Value && Character.Tags.Count > 0;
+            _tagPanel.Visible = !onlyIcon && Settings.DisplayToggles.Value["Tags"].Show && Character.Tags.Count > 0;
             foreach (Tag tag in _tagPanel.Children)
             {
                 tag.Font = Font;
@@ -293,10 +306,10 @@ namespace Kenedia.Modules.Characters.Controls
             int amount = visibleControls.Count();
 
             int height = visibleControls.Count() > 0 ? visibleControls.Aggregate(0, (result, ctrl) => result + ctrl.Height + (int)_contentPanel.ControlPadding.Y) : 0;
-            int width = visibleControls.Count() > 0 ? visibleControls.Max(ctrl => ctrl.Width) : 0;
+            int width =  Math.Max(_tagPanel.Children.Count > 0 ? _tagPanel.Children.Max(ctrl => ctrl.Width) : 0, visibleControls.Count() > 0 ? visibleControls.Max(ctrl => ctrl.Width) : 0);
 
             _contentPanel.Height = Math.Max(NameFont.LineHeight + 8, height);
-            _contentPanel.Width = width + (int)_contentPanel.ControlPadding.X;
+            _contentPanel.Width = width + ((int)_contentPanel.ControlPadding.X * 2);            
             _tagPanel.Width = width;
         }
 
@@ -618,6 +631,8 @@ namespace Kenedia.Modules.Characters.Controls
             _ = Characters.ModuleInstance.MainWindow.CharacterControls.Remove(this);
             Characters.ModuleInstance.MainWindow.Hidden -= MainWindow_Hidden;
             Characters.ModuleInstance.LanguageChanged -= ApplyCharacter;
+            Characters.ModuleInstance.Settings.DisplayToggles.SettingChanged -= DisplayToggles_SettingChanged;
+
             _dataControls?.DisposeAll();
             _contentPanel?.Dispose();
             _textTooltip?.Dispose();
@@ -673,7 +688,7 @@ namespace Kenedia.Modules.Characters.Controls
 
             _levelLabel.Text = string.Format(Strings.common.LevelAmount, Character.Level);
             _levelLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
-            _levelLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(157085);
+            _levelLabel.Icon = AsyncTexture2D.FromAssetId(157085);
 
             _professionLabel.Icon = Character.SpecializationIcon;
             _professionLabel.Text = Character.SpecializationName;
@@ -688,10 +703,10 @@ namespace Kenedia.Modules.Characters.Controls
 
             _mapLabel.Text = Characters.ModuleInstance.Data.GetMapById(Character.Map).Name;
             _mapLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
-            _mapLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(358406); // 358406 //517180 //157122;
+            _mapLabel.Icon = AsyncTexture2D.FromAssetId(358406); // 358406 //517180 //157122;
 
-            //_lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(841721);
-            _lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(155035);
+            //_lastLoginLabel.Icon = AsyncTexture2D.FromAssetId(841721);
+            _lastLoginLabel.Icon = AsyncTexture2D.FromAssetId(155035);
             _lastLoginLabel.TextureRectangle = new Rectangle(10, 10, 44, 44);
             _lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, 0, 0, 0, 0);
 

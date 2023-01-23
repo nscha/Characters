@@ -89,12 +89,14 @@ namespace Kenedia.Modules.Characters.Services
             ModuleIcon_Hovered,
             ModuleIcon_HoveredWhite,
             Folder,
-            FolderGray,
+            Folder_Hovered,
             Camera,
             Dice,
             Dice_Hovered,
             Pin,
             Pin_Hovered,
+            Camera_Hovered,
+            Portrait_Hovered,
         }
 
         public enum Backgrounds

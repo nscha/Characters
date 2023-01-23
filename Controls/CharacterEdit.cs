@@ -22,6 +22,7 @@ namespace Kenedia.Modules.Characters.Controls
         private readonly Checkbox _show;
         private readonly ImageButton _image;
         private readonly ImageButton _delete;
+        private readonly ImageButton _closeButton;
         private readonly Label _name;
         private readonly ImageSelector _imagePanel;
         private readonly FlowPanel _tagPanel;
@@ -44,28 +45,34 @@ namespace Kenedia.Modules.Characters.Controls
         public CharacterEdit()
         {
             Width = _width;
-            _ = new Dummy()
-            {
-                Width = 350,
-            };
             Parent = GameService.Graphics.SpriteScreen;
             HeightSizingMode = SizingMode.AutoSize;
             AutoSizePadding = new Point(5, 5);
             ZIndex = 999;
 
-            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003); // 155985
+            Background = AsyncTexture2D.FromAssetId(156003); // 155985
 
             Services.TextureManager tM = Characters.ModuleInstance.TextureManager;
 
             _image = new ImageButton()
             {
                 Parent = this,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(358353),
-                HoveredTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(358353),
+                Texture = AsyncTexture2D.FromAssetId(358353),
+                HoveredTexture = AsyncTexture2D.FromAssetId(358353),
                 Location = new Point(5 + 2, 5 + 2),
                 Size = new Point(64, 64),
             };
             _image.Click += Image_Click;
+
+            _closeButton = new()
+            {
+                Parent = this,
+                Texture = AsyncTexture2D.FromAssetId(156012),
+                HoveredTexture = AsyncTexture2D.FromAssetId(156011),
+                Size = new Point(20, 20),
+                TextureRectangle = new Rectangle(7, 7, 20, 20),
+            };
+            _closeButton.Click += CloseButton_Click; ;
 
             _delete = new ImageButton()
             {
@@ -75,6 +82,7 @@ namespace Kenedia.Modules.Characters.Controls
                 Location = new Point(Right - 24 - 5, 5),
                 Size = new Point(24, 24),
                 BasicTooltipText = string.Format(Strings.common.DeleteItem, Strings.common.Character),
+                Visible = false,
             };
             _delete.Click += Delete_Click;
 
@@ -175,6 +183,11 @@ namespace Kenedia.Modules.Characters.Controls
             _initialized = true;
         }
 
+        private void CloseButton_Click(object sender, MouseEventArgs e)
+        {
+            Hide();
+        }
+
         public Character_Model Character
         {
             get => _character;
@@ -271,7 +284,7 @@ namespace Kenedia.Modules.Characters.Controls
             {
                 _opacityTick = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (!MouseOver && Characters.ModuleInstance.Settings.FadeOut.Value && DateTime.Now.Subtract(_lastMouseOver).TotalMilliseconds >= 5000 && !Characters.ModuleInstance.PotraitCapture.Visible)
+                if (!MouseOver && !Characters.ModuleInstance.Settings.PinSideMenus.Value && DateTime.Now.Subtract(_lastMouseOver).TotalMilliseconds >= 5000 && !Characters.ModuleInstance.PotraitCapture.Visible)
                 {
                     Opacity -= 0.05F;
                     if (Opacity <= 0F)
@@ -357,6 +370,7 @@ namespace Kenedia.Modules.Characters.Controls
             if (_initialized)
             {
                 _delete.Location = new Point(e.CurrentSize.X - 24 - 5, 5);
+                _closeButton.Location = new Point(e.CurrentSize.X - _closeButton.Width - 2, 3);
 
                 _show.Visible = Width == _width;
                 _tagBox.Visible = Width == _width;
@@ -366,6 +380,13 @@ namespace Kenedia.Modules.Characters.Controls
                 _captureImages.Visible = Width == _expandedWidth;
                 _openFolder.Visible = Width == _expandedWidth;
             }
+        }
+
+        protected override void DisposeControl()
+        {
+            base.DisposeControl();
+
+            _closeButton.Click -= CloseButton_Click; ;
         }
 
         private void Tag_Deleted(object sender, EventArgs e)
@@ -381,7 +402,7 @@ namespace Kenedia.Modules.Characters.Controls
         {
             foreach (Tag t in _tags)
             {
-                t.Active = _character.Tags.Contains(t.Text);
+                t.SetActive(_character.Tags.Contains(t.Text));
             }
 
             _name.Text = _character.Name;
@@ -441,7 +462,7 @@ namespace Kenedia.Modules.Characters.Controls
             if (_tagBox.Text != null && _tagBox.Text.Length > 0 && !Characters.ModuleInstance.Tags.Contains(_tagBox.Text))
             {
                 Characters.ModuleInstance.Tags.Add(_tagBox.Text);
-                Character.Tags.Add(_tagBox.Text);
+                Character.AddTag(_tagBox.Text);
                 _tags.Add(AddTag(_tagBox.Text, true));
 
                 _tagBox.Text = null;
@@ -455,25 +476,26 @@ namespace Kenedia.Modules.Characters.Controls
                 Text = txt,
                 Parent = _tagPanel,
                 Active = active,
+                CanInteract = true,
             };
 
             tag.Deleted += Tag_Deleted;
-            tag.Click += Tag_Click;
+            tag.ActiveChanged += Tag_ActiveChanged; ;
 
             return tag;
         }
 
-        private void Tag_Click(object sender, MouseEventArgs e)
+        private void Tag_ActiveChanged(object sender, EventArgs e)
         {
             var tag = (Tag)sender;
 
-            if (tag.Active)
+            if (tag.Active && !_character.Tags.Contains(tag.Text))
             {
-                _ = _character.Tags.Remove(tag.Text);
+                _character.AddTag(tag.Text);
             }
             else
             {
-                _character.Tags.Add(tag.Text);
+                _character.RemoveTag(tag.Text);
             }
         }
     }

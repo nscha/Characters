@@ -1,4 +1,5 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Kenedia.Modules.Characters.Controls;
@@ -7,11 +8,9 @@ using Kenedia.Modules.Characters.Models;
 using Microsoft.Xna.Framework;
 using Patagames.Ocr;
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -52,7 +51,7 @@ namespace Kenedia.Modules.Characters
             {
                 Parent = GameService.Graphics.SpriteScreen,
                 FrameColor = Color.Black, // new Color(32, 32 , 32),
-                Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003),
+                Background = AsyncTexture2D.FromAssetId(156003),
                 TextureRectangle = new Rectangle(50, 50, 500, 500),
                 Height = 260,
                 Width = 530,
@@ -92,8 +91,8 @@ namespace Kenedia.Modules.Characters
             _closeButton = new()
             {
                 Parent = headerPanel,
-                Texture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156012),
-                HoveredTexture = GameService.Content.DatAssetCache.GetTextureFromAssetId(156011),
+                Texture = AsyncTexture2D.FromAssetId(156012),
+                HoveredTexture = AsyncTexture2D.FromAssetId(156011),
                 Size = new Point(25, 25),
                 TextureRectangle = new Rectangle(7, 7, 20, 20),
             };

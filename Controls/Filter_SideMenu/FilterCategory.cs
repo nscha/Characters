@@ -9,5 +9,6 @@
         Specialization,
         Hidden,
         Birthday,
+        Utility,
     }
 }

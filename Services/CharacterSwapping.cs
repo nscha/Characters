@@ -1,15 +1,11 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Controls;
 using Blish_HUD.Controls.Extern;
-using Gw2Sharp.WebApi.V2.Models;
 using Kenedia.Modules.Characters.Models;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 

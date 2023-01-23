@@ -8,7 +8,6 @@ using MonoGame.Extended.BitmapFonts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Kenedia.Modules.Characters.Services.SettingsModel;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -17,7 +16,7 @@ namespace Kenedia.Modules.Characters.Controls
 {
     public class CharacterTooltip : Container
     {
-        private readonly AsyncTexture2D _iconFrame = GameService.Content.DatAssetCache.GetTextureFromAssetId(1414041);
+        private readonly AsyncTexture2D _iconFrame = AsyncTexture2D.FromAssetId(1414041);
         private readonly FlowPanel _contentPanel;
         private readonly Dummy _iconDummy;
 
@@ -131,7 +130,7 @@ namespace Kenedia.Modules.Characters.Controls
 
         public Rectangle TextureRectangle { get; set; } = new Rectangle(40, 25, 250, 250);
 
-        public AsyncTexture2D Background { get; set; } = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
+        public AsyncTexture2D Background { get; set; } = AsyncTexture2D.FromAssetId(156003);
 
         public Color BackgroundTint { get; set; } = Color.Honeydew * 0.95f;
 
@@ -324,7 +323,7 @@ namespace Kenedia.Modules.Characters.Controls
 
             _levelLabel.Text = string.Format(Strings.common.LevelAmount, Character.Level);
             _levelLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
-            _levelLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(157085);
+            _levelLabel.Icon = AsyncTexture2D.FromAssetId(157085);
 
             _professionLabel.Icon = Character.SpecializationIcon;
             _professionLabel.Text = Character.SpecializationName;
@@ -339,9 +338,9 @@ namespace Kenedia.Modules.Characters.Controls
 
             _mapLabel.Text = Characters.ModuleInstance.Data.GetMapById(Character.Map).Name;
             _mapLabel.TextureRectangle = new Rectangle(2, 2, 28, 28);
-            _mapLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(358406); // 358406 //517180 //157122;
+            _mapLabel.Icon = AsyncTexture2D.FromAssetId(358406); // 358406 //517180 //157122;
 
-            _lastLoginLabel.Icon = GameService.Content.DatAssetCache.GetTextureFromAssetId(841721);
+            _lastLoginLabel.Icon = AsyncTexture2D.FromAssetId(841721);
             _lastLoginLabel.Text = string.Format("{1} {0} {2:00}:{3:00}:{4:00}", Strings.common.Days, 0, 0, 0, 0);
             _lastLoginLabel.TextureRectangle = Rectangle.Empty;
 

@@ -1,13 +1,9 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
 using Blish_HUD.Controls;
 using Kenedia.Modules.Characters.Services;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.BitmapFonts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Kenedia.Modules.Characters.Controls
 {
@@ -29,7 +25,7 @@ namespace Kenedia.Modules.Characters.Controls
             Size = _screenPartionSize;
             Location = new Point(x, y);
             FrameColor = Color.Black;
-            Background = GameService.Content.DatAssetCache.GetTextureFromAssetId(156003);
+            Background = AsyncTexture2D.FromAssetId(156003);
             BackgroundImageColor = new Color(43, 43, 43) * 0.9f;
             TextureRectangle = new Rectangle(30, 30, 500, 500);
             Visible = false;

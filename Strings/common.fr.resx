@@ -706,4 +706,43 @@ Pour obtenir la valeur actuelle, vous devrez changer d'onglet de module une fois
   <data name="FilterDiacriticsInsensitive_Description" xml:space="preserve">
     <value>Ignore les accents lors de la recherche</value>
   </data>
+  <data name="ToggleAllItem" xml:space="preserve">
+    <value>Basculer tout {0}</value>
+  </data>
+  <data name="OnlyMaxCrafting" xml:space="preserve">
+    <value>Uniquement les métiers maxés</value>
+  </data>
+  <data name="AppearanceAndBehaviour" xml:space="preserve">
+    <value>Apparence et comportement</value>
+  </data>
+  <data name="PinSideMenus_DisplayName" xml:space="preserve">
+    <value>Épingler les menus latéraux</value>
+  </data>
+  <data name="PinSideMenus_Description" xml:space="preserve">
+    <value>Empêcher les menus latéraux de disparaître</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Apparence</value>
+  </data>
+  <data name="CharacterDisplayOption" xml:space="preserve">
+    <value>Option d'affichage des caractères</value>
+  </data>
+  <data name="CharacterDisplaySize" xml:space="preserve">
+    <value>Taille de l'affichage des caractères</value>
+  </data>
+  <data name="Keybinds" xml:space="preserve">
+    <value>Liens entre les touches</value>
+  </data>
+  <data name="SwapBehaviour" xml:space="preserve">
+    <value>Comportement de permutation</value>
+  </data>
+  <data name="Delays" xml:space="preserve">
+    <value>Délais</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="DetailedTooltip_Description" xml:space="preserve">
+    <value>Affiche une infobulle détaillée lors du survol d'un personnage dans la liste des personnages. L'infobulle exposera toutes les informations disponibles pour ce personnage.</value>
+  </data>
 </root>

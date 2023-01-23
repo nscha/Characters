@@ -1,7 +1,5 @@
-﻿using Blish_HUD.Controls;
-using Blish_HUD.Controls.Extern;
+﻿using Blish_HUD.Controls.Extern;
 using Kenedia.Modules.Characters.Models;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
